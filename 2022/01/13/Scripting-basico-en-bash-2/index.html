@@ -1,0 +1,306 @@
+<!DOCTYPE html><html lang="es" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Scripting basico en bash 2 | Sergiky</title><meta name="author" content="Sergiky"><meta name="copyright" content="Sergiky"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="IntroducciónVamos a utilizar la página OverTheWire Bandit, aquí aprenderemos sobre el scripting en general y varias formas de realizar la misma acción. Os recomiendo que intenteis hacerlo por vuestra">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Scripting basico en bash 2">
+<meta property="og:url" content="https://sergiky.github.io/2022/01/13/Scripting-basico-en-bash-2/index.html">
+<meta property="og:site_name" content="Sergiky">
+<meta property="og:description" content="IntroducciónVamos a utilizar la página OverTheWire Bandit, aquí aprenderemos sobre el scripting en general y varias formas de realizar la misma acción. Os recomiendo que intenteis hacerlo por vuestra">
+<meta property="og:locale" content="es_ES">
+<meta property="og:image" content="https://sergiky.github.io/2022/01/13/Scripting-basico-en-bash-2/Scripting_basico_en_bash_2.png">
+<meta property="article:published_time" content="2022-01-13T20:57:14.802Z">
+<meta property="article:modified_time" content="2022-04-01T12:26:08.897Z">
+<meta property="article:author" content="Sergiky">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://sergiky.github.io/2022/01/13/Scripting-basico-en-bash-2/Scripting_basico_en_bash_2.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://sergiky.github.io/2022/01/13/Scripting-basico-en-bash-2/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"We didn't find any results for the search: ${query}"}},
+  translate: undefined,
+  noticeOutdate: {"limitDay":730,"position":"top","messagePrev":"It has been","messageNext":"days since the last update, the content of the article may be outdated."},
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":false,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Scripting basico en bash 2',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-04-01 14:26:08'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">6</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Inicio</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Post</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/2022/01/13/Scripting-basico-en-bash-2/Scripting_basico_en_bash_2.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Sergiky</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Inicio</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Post</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Scripting basico en bash 2</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon fas fa-history"></i><span class="post-meta-label">Updated</span><time datetime="2022-04-01T12:26:08.897Z" title="undefined 2022-04-01 14:26:08">2022-04-01</time></span></div><div class="meta-secondline"></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="Introduccion"><a href="#Introduccion" class="headerlink" title="Introducción"></a>Introducción</h1><p>Vamos a utilizar la página <a target="_blank" rel="noopener" href="https://overthewire.org/wargames/bandit/bandit0.html">OverTheWire</a> Bandit, aquí aprenderemos sobre el scripting en general y varias formas de realizar la misma acción.</p>
+<p>Os recomiendo que intenteis hacerlo por vuestra cuenta (eso incluye buscar por internet también)<br><img src="/2022/01/13/Scripting-basico-en-bash-2/Bandit_level.jpg" alt="Bandit_level"></p>
+<p>Actualmente solo vamos a hacer los 10 primeros niveles, cabrá la posibilidad de extenderlo al resto de niveles en un futuro</p>
+<h1 id="Nivel-0"><a href="#Nivel-0" class="headerlink" title="Nivel 0"></a>Nivel 0</h1><p>Para hacer los niveles nos tenemos que conectar por ssh:<br>Con el usuario <strong>bandit0</strong>, la contraseña <strong>bandit0</strong>, el host <strong>bandit.labs.overthewire.org</strong> y el puerto <strong>2220</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -p 2220 bandit0@bandit.labs.overthewire.org</span><br></pre></td></tr></table></figure>
+<p>Le indicamos que es la primera vez que entramos poniendo “yes” y ponemos la contraseña.</p>
+<p>Ya dentro si hacemos ls podemos ver un archivo readme si le hacemos un cat para ver la información podremos ver la contraseña del siguiente nivel (boJ9jbbUNNfktd78OOpsqOltutMc3MY1)<br><img src="/2022/01/13/Scripting-basico-en-bash-2/bandit0.jpg" alt="Bandit0"></p>
+<p>Cerramos sesión (exit)</p>
+<h1 id="Nivel-1"><a href="#Nivel-1" class="headerlink" title="Nivel 1"></a>Nivel 1</h1><p>En la página web en el nivel 0 –&gt; 1 nos indica que la contraseña esta en un archivo llamado “-“.</p>
+<p>Para avanzar al siguiente nivel tenemos que iniciar por ssh con bandit1:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -p 2220 bandit1@bandit.labs.overthewire.org</span><br></pre></td></tr></table></figure>
+<p>Y introducir la contraseña del nivel anterior.</p>
+<p>Bien ahora nos encontramos con el archivo que se llama “-“, si intentamos hacerle un cat a este archivo se queda colgado ya que se interpreta como un <strong>parámetro</strong> de cat.</p>
+<p>Para ello podemos hacer lo siguiente:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat ~/*</span><br></pre></td></tr></table></figure>
+<p><img src="/2022/01/13/Scripting-basico-en-bash-2/bandit1.jpg" alt="Bandit1"></p>
+<p>Ya podemos ver la contraseña del siguiente nivel (CV1DtqXWVFXTvM2F0k09SHz0YwRINYA9),<br>este comando lo que hace es <strong>mostrarme el contenido de todos</strong> los archivos que existan en esa ruta, os recuerdo que está ruta es /home/bandit1.</p>
+<h1 id="Nivel-2"><a href="#Nivel-2" class="headerlink" title="Nivel 2"></a>Nivel 2</h1><p>Este nivel nos dice que hay un archivo que se llama “spaces in this filename”, la dificultad de este nivel es que no podemos hacerle un “cat spaces in this filename” porque se cree que son archivos diferentes.<br>Una forma de solucionar esto es tabulando en verde poner el nombre entero por ejemplo:<br><img src="/2022/01/13/Scripting-basico-en-bash-2/bandit2.jpg" alt="bandit2"></p>
+<p>Otra forma también muy utilizada es ponerlo entre comillas (“”) el nombre del archivo:<br><img src="/2022/01/13/Scripting-basico-en-bash-2/bandit2_2.jpg" alt="bandit2_2"></p>
+<p>Con estos dos se puede visualizar la contraseña (UmHadQclWmgdLOKQ3YNgjWxGoRMb5luK)</p>
+<h1 id="Nivel-3"><a href="#Nivel-3" class="headerlink" title="Nivel 3"></a>Nivel 3</h1><p>Nos está indicando que hay un archivo <strong>oculto</strong> en el directorio inhere.<br>Nos desplazamos con “cd inhere dentro de la carpeta” y si hacemos un ls no podemos ver nada, para ver archivos ocultos podemos utilizar:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -a</span><br></pre></td></tr></table></figure>
+<p>Este comando sirve para hacer un listado de <strong>todos</strong> (all) los archivos.<br><img src="/2022/01/13/Scripting-basico-en-bash-2/bandit3.jpg" alt="bandit3"><br>Y ya podremos ver el archivo que contiene la password (pIwrPrtPN36QITSp3EQaw936yaFoFgAB)</p>
+<h1 id="Nivel-4"><a href="#Nivel-4" class="headerlink" title="Nivel 4"></a>Nivel 4</h1><p>Nos dice que la contraseña está en el único archivo humanamente legible.</p>
+<p>¿Cómo sabemos de todos esos archivos en cuál esta la contraseña?<br>¿Lo vamos mirando uno a uno?</p>
+<p>Vamos a utilizar el comando <strong>file</strong>, este comando es muy bueno para saber con que tipo de archivo estamos tratando, ya sea un gif, png, jpg etc…</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">file inhere/*</span><br></pre></td></tr></table></figure>
+<p>Podemos ver el tipo de todos los archivos:<br><img src="/2022/01/13/Scripting-basico-en-bash-2/bandit4.jpg" alt="bandit4"></p>
+<p>A la vista nos puede destacar uno el <strong>file07</strong> nos indica que está en ASCII vamos a echarle un vistazo.</p>
+<p>Para echarle un vistazo podemos utilizar find y xargs.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find . -name -file07 | xargs cat</span><br></pre></td></tr></table></figure>
+
+<p><code>Find</code> es un comando para buscar archivos en un directorio, con el <strong>.</strong> le indicamos que sea en el actual, con el parámetro <strong>-name</strong> le estamos indicando el nombre del archivo que en mi caso es “file07”</p>
+<p><code>Xargs</code> es un comando que se utiliza principalmente para trabajar de forma <strong>paralela</strong> y sirve para mostrar el output del primer parámetro. Por ejemplo no podriamos poner “find . -name .file07 | cat” pero con xargs si funcionaría (no solo funciona con cat)</p>
+<p><img src="/2022/01/13/Scripting-basico-en-bash-2/bandit4_2.jpg" alt="bandit4_2"></p>
+<p>Ya se puede apreciar la contraseña del siguiente nivel (koReBOKuIDDepwhWk7jZC0RTdopnAYKh)</p>
+<h1 id="Nivel-5"><a href="#Nivel-5" class="headerlink" title="Nivel 5"></a>Nivel 5</h1><p>Nos indica que el archivo está dentro del directorio inhere, en algún directorio y que cumple las siguiente propiedades:</p>
+<ul>
+<li>Humanamente legible</li>
+<li>1033 bytes de tamaño</li>
+<li>No es ejecutable</li>
+</ul>
+<p>Después de ver tantos directorios y tantos archivos parece imposible, pero con este comando lo podemos averiguar:</p>
+<p>Dentro de <strong>inhere</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">file ???????????/* | grep ASCII | find -size 1033c</span><br></pre></td></tr></table></figure>
+<p><img src="/2022/01/13/Scripting-basico-en-bash-2/bandit5.jpg" alt="bandit5"></p>
+<h2 id="Explicacion"><a href="#Explicacion" class="headerlink" title="Explicación"></a>Explicación</h2><p><code>file ???????????/*</code> Ya vimos anteriormente lo que hacía file, pero os preguntaréis que significan todas esas interrogaciones, las interrogaciones etán <strong>representando</strong> un caracter y como he visto todos los directorios tienen el mismo número de caracteres (11), pues con esto estamos sacando el tipo de archivo de el contenido de <strong>todos los ficheros</strong></p>
+<p><code>grep ASCII</code> A nosotros solo nos interesa los archivos ASCII, asi que con <strong>grep</strong> filtramos para que solo nos muestre la línea que contenga ASCII.</p>
+<p><code>find -size 1033c</code> Find tiene un parámetro para buscar archivos de un tamaño, la <strong>c</strong> son <strong>bytes</strong>, sus opciones más utilizadas son las siguientes:</p>
+<ul>
+<li>c: bytes</li>
+<li>k: kilobytes</li>
+<li>m: megabytes</li>
+<li>g: gigabytes</li>
+</ul>
+<p>Si juntamos todo sería así:<br>Muestrame los archivos que sean ASCII con un tamaño de 1033 bytes.</p>
+<p>Y si le añadimos un xargs al final nos muestra el contenido:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">file ???????????/* | grep ASCII | find -size 1033c | xargs cat</span><br></pre></td></tr></table></figure>
+<p>Podemos ver la contraseña del siguiente nivel (DXjZPULLxYr17uwoI01bNLQbtFemEgo7), aunque tarda un rato el comando y nos desconfigura el lugar del prompt, pero con un simple <strong>Ctrl + l</strong> para limpiar pantalla se nos vuelve a poner normal.</p>
+<p><img src="/2022/01/13/Scripting-basico-en-bash-2/bandit5_2.jpg" alt="bandit5_2"></p>
+<h1 id="Nivel-6"><a href="#Nivel-6" class="headerlink" title="Nivel 6"></a>Nivel 6</h1><p>Nos dice que el archivo está guardado en algún sitio y tiene las siguientes propiedades:</p>
+<ul>
+<li>El propietario es bandit7</li>
+<li>El grupo propietario es bandit6</li>
+<li>Ocupa 33 bytes</li>
+</ul>
+<p>Tenemos las propiedades pero no tenenemos de idea de donde está así que vamos a construir el siguiente comando:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find / -<span class="built_in">type</span> f -user bandit7 -group bandit6 -size 33c</span><br></pre></td></tr></table></figure>
+<p><img src="/2022/01/13/Scripting-basico-en-bash-2/bandit6.jpg" alt="bandit6"></p>
+<p>Os preguntaréis que hacemos con eso que hay no se puede sacar nada en claro, bien para ello vamos a hacer que no se muestren los <strong>errores por consola</strong> para ello vamos a utilizar <strong>2&gt;/dev/null</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find / -<span class="built_in">type</span> f -user bandit7 -group bandit6 -size 33c 2&gt;/dev/null</span><br></pre></td></tr></table></figure>
+
+<h2 id="Explicacion-1"><a href="#Explicacion-1" class="headerlink" title="Explicación"></a>Explicación</h2><p>Estamos buscando en la <strong>raíz</strong> porque no tenemos ni idea de donde está (/).</p>
+<p><code>-type f</code> Estamos buscando un <strong>fichero</strong><br><code>-user bandit7</code> Archivo que tenga de propietario bandit7<br><code>-group bandit6</code> Archivo que pertenezca al grupo bandit6<br><code>-size 33c</code> Ya lo vimos anteriormente y es para buscar archivos de 33 bytes.</p>
+<p><code>2</code> El 2 se llama <strong>stderr</strong> y es el encargado de <strong>controlar los errores</strong>. Con el “&gt;” los estamos dirigiendo.</p>
+<p><code>/dev/null</code> Es una ruta en nuestro equipo linux que se utiliza como <strong>agujero negro</strong>, lo que movéis hay se borra.</p>
+<p><code>No hacer!!</code> Si por ejemplo ponéis:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv /* /dev/null</span><br></pre></td></tr></table></figure>
+<p>Estas enviando la raíz de tu equipo al infierno, <strong>os cargaríais el equipo</strong>.</p>
+<p><strong>Datos extras:</strong><br><strong>Stdin</strong> Son los datos enviados al programa (Input) normalmente escritos por teclado, se utiliza una <strong>o</strong>.<br><strong>Stdout</strong> Es la salida del comando <strong>exitosa</strong>(Output), para este se utiliza el <strong>1</strong>.</p>
+<p>Ej:<br><img src="/2022/01/13/Scripting-basico-en-bash-2/bandit6_2.jpg" alt="bandit6_2"></p>
+<p><strong>Convertir stder a stdin</strong></p>
+<p>Ejemplo:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /etc/passwd 2&gt;&amp;1</span><br></pre></td></tr></table></figure>
+<p>Esto es muy útil en las webshells cuando no vemos un error, podemos utilizar esto.</p>
+<p>También se utiliza para lanzar aplicaciones, muchas veces en consola hace un montón de ruido innecesario que se puede omitir:</p>
+<p><img src="/2022/01/13/Scripting-basico-en-bash-2/bandit6_4.jpg" alt="bandit6_4"></p>
+<p>Esto que vemos es <strong>stdin</strong> (no son errores), así que para evitar esto podemos reedirigir el flujo del programa.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">remmina &gt; /dev/null 2&gt;&amp;1</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/01/13/Scripting-basico-en-bash-2/bandit6_5.jpg" alt="bandit6_5"></p>
+<p>Este comando lo que hace es reedirigir al /dev/null <strong>y si hay errores</strong> para que no se muestren por consola el <strong>stder se convierte en stdin</strong> (2&gt;&amp;1).</p>
+<p>Para que no se muestre el <strong>stdin</strong> ni el <strong>stder</strong>.</p>
+<p>Una vez realizado esto podemos ponerlo en segundo plano (&amp;), así podremos utilizar la consola, pero si os daís cuenta si cierramos la consola el programa se cerrará, para que no pase esto podemos utilizar <strong>disown</strong>, esto se utiliza para <strong>desenganchar</strong> el proceso asociado en <strong>segundo plano</strong>.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">remmina &gt; /dev/null 2&gt;&amp;1 &amp;</span><br><span class="line"><span class="built_in">disown</span></span><br></pre></td></tr></table></figure>
+<p><strong>¿Qué esta haciendo el comando?</strong></p>
+<p>Estamos <strong>redirigiendo</strong> los errores (stder) y los no errrores (stdin) al <strong>/dev/null</strong> (agujero negro), lo estamos poniendo en <strong>segundo plano</strong> (&amp;) y para desenganchar el proceso en <strong>segundo plano</strong> utilizamos <strong>disown</strong>.</p>
+<p>El comando a ejecutar sería el siguiente:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">find / -<span class="built_in">type</span> f -user bandit7 -group bandit6 -size 33c 2&gt;/dev/null | xargs cat</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>Nos mostraría la contraseña del siguiente nivel por pantalla (HKBPTKQnIay4Fw76bEy8PVxKEDQRKTzs)<br><img src="/2022/01/13/Scripting-basico-en-bash-2/bandit6_3.jpg" alt="bandit6_3"></p>
+<h1 id="Nivel-7"><a href="#Nivel-7" class="headerlink" title="Nivel 7"></a>Nivel 7</h1><p>La contraseña esta guardada en el archivo <strong>data.txt</strong> <strong>después</strong> de la palabra <strong>millionth</strong></p>
+<h2 id="Varias-formas-de-hacerlo"><a href="#Varias-formas-de-hacerlo" class="headerlink" title="Varias formas de hacerlo"></a>Varias formas de hacerlo</h2><h3 id="Ej-forma-incorrecta"><a href="#Ej-forma-incorrecta" class="headerlink" title="Ej forma incorrecta"></a>Ej forma incorrecta</h3><p>Si le hacéis un cat al archivo podréis ver que esta lleno de contenido, si le haceis un <strong>cat data.txt | wc -l</strong> podréis ver las líneas que tiene el archivo. Una forma muy fácil de obtener la contraseña es así:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat data.txt | grep millionth</span><br></pre></td></tr></table></figure>
+<p><img src="/2022/01/13/Scripting-basico-en-bash-2/bandit7.jpg" alt="bandit7"></p>
+<h3 id="Ej-forma-correcta"><a href="#Ej-forma-correcta" class="headerlink" title="Ej forma correcta"></a>Ej forma correcta</h3><p>Pero la forma de arriba no es la forma óptima de hacerlo, lo suyo es hacer un <strong>grep de un criterio</strong> (la palabra indicada “millionth”) <strong>a un archivo</strong>:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep millionth data.txt</span><br></pre></td></tr></table></figure>
+<p>Cómo podéis apreciar tarda incluso menos en mostrarnos la contraseña.<br><img src="/2022/01/13/Scripting-basico-en-bash-2/bandit7_2.jpg" alt="bandit7_2"></p>
+<h3 id="AWK"><a href="#AWK" class="headerlink" title="AWK"></a>AWK</h3><p>Con el comando awk aparte de <strong>filtrar</strong>, podemos <strong>grepear</strong>.<br>AWK tarda un poco más que grep, pero no se nota porque son microsegundos. AWK es más potente que grep.<br>Ejs:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat data.txt | awk <span class="string">&quot;/millionth/&quot;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk <span class="string">&quot;/millionth/&quot;</span> data.txt</span><br></pre></td></tr></table></figure>
+<p>AWK nos permite filtrar por argumentos:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk <span class="string">&quot;/millionth/&quot;</span> data.txt | awk <span class="string">&#x27;&#123;print $1&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
+<p><img src="/2022/01/13/Scripting-basico-en-bash-2/bandit7_3.jpg" alt="bandit7_3"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk <span class="string">&quot;/millionth/&quot;</span> data.txt | awk <span class="string">&#x27;&#123;print $2&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
+<p><img src="/2022/01/13/Scripting-basico-en-bash-2/bandit7_4.jpg" alt="bandit7_4"></p>
+<p>Quiero que me muestre el <strong>último elemento</strong>:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk <span class="string">&quot;/millionth/&quot;</span> data.txt | awk <span class="string">&#x27;NF&#123;print $NF&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>También podemos revertir la cadena:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk <span class="string">&quot;/millionth/&quot;</span> data.txt | rev</span><br></pre></td></tr></table></figure>
+<p><img src="/2022/01/13/Scripting-basico-en-bash-2/bandit7_5.jpg" alt="bandit7_5"></p>
+<p>Como podéis ver <strong>está todo al revés</strong></p>
+<p>Para ponerla bien otra vez aplicariamos otro <strong>rev</strong></p>
+<p>Si tenemos curiosidad y queremos saber en que línea se situa la palabra millionth podemos hacer:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep <span class="string">&quot;millionth&quot;</span> data.txt -n </span><br></pre></td></tr></table></figure>
+<p><img src="/2022/01/13/Scripting-basico-en-bash-2/bandit7_6.jpg" alt="bandit7_6"><br>Cómo se puede ver en la imagen está en la lína <strong>37.262</strong></p>
+<p>Ahora si queremos ver lo que hay en esa línea sería así:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk <span class="string">&#x27;NR==37262&#x27;</span> data.txt</span><br></pre></td></tr></table></figure>
+<p><img src="/2022/01/13/Scripting-basico-en-bash-2/bandit7_7.jpg" alt="bandit7_7"></p>
+<p>Como se puede ver hay multiples maneras de hacer este ejercicio más las que me deje, para llevarnos siempre al mismo resultado la contraseña del siguiente nivel (cvX2JJa4CFALtqS87jk27qwqGhBM9plV)</p>
+<h1 id="Nivel-8"><a href="#Nivel-8" class="headerlink" title="Nivel 8"></a>Nivel 8</h1><p>Tenemos que la única línea que no esta repetida en el archivo <strong>data.txt</strong></p>
+<h2 id="Resolucion"><a href="#Resolucion" class="headerlink" title="Resolución"></a>Resolución</h2><p>Para ello vamos a hacer un ordenamiento alfabético (cat data.txt | sort ) podremos ver las repeticiones que existen, para mostrar las líneas únicas se utiliza el comando <strong>uniq -u</strong>, pero tiene que estar <strong>ordenado</strong> si no uniq no funciona </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat data.txt | sort | uniq -u</span><br></pre></td></tr></table></figure>
+<p><img src="/2022/01/13/Scripting-basico-en-bash-2/bandit8.jpg" alt="bandit8"></p>
+<h2 id="Explicacion-Pseudocodigo"><a href="#Explicacion-Pseudocodigo" class="headerlink" title="Explicación / Pseudocódigo"></a>Explicación / Pseudocódigo</h2><p>Estamos viendo por pantalla el contenido de data.txt (cat), estamos ordenando alfabéticamente el contenido y solo queremos ver las <strong>líneas únicas</strong> y así nos muestra la clave del siguiente nivel(UsvVyFSfZZWbi6wgC7dAFyFuR6jQQUhR)</p>
+<h1 id="Nivel-9"><a href="#Nivel-9" class="headerlink" title="Nivel 9"></a>Nivel 9</h1><p>En este nivel tendremos un archivo ilegible humanamente (data.txt) y tendremos que encontrar la clave para el siguiente nivel en dicho archivo</p>
+<p>Con el comando strings podemos ver el contenido legible de dicho archivo</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">strings data.txt</span><br></pre></td></tr></table></figure>
+<p>Ya podemos ver algunas posibles contraseñas, pero vamos a organizarlo mejor</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">strings data.txt | grep <span class="string">&quot;==&quot;</span> | tail -n 1</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/01/13/Scripting-basico-en-bash-2/bandit9.jpg" alt="Bandit9"></p>
+<h2 id="Explicacion-Pseudocodigo-1"><a href="#Explicacion-Pseudocodigo-1" class="headerlink" title="Explicación /Pseudocódigo"></a>Explicación /Pseudocódigo</h2><p>Estamos buscando los carácteres legibles (strings), filtrando por los == (grep) y como hemos visto estaba la contraseña entre las dadas, ahora vamos a indicar que nos coja la última línea del resultado (<strong>tail -n 1</strong>) y podremos ver la contraseña del siguiente nivel(truKLdjsbJ5g7yyJ2X2R0o3a5HQJFuLk)</p>
+<h1 id="Nivel-10"><a href="#Nivel-10" class="headerlink" title="Nivel 10"></a>Nivel 10</h1><p>La contraseña está en el archivo <strong>data.txt</strong> que está en base64 (codificado)</p>
+<p>Bien si habeís abierto el archivo veréis el contenido codificado y para ello tenemos que d<strong>ecodificarlo</strong>, ¿Cómo hacemos eso? Muy fácil, tenemos el comando <strong>base64</strong> para codificar y decodificar</p>
+<p>Para <strong>codificar</strong> sería así:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;hola esto va a estar codificado&#x27;</span> | base64</span><br></pre></td></tr></table></figure>
+
+<p>Pero nosotros lo queremos <strong>decodificar</strong> así que sería de la siguiente forma:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;VGhlIHBhc3N3b3JkIGlzIElGdWt3S0dzRlc4TU9xM0lSRnFyeEUxaHhUTkViVVBSCg==&#x27;</span> | base64 --decode</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/01/13/Scripting-basico-en-bash-2/Bandit10.jpg" alt="bandit10"></p>
+<p>Ya podríamos ver la clave del siguiente nivel (IFukwKGsFW8MOq3IRFqrxE1hxTNEbUPR)</p>
+<h2 id="Explicacion-Pseudocodigo-2"><a href="#Explicacion-Pseudocodigo-2" class="headerlink" title="Explicación/Pseudocódigo"></a>Explicación/Pseudocódigo</h2><p>Estamos mostrando por pantalla la cadena codificada, pero con <strong>base64 –decode</strong> la estamos decodificando para poder leerla claramente</p>
+<h1 id="Recursos"><a href="#Recursos" class="headerlink" title="Recursos"></a>Recursos</h1><ul>
+<li>Guía principal utilizada <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=RUorAzaDftg&t=1980s">vídeo de s4vitaar</a></li>
+</ul>
+</article><div class="tag_share"><div class="post_share"><div class="addtoany"><div class="a2a_kit a2a_kit_size_32 a2a_default_style"><a class="a2a_button_whatsapp"></a><a class="a2a_button_twitter"></a><a class="a2a_button_facebook"></a><a class="a2a_dd" target="_blank" rel="noopener" href="https://www.addtoany.com/share"></a></div></div><script async="async" src="https://static.addtoany.com/menu/page.js"></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2021/12/29/Fase%20de%20reconocimiento/"><img class="next-cover" src="/2021/12/29/Fase%20de%20reconocimiento/fase-de-reconocimiento.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">Fase de reconocimiento</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Introduccion"><span class="toc-number">1.</span> <span class="toc-text">Introducción</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Nivel-0"><span class="toc-number">2.</span> <span class="toc-text">Nivel 0</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Nivel-1"><span class="toc-number">3.</span> <span class="toc-text">Nivel 1</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Nivel-2"><span class="toc-number">4.</span> <span class="toc-text">Nivel 2</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Nivel-3"><span class="toc-number">5.</span> <span class="toc-text">Nivel 3</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Nivel-4"><span class="toc-number">6.</span> <span class="toc-text">Nivel 4</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Nivel-5"><span class="toc-number">7.</span> <span class="toc-text">Nivel 5</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Explicacion"><span class="toc-number">7.1.</span> <span class="toc-text">Explicación</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Nivel-6"><span class="toc-number">8.</span> <span class="toc-text">Nivel 6</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Explicacion-1"><span class="toc-number">8.1.</span> <span class="toc-text">Explicación</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Nivel-7"><span class="toc-number">9.</span> <span class="toc-text">Nivel 7</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Varias-formas-de-hacerlo"><span class="toc-number">9.1.</span> <span class="toc-text">Varias formas de hacerlo</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Ej-forma-incorrecta"><span class="toc-number">9.1.1.</span> <span class="toc-text">Ej forma incorrecta</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Ej-forma-correcta"><span class="toc-number">9.1.2.</span> <span class="toc-text">Ej forma correcta</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AWK"><span class="toc-number">9.1.3.</span> <span class="toc-text">AWK</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Nivel-8"><span class="toc-number">10.</span> <span class="toc-text">Nivel 8</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Resolucion"><span class="toc-number">10.1.</span> <span class="toc-text">Resolución</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Explicacion-Pseudocodigo"><span class="toc-number">10.2.</span> <span class="toc-text">Explicación &#x2F; Pseudocódigo</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Nivel-9"><span class="toc-number">11.</span> <span class="toc-text">Nivel 9</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Explicacion-Pseudocodigo-1"><span class="toc-number">11.1.</span> <span class="toc-text">Explicación &#x2F;Pseudocódigo</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Nivel-10"><span class="toc-number">12.</span> <span class="toc-text">Nivel 10</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Explicacion-Pseudocodigo-2"><span class="toc-number">12.1.</span> <span class="toc-text">Explicación&#x2F;Pseudocódigo</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Recursos"><span class="toc-number">13.</span> <span class="toc-text">Recursos</span></a></li></ol></div></div></div></div></main><footer id="footer" style="background-image: url('/2022/01/13/Scripting-basico-en-bash-2/Scripting_basico_en_bash_2.png')"><div id="footer-wrap"><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">Local search</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"></div><script id="canvas_nest" defer="defer" color="12,183,242" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-nest.min.js"></script></div></body></html>
