@@ -1,251 +1,378 @@
-const btf = {
-  debounce: function (func, wait, immediate) {
-    let timeout
-    return function () {
-      const context = this
-      const args = arguments
-      const later = function () {
-        timeout = null
-        if (!immediate) func.apply(context, args)
+/* utils function */
+import { navbarShrink } from "./layouts/navbarShrink.js";
+import { initTOC } from "./layouts/toc.js";
+import { main } from "./main.js";
+import imageViewer from "./tools/imageViewer.js";
+
+export const navigationState = {
+  isNavigating: false,
+};
+
+export default function initUtils() {
+  const utils = {
+    html_root_dom: document.querySelector("html"),
+    pageContainer_dom: document.querySelector(".page-container"),
+    pageTop_dom: document.querySelector(".main-content-header"),
+    homeBanner_dom: document.querySelector(".home-banner-container"),
+    homeBannerBackground_dom: document.querySelector(".home-banner-background"),
+    scrollProgressBar_dom: document.querySelector(".scroll-progress-bar"),
+    pjaxProgressBar_dom: document.querySelector(".pjax-progress-bar"),
+    backToTopButton_dom: document.querySelector(".tool-scroll-to-top"),
+    toolsList: document.querySelector(".hidden-tools-list"),
+    toggleButton: document.querySelector(".toggle-tools-list"),
+
+    innerHeight: window.innerHeight,
+    pjaxProgressBarTimer: null,
+    prevScrollValue: 0,
+    fontSizeLevel: 0,
+    triggerViewHeight: 0.5 * window.innerHeight,
+
+    isHasScrollProgressBar: theme.global.scroll_progress.bar === true,
+    isHasScrollPercent: theme.global.scroll_progress.percentage === true,
+
+    // Scroll Style
+    updateScrollStyle() {
+      const scrollTop =
+        window.pageYOffset || document.documentElement.scrollTop;
+      const scrollHeight = document.documentElement.scrollHeight;
+      const clientHeight =
+        window.innerHeight || document.documentElement.clientHeight;
+      const percent = this.calculatePercentage(
+        scrollTop,
+        scrollHeight,
+        clientHeight,
+      );
+
+      this.updateScrollProgressBar(percent);
+      this.updateScrollPercent(percent);
+      this.updatePageTopVisibility(scrollTop, clientHeight);
+
+      this.prevScrollValue = scrollTop;
+    },
+
+    updateScrollProgressBar(percent) {
+      if (this.isHasScrollProgressBar) {
+        const progressPercent = percent.toFixed(3);
+        const visibility = percent === 0 ? "hidden" : "visible";
+
+        this.scrollProgressBar_dom.style.visibility = visibility;
+        this.scrollProgressBar_dom.style.width = `${progressPercent}%`;
       }
-      const callNow = immediate && !timeout
-      clearTimeout(timeout)
-      timeout = setTimeout(later, wait)
-      if (callNow) func.apply(context, args)
-    }
-  },
+    },
 
-  throttle: function (func, wait, options) {
-    let timeout, context, args
-    let previous = 0
-    if (!options) options = {}
+    updateScrollPercent(percent) {
+      if (this.isHasScrollPercent) {
+        const percentDom = this.backToTopButton_dom.querySelector(".percent");
+        const showButton = percent !== 0 && percent !== undefined;
 
-    const later = function () {
-      previous = options.leading === false ? 0 : new Date().getTime()
-      timeout = null
-      func.apply(context, args)
-      if (!timeout) context = args = null
-    }
-
-    const throttled = function () {
-      const now = new Date().getTime()
-      if (!previous && options.leading === false) previous = now
-      const remaining = wait - (now - previous)
-      context = this
-      args = arguments
-      if (remaining <= 0 || remaining > wait) {
-        if (timeout) {
-          clearTimeout(timeout)
-          timeout = null
-        }
-        previous = now
-        func.apply(context, args)
-        if (!timeout) context = args = null
-      } else if (!timeout && options.trailing !== false) {
-        timeout = setTimeout(later, remaining)
+        this.backToTopButton_dom.classList.toggle("show", showButton);
+        percentDom.innerHTML = percent.toFixed(0);
       }
-    }
+    },
 
-    return throttled
-  },
+    updatePageTopVisibility(scrollTop, clientHeight) {
+      if (theme.navbar.auto_hide) {
+        const prevScrollValue = this.prevScrollValue;
+        const hidePageTop =
+          prevScrollValue > clientHeight && scrollTop > prevScrollValue;
 
-  sidebarPaddingR: () => {
-    const innerWidth = window.innerWidth
-    const clientWidth = document.body.clientWidth
-    const paddingRight = innerWidth - clientWidth
-    if (innerWidth !== clientWidth) {
-      document.body.style.paddingRight = paddingRight + 'px'
-    }
-  },
-
-  snackbarShow: (text, showAction, duration) => {
-    const sa = (typeof showAction !== 'undefined') ? showAction : false
-    const dur = (typeof duration !== 'undefined') ? duration : 2000
-    const position = GLOBAL_CONFIG.Snackbar.position
-    const bg = document.documentElement.getAttribute('data-theme') === 'light' ? GLOBAL_CONFIG.Snackbar.bgLight : GLOBAL_CONFIG.Snackbar.bgDark
-    Snackbar.show({
-      text: text,
-      backgroundColor: bg,
-      showAction: sa,
-      duration: dur,
-      pos: position
-    })
-  },
-
-  initJustifiedGallery: function (selector) {
-    if (!(selector instanceof jQuery)) {
-      selector = $(selector)
-    }
-    selector.each(function (i, o) {
-      if ($(this).is(':visible')) {
-        $(this).justifiedGallery({
-          rowHeight: 220,
-          margins: 4
-        })
-      }
-    })
-  },
-
-  diffDate: (d, more = false) => {
-    const dateNow = new Date()
-    const datePost = new Date(d)
-    const dateDiff = dateNow.getTime() - datePost.getTime()
-    const minute = 1000 * 60
-    const hour = minute * 60
-    const day = hour * 24
-    const month = day * 30
-
-    let result
-    if (more) {
-      const monthCount = dateDiff / month
-      const dayCount = dateDiff / day
-      const hourCount = dateDiff / hour
-      const minuteCount = dateDiff / minute
-
-      if (monthCount > 12) {
-        result = datePost.toLocaleDateString().replace(/\//g, '-')
-      } else if (monthCount >= 1) {
-        result = parseInt(monthCount) + ' ' + GLOBAL_CONFIG.date_suffix.month
-      } else if (dayCount >= 1) {
-        result = parseInt(dayCount) + ' ' + GLOBAL_CONFIG.date_suffix.day
-      } else if (hourCount >= 1) {
-        result = parseInt(hourCount) + ' ' + GLOBAL_CONFIG.date_suffix.hour
-      } else if (minuteCount >= 1) {
-        result = parseInt(minuteCount) + ' ' + GLOBAL_CONFIG.date_suffix.min
+        this.pageTop_dom.classList.toggle("hide", hidePageTop);
       } else {
-        result = GLOBAL_CONFIG.date_suffix.just
+        this.pageTop_dom.classList.remove("hide");
       }
-    } else {
-      result = parseInt(dateDiff / day)
-    }
-    return result
-  },
+    },
 
-  loadComment: (dom, callback) => {
-    if ('IntersectionObserver' in window) {
-      const observerItem = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting) {
-          callback()
-          observerItem.disconnect()
+    calculatePercentage(scrollTop, scrollHeight, clientHeight) {
+      let percentageValue = Math.round(
+        (scrollTop / (scrollHeight - clientHeight)) * 100,
+      );
+      if (
+        isNaN(percentageValue) ||
+        percentageValue < 0 ||
+        !isFinite(percentageValue)
+      ) {
+        percentageValue = 0;
+      } else if (percentageValue > 100) {
+        percentageValue = 100;
+      }
+      return percentageValue;
+    },
+
+    // register window scroll event
+    registerWindowScroll() {
+      window.addEventListener("scroll", () => {
+        this.updateScrollStyle();
+        this.updateTOCScroll();
+        this.updateNavbarShrink();
+        // this.updateHomeBannerBlur();
+        this.updateAutoHideTools();
+      });
+      window.addEventListener(
+        "scroll",
+        this.debounce(() => this.updateHomeBannerBlur(), 20),
+      );
+    },
+
+    updateTOCScroll() {
+      if (
+        theme.articles.toc.enable &&
+        initTOC().hasOwnProperty("updateActiveTOCLink")
+      ) {
+        initTOC().updateActiveTOCLink();
+      }
+    },
+
+    updateNavbarShrink() {
+      if (!navigationState.isNavigating) {
+        navbarShrink.init();
+      }
+    },
+
+    debounce(func, delay) {
+      let timer;
+      return function () {
+        clearTimeout(timer);
+        timer = setTimeout(() => func.apply(this, arguments), delay);
+      };
+    },
+
+    updateHomeBannerBlur() {
+      if (!this.homeBannerBackground_dom) return;
+
+      if (
+        theme.home_banner.style === "fixed" &&
+        location.pathname === config.root
+      ) {
+        const scrollY = window.scrollY || window.pageYOffset;
+        const blurValue = scrollY >= this.triggerViewHeight ? 15 : 0;
+
+        try {
+          requestAnimationFrame(() => {
+            this.homeBannerBackground_dom.style.filter = `blur(${blurValue}px)`;
+            this.homeBannerBackground_dom.style.webkitFilter = `blur(${blurValue}px)`;
+          });
+        } catch (e) {
+          // Handle or log the error properly
+          console.error("Error updating banner blur:", e);
         }
-      }, { threshold: [0] })
-      observerItem.observe(dom)
-    } else {
-      callback()
-    }
-  },
+      }
+    },
 
-  scrollToDest: (pos, time) => {
-    if (pos < 0 || time < 0) {
-      return
-    }
+    updateAutoHideTools() {
+      const y = window.scrollY;
+      const height = document.body.scrollHeight;
+      const windowHeight = window.innerHeight;
+      const toolList = document.getElementsByClassName(
+        "right-side-tools-container",
+      );
+      const aplayer = document.getElementById("aplayer");
 
-    const currentPos = window.scrollY || window.screenTop
-    if (currentPos > pos) pos = pos - 70
-
-    if ('CSS' in window && CSS.supports('scroll-behavior', 'smooth')) {
-      window.scrollTo({
-        top: pos,
-        behavior: 'smooth'
-      })
-      return
-    }
-
-    let start = null
-    time = time || 500
-    window.requestAnimationFrame(function step (currentTime) {
-      start = !start ? currentTime : start
-      if (currentPos < pos) {
-        const progress = currentTime - start
-        window.scrollTo(0, ((pos - currentPos) * progress / time) + currentPos)
-        if (progress < time) {
-          window.requestAnimationFrame(step)
+      for (let i = 0; i < toolList.length; i++) {
+        const tools = toolList[i];
+        if (y <= 100) {
+          if (location.pathname === config.root) {
+            tools.classList.add("hide");
+            if (aplayer !== null) {
+              aplayer.classList.add("hide");
+            }
+          }
+        } else if (y + windowHeight >= height - 20) {
+          tools.classList.add("hide");
+          if (aplayer !== null) {
+            aplayer.classList.add("hide");
+          }
         } else {
-          window.scrollTo(0, pos)
-        }
-      } else {
-        const progress = currentTime - start
-        window.scrollTo(0, currentPos - ((currentPos - pos) * progress / time))
-        if (progress < time) {
-          window.requestAnimationFrame(step)
-        } else {
-          window.scrollTo(0, pos)
+          tools.classList.remove("hide");
+          if (aplayer !== null) {
+            aplayer.classList.remove("hide");
+          }
         }
       }
-    })
-  },
+    },
 
-  fadeIn: (ele, time) => {
-    ele.style.cssText = `display:block;animation: to_show ${time}s`
-  },
+    toggleToolsList() {
+      this.toggleButton.addEventListener("click", () => {
+        this.toolsList.classList.toggle("show");
+      });
+    },
 
-  fadeOut: (ele, time) => {
-    ele.addEventListener('animationend', function f () {
-      ele.style.cssText = "display: none; animation: '' "
-      ele.removeEventListener('animationend', f)
-    })
-    ele.style.animation = `to_hide ${time}s`
-  },
+    fontAdjPlus_dom: document.querySelector(".tool-font-adjust-plus"),
+    fontAdMinus_dom: document.querySelector(".tool-font-adjust-minus"),
+    globalFontSizeAdjust() {
+      const htmlRoot = this.html_root_dom;
+      const fontAdjustPlus = this.fontAdjPlus_dom;
+      const fontAdjustMinus = this.fontAdMinus_dom;
 
-  getParents: (elem, selector) => {
-    for (; elem && elem !== document; elem = elem.parentNode) {
-      if (elem.matches(selector)) return elem
-    }
-    return null
-  },
+      const fontSize = document.defaultView.getComputedStyle(
+        document.body,
+      ).fontSize;
+      const baseFontSize = parseFloat(fontSize);
 
-  siblings: (ele, selector) => {
-    return [...ele.parentNode.children].filter((child) => {
-      if (selector) {
-        return child !== ele && child.matches(selector)
+      let fontSizeLevel = 0;
+      const styleStatus = main.getStyleStatus();
+      if (styleStatus) {
+        fontSizeLevel = styleStatus.fontSizeLevel;
+        setFontSize(fontSizeLevel);
       }
-      return child !== ele
-    })
-  },
 
-  /**
-   *
-   * @param {*} selector
-   * @param {*} eleType the type of create element
-   * @param {*} options object key: value
-   */
-  wrap: (selector, eleType, options) => {
-    const creatEle = document.createElement(eleType)
-    for (const [key, value] of Object.entries(options)) {
-      creatEle.setAttribute(key, value)
-    }
-    selector.parentNode.insertBefore(creatEle, selector)
-    creatEle.appendChild(selector)
-  },
+      function setFontSize(level) {
+        const fontSize = baseFontSize * (1 + level * 0.05);
+        htmlRoot.style.fontSize = `${fontSize}px`;
+        main.styleStatus.fontSizeLevel = level;
+        main.setStyleStatus();
+      }
 
-  unwrap: el => {
-    const elParentNode = el.parentNode
-    if (elParentNode !== document.body) {
-      elParentNode.parentNode.insertBefore(el, elParentNode)
-      elParentNode.parentNode.removeChild(elParentNode)
-    }
-  },
+      function increaseFontSize() {
+        fontSizeLevel = Math.min(fontSizeLevel + 1, 5);
+        setFontSize(fontSizeLevel);
+      }
 
-  isJqueryLoad: fn => {
-    if (typeof jQuery === 'undefined') {
-      getScript(GLOBAL_CONFIG.source.jQuery).then(fn)
-    } else {
-      fn()
-    }
-  },
+      function decreaseFontSize() {
+        fontSizeLevel = Math.max(fontSizeLevel - 1, 0);
+        setFontSize(fontSizeLevel);
+      }
 
-  isHidden: ele => ele.offsetHeight === 0 && ele.offsetWidth === 0,
+      fontAdjustPlus.addEventListener("click", increaseFontSize);
+      fontAdjustMinus.addEventListener("click", decreaseFontSize);
+    },
+    // go comment anchor
+    goComment() {
+      this.goComment_dom = document.querySelector(".go-comment");
+      if (this.goComment_dom) {
+        this.goComment_dom.addEventListener("click", () => {
+          const target = document.querySelector("#comment-anchor");
+          if (target) {
+            const offset = target.getBoundingClientRect().top + window.scrollY;
+            window.scrollTo({
+              top: offset,
+              behavior: "smooth",
+            });
+          }
+        });
+      }
+    },
 
-  getEleTop: ele => {
-    let actualTop = ele.offsetTop
-    let current = ele.offsetParent
+    // get dom element height
+    getElementHeight(selectors) {
+      const dom = document.querySelector(selectors);
+      return dom ? dom.getBoundingClientRect().height : 0;
+    },
 
-    while (current !== null) {
-      actualTop += current.offsetTop
-      current = current.offsetParent
-    }
+    // init first screen height
+    inithomeBannerHeight() {
+      this.homeBanner_dom &&
+        (this.homeBanner_dom.style.height = this.innerHeight + "px");
+    },
 
-    return actualTop
-  }
+    // init page height handle
+    initPageHeightHandle() {
+      if (this.homeBanner_dom) return;
+      const temp_h1 = this.getElementHeight(".main-content-header");
+      const temp_h2 = this.getElementHeight(".main-content-body");
+      const temp_h3 = this.getElementHeight(".main-content-footer");
+      const allDomHeight = temp_h1 + temp_h2 + temp_h3;
+      const innerHeight = window.innerHeight;
+      const pb_dom = document.querySelector(".main-content-footer");
+      if (allDomHeight < innerHeight) {
+        const marginTopValue = Math.floor(innerHeight - allDomHeight);
+        if (marginTopValue > 0) {
+          pb_dom.style.marginTop = `${marginTopValue - 2}px`;
+        }
+      }
+    },
 
+    // set how long ago language
+    setHowLongAgoLanguage(p1, p2) {
+      return p2.replace(/%s/g, p1);
+    },
+
+    getHowLongAgo(timestamp) {
+      const l = lang_ago;
+
+      const __Y = Math.floor(timestamp / (60 * 60 * 24 * 30) / 12);
+      const __M = Math.floor(timestamp / (60 * 60 * 24 * 30));
+      const __W = Math.floor(timestamp / (60 * 60 * 24) / 7);
+      const __d = Math.floor(timestamp / (60 * 60 * 24));
+      const __h = Math.floor((timestamp / (60 * 60)) % 24);
+      const __m = Math.floor((timestamp / 60) % 60);
+      const __s = Math.floor(timestamp % 60);
+
+      if (__Y > 0) {
+        return this.setHowLongAgoLanguage(__Y, l.year);
+      } else if (__M > 0) {
+        return this.setHowLongAgoLanguage(__M, l.month);
+      } else if (__W > 0) {
+        return this.setHowLongAgoLanguage(__W, l.week);
+      } else if (__d > 0) {
+        return this.setHowLongAgoLanguage(__d, l.day);
+      } else if (__h > 0) {
+        return this.setHowLongAgoLanguage(__h, l.hour);
+      } else if (__m > 0) {
+        return this.setHowLongAgoLanguage(__m, l.minute);
+      } else if (__s > 0) {
+        return this.setHowLongAgoLanguage(__s, l.second);
+      }
+    },
+
+    relativeTimeInHome() {
+      const post = document.querySelectorAll(
+        ".home-article-meta-info .home-article-date",
+      );
+      const df = theme.home.article_date_format;
+      if (df === "relative") {
+        post &&
+          post.forEach((v) => {
+            const nowDate = Date.now();
+            const postDate = new Date(
+              v.dataset.date.split(" GMT")[0],
+            ).getTime();
+            v.innerHTML = this.getHowLongAgo(
+              Math.floor((nowDate - postDate) / 1000),
+            );
+          });
+      } else if (df === "auto") {
+        post &&
+          post.forEach((v) => {
+            const nowDate = Date.now();
+            const postDate = new Date(
+              v.dataset.date.split(" GMT")[0],
+            ).getTime();
+            const finalDays = Math.floor(
+              (nowDate - postDate) / (60 * 60 * 24 * 1000),
+            );
+            if (finalDays < 7) {
+              v.innerHTML = this.getHowLongAgo(
+                Math.floor((nowDate - postDate) / 1000),
+              );
+            }
+          });
+      }
+    },
+  };
+
+  utils.updateAutoHideTools();
+
+  // init scroll
+  utils.registerWindowScroll();
+
+  // toggle show tools list
+  utils.toggleToolsList();
+
+  // main font adjust
+  utils.globalFontSizeAdjust();
+
+  // go comment
+  utils.goComment();
+
+  // init page height handle
+  utils.initPageHeightHandle();
+
+  // init first screen height
+  utils.inithomeBannerHeight();
+
+  // set how long ago in home article block
+  utils.relativeTimeInHome();
+
+  // image viewer handle
+  imageViewer();
 }
