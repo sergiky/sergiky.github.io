@@ -30,7 +30,7 @@
 <meta property="og:locale" content="es_ES">
 <meta property="og:image" content="https://sergiky.github.io/images/sergiky.webp">
 <meta property="article:published_time" content="2025-06-11T22:00:00.000Z">
-<meta property="article:modified_time" content="2025-06-12T12:26:37.515Z">
+<meta property="article:modified_time" content="2025-06-12T12:30:19.747Z">
 <meta property="article:author" content="Sergio Guijarro">
 <meta property="article:tag" content="ctf">
 <meta property="article:tag" content="linux">
@@ -334,7 +334,7 @@
 			
 			
 			
-			<img src="https://sergiky.github.io/2025/06/11/Tentacle/cover-image.webp" alt="🐙 Tentacle | WriteUp" class="w-full h-60 sm:h-72 md:h-80 object-cover sm:rounded-t-large dark:brightness-75" />
+			<img src="https://sergiky.github.io/2025/06/12/Tentacle/cover-image.webp" alt="🐙 Tentacle | WriteUp" class="w-full h-60 sm:h-72 md:h-80 object-cover sm:rounded-t-large dark:brightness-75" />
 			
 			<div class="w-full flex items-center absolute bottom-0 justify-start">
 				<h1 class="article-title-cover text-center mx-6 my-6 text-second-text-color bg-background-color-transparent px-4 py-3 text-3xl sm:text-4xl md:text-5xl font-semibold backdrop-blur-lg rounded-xl border border-border-color ">🐙 Tentacle | WriteUp</h1>
@@ -363,8 +363,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2025-06-12 14:26:37</span>
-            <span class="mobile">2025-06-12 14:26:37</span>
+            <span class="desktop">2025-06-12 14:30:19</span>
+            <span class="mobile">2025-06-12 14:30:19</span>
             <span class="hover-info">Actualizado</span>
         </span>
     
@@ -631,7 +631,7 @@
 <p><figure class="image-caption"><img src="/2025/06/12/Tentacle/first_try_exploit_snmptd_failed.png" alt="Intento fallido del exploit."><figcaption>Intento fallido del exploit.</figcaption></figure></p>
 <p>Vemos que por abajo no ha llegado nada, ¿porque?. Vamos a revisar el código del script.</p>
 <p><figure class="image-caption"><img src="/2025/06/12/Tentacle/original_script_exploit_root_user.png" alt="El usuario que se indica para enviar el correo es root."><figcaption>El usuario que se indica para enviar el correo es root.</figcaption></figure></p>
-<p>Recordemos que al principio, al visualizar la página del primer squid proxy, nos daba un usuario, el usuario “<a class="link"   href="mailto:&#106;&#x2e;&#x6e;&#x61;&#107;&#97;&#x7a;&#x61;&#x77;&#x61;&#x40;&#x72;&#101;&#97;&#x6c;&#x63;&#x6f;&#x72;&#112;&#x2e;&#104;&#116;&#x62;" >&#106;&#x2e;&#x6e;&#x61;&#107;&#97;&#x7a;&#x61;&#x77;&#x61;&#x40;&#x72;&#101;&#97;&#x6c;&#x63;&#x6f;&#x72;&#112;&#x2e;&#104;&#116;&#x62;<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>“.</p>
+<p>Recordemos que al principio, al visualizar la página del primer squid proxy, nos daba un usuario, el usuario “<a class="link"   href="mailto:&#106;&#x2e;&#110;&#97;&#x6b;&#97;&#x7a;&#x61;&#119;&#x61;&#64;&#114;&#101;&#x61;&#x6c;&#99;&#111;&#x72;&#x70;&#46;&#x68;&#116;&#98;" >&#106;&#x2e;&#110;&#97;&#x6b;&#97;&#x7a;&#x61;&#119;&#x61;&#64;&#114;&#101;&#x61;&#x6c;&#99;&#111;&#x72;&#x70;&#46;&#x68;&#116;&#98;<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>“.</p>
 <h3 id="Kerbrute-para-validar-usuarios"><a href="#Kerbrute-para-validar-usuarios" class="headerlink" title="Kerbrute para validar usuarios"></a>Kerbrute para validar usuarios</h3><p>Podemos chekear si el usuario existe gracias al servicio kerberos corriendo en la primera máquina, para ello utilizaremos la herramienta kerbrute:</p>
 <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kerbrute userenum --domain realcorp.htb --dc 10.10.10.224 ../data/users.txt</span><br></pre></td></tr></table></figure></div>
 
