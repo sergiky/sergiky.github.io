@@ -1,6 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Laboratorios de PortSwigger | Opinión y resoluciones.</title>
+    <url>/2025/09/03/Laboratorios-de-PortSwigger-Opinion-y-resoluciones/</url>
+    <content><![CDATA[<p>Hola de nuevo chicos, hoy vengo a dar mi opinión sobre los laboratorios de PortSwigger y porque considero que es la mejor academia sobre vulnerabilidades web.</p>
+<iframe src="https://hazel-polish-a20.notion.site/ebd/262f2dd767f380c7ac99e3ccad6811e5" width="100%" height="600" frameborder="0" allowfullscreen></iframe>
+
+
+<p><br>Como podéis ver esos son mis apuntes de Notion hasta la fecha, iré rellenándolo según avance.</p>
+<p>¿Porque considero que PortSwigger es la mejor academia sobre vulnerabilidades web?.</p>
+<p>La verdad que se dice muy pronto “la mejor” con lo grande que es Internet, pero voy a destacar algunos puntos que me han gustado mucho.</p>
+<ul>
+<li><p>Es gratuito. Si efectivamente, todo el contenido es gratuito que no es poco, estamos hablando de cientos de horas resolviendo laboratorios y aprendiendo sobre infinidad de vulnerabilidades web, una academia con un curso tan completo y gratuito es difícil de encontrar.</p>
+</li>
+<li><p>Esta al día con las vulnerabilidades web que van apareciendo. Web cache deception, Web LLM attacks, Request Smuggling.</p>
+</li>
+<li><p>Dispone de certificación propia, Burp Suite Certified Practitioner(BSCP). Por esta certificación tienes que pagar efectivamente, pero solo con 99$ puedes realizar dicha certificación, no puedo opinar sobre ella porque aún no la he realizado.</p>
+</li>
+<li><p>Bug bounty. Si te interesa el mundo del Bug Bounty podrás encontrar ciertas similitud entre ciertos laboratorios y situaciones reales. Esto demuestra que los laboratorios que ofrece PortSwigger no son unos laboratorios cualquiera y se nota la calidad de los mismos.</p>
+</li>
+</ul>
+<p>Lo único “malo” a recalcar es algunos bugs en algunos laboratorios o no poder completarlos con éxitos cuando están terminados de la manera adecuada.</p>
+<p>A cualquier curioso o curiosa que le interese el mundo de las vulnerabilidades web le recomiendo, es más, le obligo a realizar estos laboratorios mientras pone en práctica lo aprendido.</p>
+]]></content>
+      <categories>
+        <category>ctf</category>
+        <category>portswigger</category>
+      </categories>
+      <tags>
+        <tag>portswigger</tag>
+        <tag>ctf</tag>
+        <tag>bugbounty</tag>
+        <tag>bscp</tag>
+        <tag>ewpt</tag>
+        <tag>ewptx</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Blue | WriteUp</title>
     <url>/2025/01/09/Blue/</url>
     <content><![CDATA[<h1 id="Introduccion"><a href="#Introduccion" class="headerlink" title="Introducción"></a>Introducción</h1><p>Bienvenidos a este humilde WriteUp sobre esta sencillita máquina Windows que nos será de utilidad para repasar conceptos básicos y la explotación de diferentes formas sobre la vulnerabilidad <strong>MS17-010</strong> o mayormente conocida como <strong>EternalBlue</strong>. Para que un sea un simple Write-up más hacer dos tipos de explotaciones, una automática con metasploit y otra manual, aunque para la manual tengo que recalcar que la máquina de tryhackme no está preparada para esto y en ciertas ocasiones tendremos problemas, en cambio, existe la misma máquina sin estos problemas en la plataforma hack the box(se necesita subscripción). También comentaros que veréis diferentes ips de “víctima” porque no lo he podido hacer todo de golpe o he tenido que reiniciar la máquina.</p>
@@ -419,42 +455,6 @@
         <tag>persistence with debugging</tag>
         <tag>persistence with gflags</tag>
         <tag>persistence with WMI Events</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Laboratorios de PortSwigger | Opinión y resoluciones.</title>
-    <url>/2025/09/03/Laboratorios-de-PortSwigger-Opinion-y-resoluciones/</url>
-    <content><![CDATA[<p>Hola de nuevo chicos, hoy vengo a dar mi opinión sobre los laboratorios de PortSwigger y porque considero que es la mejor academia sobre vulnerabilidades web.</p>
-<iframe src="https://hazel-polish-a20.notion.site/ebd/262f2dd767f380c7ac99e3ccad6811e5" width="100%" height="600" frameborder="0" allowfullscreen></iframe>
-
-
-<p><br>Como podéis ver esos son mis apuntes de Notion hasta la fecha, iré rellenándolo según avance.</p>
-<p>¿Porque considero que PortSwigger es la mejor academia sobre vulnerabilidades web?.</p>
-<p>La verdad que se dice muy pronto “la mejor” con lo grande que es Internet, pero voy a destacar algunos puntos que me han gustado mucho.</p>
-<ul>
-<li><p>Es gratuito. Si efectivamente, todo el contenido es gratuito que no es poco, estamos hablando de cientos de horas resolviendo laboratorios y aprendiendo sobre infinidad de vulnerabilidades web, una academia con un curso tan completo y gratuito es difícil de encontrar.</p>
-</li>
-<li><p>Esta al día con las vulnerabilidades web que van apareciendo. Web cache deception, Web LLM attacks, Request Smuggling.</p>
-</li>
-<li><p>Dispone de certificación propia, Burp Suite Certified Practitioner(BSCP). Por esta certificación tienes que pagar efectivamente, pero solo con 99$ puedes realizar dicha certificación, no puedo opinar sobre ella porque aún no la he realizado.</p>
-</li>
-<li><p>Bug bounty. Si te interesa el mundo del Bug Bounty podrás encontrar ciertas similitud entre ciertos laboratorios y situaciones reales. Esto demuestra que los laboratorios que ofrece PortSwigger no son unos laboratorios cualquiera y se nota la calidad de los mismos.</p>
-</li>
-</ul>
-<p>Lo único “malo” a recalcar es algunos bugs en algunos laboratorios o no poder completarlos con éxitos cuando están terminados de la manera adecuada.</p>
-<p>A cualquier curioso o curiosa que le interese el mundo de las vulnerabilidades web le recomiendo, es más, le obligo a realizar estos laboratorios mientras pone en práctica lo aprendido.</p>
-]]></content>
-      <categories>
-        <category>ctf</category>
-        <category>portswigger</category>
-      </categories>
-      <tags>
-        <tag>ctf</tag>
-        <tag>portswigger</tag>
-        <tag>bugbounty</tag>
-        <tag>bscp</tag>
-        <tag>ewpt</tag>
-        <tag>ewptx</tag>
       </tags>
   </entry>
   <entry>
@@ -1202,7 +1202,7 @@
 <p><figure class="image-caption"><img src="/2025/06/12/Tentacle/first_try_exploit_snmptd_failed.png" alt="Intento fallido del exploit."><figcaption>Intento fallido del exploit.</figcaption></figure></p>
 <p>Vemos que por abajo no ha llegado nada, ¿porque?. Vamos a revisar el código del script.</p>
 <p><figure class="image-caption"><img src="/2025/06/12/Tentacle/original_script_exploit_root_user.png" alt="El usuario que se indica para enviar el correo es root."><figcaption>El usuario que se indica para enviar el correo es root.</figcaption></figure></p>
-<p>Recordemos que al principio, al visualizar la página del primer squid proxy, nos daba un usuario, el usuario “<a class="link"   href="mailto:&#106;&#x2e;&#x6e;&#97;&#107;&#97;&#122;&#x61;&#x77;&#97;&#64;&#x72;&#101;&#x61;&#x6c;&#x63;&#x6f;&#x72;&#x70;&#46;&#104;&#116;&#x62;" >&#106;&#x2e;&#x6e;&#97;&#107;&#97;&#122;&#x61;&#x77;&#97;&#64;&#x72;&#101;&#x61;&#x6c;&#x63;&#x6f;&#x72;&#x70;&#46;&#104;&#116;&#x62;<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>“.</p>
+<p>Recordemos que al principio, al visualizar la página del primer squid proxy, nos daba un usuario, el usuario “<a class="link"   href="mailto:&#x6a;&#46;&#x6e;&#x61;&#107;&#97;&#x7a;&#x61;&#119;&#97;&#x40;&#x72;&#101;&#97;&#x6c;&#x63;&#x6f;&#114;&#112;&#46;&#104;&#116;&#x62;" >&#x6a;&#46;&#x6e;&#x61;&#107;&#97;&#x7a;&#x61;&#119;&#97;&#x40;&#x72;&#101;&#97;&#x6c;&#x63;&#x6f;&#114;&#112;&#46;&#104;&#116;&#x62;<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>“.</p>
 <h3 id="Kerbrute-para-validar-usuarios"><a href="#Kerbrute-para-validar-usuarios" class="headerlink" title="Kerbrute para validar usuarios"></a>Kerbrute para validar usuarios</h3><p>Podemos chekear si el usuario existe gracias al servicio kerberos corriendo en la primera máquina, para ello utilizaremos la herramienta kerbrute:</p>
 <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">kerbrute userenum --domain realcorp.htb --dc 10.10.10.224 ../data/users.txt</span><br></pre></td></tr></table></figure></div>
 

@@ -642,7 +642,7 @@
 <p><figure class="image-caption"><img src="/2025/06/12/Tentacle/first_try_exploit_snmptd_failed.png" alt="Intento fallido del exploit."><figcaption>Intento fallido del exploit.</figcaption></figure></p>
 <p>Vemos que por abajo no ha llegado nada, ¿porque?. Vamos a revisar el código del script.</p>
 <p><figure class="image-caption"><img src="/2025/06/12/Tentacle/original_script_exploit_root_user.png" alt="El usuario que se indica para enviar el correo es root."><figcaption>El usuario que se indica para enviar el correo es root.</figcaption></figure></p>
-<p>Recordemos que al principio, al visualizar la página del primer squid proxy, nos daba un usuario, el usuario “<a class="link"   href="mailto:&#106;&#x2e;&#x6e;&#97;&#107;&#97;&#122;&#x61;&#x77;&#97;&#64;&#x72;&#101;&#x61;&#x6c;&#x63;&#x6f;&#x72;&#x70;&#46;&#104;&#116;&#x62;" >&#106;&#x2e;&#x6e;&#97;&#107;&#97;&#122;&#x61;&#x77;&#97;&#64;&#x72;&#101;&#x61;&#x6c;&#x63;&#x6f;&#x72;&#x70;&#46;&#104;&#116;&#x62;<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>“.</p>
+<p>Recordemos que al principio, al visualizar la página del primer squid proxy, nos daba un usuario, el usuario “<a class="link"   href="mailto:&#x6a;&#46;&#x6e;&#x61;&#107;&#97;&#x7a;&#x61;&#119;&#97;&#x40;&#x72;&#101;&#97;&#x6c;&#x63;&#x6f;&#114;&#112;&#46;&#104;&#116;&#x62;" >&#x6a;&#46;&#x6e;&#x61;&#107;&#97;&#x7a;&#x61;&#119;&#97;&#x40;&#x72;&#101;&#97;&#x6c;&#x63;&#x6f;&#114;&#112;&#46;&#104;&#116;&#x62;<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>“.</p>
 <h3 id="Kerbrute-para-validar-usuarios"><a href="#Kerbrute-para-validar-usuarios" class="headerlink" title="Kerbrute para validar usuarios"></a>Kerbrute para validar usuarios</h3><p>Podemos chekear si el usuario existe gracias al servicio kerberos corriendo en la primera máquina, para ello utilizaremos la herramienta kerbrute:</p>
 <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kerbrute userenum --domain realcorp.htb --dc 10.10.10.224 ../data/users.txt</span><br></pre></td></tr></table></figure></div>
 
@@ -809,12 +809,12 @@
     <div class="recommended-article-group"><a class="recommended-article-item" href="/2025/03/25/lab-ejptv2-xerosec/" title="Laboratorio preparatorio ejptv2 | Xerosec" rel="bookmark">
   <img src="cover-image.png" alt="Laboratorio preparatorio ejptv2 | Xerosec" class="!max-w-none">
   <span class="title">Laboratorio preparatorio ejptv2 | Xerosec</span>
-</a><a class="recommended-article-item" href="/2025/01/09/Blue/" title="Blue | WriteUp" rel="bookmark">
-  <img src="https://sergiky.github.io/2025/01/09/Blue/cover_image.png" alt="Blue | WriteUp" class="!max-w-none">
-  <span class="title">Blue | WriteUp</span>
 </a><a class="recommended-article-item" href="/2024/12/04/Symfonos 1 y 2/" title="Symfonos 1 y 2 | S4vitar | Pivoting I" rel="bookmark">
   <img src="https://sergiky.github.io/2024/12/04/Symfonos%201%20y%202/cover-image.png" alt="Symfonos 1 y 2 | S4vitar | Pivoting I" class="!max-w-none">
   <span class="title">Symfonos 1 y 2 | S4vitar | Pivoting I</span>
+</a><a class="recommended-article-item" href="/2025/01/09/Blue/" title="Blue | WriteUp" rel="bookmark">
+  <img src="https://sergiky.github.io/2025/01/09/Blue/cover_image.png" alt="Blue | WriteUp" class="!max-w-none">
+  <span class="title">Blue | WriteUp</span>
 </a></div>
    </div>
    <div class="recommended-mobile">
@@ -824,9 +824,9 @@
    <div class="recommended-article-group"><a class="recommended-article-item" href="/2025/03/25/lab-ejptv2-xerosec/" title="Laboratorio preparatorio ejptv2 | Xerosec" rel="bookmark">
   <img src="cover-image.png" alt="Laboratorio preparatorio ejptv2 | Xerosec" class="!max-w-none">
   <span class="title">Laboratorio preparatorio ejptv2 | Xerosec</span>
-</a><a class="recommended-article-item" href="/2025/01/09/Blue/" title="Blue | WriteUp" rel="bookmark">
-  <img src="https://sergiky.github.io/2025/01/09/Blue/cover_image.png" alt="Blue | WriteUp" class="!max-w-none">
-  <span class="title">Blue | WriteUp</span>
+</a><a class="recommended-article-item" href="/2024/12/04/Symfonos 1 y 2/" title="Symfonos 1 y 2 | S4vitar | Pivoting I" rel="bookmark">
+  <img src="https://sergiky.github.io/2024/12/04/Symfonos%201%20y%202/cover-image.png" alt="Symfonos 1 y 2 | S4vitar | Pivoting I" class="!max-w-none">
+  <span class="title">Symfonos 1 y 2 | S4vitar | Pivoting I</span>
 </a></div>
    </div>
   </div>
