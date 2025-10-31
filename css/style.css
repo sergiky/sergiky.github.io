@@ -350,8 +350,6 @@ body .navbar-shrink {
 ul,
 ol,
 li {
-  padding: 0;
-  margin: 0;
   list-style: none;
 }
 a {
@@ -738,6 +736,7 @@ button {
   width: 100%;
   overflow: auto;
   margin-bottom: 1.2rem;
+  margin-top: 1rem;
   box-shadow: var(--redefine-box-shadow-flat);
   border-radius: 14px;
 }
@@ -2589,7 +2588,6 @@ html.is-animating .scroll-progress-bar {
 }
 .post-toc-wrap {
   width: 100%;
-  height: 100%;
   font-size: 0.92rem;
   box-sizing: border-box;
   font-family: 'Geist Variable', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', 'Heiti SC', 'WenQuanYi Micro Hei', sans-serif, 'Noto Sans', 'Noto Sans SC', sans-serif;
@@ -2626,7 +2624,6 @@ html.is-animating .scroll-progress-bar {
   transition-property: all;
 }
 .post-toc-wrap .post-toc .nav-item {
-  width: 100%;
   line-height: 2;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -5227,7 +5224,7 @@ div.tabs .tab-content .tab-pane .note:last-child {
 .page-container .main-content-container .main-content-body .main-content {
   position: relative;
   box-sizing: border-box;
-  width: 90%;
+  width: 80%;
   max-width: 1400px;
   height: 100%;
   transition-property: color, background, box-shadow, border-color, max-width, width;
@@ -5897,7 +5894,7 @@ html.is-animating .transition-fade-down {
   position: sticky;
   top: 108px;
   border-radius: 0px;
-  width: 0px;
+  width: 0;
   height: auto;
   max-height: calc(100vh - 210px);
   overflow-y: auto;
