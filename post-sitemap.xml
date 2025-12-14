@@ -9,32 +9,8 @@
 
 
     <url>
-        <loc>https://sergiky.github.io/bug-bounty/Mi-primer-bounty/</loc>
-        <lastmod>2025-12-14T14:26:51.738Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://sergiky.github.io/ctf/portswigger/Laboratorios-de-PortSwigger-Opinion-y-resoluciones/</loc>
-        <lastmod>2025-09-03T16:40:24.242Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>https://sergiky.github.io/ctf/hackthebox/Tentacle/</loc>
-        <lastmod>2025-06-12T12:30:19.747Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://sergiky.github.io/ctf/labs/lab-ejptv2-xerosec/</loc>
-        <lastmod>2025-04-09T15:46:35.763Z</lastmod>
+        <lastmod>2025-12-14T14:30:05.954Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -42,7 +18,23 @@
 
     <url>
         <loc>https://sergiky.github.io/ctf/labs/Symfonos%201%20y%202/</loc>
-        <lastmod>2025-04-01T13:50:18.471Z</lastmod>
+        <lastmod>2025-12-14T14:29:48.270Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://sergiky.github.io/bug-bounty/Mi-primer-bounty/</loc>
+        <lastmod>2025-12-14T14:29:35.150Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://sergiky.github.io/ctf/portswigger/Laboratorios-de-PortSwigger-Opinion-y-resoluciones/</loc>
+        <lastmod>2025-12-14T14:29:18.233Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -50,7 +42,15 @@
 
     <url>
         <loc>https://sergiky.github.io/ctf/tryhackme/Blue/</loc>
-        <lastmod>2025-03-25T09:30:56.788Z</lastmod>
+        <lastmod>2025-12-14T14:29:06.333Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://sergiky.github.io/ctf/labs/lab-ejptv2-xerosec/</loc>
+        <lastmod>2025-12-14T14:28:51.019Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 

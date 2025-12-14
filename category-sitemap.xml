@@ -9,43 +9,43 @@
 
 
     <url>
-        <loc>https://sergiky.github.io/categories/bug-bounty/</loc>
-        <lastmod>2025-12-14T14:26:51.738Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://sergiky.github.io/categories/ctf/portswigger/</loc>
-        <lastmod>2025-09-03T16:40:24.242Z</lastmod>
+        <loc>https://sergiky.github.io/categories/ctf/hackthebox/</loc>
+        <lastmod>2025-12-14T14:30:05.954Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>https://sergiky.github.io/categories/ctf/</loc>
-        <lastmod>2025-09-03T16:40:24.242Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://sergiky.github.io/categories/ctf/hackthebox/</loc>
-        <lastmod>2025-06-12T12:30:19.747Z</lastmod>
+        <lastmod>2025-12-14T14:30:05.954Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>https://sergiky.github.io/categories/ctf/labs/</loc>
-        <lastmod>2025-04-09T15:46:35.763Z</lastmod>
+        <lastmod>2025-12-14T14:29:48.270Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://sergiky.github.io/categories/bug-bounty/</loc>
+        <lastmod>2025-12-14T14:29:35.150Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://sergiky.github.io/categories/ctf/portswigger/</loc>
+        <lastmod>2025-12-14T14:29:18.233Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>https://sergiky.github.io/categories/ctf/tryhackme/</loc>
-        <lastmod>2025-03-25T09:30:56.788Z</lastmod>
+        <lastmod>2025-12-14T14:29:06.333Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
