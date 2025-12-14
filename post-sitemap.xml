@@ -9,8 +9,16 @@
 
 
     <url>
+        <loc>https://sergiky.github.io/bug-bounty/Mi-primer-bounty/</loc>
+        <lastmod>2025-12-14T14:39:36.336Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>https://sergiky.github.io/ctf/hackthebox/Tentacle/</loc>
-        <lastmod>2025-12-14T14:30:05.954Z</lastmod>
+        <lastmod>2025-12-14T14:37:08.244Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -18,15 +26,7 @@
 
     <url>
         <loc>https://sergiky.github.io/ctf/labs/Symfonos%201%20y%202/</loc>
-        <lastmod>2025-12-14T14:29:48.270Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://sergiky.github.io/bug-bounty/Mi-primer-bounty/</loc>
-        <lastmod>2025-12-14T14:29:35.150Z</lastmod>
+        <lastmod>2025-12-14T14:36:30.101Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -34,15 +34,7 @@
 
     <url>
         <loc>https://sergiky.github.io/ctf/portswigger/Laboratorios-de-PortSwigger-Opinion-y-resoluciones/</loc>
-        <lastmod>2025-12-14T14:29:18.233Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://sergiky.github.io/ctf/tryhackme/Blue/</loc>
-        <lastmod>2025-12-14T14:29:06.333Z</lastmod>
+        <lastmod>2025-12-14T14:36:00.457Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -50,7 +42,15 @@
 
     <url>
         <loc>https://sergiky.github.io/ctf/labs/lab-ejptv2-xerosec/</loc>
-        <lastmod>2025-12-14T14:28:51.019Z</lastmod>
+        <lastmod>2025-12-14T14:35:13.120Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://sergiky.github.io/ctf/tryhackme/Blue/</loc>
+        <lastmod>2025-12-14T14:34:09.576Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 

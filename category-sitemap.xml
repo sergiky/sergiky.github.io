@@ -9,43 +9,43 @@
 
 
     <url>
+        <loc>https://sergiky.github.io/categories/bug-bounty/</loc>
+        <lastmod>2025-12-14T14:39:36.336Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>https://sergiky.github.io/categories/ctf/hackthebox/</loc>
-        <lastmod>2025-12-14T14:30:05.954Z</lastmod>
+        <lastmod>2025-12-14T14:37:08.244Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>https://sergiky.github.io/categories/ctf/</loc>
-        <lastmod>2025-12-14T14:30:05.954Z</lastmod>
+        <lastmod>2025-12-14T14:37:08.244Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>https://sergiky.github.io/categories/ctf/labs/</loc>
-        <lastmod>2025-12-14T14:29:48.270Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://sergiky.github.io/categories/bug-bounty/</loc>
-        <lastmod>2025-12-14T14:29:35.150Z</lastmod>
+        <lastmod>2025-12-14T14:36:30.101Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>https://sergiky.github.io/categories/ctf/portswigger/</loc>
-        <lastmod>2025-12-14T14:29:18.233Z</lastmod>
+        <lastmod>2025-12-14T14:36:00.457Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>https://sergiky.github.io/categories/ctf/tryhackme/</loc>
-        <lastmod>2025-12-14T14:29:06.333Z</lastmod>
+        <lastmod>2025-12-14T14:34:09.576Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
