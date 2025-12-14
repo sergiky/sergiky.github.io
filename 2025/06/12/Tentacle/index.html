@@ -147,15 +147,15 @@
 <meta property="article:modified_time" content="2025-06-12T12:30:19.747Z">
 <meta property="article:author" content="Sergio Guijarro">
 <meta property="article:tag" content="ctf">
-<meta property="article:tag" content="linux">
-<meta property="article:tag" content="eCPPTv2">
-<meta property="article:tag" content="eCPTXv2">
 <meta property="article:tag" content="htb">
 <meta property="article:tag" content="high">
+<meta property="article:tag" content="linux">
 <meta property="article:tag" content="dns_enumeration">
 <meta property="article:tag" content="squid_proxy">
 <meta property="article:tag" content="kerberos">
+<meta property="article:tag" content="eCPPTv2">
 <meta property="article:tag" content="OSCP">
+<meta property="article:tag" content="eCPTXv2">
 <meta property="article:tag" content="dnsenum">
 <meta property="article:tag" content="kerbrute">
 <meta name="twitter:card" content="summary">
@@ -557,23 +557,15 @@
                     </li>
                 
                     <li>
-                        | <a href="/tags/linux/">linux</a>&nbsp;
-                    </li>
-                
-                    <li>
-                        | <a href="/tags/eCPPTv2/">eCPPTv2</a>&nbsp;
-                    </li>
-                
-                    <li>
-                        | <a href="/tags/eCPTXv2/">eCPTXv2</a>&nbsp;
-                    </li>
-                
-                    <li>
                         | <a href="/tags/htb/">htb</a>&nbsp;
                     </li>
                 
                     <li>
                         | <a href="/tags/high/">high</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/linux/">linux</a>&nbsp;
                     </li>
                 
                     <li>
@@ -589,7 +581,15 @@
                     </li>
                 
                     <li>
+                        | <a href="/tags/eCPPTv2/">eCPPTv2</a>&nbsp;
+                    </li>
+                
+                    <li>
                         | <a href="/tags/OSCP/">OSCP</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/eCPTXv2/">eCPTXv2</a>&nbsp;
                     </li>
                 
                     <li>
@@ -897,7 +897,7 @@
                      data-src="/2025/06/12/Tentacle/original_script_exploit_root_user.png"
                       alt="El usuario que se indica para enviar el correo es root."
                 ><figcaption>El usuario que se indica para enviar el correo es root.</figcaption></figure></p>
-<p>Recordemos que al principio, al visualizar la página del primer squid proxy, nos daba un usuario, el usuario “<a class="link"   href="mailto:&#x6a;&#46;&#110;&#x61;&#107;&#x61;&#122;&#97;&#x77;&#97;&#x40;&#114;&#101;&#x61;&#x6c;&#x63;&#111;&#x72;&#x70;&#x2e;&#x68;&#116;&#98;" >&#x6a;&#46;&#110;&#x61;&#107;&#x61;&#122;&#97;&#x77;&#97;&#x40;&#114;&#101;&#x61;&#x6c;&#x63;&#111;&#x72;&#x70;&#x2e;&#x68;&#116;&#98;<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>“.</p>
+<p>Recordemos que al principio, al visualizar la página del primer squid proxy, nos daba un usuario, el usuario “<a class="link"   href="mailto:&#x6a;&#46;&#110;&#x61;&#107;&#97;&#x7a;&#x61;&#119;&#x61;&#x40;&#x72;&#101;&#x61;&#108;&#99;&#111;&#114;&#x70;&#46;&#104;&#116;&#98;" >&#x6a;&#46;&#110;&#x61;&#107;&#97;&#x7a;&#x61;&#119;&#x61;&#x40;&#x72;&#101;&#x61;&#108;&#99;&#111;&#114;&#x70;&#46;&#104;&#116;&#98;<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>“.</p>
 <h3 id="Kerbrute-para-validar-usuarios"><a href="#Kerbrute-para-validar-usuarios" class="headerlink" title="Kerbrute para validar usuarios"></a>Kerbrute para validar usuarios</h3><p>Podemos chekear si el usuario existe gracias al servicio kerberos corriendo en la primera máquina, para ello utilizaremos la herramienta kerbrute:</p>
 <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kerbrute userenum --domain realcorp.htb --dc 10.10.10.224 ../data/users.txt</span><br></pre></td></tr></table></figure></div>
 
@@ -1079,23 +1079,15 @@
 			</li>
 			
 			<li class="tag-item mx-0.5">
-				<a href="/tags/linux/">#linux</a>&nbsp;
-			</li>
-			
-			<li class="tag-item mx-0.5">
-				<a href="/tags/eCPPTv2/">#eCPPTv2</a>&nbsp;
-			</li>
-			
-			<li class="tag-item mx-0.5">
-				<a href="/tags/eCPTXv2/">#eCPTXv2</a>&nbsp;
-			</li>
-			
-			<li class="tag-item mx-0.5">
 				<a href="/tags/htb/">#htb</a>&nbsp;
 			</li>
 			
 			<li class="tag-item mx-0.5">
 				<a href="/tags/high/">#high</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/linux/">#linux</a>&nbsp;
 			</li>
 			
 			<li class="tag-item mx-0.5">
@@ -1111,7 +1103,15 @@
 			</li>
 			
 			<li class="tag-item mx-0.5">
+				<a href="/tags/eCPPTv2/">#eCPPTv2</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
 				<a href="/tags/OSCP/">#OSCP</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/eCPTXv2/">#eCPTXv2</a>&nbsp;
 			</li>
 			
 			<li class="tag-item mx-0.5">
