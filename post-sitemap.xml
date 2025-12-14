@@ -9,7 +9,7 @@
 
 
     <url>
-        <loc>https://sergiky.github.io/2025/10/31/Mi-primer-bounty/</loc>
+        <loc>https://sergiky.github.io/bug-bounty/Mi-primer-bounty/</loc>
         <lastmod>2025-10-31T10:33:53.366Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -17,7 +17,7 @@
     </url>
 
     <url>
-        <loc>https://sergiky.github.io/2025/09/03/Laboratorios-de-PortSwigger-Opinion-y-resoluciones/</loc>
+        <loc>https://sergiky.github.io/ctf/portswigger/Laboratorios-de-PortSwigger-Opinion-y-resoluciones/</loc>
         <lastmod>2025-09-03T16:40:24.242Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -25,7 +25,7 @@
     </url>
 
     <url>
-        <loc>https://sergiky.github.io/2025/06/12/Tentacle/</loc>
+        <loc>https://sergiky.github.io/ctf/hackthebox/Tentacle/</loc>
         <lastmod>2025-06-12T12:30:19.747Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -33,7 +33,7 @@
     </url>
 
     <url>
-        <loc>https://sergiky.github.io/2025/03/25/lab-ejptv2-xerosec/</loc>
+        <loc>https://sergiky.github.io/ctf/labs/lab-ejptv2-xerosec/</loc>
         <lastmod>2025-04-09T15:46:35.763Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -41,7 +41,7 @@
     </url>
 
     <url>
-        <loc>https://sergiky.github.io/2024/12/04/Symfonos%201%20y%202/</loc>
+        <loc>https://sergiky.github.io/ctf/labs/Symfonos%201%20y%202/</loc>
         <lastmod>2025-04-01T13:50:18.471Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -49,7 +49,7 @@
     </url>
 
     <url>
-        <loc>https://sergiky.github.io/2025/01/09/Blue/</loc>
+        <loc>https://sergiky.github.io/ctf/tryhackme/Blue/</loc>
         <lastmod>2025-03-25T09:30:56.788Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>

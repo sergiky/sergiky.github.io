@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 	
 	<meta name="robots" content="all">
-	<link rel="canonical" href="https://sergiky.github.io/2025/01/09/blue/"/>
+	<link rel="canonical" href="https://sergiky.github.io/ctf/tryhackme/blue/"/>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="keywords" content="Hexo Theme Redefine">
@@ -127,7 +127,7 @@
     
     <!--- Seo Part-->
     
-    <link rel="canonical" href="https://sergiky.github.io/2025/01/09/blue/"/>
+    <link rel="canonical" href="https://sergiky.github.io/ctf/tryhackme/blue/"/>
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
@@ -138,7 +138,7 @@
         <meta name="description" content="Blog personal de sergiky.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Blue | WriteUp">
-<meta property="og:url" content="https://sergiky.github.io/2025/01/09/Blue/index.html">
+<meta property="og:url" content="https://sergiky.github.io/ctf/tryhackme/Blue/index.html">
 <meta property="og:site_name" content="Sergiky">
 <meta property="og:description" content="Blog personal de sergiky.">
 <meta property="og:locale" content="es_ES">
@@ -670,7 +670,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/primera_comprobacion_ip_tables.png"
+                     data-src="/ctf/tryhackme/Blue/primera_comprobacion_ip_tables.png"
                       alt="iptables vacío."
                 ><figcaption>iptables vacío.</figcaption></figure></p>
 </li>
@@ -679,7 +679,7 @@
 <p>La ip indicada es la correspondiente con tun0, interfaz creada por la VPN.<br><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/iptable_despues_del_script.png"
+                     data-src="/ctf/tryhackme/Blue/iptable_despues_del_script.png"
                       alt="iptable después de ejecutar el script."
                 ><figcaption>iptable después de ejecutar el script.</figcaption></figure></p>
 </li>
@@ -698,7 +698,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/escaneo_puertos_nmap.png"
+                     data-src="/ctf/tryhackme/Blue/escaneo_puertos_nmap.png"
                       alt="Escaneo de puertos con nmap."
                 ><figcaption>Escaneo de puertos con nmap.</figcaption></figure><br>Recuerda que puedes utilizar varias herramientas y comparar resultados, puedes encontrar algún dato extra.</p>
 <h2 id="Escaneo-con-netcat"><a href="#Escaneo-con-netcat" class="headerlink" title="Escaneo con netcat"></a>Escaneo con netcat</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc -zv 10.10.210.75 1-1000</span><br></pre></td></tr></table></figure></div>
@@ -709,7 +709,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/extract_ports_manually.png"
+                     data-src="/ctf/tryhackme/Blue/extract_ports_manually.png"
                       alt="Extracción de puertos manualmente."
                 ><figcaption>Extracción de puertos manualmente.</figcaption></figure></p>
 <ul>
@@ -725,7 +725,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/version_and_services_nmap.png"
+                     data-src="/ctf/tryhackme/Blue/version_and_services_nmap.png"
                       alt="Versión y servicios corriendo en dichos puertos."
                 ><figcaption>Versión y servicios corriendo en dichos puertos.</figcaption></figure></p>
 <p>Podemos encontrar alguna información como el nombre del equipo: Jon-PC, Windows 7 y diferentes versiones.</p>
@@ -734,7 +734,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/smbclient_null_session.png"
+                     data-src="/ctf/tryhackme/Blue/smbclient_null_session.png"
                       alt="Uso de null session con smbclient."
                 ><figcaption>Uso de null session con smbclient.</figcaption></figure></p>
 <p>Podemos probar con smbmap, pero comprobamos que tampoco nos deja:</p>
@@ -742,7 +742,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/smbmap_error.png"
+                     data-src="/ctf/tryhackme/Blue/smbmap_error.png"
                       alt="Intento de conexión con smbmap."
                 ><figcaption>Intento de conexión con smbmap.</figcaption></figure></p>
 <p>Llegados a este punto podemos comprobar si existen vulnerabilidades existentes para este Windows 7. Para ello utilizaremos algunos script en nmap, estos están divididos en <strong>categorías</strong>:</p>
@@ -750,7 +750,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/categorias_nmap.png"
+                     data-src="/ctf/tryhackme/Blue/categorias_nmap.png"
                       alt="Categorías sobre los scripts de nmap."
                 ><figcaption>Categorías sobre los scripts de nmap.</figcaption></figure></p>
 <p>Como es un Windows 7 y el smb esta expuesto comprobamos las vulnerabilidades(vuln) de forma no intrusiva(safe):</p>
@@ -759,7 +759,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/detect_eternalblue_general_vuln_nmap.png"
+                     data-src="/ctf/tryhackme/Blue/detect_eternalblue_general_vuln_nmap.png"
                       alt="Detección del eternal blue con nmap."
                 ><figcaption>Detección del eternal blue con nmap.</figcaption></figure></p>
 <p>Puedes indicar el script:</p>
@@ -773,7 +773,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/netexec_eternalblue.png"
+                     data-src="/ctf/tryhackme/Blue/netexec_eternalblue.png"
                       alt="Utilizando netexec para comprobar si eternalblue existe."
                 ><figcaption>Utilizando netexec para comprobar si eternalblue existe.</figcaption></figure></p>
 <h1 id="Explotacion"><a href="#Explotacion" class="headerlink" title="Explotación"></a>Explotación</h1><h2 id="Explotacion-con-metasploit"><a href="#Explotacion-con-metasploit" class="headerlink" title="Explotación con metasploit"></a>Explotación con metasploit</h2><h3 id="Configuracion-inicial-del-exploit"><a href="#Configuracion-inicial-del-exploit" class="headerlink" title="Configuración inicial del exploit."></a>Configuración inicial del exploit.</h3><p>Para explotarlo tenemos diferentes maneras de hacerlo:</p>
@@ -788,7 +788,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/search_eternalblue_metasploit.png"
+                     data-src="/ctf/tryhackme/Blue/search_eternalblue_metasploit.png"
                       alt="Buscamos por eternalblue."
                 ><figcaption>Buscamos por eternalblue.</figcaption></figure></p>
 <ol start="3">
@@ -803,7 +803,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/show_parameters_value_eternalblue_metasploit.png"
+                     data-src="/ctf/tryhackme/Blue/show_parameters_value_eternalblue_metasploit.png"
                       alt="Ip víctima seteada."
                 ><figcaption>Ip víctima seteada.</figcaption></figure></p>
 <ol start="6">
@@ -822,7 +822,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/conectados_con_metasploit.png"
+                     data-src="/ctf/tryhackme/Blue/conectados_con_metasploit.png"
                       alt="Conexión exitosa con metasploit."
                 ><figcaption>Conexión exitosa con metasploit.</figcaption></figure></p>
 <p>Ya podemos introducir comandos en el equipo víctima.</p>
@@ -846,7 +846,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/sesiones_metasploit_cambio_de_reverse_shell_a_meterpreter.png"
+                     data-src="/ctf/tryhackme/Blue/sesiones_metasploit_cambio_de_reverse_shell_a_meterpreter.png"
                       alt="Sesiones disponibles."
                 ><figcaption>Sesiones disponibles.</figcaption></figure></p>
 <p>Comandos y algunos extra.</p>
@@ -856,7 +856,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/comprobacion_nt_authority_system_meterpreter.png"
+                     data-src="/ctf/tryhackme/Blue/comprobacion_nt_authority_system_meterpreter.png"
                       alt="Usuario NT AUTHORITY\SYSTEM."
                 ><figcaption>Usuario NT AUTHORITY\SYSTEM.</figcaption></figure></p>
 <p>Vamos a ver por encima el concepto de <strong>“migrar el proceso”</strong>, esto puede ser útil para obtener persistencia, para evadir una detección…</p>
@@ -871,7 +871,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/hashdump_meterpreter.png"
+                     data-src="/ctf/tryhackme/Blue/hashdump_meterpreter.png"
                       alt="Resultado de usar hashdump."
                 ><figcaption>Resultado de usar hashdump.</figcaption></figure></p>
 <p>Vamos a separar esto:</p>
@@ -887,7 +887,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/crackstation_ntlm_jon_hashdump.png"
+                     data-src="/ctf/tryhackme/Blue/crackstation_ntlm_jon_hashdump.png"
                      
                 ></p>
 <p>La contraseña de Jon es: <strong>alqfna22</strong></p>
@@ -897,7 +897,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/primera_flag.png"
+                     data-src="/ctf/tryhackme/Blue/primera_flag.png"
                       alt="Obtención de la primera bandera."
                 ><figcaption>Obtención de la primera bandera.</figcaption></figure></p>
 <p>Segunda bandera en el directorio donde se almacenan las contraseñas:</p>
@@ -906,7 +906,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/segunda_flag.png"
+                     data-src="/ctf/tryhackme/Blue/segunda_flag.png"
                       alt="Obtención de la segunda flag."
                 ><figcaption>Obtención de la segunda flag.</figcaption></figure></p>
 <p>En la imagen da error porque ya estoy en dicho directorio, ejecute el comando sin querer.</p>
@@ -915,7 +915,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/tercera_flag.png"
+                     data-src="/ctf/tryhackme/Blue/tercera_flag.png"
                       alt="Resultado de la tercera flag."
                 ><figcaption>Resultado de la tercera flag.</figcaption></figure></p>
 <h2 id="Explotacion-manual"><a href="#Explotacion-manual" class="headerlink" title="Explotación manual"></a>Explotación manual</h2><h3 id="Uso-de-zzz-exploit"><a href="#Uso-de-zzz-exploit" class="headerlink" title="Uso de zzz exploit"></a>Uso de zzz exploit</h3><p>Es bueno saber como usar mestasploit ya que es considerada una herramienta muy pontente, aunque considero que no se debe de abusar de ella porque no ganariamos tanto conocimiento como realizar una <strong>explotación manual</strong>.</p>
@@ -929,54 +929,54 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/preview_checker_zzz.png"
+                     data-src="/ctf/tryhackme/Blue/preview_checker_zzz.png"
                       alt="Preview del script checker."
                 ><figcaption>Preview del script checker.</figcaption></figure></p>
 <p>Si en alguno de las pipes te muestra información en lugar de status_access_denied significa que tenemos una forma potencial de ejecutar comandos, incluso ya soo con ver <strong>the target is not patched</strong>. Esto no significa que no deje, debemos <strong>modificar el script checker.py</strong> y indicar en el campo <strong>USERNAME</strong> el usuario <strong>guest</strong>:</p>
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/credenciales_guest_checker_zzz.png"
+                     data-src="/ctf/tryhackme/Blue/credenciales_guest_checker_zzz.png"
                       alt="Indicamos el usuario guest en checker.py"
                 ><figcaption>Indicamos el usuario guest en checker.py</figcaption></figure></p>
 <p>Pero a continuación vemos que el usuario guest no está activado en la máquina víctima.<br><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/error_guest_checker_zzz.png"
+                     data-src="/ctf/tryhackme/Blue/error_guest_checker_zzz.png"
                       alt="Error con el usuario guest."
                 ><figcaption>Error con el usuario guest.</figcaption></figure></p>
 <p>Puedes poner las credenciales del usuario encontrado con metasploit anteriormente y funcionaría:</p>
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/checker_despues_de_poner_credenciales.png"
+                     data-src="/ctf/tryhackme/Blue/checker_despues_de_poner_credenciales.png"
                       alt="Después de poner las credenciales."
                 ><figcaption>Después de poner las credenciales.</figcaption></figure></p>
 <h3 id="Uso-de-Autoblue"><a href="#Uso-de-Autoblue" class="headerlink" title="Uso de Autoblue"></a>Uso de Autoblue</h3><p>En la máquina de tryhackme no está activado el usuario guest(en la de hack the box sí), pero aún así podemos utilizar el script <a class="link"   target="_blank" rel="noopener" href="https://github.com/3ndG4me/AutoBlue-MS17-010" >AutoBlue<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>. Nos permite tener una mayor flexibilidad y retocar ciertas características que metasploit no permite. Este también tiene un checker y nos sale lo siguiente al ejecutarlo:</p>
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/autoblue_path_wordlists_not_found_checker.png"
+                     data-src="/ctf/tryhackme/Blue/autoblue_path_wordlists_not_found_checker.png"
                       alt="Autoblue no encuentra los diccionarios."
                 ><figcaption>Autoblue no encuentra los diccionarios.</figcaption></figure></p>
 <p>Al intentar modificar el script para indicar la ruta veo que no se encuentra aquí, siguiendo el rastro, encuentro el problema en la función <strong>check_accesisible_pipes()</strong>, exactamente en la función de la conexión(conn.find_named_pipe), objeto creado por el módulo importado <strong>mysmb</strong>(más abajo se ve), una vez aquí dentro busco por el output que nos muestra al no encontrar el diccionario y encuentro la ruta:</p>
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/autoblue_change_path_checker.png"
+                     data-src="/ctf/tryhackme/Blue/autoblue_change_path_checker.png"
                       alt="Cambiamos la ruta en el script mysmb.py"
                 ><figcaption>Cambiamos la ruta en el script mysmb.py</figcaption></figure></p>
 <p>Ahora probamos a ejecutar el script de nuevo:<br><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/autoblue_checker_ok.png"
+                     data-src="/ctf/tryhackme/Blue/autoblue_checker_ok.png"
                       alt="Ejecucción exitosa del checker."
                 ><figcaption>Ejecucción exitosa del checker.</figcaption></figure></p>
 <p>Genial, parece que funciona, ahora debemos de dirigirnos al directorio shellcode y dentro encontraremos un script llamado <strong>shell_prep.sh</strong> que nos generará la carga, este nos realizará diferentes preguntas al ejecutarlo:</p>
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/autoblue_generate_shellcode.png"
+                     data-src="/ctf/tryhackme/Blue/autoblue_generate_shellcode.png"
                       alt="Generando el shellcode."
                 ><figcaption>Generando el shellcode.</figcaption></figure></p>
 <ul>
@@ -1003,7 +1003,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/whoami_en_victima.png"
+                     data-src="/ctf/tryhackme/Blue/whoami_en_victima.png"
                       alt="Ejecucción del comando whoami en la máquina víctima."
                 ><figcaption>Ejecucción del comando whoami en la máquina víctima.</figcaption></figure></p>
 <p>Cómo podéis comprobar no siempre es un camino de rosas, te vas a encontrar muchas trabas, si en el exploit de python(zzz_exploit.py) visto anteriormente hubiera salido algún pipe poniendo el usuario <strong>guest</strong> tendríamos que haber modificado el script para que en lugar de escribir un archivo en C: se conectará a un recurso compartido mediante smb creado por nosotros para ejecutar un binario netcat.exe para proporcionarnos la reverse shell. Quién quiera entrar más en detalle de cómo realizar en este <a class="link"   target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=92XycxcAXkI" >vídeo de s4ivtar<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> lo explica, minutos 57:00-1:01:19.</p>
@@ -1021,7 +1021,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/saves_reg_sam_system.png"
+                     data-src="/ctf/tryhackme/Blue/saves_reg_sam_system.png"
                       alt="Copia de SAM y SYSTEM."
                 ><figcaption>Copia de SAM y SYSTEM.</figcaption></figure></p>
 <p>A continuación nos lo vamos a transferir por smb hacía nuestro equipo.</p>
@@ -1032,7 +1032,7 @@
 <p>Le damos permisos de ejecucción y lanzamos.<br><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/creacion_symbolic_links_impacket.png"
+                     data-src="/ctf/tryhackme/Blue/creacion_symbolic_links_impacket.png"
                       alt="Creación de los links simbólicos."
                 ><figcaption>Creación de los links simbólicos.</figcaption></figure></p>
 <p>Con reiniciar la terminal o cerrarla y abrir otra ya podemos utilizarlo el comando con el formato <strong>impacket-…</strong></p>
@@ -1054,12 +1054,12 @@
 <p>Y el resultado sería el siguiente:<br><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/mandar_sam_system_victima_atacante_via_smb.png"
+                     data-src="/ctf/tryhackme/Blue/mandar_sam_system_victima_atacante_via_smb.png"
                       alt="Mandar via smb los archivos sam y system."
                 ><figcaption>Mandar via smb los archivos sam y system.</figcaption></figure><br><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/recibir_sam_system_atacante_impacket_smb.png"
+                     data-src="/ctf/tryhackme/Blue/recibir_sam_system_atacante_impacket_smb.png"
                       alt="Recibir los archivos sam y system."
                 ><figcaption>Recibir los archivos sam y system.</figcaption></figure></p>
 <p>Al tener estos archivos ya en nuestro equipo podemos utilizar <strong>impacket-secretdump</strong> que nos devolverá los hashes de los usuarios:</p>
@@ -1068,7 +1068,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/hashes_volcados_con_impacket_secretsdump.png"
+                     data-src="/ctf/tryhackme/Blue/hashes_volcados_con_impacket_secretsdump.png"
                       alt="Obtención de hashes con impacket-secretsdump."
                 ><figcaption>Obtención de hashes con impacket-secretsdump.</figcaption></figure></p>
 <p>Estos hashes los puedes intentar de romper como hemos visto antes con metasploit, mediante crackstation, hashcat…</p>
@@ -1081,7 +1081,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/netexec_pass_the_hash.png"
+                     data-src="/ctf/tryhackme/Blue/netexec_pass_the_hash.png"
                       alt="Intento fallido de pass the hash."
                 ><figcaption>Intento fallido de pass the hash.</figcaption></figure></p>
 <p>Obtener hashes de contraseña almacenados en memoria, secretos como contraseñas de cuentas.</p>
@@ -1090,7 +1090,7 @@
 <p>No vemos nada interesante.<br><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/netexec_administrator_lsa_secrets.png"
+                     data-src="/ctf/tryhackme/Blue/netexec_administrator_lsa_secrets.png"
                       alt="Resultado de los secretos."
                 ><figcaption>Resultado de los secretos.</figcaption></figure></p>
 <p>Para entrar al sistema con el usuario Administrador sería:</p>
@@ -1107,14 +1107,14 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/ebowla_genetic_config_output_payload_type_modification.png"
+                     data-src="/ctf/tryhackme/Blue/ebowla_genetic_config_output_payload_type_modification.png"
                       alt="Modificación de la variable output_type y payload_type."
                 ><figcaption>Modificación de la variable output_type y payload_type.</figcaption></figure></p>
 <p>Ahora vamos un poco en el script hasta que estemos en [[ENV_VAR]] que es la chicha.</p>
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/ebowla_genetic_config_env_var_vacio.png"
+                     data-src="/ctf/tryhackme/Blue/ebowla_genetic_config_env_var_vacio.png"
                       alt="Variables de entorno por defecto."
                 ><figcaption>Variables de entorno por defecto.</figcaption></figure></p>
 <p>Hay que tener cuidado a la hora de rellenarlo, porque si nos equivocamos en alguna luego el binario no se va interpretar bien y no se podrá descrifrar correctamente.</p>
@@ -1123,7 +1123,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/ebowla_genetic_config_env_var_completado.png"
+                     data-src="/ctf/tryhackme/Blue/ebowla_genetic_config_env_var_completado.png"
                       alt="Variables de entorno rellenadas."
                 ><figcaption>Variables de entorno rellenadas.</figcaption></figure></p>
 <p>Guardamos, cerramos, instalamos las siguientes dependencias para que el script funcione:</p>
@@ -1135,7 +1135,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/ebowla_go_mimikatz.png"
+                     data-src="/ctf/tryhackme/Blue/ebowla_go_mimikatz.png"
                       alt="Creación del archivo mimikatz con go que será compilado."
                 ><figcaption>Creación del archivo mimikatz con go que será compilado.</figcaption></figure></p>
 <p>Si vemos lo que hay en el directorio output que nos ha creado, veremos el archivo go_symmetric_mimikatz.exe.go. Tenemos el script <strong>build_x64_go.sh</strong> que se va a encargar de compilar nuestro archivo:</p>
@@ -1147,7 +1147,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/ebowla_script_bash_go_compila_mimikatz.png"
+                     data-src="/ctf/tryhackme/Blue/ebowla_script_bash_go_compila_mimikatz.png"
                       alt="Compilación final de mimikatz."
                 ><figcaption>Compilación final de mimikatz.</figcaption></figure></p>
 <p>Bien, ya nos lo ha creado en el directorio output, vamos a transferir el archivo, en esta ocasión con un servidor en python:</p>
@@ -1164,14 +1164,14 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/mimikatz_in_victim_machine.png"
+                     data-src="/ctf/tryhackme/Blue/mimikatz_in_victim_machine.png"
                       alt="Mimikatz descargado en la máquina víctima."
                 ><figcaption>Mimikatz descargado en la máquina víctima.</figcaption></figure></p>
 <p>Si probamos a ejecutar el programa nos sale lo siguiente:</p>
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/preview_mimikatz_victim_machine.png"
+                     data-src="/ctf/tryhackme/Blue/preview_mimikatz_victim_machine.png"
                       alt="Mimikatz en la máquina víctima."
                 ><figcaption>Mimikatz en la máquina víctima.</figcaption></figure></p>
 <p>Ahora en la consola interactiva de mimikatz ponemos lo siguiente:</p>
@@ -1184,7 +1184,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/mimikatz_results_without_passwords.png"
+                     data-src="/ctf/tryhackme/Blue/mimikatz_results_without_passwords.png"
                       alt="Resultados de mimikatz sin contraseña."
                 ><figcaption>Resultados de mimikatz sin contraseña.</figcaption></figure></p>
 <p>En este caso no nos muestra credenciales en texto claro, pero podría ser que lo hiciera.</p>
@@ -1195,7 +1195,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/port_rdp_nmap_scan.png"
+                     data-src="/ctf/tryhackme/Blue/port_rdp_nmap_scan.png"
                       alt="Comprobación del puerto RDP."
                 ><figcaption>Comprobación del puerto RDP.</figcaption></figure></p>
 <p>Al estar cerrado tendríamos que utilizar <strong>netexec</strong> para activar el rdp en la máquina víctima:</p>
@@ -1208,7 +1208,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/active_rdp_with_netexec.png"
+                     data-src="/ctf/tryhackme/Blue/active_rdp_with_netexec.png"
                       alt="Activando rdp con netexec."
                 ><figcaption>Activando rdp con netexec.</figcaption></figure></p>
 <p>Otro tip es que ya que tenemos acceso al equipo víctima, podemos comprobar si dicho puerto se ha abierto con el comando:</p>
@@ -1221,7 +1221,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/netstat_open_port.png"
+                     data-src="/ctf/tryhackme/Blue/netstat_open_port.png"
                       alt="Comprobación del estado del puerto rdp en la máquina víctima."
                 ><figcaption>Comprobación del estado del puerto rdp en la máquina víctima.</figcaption></figure></p>
 <p>Ejecucción de la conexión para obtener el escritorio:</p>
@@ -1237,7 +1237,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/hash_the_pass_rdp_w7_not_allowed.png"
+                     data-src="/ctf/tryhackme/Blue/hash_the_pass_rdp_w7_not_allowed.png"
                       alt="Hash the pass en Windows 7 no permitido."
                 ><figcaption>Hash the pass en Windows 7 no permitido.</figcaption></figure></p>
 <p>Así que tenemos que seguir buscando una manera para buscar la contraseña sin llegar a descifrar el hash.</p>
@@ -1246,13 +1246,13 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/conexion_mediante_rdp_sabiendo_la_contrase%C3%B1a.png"
+                     data-src="/ctf/tryhackme/Blue/conexion_mediante_rdp_sabiendo_la_contrase%C3%B1a.png"
                       alt="Conexión simulando un tercero."
                 ><figcaption>Conexión simulando un tercero.</figcaption></figure></p>
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/mimikatz_con_credenciales_administrator.png"
+                     data-src="/ctf/tryhackme/Blue/mimikatz_con_credenciales_administrator.png"
                       alt="Mimikatz con las credenciales del administrador en texto claro."
                 ><figcaption>Mimikatz con las credenciales del administrador en texto claro.</figcaption></figure></p>
 <p>Genial, ahora si podemos ver la contraseña en texto claro, hashes…En caso de ser una contraseña compleja os la podríais encontrar mediante mimikatz y ser de gran ayuda.</p>
@@ -1262,7 +1262,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/encontrado_el_binario_del_explorador_de_archivos.png"
+                     data-src="/ctf/tryhackme/Blue/encontrado_el_binario_del_explorador_de_archivos.png"
                       alt="Binario del explorador de archivos."
                 ><figcaption>Binario del explorador de archivos.</figcaption></figure></p>
 <p>Una vez localizado(explorer.exe) debemos realizar una copia:</p>
@@ -1286,7 +1286,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/obtain_reverse_shell_open_explorer.png"
+                     data-src="/ctf/tryhackme/Blue/obtain_reverse_shell_open_explorer.png"
                       alt="Obteniendo una reverse shell al abrir el explorador de archivos."
                 ><figcaption>Obteniendo una reverse shell al abrir el explorador de archivos.</figcaption></figure></p>
 <p>Cómo podeis ver es un poco bastante cantoso, porque se ve la terminal y indica que el comando _explorer no se ha reconocido, según la aplicación que utiliceis se mostrará de una manera u otra. No es recomendable para casos de auditorías reales donde se busque la descripción. Normalmente es útil identificar que aplicaciones son las que abre el usuario constantemente(por ejemplo el office) y realizar algo así, pero más camuflado.</p>
@@ -1398,13 +1398,13 @@
     <div class="recommended-article-header text-xl md:text-3xl font-bold mt-10">
      <i aria-hidden="true"></i><span>Artículos recomendados</span>
     </div>
-    <div class="recommended-article-group"><a class="recommended-article-item" href="/2025/03/25/lab-ejptv2-xerosec/" title="Laboratorio preparatorio ejptv2 | Xerosec" rel="bookmark">
+    <div class="recommended-article-group"><a class="recommended-article-item" href="/ctf/labs/lab-ejptv2-xerosec/" title="Laboratorio preparatorio ejptv2 | Xerosec" rel="bookmark">
   <img src="cover-image.png" alt="Laboratorio preparatorio ejptv2 | Xerosec" class="!max-w-none">
   <span class="title">Laboratorio preparatorio ejptv2 | Xerosec</span>
-</a><a class="recommended-article-item" href="/2024/12/04/Symfonos%201%20y%202/" title="Symfonos 1 y 2 | S4vitar | Pivoting I" rel="bookmark">
+</a><a class="recommended-article-item" href="/ctf/labs/Symfonos%201%20y%202/" title="Symfonos 1 y 2 | S4vitar | Pivoting I" rel="bookmark">
   <img src="https://sergiky.github.io/2024/12/04/Symfonos%201%20y%202/cover-image.png" alt="Symfonos 1 y 2 | S4vitar | Pivoting I" class="!max-w-none">
   <span class="title">Symfonos 1 y 2 | S4vitar | Pivoting I</span>
-</a><a class="recommended-article-item" href="/2025/06/12/Tentacle/" title="🐙 Tentacle | WriteUp" rel="bookmark">
+</a><a class="recommended-article-item" href="/ctf/hackthebox/Tentacle/" title="🐙 Tentacle | WriteUp" rel="bookmark">
   <img src="https://sergiky.github.io/2025/06/12/Tentacle/cover-image.webp" alt="🐙 Tentacle | WriteUp" class="!max-w-none">
   <span class="title">🐙 Tentacle | WriteUp</span>
 </a></div>
@@ -1413,10 +1413,10 @@
    <div class="recommended-article-header text-xl md:text-3xl font-bold mt-10">
      <i aria-hidden="true"></i><span>Artículos recomendados</span>
    </div>
-   <div class="recommended-article-group"><a class="recommended-article-item" href="/2025/03/25/lab-ejptv2-xerosec/" title="Laboratorio preparatorio ejptv2 | Xerosec" rel="bookmark">
+   <div class="recommended-article-group"><a class="recommended-article-item" href="/ctf/labs/lab-ejptv2-xerosec/" title="Laboratorio preparatorio ejptv2 | Xerosec" rel="bookmark">
   <img src="cover-image.png" alt="Laboratorio preparatorio ejptv2 | Xerosec" class="!max-w-none">
   <span class="title">Laboratorio preparatorio ejptv2 | Xerosec</span>
-</a><a class="recommended-article-item" href="/2024/12/04/Symfonos%201%20y%202/" title="Symfonos 1 y 2 | S4vitar | Pivoting I" rel="bookmark">
+</a><a class="recommended-article-item" href="/ctf/labs/Symfonos%201%20y%202/" title="Symfonos 1 y 2 | S4vitar | Pivoting I" rel="bookmark">
   <img src="https://sergiky.github.io/2024/12/04/Symfonos%201%20y%202/cover-image.png" alt="Symfonos 1 y 2 | S4vitar | Pivoting I" class="!max-w-none">
   <span class="title">Symfonos 1 y 2 | S4vitar | Pivoting I</span>
 </a></div>
@@ -1427,7 +1427,7 @@
 		<div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
 			
 			<div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
-				<a class="prev" rel="prev" href="/2025/03/25/lab-ejptv2-xerosec/">
+				<a class="prev" rel="prev" href="/ctf/labs/lab-ejptv2-xerosec/">
 					<span class="left arrow-icon flex justify-center items-center">
 						<i class="fa-solid fa-chevron-left"></i>
 					</span>
@@ -1440,7 +1440,7 @@
 			
 			
 			<div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
-				<a class="next" rel="next" href="/2024/12/04/Symfonos%201%20y%202/">
+				<a class="next" rel="next" href="/ctf/labs/Symfonos%201%20y%202/">
 					<span class="title flex justify-center items-center">
 						<span class="post-nav-title-item truncate max-w-48">Symfonos 1 y 2 | S4vitar | Pivoting I</span>
 						<span class="post-nav-item">Publicaciones siguientes</span>

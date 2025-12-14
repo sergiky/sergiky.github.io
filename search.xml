@@ -2,7 +2,7 @@
 <search>
   <entry>
     <title>Laboratorios de PortSwigger | Opinión y resoluciones.</title>
-    <url>/2025/09/03/Laboratorios-de-PortSwigger-Opinion-y-resoluciones/</url>
+    <url>/ctf/portswigger/Laboratorios-de-PortSwigger-Opinion-y-resoluciones/</url>
     <content><![CDATA[<p>Hola de nuevo chicos, hoy vengo a dar mi opinión sobre los laboratorios de PortSwigger y porque considero que es la mejor academia sobre vulnerabilidades web.</p>
 <iframe src="https://hazel-polish-a20.notion.site/ebd/262f2dd767f380c7ac99e3ccad6811e5" width="100%" height="600" frameborder="0" allowfullscreen></iframe>
 
@@ -38,7 +38,7 @@
   </entry>
   <entry>
     <title>Mi primer bounty</title>
-    <url>/2025/10/31/Mi-primer-bounty/</url>
+    <url>/bug-bounty/Mi-primer-bounty/</url>
     <content><![CDATA[<p>Este es un post especial. No todos los días recibes tu primera recompensa en un programa de Bug Bounty.</p>
 <h1 id="Introduccion"><a href="#Introduccion" class="headerlink" title="Introducción"></a>Introducción</h1><p>En el siguiente artículo voy a hablar y contar mi experiencia sobre como descubrí mi primer bounty y de que trataba.</p>
 <p>En mi caso, no suelo realizar reconocimiento al principio al menos que se cumplan uno de los siguientes factores:</p>
@@ -81,7 +81,7 @@
   </entry>
   <entry>
     <title>Blue | WriteUp</title>
-    <url>/2025/01/09/Blue/</url>
+    <url>/ctf/tryhackme/Blue/</url>
     <content><![CDATA[<h1 id="Introduccion"><a href="#Introduccion" class="headerlink" title="Introducción"></a>Introducción</h1><p>Bienvenidos a este humilde WriteUp sobre esta sencillita máquina Windows que nos será de utilidad para repasar conceptos básicos y la explotación de diferentes formas sobre la vulnerabilidad <strong>MS17-010</strong> o mayormente conocida como <strong>EternalBlue</strong>. Para que un sea un simple Write-up más hacer dos tipos de explotaciones, una automática con metasploit y otra manual, aunque para la manual tengo que recalcar que la máquina de tryhackme no está preparada para esto y en ciertas ocasiones tendremos problemas, en cambio, existe la misma máquina sin estos problemas en la plataforma hack the box(se necesita subscripción). También comentaros que veréis diferentes ips de “víctima” porque no lo he podido hacer todo de golpe o he tenido que reiniciar la máquina.</p>
 <h1 id="Montar-el-laboratorio"><a href="#Montar-el-laboratorio" class="headerlink" title="Montar el laboratorio"></a>Montar el laboratorio</h1><p>Hace tiempo escuche en un vídeo de S4vitar sobre el gran problema que tiene TryHackMe para ocultar las conexiones entre los diferentes dispositivos conectados a su VPN, no sé si en la actualidad esto estará solucionado, pero para asegurarnos os comparto un <a class="link"   href="https://github.com/Wh1teDrvg0n/safeVPN-THM" >recurso de Wh1teDrvg0n<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> que son unas reglas para prohibir las conexiones entrantes no deseadas.</p>
 <p>Aseguraros de no tener reglas propias o alguna copia de estas porque al finalizar la máquina limpiaremos todas las reglas existentes.</p>
@@ -98,7 +98,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/primera_comprobacion_ip_tables.png"
+                     data-src="/ctf/tryhackme/Blue/primera_comprobacion_ip_tables.png"
                       alt="iptables vacío."
                 ><figcaption>iptables vacío.</figcaption></figure></p>
 </li>
@@ -107,7 +107,7 @@
 <p>La ip indicada es la correspondiente con tun0, interfaz creada por la VPN.<br><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/iptable_despues_del_script.png"
+                     data-src="/ctf/tryhackme/Blue/iptable_despues_del_script.png"
                       alt="iptable después de ejecutar el script."
                 ><figcaption>iptable después de ejecutar el script.</figcaption></figure></p>
 </li>
@@ -126,7 +126,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/escaneo_puertos_nmap.png"
+                     data-src="/ctf/tryhackme/Blue/escaneo_puertos_nmap.png"
                       alt="Escaneo de puertos con nmap."
                 ><figcaption>Escaneo de puertos con nmap.</figcaption></figure><br>Recuerda que puedes utilizar varias herramientas y comparar resultados, puedes encontrar algún dato extra.</p>
 <h2 id="Escaneo-con-netcat"><a href="#Escaneo-con-netcat" class="headerlink" title="Escaneo con netcat"></a>Escaneo con netcat</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">nc -zv 10.10.210.75 1-1000</span><br></pre></td></tr></table></figure></div>
@@ -137,7 +137,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/extract_ports_manually.png"
+                     data-src="/ctf/tryhackme/Blue/extract_ports_manually.png"
                       alt="Extracción de puertos manualmente."
                 ><figcaption>Extracción de puertos manualmente.</figcaption></figure></p>
 <ul>
@@ -153,7 +153,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/version_and_services_nmap.png"
+                     data-src="/ctf/tryhackme/Blue/version_and_services_nmap.png"
                       alt="Versión y servicios corriendo en dichos puertos."
                 ><figcaption>Versión y servicios corriendo en dichos puertos.</figcaption></figure></p>
 <p>Podemos encontrar alguna información como el nombre del equipo: Jon-PC, Windows 7 y diferentes versiones.</p>
@@ -162,7 +162,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/smbclient_null_session.png"
+                     data-src="/ctf/tryhackme/Blue/smbclient_null_session.png"
                       alt="Uso de null session con smbclient."
                 ><figcaption>Uso de null session con smbclient.</figcaption></figure></p>
 <p>Podemos probar con smbmap, pero comprobamos que tampoco nos deja:</p>
@@ -170,7 +170,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/smbmap_error.png"
+                     data-src="/ctf/tryhackme/Blue/smbmap_error.png"
                       alt="Intento de conexión con smbmap."
                 ><figcaption>Intento de conexión con smbmap.</figcaption></figure></p>
 <p>Llegados a este punto podemos comprobar si existen vulnerabilidades existentes para este Windows 7. Para ello utilizaremos algunos script en nmap, estos están divididos en <strong>categorías</strong>:</p>
@@ -178,7 +178,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/categorias_nmap.png"
+                     data-src="/ctf/tryhackme/Blue/categorias_nmap.png"
                       alt="Categorías sobre los scripts de nmap."
                 ><figcaption>Categorías sobre los scripts de nmap.</figcaption></figure></p>
 <p>Como es un Windows 7 y el smb esta expuesto comprobamos las vulnerabilidades(vuln) de forma no intrusiva(safe):</p>
@@ -187,7 +187,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/detect_eternalblue_general_vuln_nmap.png"
+                     data-src="/ctf/tryhackme/Blue/detect_eternalblue_general_vuln_nmap.png"
                       alt="Detección del eternal blue con nmap."
                 ><figcaption>Detección del eternal blue con nmap.</figcaption></figure></p>
 <p>Puedes indicar el script:</p>
@@ -201,7 +201,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/netexec_eternalblue.png"
+                     data-src="/ctf/tryhackme/Blue/netexec_eternalblue.png"
                       alt="Utilizando netexec para comprobar si eternalblue existe."
                 ><figcaption>Utilizando netexec para comprobar si eternalblue existe.</figcaption></figure></p>
 <h1 id="Explotacion"><a href="#Explotacion" class="headerlink" title="Explotación"></a>Explotación</h1><h2 id="Explotacion-con-metasploit"><a href="#Explotacion-con-metasploit" class="headerlink" title="Explotación con metasploit"></a>Explotación con metasploit</h2><h3 id="Configuracion-inicial-del-exploit"><a href="#Configuracion-inicial-del-exploit" class="headerlink" title="Configuración inicial del exploit."></a>Configuración inicial del exploit.</h3><p>Para explotarlo tenemos diferentes maneras de hacerlo:</p>
@@ -216,7 +216,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/search_eternalblue_metasploit.png"
+                     data-src="/ctf/tryhackme/Blue/search_eternalblue_metasploit.png"
                       alt="Buscamos por eternalblue."
                 ><figcaption>Buscamos por eternalblue.</figcaption></figure></p>
 <ol start="3">
@@ -231,7 +231,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/show_parameters_value_eternalblue_metasploit.png"
+                     data-src="/ctf/tryhackme/Blue/show_parameters_value_eternalblue_metasploit.png"
                       alt="Ip víctima seteada."
                 ><figcaption>Ip víctima seteada.</figcaption></figure></p>
 <ol start="6">
@@ -250,7 +250,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/conectados_con_metasploit.png"
+                     data-src="/ctf/tryhackme/Blue/conectados_con_metasploit.png"
                       alt="Conexión exitosa con metasploit."
                 ><figcaption>Conexión exitosa con metasploit.</figcaption></figure></p>
 <p>Ya podemos introducir comandos en el equipo víctima.</p>
@@ -274,7 +274,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/sesiones_metasploit_cambio_de_reverse_shell_a_meterpreter.png"
+                     data-src="/ctf/tryhackme/Blue/sesiones_metasploit_cambio_de_reverse_shell_a_meterpreter.png"
                       alt="Sesiones disponibles."
                 ><figcaption>Sesiones disponibles.</figcaption></figure></p>
 <p>Comandos y algunos extra.</p>
@@ -284,7 +284,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/comprobacion_nt_authority_system_meterpreter.png"
+                     data-src="/ctf/tryhackme/Blue/comprobacion_nt_authority_system_meterpreter.png"
                       alt="Usuario NT AUTHORITY\SYSTEM."
                 ><figcaption>Usuario NT AUTHORITY\SYSTEM.</figcaption></figure></p>
 <p>Vamos a ver por encima el concepto de <strong>“migrar el proceso”</strong>, esto puede ser útil para obtener persistencia, para evadir una detección…</p>
@@ -299,7 +299,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/hashdump_meterpreter.png"
+                     data-src="/ctf/tryhackme/Blue/hashdump_meterpreter.png"
                       alt="Resultado de usar hashdump."
                 ><figcaption>Resultado de usar hashdump.</figcaption></figure></p>
 <p>Vamos a separar esto:</p>
@@ -315,7 +315,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/crackstation_ntlm_jon_hashdump.png"
+                     data-src="/ctf/tryhackme/Blue/crackstation_ntlm_jon_hashdump.png"
                      
                 ></p>
 <p>La contraseña de Jon es: <strong>alqfna22</strong></p>
@@ -325,7 +325,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/primera_flag.png"
+                     data-src="/ctf/tryhackme/Blue/primera_flag.png"
                       alt="Obtención de la primera bandera."
                 ><figcaption>Obtención de la primera bandera.</figcaption></figure></p>
 <p>Segunda bandera en el directorio donde se almacenan las contraseñas:</p>
@@ -334,7 +334,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/segunda_flag.png"
+                     data-src="/ctf/tryhackme/Blue/segunda_flag.png"
                       alt="Obtención de la segunda flag."
                 ><figcaption>Obtención de la segunda flag.</figcaption></figure></p>
 <p>En la imagen da error porque ya estoy en dicho directorio, ejecute el comando sin querer.</p>
@@ -343,7 +343,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/tercera_flag.png"
+                     data-src="/ctf/tryhackme/Blue/tercera_flag.png"
                       alt="Resultado de la tercera flag."
                 ><figcaption>Resultado de la tercera flag.</figcaption></figure></p>
 <h2 id="Explotacion-manual"><a href="#Explotacion-manual" class="headerlink" title="Explotación manual"></a>Explotación manual</h2><h3 id="Uso-de-zzz-exploit"><a href="#Uso-de-zzz-exploit" class="headerlink" title="Uso de zzz exploit"></a>Uso de zzz exploit</h3><p>Es bueno saber como usar mestasploit ya que es considerada una herramienta muy pontente, aunque considero que no se debe de abusar de ella porque no ganariamos tanto conocimiento como realizar una <strong>explotación manual</strong>.</p>
@@ -357,54 +357,54 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/preview_checker_zzz.png"
+                     data-src="/ctf/tryhackme/Blue/preview_checker_zzz.png"
                       alt="Preview del script checker."
                 ><figcaption>Preview del script checker.</figcaption></figure></p>
 <p>Si en alguno de las pipes te muestra información en lugar de status_access_denied significa que tenemos una forma potencial de ejecutar comandos, incluso ya soo con ver <strong>the target is not patched</strong>. Esto no significa que no deje, debemos <strong>modificar el script checker.py</strong> y indicar en el campo <strong>USERNAME</strong> el usuario <strong>guest</strong>:</p>
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/credenciales_guest_checker_zzz.png"
+                     data-src="/ctf/tryhackme/Blue/credenciales_guest_checker_zzz.png"
                       alt="Indicamos el usuario guest en checker.py"
                 ><figcaption>Indicamos el usuario guest en checker.py</figcaption></figure></p>
 <p>Pero a continuación vemos que el usuario guest no está activado en la máquina víctima.<br><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/error_guest_checker_zzz.png"
+                     data-src="/ctf/tryhackme/Blue/error_guest_checker_zzz.png"
                       alt="Error con el usuario guest."
                 ><figcaption>Error con el usuario guest.</figcaption></figure></p>
 <p>Puedes poner las credenciales del usuario encontrado con metasploit anteriormente y funcionaría:</p>
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/checker_despues_de_poner_credenciales.png"
+                     data-src="/ctf/tryhackme/Blue/checker_despues_de_poner_credenciales.png"
                       alt="Después de poner las credenciales."
                 ><figcaption>Después de poner las credenciales.</figcaption></figure></p>
 <h3 id="Uso-de-Autoblue"><a href="#Uso-de-Autoblue" class="headerlink" title="Uso de Autoblue"></a>Uso de Autoblue</h3><p>En la máquina de tryhackme no está activado el usuario guest(en la de hack the box sí), pero aún así podemos utilizar el script <a class="link"   href="https://github.com/3ndG4me/AutoBlue-MS17-010" >AutoBlue<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>. Nos permite tener una mayor flexibilidad y retocar ciertas características que metasploit no permite. Este también tiene un checker y nos sale lo siguiente al ejecutarlo:</p>
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/autoblue_path_wordlists_not_found_checker.png"
+                     data-src="/ctf/tryhackme/Blue/autoblue_path_wordlists_not_found_checker.png"
                       alt="Autoblue no encuentra los diccionarios."
                 ><figcaption>Autoblue no encuentra los diccionarios.</figcaption></figure></p>
 <p>Al intentar modificar el script para indicar la ruta veo que no se encuentra aquí, siguiendo el rastro, encuentro el problema en la función <strong>check_accesisible_pipes()</strong>, exactamente en la función de la conexión(conn.find_named_pipe), objeto creado por el módulo importado <strong>mysmb</strong>(más abajo se ve), una vez aquí dentro busco por el output que nos muestra al no encontrar el diccionario y encuentro la ruta:</p>
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/autoblue_change_path_checker.png"
+                     data-src="/ctf/tryhackme/Blue/autoblue_change_path_checker.png"
                       alt="Cambiamos la ruta en el script mysmb.py"
                 ><figcaption>Cambiamos la ruta en el script mysmb.py</figcaption></figure></p>
 <p>Ahora probamos a ejecutar el script de nuevo:<br><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/autoblue_checker_ok.png"
+                     data-src="/ctf/tryhackme/Blue/autoblue_checker_ok.png"
                       alt="Ejecucción exitosa del checker."
                 ><figcaption>Ejecucción exitosa del checker.</figcaption></figure></p>
 <p>Genial, parece que funciona, ahora debemos de dirigirnos al directorio shellcode y dentro encontraremos un script llamado <strong>shell_prep.sh</strong> que nos generará la carga, este nos realizará diferentes preguntas al ejecutarlo:</p>
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/autoblue_generate_shellcode.png"
+                     data-src="/ctf/tryhackme/Blue/autoblue_generate_shellcode.png"
                       alt="Generando el shellcode."
                 ><figcaption>Generando el shellcode.</figcaption></figure></p>
 <ul>
@@ -431,7 +431,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/whoami_en_victima.png"
+                     data-src="/ctf/tryhackme/Blue/whoami_en_victima.png"
                       alt="Ejecucción del comando whoami en la máquina víctima."
                 ><figcaption>Ejecucción del comando whoami en la máquina víctima.</figcaption></figure></p>
 <p>Cómo podéis comprobar no siempre es un camino de rosas, te vas a encontrar muchas trabas, si en el exploit de python(zzz_exploit.py) visto anteriormente hubiera salido algún pipe poniendo el usuario <strong>guest</strong> tendríamos que haber modificado el script para que en lugar de escribir un archivo en C: se conectará a un recurso compartido mediante smb creado por nosotros para ejecutar un binario netcat.exe para proporcionarnos la reverse shell. Quién quiera entrar más en detalle de cómo realizar en este <a class="link"   href="https://www.youtube.com/watch?v=92XycxcAXkI" >vídeo de s4ivtar<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> lo explica, minutos 57:00-1:01:19.</p>
@@ -449,7 +449,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/saves_reg_sam_system.png"
+                     data-src="/ctf/tryhackme/Blue/saves_reg_sam_system.png"
                       alt="Copia de SAM y SYSTEM."
                 ><figcaption>Copia de SAM y SYSTEM.</figcaption></figure></p>
 <p>A continuación nos lo vamos a transferir por smb hacía nuestro equipo.</p>
@@ -460,7 +460,7 @@
 <p>Le damos permisos de ejecucción y lanzamos.<br><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/creacion_symbolic_links_impacket.png"
+                     data-src="/ctf/tryhackme/Blue/creacion_symbolic_links_impacket.png"
                       alt="Creación de los links simbólicos."
                 ><figcaption>Creación de los links simbólicos.</figcaption></figure></p>
 <p>Con reiniciar la terminal o cerrarla y abrir otra ya podemos utilizarlo el comando con el formato <strong>impacket-…</strong></p>
@@ -482,12 +482,12 @@
 <p>Y el resultado sería el siguiente:<br><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/mandar_sam_system_victima_atacante_via_smb.png"
+                     data-src="/ctf/tryhackme/Blue/mandar_sam_system_victima_atacante_via_smb.png"
                       alt="Mandar via smb los archivos sam y system."
                 ><figcaption>Mandar via smb los archivos sam y system.</figcaption></figure><br><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/recibir_sam_system_atacante_impacket_smb.png"
+                     data-src="/ctf/tryhackme/Blue/recibir_sam_system_atacante_impacket_smb.png"
                       alt="Recibir los archivos sam y system."
                 ><figcaption>Recibir los archivos sam y system.</figcaption></figure></p>
 <p>Al tener estos archivos ya en nuestro equipo podemos utilizar <strong>impacket-secretdump</strong> que nos devolverá los hashes de los usuarios:</p>
@@ -496,7 +496,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/hashes_volcados_con_impacket_secretsdump.png"
+                     data-src="/ctf/tryhackme/Blue/hashes_volcados_con_impacket_secretsdump.png"
                       alt="Obtención de hashes con impacket-secretsdump."
                 ><figcaption>Obtención de hashes con impacket-secretsdump.</figcaption></figure></p>
 <p>Estos hashes los puedes intentar de romper como hemos visto antes con metasploit, mediante crackstation, hashcat…</p>
@@ -509,7 +509,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/netexec_pass_the_hash.png"
+                     data-src="/ctf/tryhackme/Blue/netexec_pass_the_hash.png"
                       alt="Intento fallido de pass the hash."
                 ><figcaption>Intento fallido de pass the hash.</figcaption></figure></p>
 <p>Obtener hashes de contraseña almacenados en memoria, secretos como contraseñas de cuentas.</p>
@@ -518,7 +518,7 @@
 <p>No vemos nada interesante.<br><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/netexec_administrator_lsa_secrets.png"
+                     data-src="/ctf/tryhackme/Blue/netexec_administrator_lsa_secrets.png"
                       alt="Resultado de los secretos."
                 ><figcaption>Resultado de los secretos.</figcaption></figure></p>
 <p>Para entrar al sistema con el usuario Administrador sería:</p>
@@ -535,14 +535,14 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/ebowla_genetic_config_output_payload_type_modification.png"
+                     data-src="/ctf/tryhackme/Blue/ebowla_genetic_config_output_payload_type_modification.png"
                       alt="Modificación de la variable output_type y payload_type."
                 ><figcaption>Modificación de la variable output_type y payload_type.</figcaption></figure></p>
 <p>Ahora vamos un poco en el script hasta que estemos en [[ENV_VAR]] que es la chicha.</p>
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/ebowla_genetic_config_env_var_vacio.png"
+                     data-src="/ctf/tryhackme/Blue/ebowla_genetic_config_env_var_vacio.png"
                       alt="Variables de entorno por defecto."
                 ><figcaption>Variables de entorno por defecto.</figcaption></figure></p>
 <p>Hay que tener cuidado a la hora de rellenarlo, porque si nos equivocamos en alguna luego el binario no se va interpretar bien y no se podrá descrifrar correctamente.</p>
@@ -551,7 +551,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/ebowla_genetic_config_env_var_completado.png"
+                     data-src="/ctf/tryhackme/Blue/ebowla_genetic_config_env_var_completado.png"
                       alt="Variables de entorno rellenadas."
                 ><figcaption>Variables de entorno rellenadas.</figcaption></figure></p>
 <p>Guardamos, cerramos, instalamos las siguientes dependencias para que el script funcione:</p>
@@ -563,7 +563,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/ebowla_go_mimikatz.png"
+                     data-src="/ctf/tryhackme/Blue/ebowla_go_mimikatz.png"
                       alt="Creación del archivo mimikatz con go que será compilado."
                 ><figcaption>Creación del archivo mimikatz con go que será compilado.</figcaption></figure></p>
 <p>Si vemos lo que hay en el directorio output que nos ha creado, veremos el archivo go_symmetric_mimikatz.exe.go. Tenemos el script <strong>build_x64_go.sh</strong> que se va a encargar de compilar nuestro archivo:</p>
@@ -575,7 +575,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/ebowla_script_bash_go_compila_mimikatz.png"
+                     data-src="/ctf/tryhackme/Blue/ebowla_script_bash_go_compila_mimikatz.png"
                       alt="Compilación final de mimikatz."
                 ><figcaption>Compilación final de mimikatz.</figcaption></figure></p>
 <p>Bien, ya nos lo ha creado en el directorio output, vamos a transferir el archivo, en esta ocasión con un servidor en python:</p>
@@ -592,14 +592,14 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/mimikatz_in_victim_machine.png"
+                     data-src="/ctf/tryhackme/Blue/mimikatz_in_victim_machine.png"
                       alt="Mimikatz descargado en la máquina víctima."
                 ><figcaption>Mimikatz descargado en la máquina víctima.</figcaption></figure></p>
 <p>Si probamos a ejecutar el programa nos sale lo siguiente:</p>
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/preview_mimikatz_victim_machine.png"
+                     data-src="/ctf/tryhackme/Blue/preview_mimikatz_victim_machine.png"
                       alt="Mimikatz en la máquina víctima."
                 ><figcaption>Mimikatz en la máquina víctima.</figcaption></figure></p>
 <p>Ahora en la consola interactiva de mimikatz ponemos lo siguiente:</p>
@@ -612,7 +612,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/mimikatz_results_without_passwords.png"
+                     data-src="/ctf/tryhackme/Blue/mimikatz_results_without_passwords.png"
                       alt="Resultados de mimikatz sin contraseña."
                 ><figcaption>Resultados de mimikatz sin contraseña.</figcaption></figure></p>
 <p>En este caso no nos muestra credenciales en texto claro, pero podría ser que lo hiciera.</p>
@@ -623,7 +623,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/port_rdp_nmap_scan.png"
+                     data-src="/ctf/tryhackme/Blue/port_rdp_nmap_scan.png"
                       alt="Comprobación del puerto RDP."
                 ><figcaption>Comprobación del puerto RDP.</figcaption></figure></p>
 <p>Al estar cerrado tendríamos que utilizar <strong>netexec</strong> para activar el rdp en la máquina víctima:</p>
@@ -636,7 +636,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/active_rdp_with_netexec.png"
+                     data-src="/ctf/tryhackme/Blue/active_rdp_with_netexec.png"
                       alt="Activando rdp con netexec."
                 ><figcaption>Activando rdp con netexec.</figcaption></figure></p>
 <p>Otro tip es que ya que tenemos acceso al equipo víctima, podemos comprobar si dicho puerto se ha abierto con el comando:</p>
@@ -649,7 +649,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/netstat_open_port.png"
+                     data-src="/ctf/tryhackme/Blue/netstat_open_port.png"
                       alt="Comprobación del estado del puerto rdp en la máquina víctima."
                 ><figcaption>Comprobación del estado del puerto rdp en la máquina víctima.</figcaption></figure></p>
 <p>Ejecucción de la conexión para obtener el escritorio:</p>
@@ -665,7 +665,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/hash_the_pass_rdp_w7_not_allowed.png"
+                     data-src="/ctf/tryhackme/Blue/hash_the_pass_rdp_w7_not_allowed.png"
                       alt="Hash the pass en Windows 7 no permitido."
                 ><figcaption>Hash the pass en Windows 7 no permitido.</figcaption></figure></p>
 <p>Así que tenemos que seguir buscando una manera para buscar la contraseña sin llegar a descifrar el hash.</p>
@@ -674,13 +674,13 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/conexion_mediante_rdp_sabiendo_la_contrase%C3%B1a.png"
+                     data-src="/ctf/tryhackme/Blue/conexion_mediante_rdp_sabiendo_la_contrase%C3%B1a.png"
                       alt="Conexión simulando un tercero."
                 ><figcaption>Conexión simulando un tercero.</figcaption></figure></p>
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/mimikatz_con_credenciales_administrator.png"
+                     data-src="/ctf/tryhackme/Blue/mimikatz_con_credenciales_administrator.png"
                       alt="Mimikatz con las credenciales del administrador en texto claro."
                 ><figcaption>Mimikatz con las credenciales del administrador en texto claro.</figcaption></figure></p>
 <p>Genial, ahora si podemos ver la contraseña en texto claro, hashes…En caso de ser una contraseña compleja os la podríais encontrar mediante mimikatz y ser de gran ayuda.</p>
@@ -690,7 +690,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/encontrado_el_binario_del_explorador_de_archivos.png"
+                     data-src="/ctf/tryhackme/Blue/encontrado_el_binario_del_explorador_de_archivos.png"
                       alt="Binario del explorador de archivos."
                 ><figcaption>Binario del explorador de archivos.</figcaption></figure></p>
 <p>Una vez localizado(explorer.exe) debemos realizar una copia:</p>
@@ -714,7 +714,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/01/09/Blue/obtain_reverse_shell_open_explorer.png"
+                     data-src="/ctf/tryhackme/Blue/obtain_reverse_shell_open_explorer.png"
                       alt="Obteniendo una reverse shell al abrir el explorador de archivos."
                 ><figcaption>Obteniendo una reverse shell al abrir el explorador de archivos.</figcaption></figure></p>
 <p>Cómo podeis ver es un poco bastante cantoso, porque se ve la terminal y indica que el comando _explorer no se ha reconocido, según la aplicación que utiliceis se mostrará de una manera u otra. No es recomendable para casos de auditorías reales donde se busque la descripción. Normalmente es útil identificar que aplicaciones son las que abre el usuario constantemente(por ejemplo el office) y realizar algo así, pero más camuflado.</p>
@@ -762,7 +762,7 @@
   </entry>
   <entry>
     <title>🐙 Tentacle | WriteUp</title>
-    <url>/2025/06/12/Tentacle/</url>
+    <url>/ctf/hackthebox/Tentacle/</url>
     <content><![CDATA[<p>En esta máquina vamos a navegar por diferentes Squid proxies para acabar encontrando un servicio vulnerable del cuál nos aprovecharemos para obtener acceso al sistema y posteriormente escalar privilegios abusando de kerberos.</p>
 <h1 id="Organizacion"><a href="#Organizacion" class="headerlink" title="Organización"></a>Organización</h1><p>Nos creamos nuestro directorio de trabajo para ordenar todas las fases realizadas en esta intrusión.</p>
 <p>En mi caso tengo un script llamado <strong>mkt</strong> nivel de .zshrc que me permite crear la estructura de trabajo correspondiente:</p>
@@ -774,7 +774,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/06/12/Tentacle/ping_main_ip.png"
+                     data-src="/ctf/hackthebox/Tentacle/ping_main_ip.png"
                       alt="Comprobando si el equipo esta activo."
                 ><figcaption>Comprobando si el equipo esta activo.</figcaption></figure></p>
 <p>Recordar que si el TTL no se ha modificado cada sistema operativo tiene uno diferente, ya solo con un simple ping tenemos un indicio de que esta máquina es Linux. Más cerca de 64 Linux, cerca de 128 Windows, más información en <a class="link"   href="https://subinsb.com/default-device-ttl-values/" >subinsb.com<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>.</p>
@@ -788,7 +788,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/06/12/Tentacle/extractPorts_main.png"
+                     data-src="/ctf/hackthebox/Tentacle/extractPorts_main.png"
                       alt="Extracción de puertos a la clipboard con extractPorts."
                 ><figcaption>Extracción de puertos a la clipboard con extractPorts.</figcaption></figure></p>
 <p>Con los puertos escaneados podemos tratar de lanzar unos scripts básicos de enumeración y reconocmiento para ver con que nos vamos a pelear.</p>
@@ -797,7 +797,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/06/12/Tentacle/nmap_enumeration_and_version_scripts_main.png"
+                     data-src="/ctf/hackthebox/Tentacle/nmap_enumeration_and_version_scripts_main.png"
                       alt="Información obtenida gracias a los scripts de nmap."
                 ><figcaption>Información obtenida gracias a los scripts de nmap.</figcaption></figure></p>
 <p>¿Qué estamos viendo?</p>
@@ -816,7 +816,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/06/12/Tentacle/first_view_web_squid_proxy.png"
+                     data-src="/ctf/hackthebox/Tentacle/first_view_web_squid_proxy.png"
                       alt="Vistazo web del squid proxy."
                 ><figcaption>Vistazo web del squid proxy.</figcaption></figure></p>
 <p>Aquí podemos apreciar información de utilidad como un correo electrónico del “cache administrator”(un correo con el nombre de un usuario y el dominio empresarial.) También un poquito más abajo nos encontramos que este error ha sido generado por “srv01.realcorp.htb” lo que parece ser el nombre del servidor que esta alojando este servicio entre otros. Lo añadiremos también al fichero &#x2F;etc&#x2F;hosts.</p>
@@ -828,7 +828,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/06/12/Tentacle/dig_basic.png"
+                     data-src="/ctf/hackthebox/Tentacle/dig_basic.png"
                       alt="Consulta dns estándar."
                 ><figcaption>Consulta dns estándar.</figcaption></figure></p>
 <p>No podemos sacar gran información de aquí aunque se puede ver un <strong>root.realcorp.htb</strong>, lo tendremos en cuenta y seguimos con la enumeración.</p>
@@ -837,7 +837,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/06/12/Tentacle/dig_ns.png"
+                     data-src="/ctf/hackthebox/Tentacle/dig_ns.png"
                       alt="Obtención de información sobre los name server."
                 ><figcaption>Obtención de información sobre los name server.</figcaption></figure></p>
 <p>Encontramos <strong>ns.realcorp.htb</strong> con un registro A con la IP 10.197.243.77. Mmm curioso, una IP a la que no podemos llegar de momento por el segmento de red donde estamos situados.</p>
@@ -847,7 +847,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/06/12/Tentacle/dig_mx.png"
+                     data-src="/ctf/hackthebox/Tentacle/dig_mx.png"
                       alt="Enumeración de los servidores de correo."
                 ><figcaption>Enumeración de los servidores de correo.</figcaption></figure></p>
 <p>Volvemos a ver root.realcorp.htb</p>
@@ -858,7 +858,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/06/12/Tentacle/dig_axfr.png"
+                     data-src="/ctf/hackthebox/Tentacle/dig_axfr.png"
                       alt="Intento fallido de ataque de transferencia de zona."
                 ><figcaption>Intento fallido de ataque de transferencia de zona.</figcaption></figure></p>
 <h3 id="dnsenum"><a href="#dnsenum" class="headerlink" title="dnsenum"></a>dnsenum</h3><p>Con la herramienta dnsenum vamos a realizar fuerza bruta para intentar enumerar subdominios a través del DNS.</p>
@@ -867,7 +867,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/06/12/Tentacle/dnsenum_bruteforce_subdomain.png"
+                     data-src="/ctf/hackthebox/Tentacle/dnsenum_bruteforce_subdomain.png"
                       alt="Enumeración de subdominios."
                 ><figcaption>Enumeración de subdominios.</figcaption></figure></p>
 <p>Podemos ver que encontramos más subdominios: <strong>proxy.realcorp.htb</strong> con la ip <strong>10.197.243.77</strong> y <strong>wpad.realcorp.htb</strong> con <strong>10.197.243.31</strong>.</p>
@@ -906,7 +906,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/06/12/Tentacle/nmap_discover_ports_localhost_first_squid_proxy.png"
+                     data-src="/ctf/hackthebox/Tentacle/nmap_discover_ports_localhost_first_squid_proxy.png"
                       alt="Puertos abiertos en dicho servidor por la interfaz de localhost."
                 ><figcaption>Puertos abiertos en dicho servidor por la interfaz de localhost.</figcaption></figure></p>
 <p>Podemos ver el puerto 464, 749 nuevos.</p>
@@ -914,7 +914,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/06/12/Tentacle/nmap_service_and_version_localhost_first_squid_proxy.png"
+                     data-src="/ctf/hackthebox/Tentacle/nmap_service_and_version_localhost_first_squid_proxy.png"
                       alt="Scripts básicos de reconocimiento y versión."
                 ><figcaption>Scripts básicos de reconocimiento y versión.</figcaption></figure></p>
 <p>De esos servicios no vamos a conseguir nada, así que seguimos avanzando en nuestra enumeración.</p>
@@ -926,7 +926,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/06/12/Tentacle/first_squid_diagram.png"
+                     data-src="/ctf/hackthebox/Tentacle/first_squid_diagram.png"
                       alt="Diagrama de lo que llevamos."
                 ><figcaption>Diagrama de lo que llevamos.</figcaption></figure></p>
 <p>Para usar la interfaz interna vamos a añadir a nuestro archivo &#x2F;etc&#x2F;proxychains.conf la siguiente línea:</p>
@@ -941,7 +941,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/06/12/Tentacle/nmap_ports_second_squid_proxy.png"
+                     data-src="/ctf/hackthebox/Tentacle/nmap_ports_second_squid_proxy.png"
                       alt="Escaneo de nmap a proxy.realcorp.htb"
                 ><figcaption>Escaneo de nmap a proxy.realcorp.htb</figcaption></figure></p>
 <p>Si considerás que el escaneo va muy lento puedes crearte un script en bash para agilizarlo:</p>
@@ -952,20 +952,20 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/06/12/Tentacle/second_squid_diagram.png"
+                     data-src="/ctf/hackthebox/Tentacle/second_squid_diagram.png"
                       alt="Squid proxy interno encontrado."
                 ><figcaption>Squid proxy interno encontrado.</figcaption></figure></p>
 <p>Y intentamos llegar al servidor wpad.realcorp.htb con el script realizado(recomiendo lanzarlo varias veces, puede que no aparezca toda la información necesaria o se salte algún puerto)</p>
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/06/12/Tentacle/nmap_wpad_recon_ports.png"
+                     data-src="/ctf/hackthebox/Tentacle/nmap_wpad_recon_ports.png"
                       alt="Puertos abiertos en el equipo wpad.realcorp.htb."
                 ><figcaption>Puertos abiertos en el equipo wpad.realcorp.htb.</figcaption></figure></p>
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/06/12/Tentacle/third_squid_diagram.png"
+                     data-src="/ctf/hackthebox/Tentacle/third_squid_diagram.png"
                       alt="Diagrama con el equipo wpad."
                 ><figcaption>Diagrama con el equipo wpad.</figcaption></figure></p>
 <p>Genial, podemos ver que llegamos al servidor. Podemos ver que el puerto 80 esta abierto, http, esto me interesa, para ver el contenido de la página podemos lanzar un simple <strong>curl</strong>.</p>
@@ -980,7 +980,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/06/12/Tentacle/wpad_data.png"
+                     data-src="/ctf/hackthebox/Tentacle/wpad_data.png"
                       alt="Contenido del archivo wpad.dat."
                 ><figcaption>Contenido del archivo wpad.dat.</figcaption></figure></p>
 <p>Y vemos dos rangos diferentes, el rango que 10.197.243.0 ya lo tenemos(de ahí sale proxy y wpad), en cambio, el rango 10.241.251.0 es nuevo.</p>
@@ -995,7 +995,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/06/12/Tentacle/port_scan_last_network_vulnerable_mail.png"
+                     data-src="/ctf/hackthebox/Tentacle/port_scan_last_network_vulnerable_mail.png"
                       alt="Escaneo de hosts y puertos sobre la nueva subred."
                 ><figcaption>Escaneo de hosts y puertos sobre la nueva subred.</figcaption></figure></p>
 <p>Vemos dos máquinas, uan con el puerto 22 y otra con el puerto 25(por defecto smtp, correo).</p>
@@ -1005,20 +1005,20 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/06/12/Tentacle/nmap_version_opensmtpd.png"
+                     data-src="/ctf/hackthebox/Tentacle/nmap_version_opensmtpd.png"
                       alt="Información extra del servicio que corre en dicho puerto."
                 ><figcaption>Información extra del servicio que corre en dicho puerto.</figcaption></figure></p>
 <p>Si utilizamos la herramienta <strong>searchsploit</strong> podemos encontrar que el servicio esta desactualizado y existe un script basntante peligroso e interesante para nosotros. Al disponer de un servicio de una versión menor podríamos probar a ejecutarlo.</p>
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/06/12/Tentacle/exploit_snmpd_searchsploit.png"
+                     data-src="/ctf/hackthebox/Tentacle/exploit_snmpd_searchsploit.png"
                       alt="Buscamos exploits para el servicio OpenSMTPD."
                 ><figcaption>Buscamos exploits para el servicio OpenSMTPD.</figcaption></figure></p>
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/06/12/Tentacle/fourth_squid_diagram.png"
+                     data-src="/ctf/hackthebox/Tentacle/fourth_squid_diagram.png"
                       alt="Red entera de la máquina."
                 ><figcaption>Red entera de la máquina.</figcaption></figure></p>
 <h1 id="Explotacion"><a href="#Explotacion" class="headerlink" title="Explotación"></a>Explotación</h1><h2 id="Uso-de-RCE-para-OpenSNMPD"><a href="#Uso-de-RCE-para-OpenSNMPD" class="headerlink" title="Uso de RCE para OpenSNMPD"></a>Uso de RCE para OpenSNMPD</h2><p>Bien, pues ya tenemos el primer exploit a probar sobre una máquina, vamos a inspeccionar el código del script y nos lo descargamos(searchsploit -x &lt;path&gt; para inspeccionar y m &lt;path&gt; para descargar).</p>
@@ -1031,24 +1031,24 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/06/12/Tentacle/first_try_exploit_snmptd_failed.png"
+                     data-src="/ctf/hackthebox/Tentacle/first_try_exploit_snmptd_failed.png"
                       alt="Intento fallido del exploit."
                 ><figcaption>Intento fallido del exploit.</figcaption></figure></p>
 <p>Vemos que por abajo no ha llegado nada, ¿porque?. Vamos a revisar el código del script.</p>
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/06/12/Tentacle/original_script_exploit_root_user.png"
+                     data-src="/ctf/hackthebox/Tentacle/original_script_exploit_root_user.png"
                       alt="El usuario que se indica para enviar el correo es root."
                 ><figcaption>El usuario que se indica para enviar el correo es root.</figcaption></figure></p>
-<p>Recordemos que al principio, al visualizar la página del primer squid proxy, nos daba un usuario, el usuario “<a class="link"   href="mailto:&#x6a;&#46;&#110;&#x61;&#107;&#97;&#x7a;&#x61;&#119;&#x61;&#x40;&#x72;&#101;&#x61;&#108;&#99;&#111;&#114;&#x70;&#46;&#104;&#116;&#98;" >&#x6a;&#46;&#110;&#x61;&#107;&#97;&#x7a;&#x61;&#119;&#x61;&#x40;&#x72;&#101;&#x61;&#108;&#99;&#111;&#114;&#x70;&#46;&#104;&#116;&#98;<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>“.</p>
+<p>Recordemos que al principio, al visualizar la página del primer squid proxy, nos daba un usuario, el usuario “<a class="link"   href="mailto:&#x6a;&#x2e;&#x6e;&#x61;&#x6b;&#97;&#122;&#97;&#x77;&#x61;&#x40;&#x72;&#101;&#x61;&#x6c;&#x63;&#111;&#x72;&#112;&#46;&#104;&#116;&#x62;" >&#x6a;&#x2e;&#x6e;&#x61;&#x6b;&#97;&#122;&#97;&#x77;&#x61;&#x40;&#x72;&#101;&#x61;&#x6c;&#x63;&#111;&#x72;&#112;&#46;&#104;&#116;&#x62;<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>“.</p>
 <h3 id="Kerbrute-para-validar-usuarios"><a href="#Kerbrute-para-validar-usuarios" class="headerlink" title="Kerbrute para validar usuarios"></a>Kerbrute para validar usuarios</h3><p>Podemos chekear si el usuario existe gracias al servicio kerberos corriendo en la primera máquina, para ello utilizaremos la herramienta kerbrute:</p>
 <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">kerbrute userenum --domain realcorp.htb --dc 10.10.10.224 ../data/users.txt</span><br></pre></td></tr></table></figure></div>
 
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/06/12/Tentacle/kerbrute_user_enum.png"
+                     data-src="/ctf/hackthebox/Tentacle/kerbrute_user_enum.png"
                       alt="Checkar si el usuario encontrado existe con kerbrute."
                 ><figcaption>Checkar si el usuario encontrado existe con kerbrute.</figcaption></figure></p>
 <p>Es más, no solo es que exista, si no también no tiene el pre-auth activado y nos dumpea el hash. Podéis intentar a crackerlo con john o hashcat, pero no vais a obtener la contraseña.</p>
@@ -1056,14 +1056,14 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/06/12/Tentacle/exploit_modified.png"
+                     data-src="/ctf/hackthebox/Tentacle/exploit_modified.png"
                       alt="Modificación del script en python."
                 ><figcaption>Modificación del script en python.</figcaption></figure></p>
 <p>Si probamos a ejecutar ahora vemos que si llega una conexión, con lo cuál podemos verificar que el exploit funciona.</p>
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/06/12/Tentacle/exploit_working_well.png"
+                     data-src="/ctf/hackthebox/Tentacle/exploit_working_well.png"
                       alt="Verificación exitosa del RCE."
                 ><figcaption>Verificación exitosa del RCE.</figcaption></figure></p>
 <p>Si pruebas con curl o wget http:&#x2F;&#x2F;… no llegará la petición… Me quedo con la curiosidad de como el equipo resuelve las peticiones para que solo funcione con wget IP.</p>
@@ -1083,7 +1083,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/06/12/Tentacle/obtained_rev_shell_snmptd__with_root.png"
+                     data-src="/ctf/hackthebox/Tentacle/obtained_rev_shell_snmptd__with_root.png"
                       alt="Obteniendo la reverse shell."
                 ><figcaption>Obteniendo la reverse shell.</figcaption></figure></p>
 <h2 id="Tratamiento-de-la-tty"><a href="#Tratamiento-de-la-tty" class="headerlink" title="Tratamiento de la tty"></a>Tratamiento de la tty</h2><p>El tratamiento es como siempre</p>
@@ -1096,7 +1096,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/06/12/Tentacle/j_nakazawa_text_clear_credentials.png"
+                     data-src="/ctf/hackthebox/Tentacle/j_nakazawa_text_clear_credentials.png"
                       alt="Credenciales del usuario j_nakazawa."
                 ><figcaption>Credenciales del usuario j_nakazawa.</figcaption></figure></p>
 <p>Somos usuario root sobre esta máquina(smtp.realcorp.htb).</p>
@@ -1105,7 +1105,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/06/12/Tentacle/ssh_with_nakazawa_error_type.png"
+                     data-src="/ctf/hackthebox/Tentacle/ssh_with_nakazawa_error_type.png"
                       alt="Error de ssh al gastar los tres intentos."
                 ><figcaption>Error de ssh al gastar los tres intentos.</figcaption></figure><br>Vemos algo raro, algo fuera de lo común, gssapi-keyex… ¿que es esto?. Vamos a buscarlo en internet. En esta entrada de <a class="link"   href="https://en.wikipedia.org/wiki/Generic_Security_Services_Application_Programming_Interface" >wikipedia<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> podemos ver que este mecanismo se utiliza con Kerberos.</p>
 <p>Para utilizar ssh con kerberos como cliente debemos realizar los siguientes pasos:</p>
@@ -1132,7 +1132,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/06/12/Tentacle/kinit_generate_ticket_nakazawa.png"
+                     data-src="/ctf/hackthebox/Tentacle/kinit_generate_ticket_nakazawa.png"
                       alt="Comprobamos el ticket generado con klist."
                 ><figcaption>Comprobamos el ticket generado con klist.</figcaption></figure></p>
 <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> ssh -o GSSAPIAuthentication=<span class="built_in">yes</span> j.nakazawa@srv01.realcorp.htb</span><br></pre></td></tr></table></figure></div>
@@ -1140,7 +1140,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/06/12/Tentacle/inside_srv01_server.png"
+                     data-src="/ctf/hackthebox/Tentacle/inside_srv01_server.png"
                       alt="Dentro del servidor principal."
                 ><figcaption>Dentro del servidor principal.</figcaption></figure></p>
 <p>Si quieres borrar los tickets puedes utilizar kdestroy.</p>
@@ -1150,14 +1150,14 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/06/12/Tentacle/srv01_crontab.png"
+                     data-src="/ctf/hackthebox/Tentacle/srv01_crontab.png"
                       alt="Crontab del equipo."
                 ><figcaption>Crontab del equipo.</figcaption></figure></p>
 <p>Si le echamos un ojo al script vemos que otros tienen capacidad de lectura sobre este.</p>
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/06/12/Tentacle/content_of_log_backup_script.png"
+                     data-src="/ctf/hackthebox/Tentacle/content_of_log_backup_script.png"
                       alt="Contenido del script."
                 ><figcaption>Contenido del script.</figcaption></figure></p>
 <p>Con rsync envía todos el contenido del directorio &#x2F;var&#x2F;log&#x2F;squid al directorio &#x2F;home&#x2F;admin&#x2F; al home del usuario admin. Después comprime algunos ficheros como access.log y cache.log y los elimina.</p>
@@ -1174,7 +1174,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/06/12/Tentacle/enter_with_admin_via_ssh_kerberos.png"
+                     data-src="/ctf/hackthebox/Tentacle/enter_with_admin_via_ssh_kerberos.png"
                       alt="Entramos como el usuario admin."
                 ><figcaption>Entramos como el usuario admin.</figcaption></figure></p>
 <h2 id="admin-root"><a href="#admin-root" class="headerlink" title="admin -&gt; root"></a>admin -&gt; root</h2><p>Vemos que estamos en el grupo admin con el comando id.<br>Y si buscamos ficheros que tengan el grupo admin:</p>
@@ -1186,7 +1186,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/06/12/Tentacle/klist_with_krb5_ketab.png"
+                     data-src="/ctf/hackthebox/Tentacle/klist_with_krb5_ketab.png"
                       alt="Lista de principals en el keytab."
                 ><figcaption>Lista de principals en el keytab.</figcaption></figure></p>
 <p>Podemos utilizar la herramienta <strong>kadmin</strong> que nos sirve para administrar el servidor de kerberos</p>
@@ -1199,14 +1199,14 @@
 <p>Efectivamente, sobreescribimos el principal root con este nuevo que nos estamos creando.<br><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/06/12/Tentacle/creat_principal_root_with_kadmin.png"
+                     data-src="/ctf/hackthebox/Tentacle/creat_principal_root_with_kadmin.png"
                       alt="Creación de principal root con nueva contraseña."
                 ><figcaption>Creación de principal root con nueva contraseña.</figcaption></figure></p>
 <p>Si volvemos a ejecutar ksu y introducimos la misma contraseña.</p>
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/06/12/Tentacle/ksu_with_root_obtaining_flag.png"
+                     data-src="/ctf/hackthebox/Tentacle/ksu_with_root_obtaining_flag.png"
                       alt="Utilizando ksu para entrar como root y mostrar la flag."
                 ><figcaption>Utilizando ksu para entrar como root y mostrar la flag.</figcaption></figure></p>
 <h1 id="Fuentes"><a href="#Fuentes" class="headerlink" title="Fuentes"></a>Fuentes</h1><p>Basado en el write-up de <a class="link"   href="https://www.youtube.com/watch?v=hFIWuWVIDek&t=3300s" >s4vitar<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
@@ -1232,12 +1232,12 @@
   </entry>
   <entry>
     <title>Symfonos 1 y 2 | S4vitar | Pivoting I</title>
-    <url>/2024/12/04/Symfonos%201%20y%202/</url>
+    <url>/ctf/labs/Symfonos%201%20y%202/</url>
     <content><![CDATA[<h1 id="Introduccion-al-Pivoting"><a href="#Introduccion-al-Pivoting" class="headerlink" title="Introducción al Pivoting."></a>Introducción al Pivoting.</h1><p>Bueenos días&#x2F;tardes&#x2F;noches hackerss, hoy vamos a montarnos un laboratorio de máquinas vulnerables para aprender un poco de <strong>Pivoting(Moverse lateralmente para comprometer otro dispositivo)</strong>.</p>
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2024/12/04/Symfonos%201%20y%202/diagrama-introducci%C3%B3n.png"
+                     data-src="/ctf/labs/Symfonos%201%20y%202/diagrama-introducci%C3%B3n.png"
                       class="" title="Diagrama introductorio."
                 >
 
@@ -1260,7 +1260,7 @@
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2024/12/04/Symfonos%201%20y%202/ping.png"
+                     data-src="/ctf/labs/Symfonos%201%20y%202/ping.png"
                       class="" title="Uso de ping para comprobar si tenemos comunicación con la víctima"
                 >
 
@@ -1293,7 +1293,7 @@
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2024/12/04/Symfonos%201%20y%202/extractPorts.png"
+                     data-src="/ctf/labs/Symfonos%201%20y%202/extractPorts.png"
                       class="" title="Uso de la utilidad extractPorts"
                 >
 
@@ -1304,7 +1304,7 @@
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2024/12/04/Symfonos%201%20y%202/escaneo_servicios.png"
+                     data-src="/ctf/labs/Symfonos%201%20y%202/escaneo_servicios.png"
                       class="" title="Escaneo de versión y servicios de los puertos detectados."
                 >
 
@@ -1323,7 +1323,7 @@
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2024/12/04/Symfonos%201%20y%202/whatweb.png"
+                     data-src="/ctf/labs/Symfonos%201%20y%202/whatweb.png"
                       class="" title="Uso de la herramienta whatweb"
                 >
 
@@ -1341,7 +1341,7 @@
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2024/12/04/Symfonos%201%20y%202/smbclient_1.png"
+                     data-src="/ctf/labs/Symfonos%201%20y%202/smbclient_1.png"
                       class="" title="Uso de smbclient para ver los recursos"
                 >
 
@@ -1354,14 +1354,14 @@
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2024/12/04/Symfonos%201%20y%202/archivo_attention_smb.png"
+                     data-src="/ctf/labs/Symfonos%201%20y%202/archivo_attention_smb.png"
                       class="" title="Descargar el archivo attention.txt desde smb"
                 >
 
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2024/12/04/Symfonos%201%20y%202/contenido_attention_smb.png"
+                     data-src="/ctf/labs/Symfonos%201%20y%202/contenido_attention_smb.png"
                       class="" title="Contenido del archivo attention.txt"
                 >
 
@@ -1372,7 +1372,7 @@
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2024/12/04/Symfonos%201%20y%202/primer_intento_zeus_ssh_fuerza_bruta.png"
+                     data-src="/ctf/labs/Symfonos%201%20y%202/primer_intento_zeus_ssh_fuerza_bruta.png"
                       class="" title="Fuerza bruta con hydra a el usuario Zeus."
                 >
 
@@ -1382,7 +1382,7 @@
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2024/12/04/Symfonos%201%20y%202/searchsploit_ssh_user_enum.png"
+                     data-src="/ctf/labs/Symfonos%201%20y%202/searchsploit_ssh_user_enum.png"
                       class="" title="Exploit en python para la enumeración de usuarios."
                 >
 
@@ -1400,7 +1400,7 @@
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2024/12/04/Symfonos%201%20y%202/ssh_attempt_valid_user_failed.png"
+                     data-src="/ctf/labs/Symfonos%201%20y%202/ssh_attempt_valid_user_failed.png"
                       class="" title="Intento fallido de enumeración de usuarios."
                 >
 
@@ -1416,7 +1416,7 @@
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2024/12/04/Symfonos%201%20y%202/helios_file_smb.png"
+                     data-src="/ctf/labs/Symfonos%201%20y%202/helios_file_smb.png"
                       class="" title="Acceso y descargas de archivos en el directorio helios"
                 >
 
@@ -1424,7 +1424,7 @@
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2024/12/04/Symfonos%201%20y%202/contenido_todo_helios.png"
+                     data-src="/ctf/labs/Symfonos%201%20y%202/contenido_todo_helios.png"
                       class="" title="Contenido del archivo todo."
                 >
 
@@ -1432,7 +1432,7 @@
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2024/12/04/Symfonos%201%20y%202/primer_vistazo_wordpress_helios.png"
+                     data-src="/ctf/labs/Symfonos%201%20y%202/primer_vistazo_wordpress_helios.png"
                       class="" title="Primer vistazo de la página wordpress"
                 >
 
@@ -1441,7 +1441,7 @@
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2024/12/04/Symfonos%201%20y%202/ping_symfonos_local.png"
+                     data-src="/ctf/labs/Symfonos%201%20y%202/ping_symfonos_local.png"
                       class="" title="ping fallido a symfonos local"
                 >
 
@@ -1449,7 +1449,7 @@
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2024/12/04/Symfonos%201%20y%202/a%C3%B1adir_symfonos_local_etc_hosts.png"
+                     data-src="/ctf/labs/Symfonos%201%20y%202/a%C3%B1adir_symfonos_local_etc_hosts.png"
                       class="" title="Añadimos symfonos.local al &#x2F;etc&#x2F;hosts"
                 >
 
@@ -1457,7 +1457,7 @@
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2024/12/04/Symfonos%201%20y%202/wordpress_cargado_symfonos.png"
+                     data-src="/ctf/labs/Symfonos%201%20y%202/wordpress_cargado_symfonos.png"
                       class="" title="Wordpress cargado."
                 >
 
@@ -1480,7 +1480,7 @@
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2024/12/04/Symfonos%201%20y%202/enumeracion_plugins.png"
+                     data-src="/ctf/labs/Symfonos%201%20y%202/enumeracion_plugins.png"
                       class="" title="Enumeración de plugins manual."
                 >
 
@@ -1491,7 +1491,7 @@
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2024/12/04/Symfonos%201%20y%202/searchsploit_mail_masta.png"
+                     data-src="/ctf/labs/Symfonos%201%20y%202/searchsploit_mail_masta.png"
                       class="" title="Buscamos en searchsploit el plugin mail masta."
                 >
 
@@ -1499,7 +1499,7 @@
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2024/12/04/Symfonos%201%20y%202/prueba_del_lfi_mail_masta.png"
+                     data-src="/ctf/labs/Symfonos%201%20y%202/prueba_del_lfi_mail_masta.png"
                       class="" title="Probamos el lfi."
                 >
 
@@ -1510,7 +1510,7 @@
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2024/12/04/Symfonos%201%20y%202/lfi_script.gif"
+                     data-src="/ctf/labs/Symfonos%201%20y%202/lfi_script.gif"
                       class="" title="Funcionamiento del script"
                 >
 
@@ -1532,7 +1532,7 @@
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2024/12/04/Symfonos%201%20y%202/mail_log_helios.png"
+                     data-src="/ctf/labs/Symfonos%201%20y%202/mail_log_helios.png"
                       class="" title="Log smtp de helios"
                 >
 
@@ -1544,7 +1544,7 @@
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2024/12/04/Symfonos%201%20y%202/send_mail.png"
+                     data-src="/ctf/labs/Symfonos%201%20y%202/send_mail.png"
                       class="" title="Correo enviado usando telnet."
                 >
 
@@ -1552,7 +1552,7 @@
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2024/12/04/Symfonos%201%20y%202/comprobacion_correo_enviado_log.png"
+                     data-src="/ctf/labs/Symfonos%201%20y%202/comprobacion_correo_enviado_log.png"
                       class="" title="Entrada en el log del correo mandado."
                 >
 
@@ -1562,7 +1562,7 @@
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2024/12/04/Symfonos%201%20y%202/lfi_rce_exitoso.png"
+                     data-src="/ctf/labs/Symfonos%201%20y%202/lfi_rce_exitoso.png"
                       class="" title="Comprobación del RCE"
                 >
 
@@ -1573,7 +1573,7 @@
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2024/12/04/Symfonos%201%20y%202/reverse_shell_con_nc.png"
+                     data-src="/ctf/labs/Symfonos%201%20y%202/reverse_shell_con_nc.png"
                       class="" title="Reverse shell con netcat."
                 >
 
@@ -1599,7 +1599,7 @@
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2024/12/04/Symfonos%201%20y%202/lsb_release_symfonos1.png"
+                     data-src="/ctf/labs/Symfonos%201%20y%202/lsb_release_symfonos1.png"
                       class="" title="lsb_release sobre Symfonos1"
                 >
 
@@ -1609,7 +1609,7 @@
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2024/12/04/Symfonos%201%20y%202/buscar_privilegios_suid.png"
+                     data-src="/ctf/labs/Symfonos%201%20y%202/buscar_privilegios_suid.png"
                       class="" title="Buscamos por archivos con privilegios SUID"
                 >
 
@@ -1620,7 +1620,7 @@
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2024/12/04/Symfonos%201%20y%202/strings_sobre_check_status_symfonos1.png"
+                     data-src="/ctf/labs/Symfonos%201%20y%202/strings_sobre_check_status_symfonos1.png"
                       class="" title="Strings sobre el binario"
                 >
 
@@ -1637,7 +1637,7 @@
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2024/12/04/Symfonos%201%20y%202/modificando_el_path_symfonos1.png"
+                     data-src="/ctf/labs/Symfonos%201%20y%202/modificando_el_path_symfonos1.png"
                       class="" title="Modificando el PATH"
                 >
 
@@ -1654,7 +1654,7 @@
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2024/12/04/Symfonos%201%20y%202/escalada_exitosa_root_symfonos1.png"
+                     data-src="/ctf/labs/Symfonos%201%20y%202/escalada_exitosa_root_symfonos1.png"
                       class="" title="Entramos como el usuario root"
                 >
 
@@ -1662,7 +1662,7 @@
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2024/12/04/Symfonos%201%20y%202/flag_root_symfonos1.png"
+                     data-src="/ctf/labs/Symfonos%201%20y%202/flag_root_symfonos1.png"
                       class="" title="Flag de root"
                 >
 
@@ -1677,7 +1677,7 @@
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2024/12/04/Symfonos%201%20y%202/host_discovery_result.png"
+                     data-src="/ctf/labs/Symfonos%201%20y%202/host_discovery_result.png"
                       class="" title="Host descubiertos en la red inaccesible."
                 >
 
@@ -1737,7 +1737,7 @@
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2024/12/04/Symfonos%201%20y%202/proxychains_symfonos1.png"
+                     data-src="/ctf/labs/Symfonos%201%20y%202/proxychains_symfonos1.png"
                       class="" title="Añadiendo el proxy sock5 a proxychain"
                 >
 
@@ -1745,7 +1745,7 @@
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2024/12/04/Symfonos%201%20y%202/primer_nmap_proxychains_erroneo.png"
+                     data-src="/ctf/labs/Symfonos%201%20y%202/primer_nmap_proxychains_erroneo.png"
                       class="" title="Primer nmap después de añadir proxychain."
                 >
 
@@ -1765,7 +1765,7 @@
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2024/12/04/Symfonos%201%20y%202/primer_nmap_con_proxychains.png"
+                     data-src="/ctf/labs/Symfonos%201%20y%202/primer_nmap_con_proxychains.png"
                       class="" title="Realizamos el primer nmap con proxychains."
                 >
 
@@ -1773,7 +1773,7 @@
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2024/12/04/Symfonos%201%20y%202/excalidraw_pivoting_con_tunel.png"
+                     data-src="/ctf/labs/Symfonos%201%20y%202/excalidraw_pivoting_con_tunel.png"
                       class=""
                 >
 
@@ -1793,7 +1793,7 @@
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2024/12/04/Symfonos%201%20y%202/targeted_symfonos2.png"
+                     data-src="/ctf/labs/Symfonos%201%20y%202/targeted_symfonos2.png"
                       class="" title="Targeted symfonos 2"
                 >
 
@@ -1801,7 +1801,7 @@
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2024/12/04/Symfonos%201%20y%202/foxyproxy_entrada_symfonos2.png"
+                     data-src="/ctf/labs/Symfonos%201%20y%202/foxyproxy_entrada_symfonos2.png"
                       class=""
                 >
 
@@ -1809,7 +1809,7 @@
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2024/12/04/Symfonos%201%20y%202/foxyproxy_conexion_con_symfonos2.png"
+                     data-src="/ctf/labs/Symfonos%201%20y%202/foxyproxy_conexion_con_symfonos2.png"
                       class="" title="Nos conectamos al proxy creado con FoxyProxy."
                 >
 
@@ -1819,7 +1819,7 @@
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2024/12/04/Symfonos%201%20y%202/first_view_smbclient.png"
+                     data-src="/ctf/labs/Symfonos%201%20y%202/first_view_smbclient.png"
                       class="" title="Primer vistazo con smblclient."
                 >
 
@@ -1827,7 +1827,7 @@
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2024/12/04/Symfonos%201%20y%202/smb_download_log_file_symfonos2.png"
+                     data-src="/ctf/labs/Symfonos%201%20y%202/smb_download_log_file_symfonos2.png"
                       class="" title="Accedemos y nos descargamos los archivos."
                 >
 
@@ -1836,7 +1836,7 @@
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2024/12/04/Symfonos%201%20y%202/mirando_el_archivo_log_smb_symfonos2.png"
+                     data-src="/ctf/labs/Symfonos%201%20y%202/mirando_el_archivo_log_smb_symfonos2.png"
                       class="" title="Usuario aeolus encontrado en log.txt"
                 >
 
@@ -1846,7 +1846,7 @@
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2024/12/04/Symfonos%201%20y%202/searchsploit_proftpd_symfonos2.png"
+                     data-src="/ctf/labs/Symfonos%201%20y%202/searchsploit_proftpd_symfonos2.png"
                       class="" title="Buscamos con searchsploit proftpd 1.3.5"
                 >
 
@@ -1870,7 +1870,7 @@
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2024/12/04/Symfonos%201%20y%202/move_shadow_ftp_to_smb_symfonos2.png"
+                     data-src="/ctf/labs/Symfonos%201%20y%202/move_shadow_ftp_to_smb_symfonos2.png"
                       class="" title="Movemos el archivo shadow de ftp al directorio de smb."
                 >
 
@@ -1880,14 +1880,14 @@
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2024/12/04/Symfonos%201%20y%202/download_shadow_attacker_machine_symfonos2.png"
+                     data-src="/ctf/labs/Symfonos%201%20y%202/download_shadow_attacker_machine_symfonos2.png"
                       class="" title="Descargarmos el archivo shadow.bak."
                 >
 
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2024/12/04/Symfonos%201%20y%202/contenido_del_shadow_symfonos2.png"
+                     data-src="/ctf/labs/Symfonos%201%20y%202/contenido_del_shadow_symfonos2.png"
                       class="" title="Visualizamos el contenido del shadow."
                 >
 
@@ -1902,7 +1902,7 @@
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2024/12/04/Symfonos%201%20y%202/john_the_ripper_shadow_contrase%C3%B1a_aeolus_symfonos2.png"
+                     data-src="/ctf/labs/Symfonos%201%20y%202/john_the_ripper_shadow_contrase%C3%B1a_aeolus_symfonos2.png"
                       class="" title="Vemos la contraseña del usuario auelus"
                 >
 
@@ -1913,7 +1913,7 @@
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2024/12/04/Symfonos%201%20y%202/conexion_ssh_establecida_con_aeolus_symfonos2.png"
+                     data-src="/ctf/labs/Symfonos%201%20y%202/conexion_ssh_establecida_con_aeolus_symfonos2.png"
                       class="" title="Establecemos conexión por ssh a la máquina symfonos2"
                 >
 
@@ -1926,7 +1926,7 @@
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2024/12/04/Symfonos%201%20y%202/lsb_release_symfonos2.png"
+                     data-src="/ctf/labs/Symfonos%201%20y%202/lsb_release_symfonos2.png"
                       class="" title="lsb_release -a en la máquina Symfonos 2."
                 >
 
@@ -1937,7 +1937,7 @@
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2024/12/04/Symfonos%201%20y%202/sudo_l_symfonos2.png"
+                     data-src="/ctf/labs/Symfonos%201%20y%202/sudo_l_symfonos2.png"
                       class="" title="Uso del comando sudo -l."
                 >
 
@@ -1965,14 +1965,14 @@
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2024/12/04/Symfonos%201%20y%202/ver_puertos_internos_symfonos2.png"
+                     data-src="/ctf/labs/Symfonos%201%20y%202/ver_puertos_internos_symfonos2.png"
                       class="" title="Puertos internos abiertos."
                 >
 
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2024/12/04/Symfonos%201%20y%202/excalidraw_puertos_internos.png"
+                     data-src="/ctf/labs/Symfonos%201%20y%202/excalidraw_puertos_internos.png"
                       class=""
                 >
 
@@ -1986,7 +1986,7 @@
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2024/12/04/Symfonos%201%20y%202/puerto_8080_symfonos2.png"
+                     data-src="/ctf/labs/Symfonos%201%20y%202/puerto_8080_symfonos2.png"
                       class="" title="Resultado del Local Port Forwarding."
                 >
 
@@ -1995,7 +1995,7 @@
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2024/12/04/Symfonos%201%20y%202/error_libre_nms_al_entrar_symfonos2.png"
+                     data-src="/ctf/labs/Symfonos%201%20y%202/error_libre_nms_al_entrar_symfonos2.png"
                       class="" title="Error al entrar a libre_nms"
                 >
 
@@ -2003,7 +2003,7 @@
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2024/12/04/Symfonos%201%20y%202/entrada_valida_libre_nms_symfonos2.png"
+                     data-src="/ctf/labs/Symfonos%201%20y%202/entrada_valida_libre_nms_symfonos2.png"
                       class="" title="Visualización del portal."
                 >
 
@@ -2011,7 +2011,7 @@
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2024/12/04/Symfonos%201%20y%202/searchsploit_libre_nms_symfonos2.png"
+                     data-src="/ctf/labs/Symfonos%201%20y%202/searchsploit_libre_nms_symfonos2.png"
                       class="" title="Searchsploit para librenms"
                 >
 
@@ -2019,7 +2019,7 @@
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2024/12/04/Symfonos%201%20y%202/searchsploit_libre_nms_payload_field_symfonos2.png"
+                     data-src="/ctf/labs/Symfonos%201%20y%202/searchsploit_libre_nms_payload_field_symfonos2.png"
                       class="" title="Campo payload en el script."
                 >
 
@@ -2027,7 +2027,7 @@
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2024/12/04/Symfonos%201%20y%202/searchsploit_libre_nms_create_new_device_payload_injection_symfonos2.png"
+                     data-src="/ctf/labs/Symfonos%201%20y%202/searchsploit_libre_nms_create_new_device_payload_injection_symfonos2.png"
                       class="" title="Donde inyecta el payload."
                 >
 
@@ -2045,7 +2045,7 @@
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2024/12/04/Symfonos%201%20y%202/executing_reverse_shell_hidden_web_service_symfonos2.png"
+                     data-src="/ctf/labs/Symfonos%201%20y%202/executing_reverse_shell_hidden_web_service_symfonos2.png"
                       class="" title="Creando el dispositivo en la web."
                 >
 
@@ -2053,7 +2053,7 @@
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2024/12/04/Symfonos%201%20y%202/python_script_def_request_exploit_symfonos2.png"
+                     data-src="/ctf/labs/Symfonos%201%20y%202/python_script_def_request_exploit_symfonos2.png"
                       class="" title="Función que llama al exploit."
                 >
 
@@ -2062,14 +2062,14 @@
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2024/12/04/Symfonos%201%20y%202/run_snmp_device_symfonos2.png"
+                     data-src="/ctf/labs/Symfonos%201%20y%202/run_snmp_device_symfonos2.png"
                       class="" title="Botón de ejecutar SNMP."
                 >
 
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2024/12/04/Symfonos%201%20y%202/primer_acceso_a_cronus_exitoso_symfonos2.png"
+                     data-src="/ctf/labs/Symfonos%201%20y%202/primer_acceso_a_cronus_exitoso_symfonos2.png"
                       class="" title="Acceso a cronus."
                 >
 
@@ -2080,7 +2080,7 @@
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2024/12/04/Symfonos%201%20y%202/reverse_shell_add_device_symfonos1_symfonos2.png"
+                     data-src="/ctf/labs/Symfonos%201%20y%202/reverse_shell_add_device_symfonos1_symfonos2.png"
                       class="" title="Envío de reverse shell a Symfonos 1."
                 >
 
@@ -2099,7 +2099,7 @@
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2024/12/04/Symfonos%201%20y%202/conexion_establecida_cronus_maquina_atacante.png"
+                     data-src="/ctf/labs/Symfonos%201%20y%202/conexion_establecida_cronus_maquina_atacante.png"
                       class="" title="Obtenemos la reverse shell en nuestra máquina atacante."
                 >
 
@@ -2111,7 +2111,7 @@
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2024/12/04/Symfonos%201%20y%202/cronus_sudo_l_mysql_symfonos2.png"
+                     data-src="/ctf/labs/Symfonos%201%20y%202/cronus_sudo_l_mysql_symfonos2.png"
                       class="" title="Permite ejecutar el comando mysql como root."
                 >
 
@@ -2121,7 +2121,7 @@
 <img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2024/12/04/Symfonos%201%20y%202/acceso_ganado_root_symfonos2.png"
+                     data-src="/ctf/labs/Symfonos%201%20y%202/acceso_ganado_root_symfonos2.png"
                       class="" title="Nos convertimos en root."
                 >
 
@@ -2146,7 +2146,7 @@
   </entry>
   <entry>
     <title>Laboratorio preparatorio ejptv2 | Xerosec</title>
-    <url>/2025/03/25/lab-ejptv2-xerosec/</url>
+    <url>/ctf/labs/lab-ejptv2-xerosec/</url>
     <content><![CDATA[<p>Bueno bueno bueeeeeenoooo, bienvenidos a todos, hoy vamos a crear y resolver el laboratorio creado por <strong><a class="link"   href="https://www.youtube.com/@xerosec" >XeroSec<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></strong> en el que pone en práctica diferentes técnicas y herramientas recomendadas para la certificación eJPTv2, al lío.</p>
 <h1 id="Creacion-del-laboratorio"><a href="#Creacion-del-laboratorio" class="headerlink" title="Creación del laboratorio"></a>Creación del laboratorio</h1><h2 id="Recursos-necesarios"><a href="#Recursos-necesarios" class="headerlink" title="Recursos necesarios"></a>Recursos necesarios</h2><p>Bien os dejo por aquí las máquinas que vamos a utilizar para nuestro laboratorio en <strong>VirtualBox</strong>:</p>
 <ul>
@@ -2196,7 +2196,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/symfonos1_id_rsa_creada.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/symfonos1_id_rsa_creada.png"
                       alt="Creación de la id_rsa."
                 ><figcaption>Creación de la id_rsa.</figcaption></figure></p>
 <p>Después tendremos que deshabilitar el inicio de sesión con contraseña y habilitar el inicio de sesión con clave. Para ello debemos de retocar el fichero de configuración de ssh, pero para ello tendremos que tener privilegios, así que realicemos la escalada:</p>
@@ -2214,7 +2214,7 @@
 <p>Una vez realizado toda la parte del servidor nos vamos a nuestro equipo atacante.<br><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/symfonos1_ssh_acceso_solo_con_llave.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/symfonos1_ssh_acceso_solo_con_llave.png"
                       alt="Solo permite el acces con llave"
                 ><figcaption>Solo permite el acces con llave</figcaption></figure></p>
 <p>Podéis comprobar que funciona accediendo con ella.<br>La pegais en un archivo(id_rsa por ejemplo).</p>
@@ -2247,7 +2247,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/configuration_setup-interfaces_gift.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/configuration_setup-interfaces_gift.png"
                       alt="Opciones a indicar durante el asistente."
                 ><figcaption>Opciones a indicar durante el asistente.</figcaption></figure><br>Eso sería lo equivalente a esto:</p>
 <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Máquina Gift</span></span><br><span class="line">auto eth0</span><br><span class="line">iface eth0 inet static</span><br><span class="line">address 192.168.100.9           </span><br><span class="line">netmask 255.255.255.0</span><br></pre></td></tr></table></figure></div>
@@ -2297,7 +2297,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/external_network_hosts_nmap.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/external_network_hosts_nmap.png"
                       alt="Hosts disponibles."
                 ><figcaption>Hosts disponibles.</figcaption></figure></p>
 <p>Los hosts 1,2, y 3 son generados por virtualbox a esos no les hacemos caso.</p>
@@ -2320,7 +2320,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/port_scan_nmap.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/port_scan_nmap.png"
                       alt="Escaneo de puertos."
                 ><figcaption>Escaneo de puertos.</figcaption></figure></p>
 <h1 id="Escaneo-de-servicios-y-sus-versiones"><a href="#Escaneo-de-servicios-y-sus-versiones" class="headerlink" title="Escaneo de servicios y sus versiones"></a>Escaneo de servicios y sus versiones</h1><p>Para obtener más información sobre estos servicios y versiones(ya que en este caso nos interesan todos) debemos crear una expresión regular para obtener los puertos:</p>
@@ -2336,7 +2336,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/regex_ports_nmap.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/regex_ports_nmap.png"
                       alt="Regex para los puertos obtenidos en nmap."
                 ><figcaption>Regex para los puertos obtenidos en nmap.</figcaption></figure></p>
 <p>Acordar siempre de tener todo apuntado o realizar capturas, en mi caso lo he metido a un archivo.</p>
@@ -2345,7 +2345,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/service_and_version_nmap.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/service_and_version_nmap.png"
                       alt="Versiones y servicios de los hosts encontrados."
                 ><figcaption>Versiones y servicios de los hosts encontrados.</figcaption></figure></p>
 <p>Vamos a ir mapeando nuestras notas en Obsidan, recordar ir haciéndolo a la vez para no dejaros nada atrás. En este caso cabe recalcar que encontramos los nombres de Simple, Symfonos y Experience</p>
@@ -2366,7 +2366,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/first_view_symfonos_browser.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/first_view_symfonos_browser.png"
                       alt="Servicio web de symfonos."
                 ><figcaption>Servicio web de symfonos.</figcaption></figure></p>
 <p>Al ver la imagen lo primero que se nos puede occurir es realizar algo de <strong>estenografía</strong> para ver si la imagen contiene algo secreto, como ver si los metadatos de la imagen contienen algo con <strong>exiftool</strong>, si los bits menos significativos de la imagen ocultan algo, con exiftool también. Aunque no va por aquí.</p>
@@ -2392,7 +2392,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/dirbuster_configuration_symfonos.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/dirbuster_configuration_symfonos.png"
                       alt="Configuración de dirbuster."
                 ><figcaption>Configuración de dirbuster.</figcaption></figure></p>
 <p>En este caso prefiero por interfaz gráfica ya que por consola(dirb) tarda más en cargar el diccionario. Aunque no es recomendada por el INE y tengo sospechas que la nota no solo se basa en las repuestas introducidas, si no de introducir los “comandos adecuados”, por eso mejor ceñirte(dentro de lo que cabe) a las herramientas indicadas.</p>
@@ -2404,7 +2404,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/smbclient_null_session_symfonos.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/smbclient_null_session_symfonos.png"
                       alt="Recursos compartidos."
                 ><figcaption>Recursos compartidos.</figcaption></figure></p>
 <p>Pero la desventaja de smbclient es que no nos muestra los <strong>permisos de los recursos compartidos</strong>. No sabemos a primera vista a que recurso tenemos acceso mediante esta null session, tendríamos que ir probando uno a uno.</p>
@@ -2414,7 +2414,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/smbmap_null_session_symfonos.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/smbmap_null_session_symfonos.png"
                       alt="Resultado de smbmap."
                 ><figcaption>Resultado de smbmap.</figcaption></figure></p>
 <p>Tenéis otra alternativa como crackmapexec o netexec ya que crackmapexec ha dejado de tener soporte y esta última sí. Aunque en el examen aparezca como crackmapexec:</p>
@@ -2423,7 +2423,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/crackmapexec_null_session_symfonos.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/crackmapexec_null_session_symfonos.png"
                       alt="Resultados de crackmapexec."
                 ><figcaption>Resultados de crackmapexec.</figcaption></figure></p>
 <p>Y por último, la herramienta que nos va a dar más información va a ser <strong>enum4linux</strong>. Esto recopila un montón de información “abusando” del protocolo SMB. Claro, hace más ruido que el resto, aunque esto para el eJPT no nos preocupa.</p>
@@ -2433,7 +2433,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/enum4linux_symfonos.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/enum4linux_symfonos.png"
                       alt="Recursos compartidos con enum4linux."
                 ><figcaption>Recursos compartidos con enum4linux.</figcaption></figure></p>
 <p>Bien, pues una vez vistas las diferentes herramientas vamos a inspeccionar el recurso anonymous. Una combinación bastante buena es usar smbclient con smbmap y&#x2F;o crackmapexec.</p>
@@ -2445,7 +2445,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/get_and_show_attention_file_smb_symfonos.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/get_and_show_attention_file_smb_symfonos.png"
                       alt="Resultado de attention.txt"
                 ><figcaption>Resultado de attention.txt</figcaption></figure></p>
 <p>Uuh, tenemos un usuario y tres posibles contraseñas. Vamos a crearnos dos archivos, users.txt y passwords.txt donde vamos a poner en cada uno la información que tenemos. En usuarios ponemos en minúsculas a zeus y helios(visto con enum4linux y al listar recursos compartidos) y en contraseñas las encontradas.</p>
@@ -2456,7 +2456,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/crackmapexec_smb_enumeracion_usuarios_symfonos.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/crackmapexec_smb_enumeracion_usuarios_symfonos.png"
                       alt="Enumeración de usuarios con crackmapexec."
                 ><figcaption>Enumeración de usuarios con crackmapexec.</figcaption></figure></p>
 <p>Mmmm, en este caso nos aparece solo helios, no dice nada de zeus, vamos a poner a helios primero en nuestra lista para que en caso que encuentre el usuario y la contraseña válida pare antes.</p>
@@ -2466,7 +2466,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/crackmapexec_smb_validar_credenciales_falso_positivo_zeus_symfonos.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/crackmapexec_smb_validar_credenciales_falso_positivo_zeus_symfonos.png"
                       alt="Validación de usuarios con crackmapexec."
                 ><figcaption>Validación de usuarios con crackmapexec.</figcaption></figure></p>
 <p>Uuh, parece que hemos encontrado la contraseña de zeus, o sea que este usuario si existe.</p>
@@ -2476,7 +2476,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/zeus_smb_failed_attempts_symfonos.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/zeus_smb_failed_attempts_symfonos.png"
                       alt="Intentos fallidos de acceso con zeus."
                 ><figcaption>Intentos fallidos de acceso con zeus.</figcaption></figure></p>
 <p>Bueno, parece que con el usuario “zeus” no tenemos acceso a nada. ¿Entonces?. Y si es la herramienta crackmapexec la que esta fallando?. Recuerda siempre probar a realizar lo mismo con <strong>diferentes herramientas</strong> ya que todas las herramientas pueden ser susceptibles a fallar.</p>
@@ -2487,7 +2487,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/smbmap_helios_valid_credentials_symfonos.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/smbmap_helios_valid_credentials_symfonos.png"
                       alt="Permisos accesibles por helios."
                 ><figcaption>Permisos accesibles por helios.</figcaption></figure></p>
 <p>Uopa, aquí podemos ver que los permisos han cambiado, ya no tenemos solo acceso a anonymous, si no que que también podemos acceder a los recursos print$ y helios. Esto nos deja claro que no siempre podemos confiar en una sola herramienta, incluso en que sea una “importante”.</p>
@@ -2501,11 +2501,11 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/smbclient_helios_mget_files_symfonos.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/smbclient_helios_mget_files_symfonos.png"
                       alt="Obtener todos los archivos."
                 ><figcaption>Obtener todos los archivos.</figcaption></figure></p>
 <p>El archivo todo.txt nos cuenta que hay trabajo en el directorio “&#x2F;h3l105&#x2F;“, esto parece una ruta del navegador, pero al acceder vemos un wordpress, pero se ve un poco meh.</p>
-<p><figure class="image-caption"><img src="/2025/03/25/lab-ejptv2-xerosec/wordpress_first_view_symfonos.png" alt="Primer vistazo de /h3l105&quot;"><figcaption>Primer vistazo de /h3l105&quot;</figcaption></figure></p>
+<p><figure class="image-caption"><img src="/ctf/labs/lab-ejptv2-xerosec/wordpress_first_view_symfonos.png" alt="Primer vistazo de /h3l105&quot;"><figcaption>Primer vistazo de /h3l105&quot;</figcaption></figure></p>
 <p>No alarmarse, esto es porque los archivos a los que esta intentando llamar este wordpress no los encuentra el navegador. Si hacéis un ctrl+u para ver el código fuente podéis ver que los enlaces apuntes a <strong>symfonos.local</strong> y claro, nosotros estamos apuntado a la IP. Este concepto se conoce como <strong>virtual hosting</strong>, para solucionarlo tenemos que dirigirnos a nuestro archivo <strong>&#x2F;etc&#x2F;hosts</strong>(para la resolución de dominios con la ip) y añadir la siguiene línea:</p>
 <div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">10.0.2.6        symfonos.local</span><br></pre></td></tr></table></figure></div>
 
@@ -2514,7 +2514,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/wordpress_correct_view_symfonos.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/wordpress_correct_view_symfonos.png"
                       alt="Visualización correcta de h3l105."
                 ><figcaption>Visualización correcta de h3l105.</figcaption></figure></p>
 <h3 id="Wordpress-en-h3l105"><a href="#Wordpress-en-h3l105" class="headerlink" title="Wordpress en h3l105"></a>Wordpress en h3l105</h3><p>Nada mas abrir el wordpress, vemos que el post de Hello world es creado por el usuario <strong>admin</strong>, entonces ya tenemos un usuario.</p>
@@ -2522,7 +2522,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/wordpress_admin_wp-login_symfonos.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/wordpress_admin_wp-login_symfonos.png"
                       alt="Usuario admin."
                 ><figcaption>Usuario admin.</figcaption></figure></p>
 <p>Podemos ver que el mensaje nos dice que la contraseña para dicho usuario es inválida, en cambio, si os inventáis un usuario veréis que el mensaje cambia(Dice usuario inválido).</p>
@@ -2538,14 +2538,14 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/wordpress_wpscan_plugins_symfonos.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/wordpress_wpscan_plugins_symfonos.png"
                       alt="Plugins del wordpress detectados con WPScan."
                 ><figcaption>Plugins del wordpress detectados con WPScan.</figcaption></figure></p>
 <h2 id="Explotacion"><a href="#Explotacion" class="headerlink" title="Explotación"></a>Explotación</h2><p>Como no hemos introducido la API key no nos muestra si existen vulnerabilidades, entonces, vamos a utilizar <strong>searchsploit</strong> para buscar vulnerabilidades correspondientes a las versiones de dichos plugins. Dicha herramienta utiliza una base de datos creada a partir de la información existente en <a class="link"   href="https://www.exploit-db.com/" >exploit-db<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>.</p>
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/wordpress_searchsploit_mailmasta_plugin_symfonos.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/wordpress_searchsploit_mailmasta_plugin_symfonos.png"
                       alt="Resultados de searchsploit"
                 ><figcaption>Resultados de searchsploit</figcaption></figure></p>
 <p>Es recomendable no utilizar el “-“ ya que muchas veces da problemas y puede reportar falsos positivos.</p>
@@ -2560,7 +2560,7 @@
 <p>En el archivo de texto, podemos encontrar entre todos los posibles archivos vulnerables, una prueba de concepto para comprobar el funcionamiento de dicha vulnerabilidad:<br><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/wordpress_plugin_mailmasta_exploit_lfi_poc_symfonos.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/wordpress_plugin_mailmasta_exploit_lfi_poc_symfonos.png"
                       alt="PoC(Proof-of-Concept). de Mail Masta."
                 ><figcaption>PoC(Proof-of-Concept). de Mail Masta.</figcaption></figure></p>
 <p>También podéis buscar vulnerabilidades del otro plugin, <code>searchsploit wordpress site editor</code> y saldría un LFI y un CSRF(Cross-Site Request Forguery).</p>
@@ -2568,7 +2568,7 @@
 <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">symfonos.local/h3l105/wp-content/plugins/mail-masta/inc/campaign/count_of_send.php?pl=/etc/passwd</span><br></pre></td></tr></table></figure></div>
 
 <p>Con el archivo &#x2F;etc&#x2F;passwd podemos ver que usuarios tienen una shell asociada(permisos de utilizar una shell), esto nos interesa para ver con que usuario podemos entrar al sistema.</p>
-<p><figure class="image-caption"><img src="/2025/03/25/lab-ejptv2-xerosec/wordpress_etc_passwords_shell_symfonos.png" alt="Usuarios con una shell en el archivo /etc/password."><figcaption>Usuarios con una shell en el archivo /etc/password.</figcaption></figure></p>
+<p><figure class="image-caption"><img src="/ctf/labs/lab-ejptv2-xerosec/wordpress_etc_passwords_shell_symfonos.png" alt="Usuarios con una shell en el archivo /etc/password."><figcaption>Usuarios con una shell en el archivo /etc/password.</figcaption></figure></p>
 <p>Lo siguiente a pensar sería, como podemos pasar de un LFI a un RCE(Remote Command Execution). Siempre en el ejpt tenemos que buscar la manera más fácil de cómo se realizaría algo, en este caso, podemos seguir mirando rutas en el sistema y una ruta potencial es <strong>donde se almacena la id_rsa del usuario helios por defecto</strong>. Otra forma muy común es Apache Log Poisoning, pero está máquina no va por aquí(Originalmente va por smtp log poisoning, pero recuerda que lo modificamos porque es más difícil que el laboratorio). También puedes encontrar la contraseña en otras rutas o servicios de la máquina como smb.</p>
 <p>Si podemos obtener esta id_rsa para conectarnos por ssh ya tendremos ejecucción de comandos.</p>
 <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">http://symfonos.local/h3l105/wp-content/plugins/mail-masta/inc/campaign/count_of_send.php?pl=/home/helios/.ssh/id_rsa</span><br></pre></td></tr></table></figure></div>
@@ -2576,7 +2576,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/wordpress_lfi_id_rsa_symfonos.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/wordpress_lfi_id_rsa_symfonos.png"
                       alt="id_rsa del usuario helios."
                 ><figcaption>id_rsa del usuario helios.</figcaption></figure></p>
 <p>Esta clave nos la guardamos en un fichero. Ya podemos comprobar a simple vista que la clave está cifrada, esto significa que nos pedirá una contraseña más adelante para poder acceder con dicha clave. </p>
@@ -2590,7 +2590,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/attempt_access_ssh_id_rsa_symfonos.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/attempt_access_ssh_id_rsa_symfonos.png"
                       alt="Intento fallido de acceso por falta de contraseña."
                 ><figcaption>Intento fallido de acceso por falta de contraseña.</figcaption></figure></p>
 <h3 id="ssh2john"><a href="#ssh2john" class="headerlink" title="ssh2john"></a>ssh2john</h3><p>Como no tenemos la “passphrase”(contraseña) no podemos iniciar con el usuario helios. Para ello tenemos vamos a romper la clave cifrada con <strong>John The Ripper</strong>. Este concepto de romper se trata en comparar hashes con una contraseña asociada al hash de la id_rsa. En caso de ser iguales, devolverá la contraseña asociada. Tenéis otras herramientas como <strong>hashcat</strong> aunque no va la utilizaremos.</p>
@@ -2604,14 +2604,14 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/id_rsa_cracked_john_symfonos.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/id_rsa_cracked_john_symfonos.png"
                       alt="Contraseña crackeada."
                 ><figcaption>Contraseña crackeada.</figcaption></figure></p>
 <p>Si probamos a conectarnos por ssh ahora y introducir dicha contraseña.</p>
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/conexion_exitosa_con_helios_ssh_symfonos.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/conexion_exitosa_con_helios_ssh_symfonos.png"
                       alt="Conexión exitosa con el usuario helios a través de ssh."
                 ><figcaption>Conexión exitosa con el usuario helios a través de ssh.</figcaption></figure></p>
 <p>Dejo por aquí anotado el tener en cuenta la <strong>reutilización de contraseñas</strong> que muchas veces es algo que se pasa encima, pero en ciertas ocasiones se puede dar y nos puede facilitar el trabajo.</p>
@@ -2629,7 +2629,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/statuscheck_privilage_escalation_symfonos.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/statuscheck_privilage_escalation_symfonos.png"
                       alt="Archivos con permisos SUID."
                 ><figcaption>Archivos con permisos SUID.</figcaption></figure></p>
 <p>Podemos observar que el archivo &#x2F;opt&#x2F;statuscheck no es común. Esto se va viendo bajo la experiencia ya que cuando ves muchos resultados ves los archivos que te suenan y cuáles no.</p>
@@ -2637,7 +2637,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/statuscheck_execution_symfonos.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/statuscheck_execution_symfonos.png"
                       alt="Ejecucción del binario."
                 ><figcaption>Ejecucción del binario.</figcaption></figure></p>
 <p>Mmm, este output me resulta familiar…<br>Si vemos de que tipo de archivo se trata con <code>file</code> veremos que que es un binario, LSB 64-bits para Linux.</p>
@@ -2645,7 +2645,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/statuscheck_strings_symfonos.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/statuscheck_strings_symfonos.png"
                       alt="Strings sobre statuscheck."
                 ><figcaption>Strings sobre statuscheck.</figcaption></figure></p>
 <p>Listando las cadenas legibles del binario encontramos que se utiliza el comando <code>curl -I H</code> y vemos que no se utiliza una ruta absoluta &#x2F;usr&#x2F;bin&#x2F;curl. Nos vamos a aprovechar de este gran fallo en este fichero que ejecuta comandos el usuario root.</p>
@@ -2653,7 +2653,7 @@
 <p>1<figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/path_symfonos.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/path_symfonos.png"
                       alt="PATH de symfonos."
                 ><figcaption>PATH de symfonos.</figcaption></figure></p>
 <p>Pues la idea es modificar el path para que empieze a mirar por donde nosotros querramos y que en dicha ruta exista un comando(archivo de ejecucción) llamado curl y este comando hará lo que nosotros querramos.</p>
@@ -2664,7 +2664,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/modify_path_symfonos.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/modify_path_symfonos.png"
                       alt="Modificamos el path"
                 ><figcaption>Modificamos el path</figcaption></figure></p>
 <p>En la ruta &#x2F;tmp se borraran los archivos cuando la sesión acabe, igual que la modificación realizada en la variable PATH.</p>
@@ -2675,7 +2675,7 @@
 <p>Ahora si ejecutamos el binario &#x2F;opt&#x2F;statuscheck veremos que accedemos como el usuario root.<br><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/root_symfonos.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/root_symfonos.png"
                       alt="Obtención del usuario root."
                 ><figcaption>Obtención del usuario root.</figcaption></figure></p>
 <h1 id="🎯-Doc"><a href="#🎯-Doc" class="headerlink" title="🎯 Doc"></a>🎯 Doc</h1><p>Resumen de lo que vamos a hacer(atención spoiler):<br>Vamos a utilizar Nikto para un escaneo de vulnerabilidades, vamos a hacer SQLi con sqlmap, file upload, enumeración de credenciales locales una vez comprometida para escalar privilegios.</p>
@@ -2687,7 +2687,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/whatweb_doc.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/whatweb_doc.png"
                       alt="Resultado de whatweb."
                 ><figcaption>Resultado de whatweb.</figcaption></figure></p>
 <p>Lo siguiente es abrir el navegador. Una vez accedemos, vemos que tenemos el mismo problema que la máquina anterior(virtual hosting), que los recursos no se cargan bien. En este caso ya sabemos como funciona, inspeccionamos el código fuente, encontramos que los recursos apuntan a doc.hmv y lo introducimos al fichero &#x2F;etc&#x2F;hosts.</p>
@@ -2697,7 +2697,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/nikto_scan_doc.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/nikto_scan_doc.png"
                       alt="Resultados del escaneo con nikto."
                 ><figcaption>Resultados del escaneo con nikto.</figcaption></figure></p>
 <p>Es recomendable utilizarlo más o menos cuando realizamos el fuzzing de directorios con dirb&#x2F;dirbuster. Cuando no encuentras nada lo podemos utilizar como comodín(al igual que dirb&#x2F;dirbuster).</p>
@@ -2717,7 +2717,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/admin_panel_doc.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/admin_panel_doc.png"
                       alt="Panel de administración."
                 ><figcaption>Panel de administración.</figcaption></figure></p>
 <p>¿Porque ha funcionado esta query?</p>
@@ -2737,14 +2737,14 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/foxyproxy_conf_burp_doc.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/foxyproxy_conf_burp_doc.png"
                       alt="Configuración proxy por defecto de Burpsuite en Foxyproxy."
                 ><figcaption>Configuración proxy por defecto de Burpsuite en Foxyproxy.</figcaption></figure></p>
 <p>Una vez creada la tenemos que activar.</p>
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/foxyproxy_burp_activate_doc.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/foxyproxy_burp_activate_doc.png"
                       alt="Activamos foxyproxy."
                 ><figcaption>Activamos foxyproxy.</figcaption></figure></p>
 <p>Si abrimos Burpsuite y nos vamos a Proxy &gt; HTTPhistory podemos ver todas las peticiones que pasan por nuestro proxy del navegador.</p>
@@ -2752,7 +2752,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/http_history_and_request_login_burp_doc.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/http_history_and_request_login_burp_doc.png"
                       alt="Historial http y nuestra petición emitida."
                 ><figcaption>Historial http y nuestra petición emitida.</figcaption></figure></p>
 <p>A mi me salen más, pero porque recargue la página antes. El siguiente paso es guardarlo en un archivo, para ello le damos click derecho en el cuerpo de la solicitud y la opción <strong>Copy to file</strong>.</p>
@@ -2760,7 +2760,7 @@
 <p>El contenido del archivo es lo mismo que veiamos por Burpsuite.<br><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/request_file_saved_content_doc.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/request_file_saved_content_doc.png"
                       alt="Contenido del archivo."
                 ><figcaption>Contenido del archivo.</figcaption></figure></p>
 <p>Ya podemos pasarle la request a sqlmap:</p>
@@ -2770,7 +2770,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/sqlmap_results_doc.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/sqlmap_results_doc.png"
                       alt="Preguntas y resultados de sqlmap."
                 ><figcaption>Preguntas y resultados de sqlmap.</figcaption></figure></p>
 <p>Aunque nos da una inyección mucho más difícil de lo visto anteriormente, nos da una time-based blind, esto se queda totalmente fuera del “scope” del ejpt y además si la probamos no funciona :o.</p>
@@ -2782,7 +2782,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/rev_shell_monkey_pentester_doc.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/rev_shell_monkey_pentester_doc.png"
                       alt="Configuración de la reverse shell."
                 ><figcaption>Configuración de la reverse shell.</figcaption></figure></p>
 <p>Nos copiamos esto y lo metemos en un archivo, en mi caso rev.php.</p>
@@ -2790,7 +2790,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/rev_shell_upload_panel_view_doc.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/rev_shell_upload_panel_view_doc.png"
                       alt="Como se ve el panel."
                 ><figcaption>Como se ve el panel.</figcaption></figure></p>
 <p>Ya vemos que se ha quedado como rarow, el siguiente paso es darle click derecho a la imagen y ver en la ruta en la que esta, vemos que la ha cambiado el nombre y sale una advertencia. Esta advertencia sale cuando la reverse shell intenta establecer una conexión con el equipo atacante(La ip y el puerto indicado anteriormente) y no ha podido).</p>
@@ -2806,7 +2806,7 @@
 <p>Y recargamos el recurso.<br><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/obtained_reverse_shell_doc.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/obtained_reverse_shell_doc.png"
                       alt="Entramos como www-data."
                 ><figcaption>Entramos como www-data.</figcaption></figure></p>
 <p>Aquí a mi personalmente me gusta hacer un tratamiento de la tty para que funcione mejor, ctrl+c sin que se salga, ctrl+l para limpiar la consola, algunas veces configuro el tamaño de la terminal para que se vea bien cuando abres un editor de texto.</p>
@@ -2850,14 +2850,14 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/content_initialize_file_doc.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/content_initialize_file_doc.png"
                       alt="Contenido del archivo initalize.php."
                 ><figcaption>Contenido del archivo initalize.php.</figcaption></figure></p>
 <p>Y si, podemos ver la contraseña de bella en la base de datos, pero esto no significa que sea la misma que el usuario del sistema operativo, pero vamos a comprobar si se está reutilizando.</p>
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/upgrade_to_bella_user_doc.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/upgrade_to_bella_user_doc.png"
                       alt="Nos convertimos al usuario bella."
                 ><figcaption>Nos convertimos al usuario bella.</figcaption></figure></p>
 <p>La escalada a root se sale del “scope” del eJPTv2 así que damos la máquina por concluida.</p>
@@ -2870,7 +2870,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/nmap_smb_vulns_experience.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/nmap_smb_vulns_experience.png"
                       alt="Vulnerabilidades detectadas con los scripts de nmap."
                 ><figcaption>Vulnerabilidades detectadas con los scripts de nmap.</figcaption></figure></p>
 <p>En este caso nmap nos reporta que es vulnerable a ms17-010(Ethernal Blue), ms08-067 y cve2009-3103.</p>
@@ -2889,7 +2889,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/db_status_metasploit_experience.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/db_status_metasploit_experience.png"
                       alt="Estatus de la base de datos."
                 ><figcaption>Estatus de la base de datos.</figcaption></figure></p>
 <p>Y para tenerlo todo más organizado nos vamos a crear un espacio de trabajo, para ello utilizamos los siguientes comandos:</p>
@@ -2904,7 +2904,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/search_results_ms17-010_metasploit_experience.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/search_results_ms17-010_metasploit_experience.png"
                       alt="Resultados de la búsqueda."
                 ><figcaption>Resultados de la búsqueda.</figcaption></figure></p>
 <p>Lo que vemos que “cuelga” es información extra. Por ejemplo, en el primero te dice los sistemas operativos con lo que es compatible el exploit. Puedes elegir el exploit 0 y intenta detectar automáticamente que sistema operativo es y cuál usar o si lo tienes claro puedes utilizar un exploit de una versión directamente.</p>
@@ -2919,14 +2919,14 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/show_options_scaner_eternalblue_metasploit_experience.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/show_options_scaner_eternalblue_metasploit_experience.png"
                       alt="Opciones disponibles."
                 ><figcaption>Opciones disponibles.</figcaption></figure></p>
 <p>Para lanzar el escaner podemos utilizar <code>run</code> o <code>exploits</code>.</p>
 <p>Bien, pues como pudimos ver con nmap, la máquina 10.0.2.9 es vulnerable a metasploit.<br><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/scaner_response_vuln_eternalblue_metasploit_experience.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/scaner_response_vuln_eternalblue_metasploit_experience.png"
                       alt="Respuesta del escaner ms17-010."
                 ><figcaption>Respuesta del escaner ms17-010.</figcaption></figure></p>
 <p>Entonces si volvemos a buscar por ms17-017 y usamos el primero con <code>use 0</code>.<br>Lo mismo, miramos las opciones con <code>show options</code>, vemos también que por defecto se nos asigna el payload de meterpreter y las opciones a mirar son rhosts, rport, lhost y lport(4444 por defecto) así que no hace falta cambiar nada.</p>
@@ -2934,7 +2934,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/eternalblue_error_64bits_metasploit_experience.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/eternalblue_error_64bits_metasploit_experience.png"
                       alt="Error indicando que el módulo solo soporta objetivos de x64 y este equipo es de x32."
                 ><figcaption>Error indicando que el módulo solo soporta objetivos de x64 y este equipo es de x32.</figcaption></figure></p>
 <p>Vamos a buscar otra vez por ms1-010 y utilizamos el segundo exploit:</p>
@@ -2944,7 +2944,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/eternalblue_psexec_ok_metasploit_experience.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/eternalblue_psexec_ok_metasploit_experience.png"
                       alt="Obtenemos una sesión meterpreter como nt authority system."
                 ><figcaption>Obtenemos una sesión meterpreter como nt authority system.</figcaption></figure></p>
 <p>Podemos hacer un ctrl+z para mandar al background la sesión por si nos hiciera falta más adelante.</p>
@@ -2952,28 +2952,28 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/search_ms08-067_metasploit_experience.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/search_ms08-067_metasploit_experience.png"
                       alt="Buscamos por la vulnerabilidad MS08-067."
                 ><figcaption>Buscamos por la vulnerabilidad MS08-067.</figcaption></figure></p>
 <p>Le indicamos que la queremos usar y su identificador <code>use 0</code> y vemos las opciones con <code>show options</code>. Lo dejamos todo por defecto como esta y ejecutamos con <code>run</code>.</p>
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/exploiting_ms08-067_metasploit_experience.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/exploiting_ms08-067_metasploit_experience.png"
                       alt="Obteniendo una sesión explotando ms08-067."
                 ><figcaption>Obteniendo una sesión explotando ms08-067.</figcaption></figure></p>
 <h4 id="cve-2009-3103"><a href="#cve-2009-3103" class="headerlink" title="cve 2009-3103"></a>cve 2009-3103</h4><p>Buscamos por la vulnerabilidad 2009-3103 reportada con nmap, <code>search 2009-3103</code>.</p>
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/search_2009-3103_metasploit_experience.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/search_2009-3103_metasploit_experience.png"
                       alt="Buscamos por la vulnerabilidad 2009-3103"
                 ><figcaption>Buscamos por la vulnerabilidad 2009-3103</figcaption></figure></p>
 <p>Vemos que también se conoce como MS09-050. La usamos, vemos las opciones y ejecutamos. En este caso no ha funcionado, no todo podía ser un camino de rosas.</p>
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/exploiting_failed_2009-3103_metasploit_experience.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/exploiting_failed_2009-3103_metasploit_experience.png"
                       alt="Explotación fallida del cve 2009-3103."
                 ><figcaption>Explotación fallida del cve 2009-3103.</figcaption></figure></p>
 <h1 id="🎯-Simple"><a href="#🎯-Simple" class="headerlink" title="🎯 Simple"></a>🎯 Simple</h1><h2 id="Enumeracion-3"><a href="#Enumeracion-3" class="headerlink" title="Enumeración"></a>Enumeración</h2><p>Vamos a inspeccionar el archivo con los servicios y las versiones de los puertos y vemos que la máquina 10.0.2.5 es nuestra máquina Simple y tiene abiertos los puertos: 80,135,139,445,5985,47001,49664,49665…</p>
@@ -2981,14 +2981,14 @@
 <h3 id="Web-2"><a href="#Web-2" class="headerlink" title="Web"></a>Web</h3><p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/whatweb_simple.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/whatweb_simple.png"
                       alt="Resultado de whatweb."
                 ><figcaption>Resultado de whatweb.</figcaption></figure></p>
 <p>Ya nos chiva por detrás que esta corriendo un Microsoft-IIS, vamos a inspeccionar la página web:</p>
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/first_view_browser_simple.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/first_view_browser_simple.png"
                       alt="Primer vistazo de la página."
                 ><figcaption>Primer vistazo de la página.</figcaption></figure></p>
 <p>Bueno, a parte de ver una falta ortográfica en “comming”(es coming) también podemos ver los agradecimientos a diferentes usuarios, estos los podemos guardar en formato lista por si hicieran falta más adelante.</p>
@@ -3003,7 +3003,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/crackmapexec_null_session_simple.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/crackmapexec_null_session_simple.png"
                       alt="Resultado de intento de null session con crackmapexec."
                 ><figcaption>Resultado de intento de null session con crackmapexec.</figcaption></figure></p>
 <p>Pero recordar que tenemos una lista de potenciales usuarios, así que podemos probar con la contraseña en blanco a ver si vemos algo nuevo.</p>
@@ -3012,7 +3012,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/crackmapexec_list_users_without_password_simple.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/crackmapexec_list_users_without_password_simple.png"
                       alt="Probando con la lista de usuarios."
                 ><figcaption>Probando con la lista de usuarios.</figcaption></figure></p>
 <p>Claro, una vez aquí pensamos y porque no hacemos fuerza bruta con algún diccionario común como rockyou o algunos de Seclist, pero más sencillo que eso y un detalle <strong>MUY IMPORTANTE</strong>. Es utilizar la lista de usuarios como contraseñas al igual que utilizar las contraseñas como lista de usuario. Esto aplica tanto en el ejptv2 como en el OSCP.</p>
@@ -3022,14 +3022,14 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/crackmapexec_list_users_with_user_password_simple.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/crackmapexec_list_users_with_user_password_simple.png"
                       alt="Probando con los usuarios como contraseña."
                 ><figcaption>Probando con los usuarios como contraseña.</figcaption></figure></p>
 <p>En este caso vemos que <strong>bogo:bogo</strong> funciona y se detiene ahí, si no queremos que se detenga cuando encuentra algo tenemos que añadir el switch <strong>–continue-on-success</strong>.</p>
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/crackmapexec_list_users_with_user_password_contiune_on_success_simple.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/crackmapexec_list_users_with_user_password_contiune_on_success_simple.png"
                       alt="Con el parámetro --continue-on-success."
                 ><figcaption>Con el parámetro --continue-on-success.</figcaption></figure></p>
 <p>Como hemos visto anteriormente tenemos permisos de lectura para el recurso compartido $IPC y LOGS. Así que con smbclient vamos a conectarnos al recurso LOGS a ver que encontramos.</p>
@@ -3038,14 +3038,14 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/smbclient_log_file_simple.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/smbclient_log_file_simple.png"
                       alt="Archivo log en el usuario bogo."
                 ><figcaption>Archivo log en el usuario bogo.</figcaption></figure></p>
 <p>Pues nos descargamos el archivo y le echamos un vistazo para comprobar que contiene.</p>
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/marcos_credentials_smb_simple.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/marcos_credentials_smb_simple.png"
                       alt="Credenciales de marcos de SMB."
                 ><figcaption>Credenciales de marcos de SMB.</figcaption></figure></p>
 <p>En este archivo encontramos que existe un recurso interno llamado WEB al que es accesible con el usuario marcos y la contraseña SuperPassword, así que vamos a intentar listar los recursos compartidos con crackmapexec:</p>
@@ -3054,14 +3054,14 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/crackmapexec_marcos_credentials_shares_smb_simple.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/crackmapexec_marcos_credentials_shares_smb_simple.png"
                       alt="Recursos compartidos disponibles para el usuario Marcos."
                 ><figcaption>Recursos compartidos disponibles para el usuario Marcos.</figcaption></figure></p>
 <p>Podemos ver que podemos acceder al recurso LOGS igual que con el usuario bogo, pero también tenemos accedo al recurso WEB con permisos de lectura y escritura.</p>
 <p>Si accedemos al recurso con smbclient:</p>
 <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">smbclient //10.0.2.5/WEB -U <span class="string">&#x27;marcos&#x27;</span></span><br></pre></td></tr></table></figure></div>
 
-<p><figure class="image-caption"><img src="/2025/03/25/lab-ejptv2-xerosec/marcos_smbclient_shared_files_simple.png" alt="Recursos compartidos en /WEB."><figcaption>Recursos compartidos en /WEB.</figcaption></figure></p>
+<p><figure class="image-caption"><img src="/ctf/labs/lab-ejptv2-xerosec/marcos_smbclient_shared_files_simple.png" alt="Recursos compartidos en /WEB."><figcaption>Recursos compartidos en /WEB.</figcaption></figure></p>
 <p>Estos archivos nos van sonando… Si, hemos encontrado algunos al realizar fuzzing con dirbuster.</p>
 <p>Nosotros como el usuario marcos tenemos permisos de escritura sobre dicho directorio, ¿si subimos un archivo podremos acceder desde la web?</p>
 <p>Vamos crear un archivo .html chapusa y probamos a subirlo al directorio compartido, en mi caso lo he llamado sergiky.html y de contenido solo tiene la cadena “pwn3d”.</p>
@@ -3071,13 +3071,13 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/upload_test_file_marco_smb_simple.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/upload_test_file_marco_smb_simple.png"
                       alt="Archivo sergiky.html subido."
                 ><figcaption>Archivo sergiky.html subido.</figcaption></figure></p>
 <p>Si checkeamos si el archivo se ha subido desde el navegador:<br><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/upload_test_file_marco_smb_in_browser_simple.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/upload_test_file_marco_smb_in_browser_simple.png"
                       alt="Comprobamos desde el navegador si podemos visualizar el archivo."
                 ><figcaption>Comprobamos desde el navegador si podemos visualizar el archivo.</figcaption></figure></p>
 <p>Genial! Vemos que podemos subir archivos.</p>
@@ -3087,7 +3087,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/revshells_cmd_msfvenom_simple.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/revshells_cmd_msfvenom_simple.png"
                       alt="Parámetros para crear una reverse shell en Windows."
                 ><figcaption>Parámetros para crear una reverse shell en Windows.</figcaption></figure></p>
 <p>Como veis no esta del todo correcto, nos crea un ejecutable .exe y no queremos eso, así que vamos a copiarlo y modificarlo en la consola. Tenemos que cambiar el formato(-f) y el nombre del archivo de salida.</p>
@@ -3096,7 +3096,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/msfvenom_cmd_payload_created_simple.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/msfvenom_cmd_payload_created_simple.png"
                       alt="Payload de msfvenom."
                 ><figcaption>Payload de msfvenom.</figcaption></figure></p>
 <p>En caso de que la máquina <strong>no fuera de 64 bits</strong>(por ejemplo no funciona al darnos la shell) podemos prescindir del &#x2F;x64&#x2F; aunque no hará falta realizar esto.</p>
@@ -3109,7 +3109,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/gain_access_defaultapppol_simple.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/gain_access_defaultapppol_simple.png"
                       alt="Ganando acceso como defaultapppool."
                 ><figcaption>Ganando acceso como defaultapppool.</figcaption></figure></p>
 <p>Vale y si ahora nosotros queremos obtener una sesión meterpreter. Una de las formas es subir un archivo que nos de una sesión meterpreter directamente y capturarlo con &#x2F;multi&#x2F;handler en metasploit.</p>
@@ -3121,21 +3121,21 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/upgrading_session_metasploit_simple.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/upgrading_session_metasploit_simple.png"
                       alt="Upgradeamos la sesión de metasploit."
                 ><figcaption>Upgradeamos la sesión de metasploit.</figcaption></figure></p>
 <p>Si ahora hacemos <code>sessions -l</code> vemos que tenemos otra sesión de tipo meterpreter.</p>
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/upgrading_session_metasploit_show_sessions_simple.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/upgrading_session_metasploit_show_sessions_simple.png"
                       alt="Sesiones disponibles."
                 ><figcaption>Sesiones disponibles.</figcaption></figure></p>
 <p>Para acceder a una sesión utilizamos <code>sessions -i 2</code>.</p>
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/using_upgrading_session_metasploit_simple.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/using_upgrading_session_metasploit_simple.png"
                       alt="Dentro de la sesión meterpreter."
                 ><figcaption>Dentro de la sesión meterpreter.</figcaption></figure></p>
 <h3 id="Creando-ejecutable-para-crear-sesion-meterpreter"><a href="#Creando-ejecutable-para-crear-sesion-meterpreter" class="headerlink" title="Creando ejecutable para crear sesión meterpreter"></a>Creando ejecutable para crear sesión meterpreter</h3><p>Desde otra consola dejando la cmd víctima abierta creamos un ejecutable:</p>
@@ -3148,7 +3148,7 @@
 <p>Si lo abrimos desde el navegador podemos ver los archivos que nos ofrece:<br><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/view_python_server_simple.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/view_python_server_simple.png"
                       alt="Servidor web en python."
                 ><figcaption>Servidor web en python.</figcaption></figure></p>
 <p>Pues la idea ahora es utilizar alguna utilidad que tengamos disponible para descarganos el archivo, en este caso podemos utilizar <strong>certutil.exe</strong> ya que es una cmd y no una powershell.</p>
@@ -3165,7 +3165,7 @@
 <p>Y nos llegará la sesión correspondiente.<br><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/get_meterpreter_session_upload_extra_binary_simple.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/get_meterpreter_session_upload_extra_binary_simple.png"
                       alt="Obteniendo la sesión con meterpreter."
                 ><figcaption>Obteniendo la sesión con meterpreter.</figcaption></figure></p>
 <h1 id="🎯-Blog"><a href="#🎯-Blog" class="headerlink" title="🎯 Blog"></a>🎯 Blog</h1><p>Aun no conocemos el hostname de esta máquina, si buscamos en nuestro archivo de escaneo vemos que solo nos queda una máquina por realizar o inspeccionar, en este caso es la IP 10.0.2.8 y tiene el puerto 22 con la version OPENSSH 7.9(Recordar que si es mayor que 7.7 no podemos enumerar usuarios y podríamos utilizar lo de launchpad, pero como en el examen no vamos a tener conexión a internet.) y el puerto 80 con Apache(debian).</p>
@@ -3173,7 +3173,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/first_view_browser_blog.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/first_view_browser_blog.png"
                       alt="Primer vistazo del servidor web."
                 ><figcaption>Primer vistazo del servidor web.</figcaption></figure></p>
 <p>Pues encontramos el output de un ping, si actualizamos la página información se va actualizando. También encontramos el nombre del dominio blog.nyx</p>
@@ -3184,40 +3184,40 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/nikto_results_blog.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/nikto_results_blog.png"
                       alt="Resultados de nikto."
                 ><figcaption>Resultados de nikto.</figcaption></figure></p>
 <p>No tenemos nada que nos interese aquí ha encontrado que la versión de apache es “outdated”, podríamos buscar exploits para dicha versión, pero no interesa ahora. También ha encontrado un archivo en &#x2F;icons&#x2F;README que no va a tener nada interesante.</p>
 <p>Vale pues vamos a utilizar dirbuster para descubrir más rutas<br><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/dirbuster_conf_blog.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/dirbuster_conf_blog.png"
                       alt="Configuración de dirbuster."
                 ><figcaption>Configuración de dirbuster.</figcaption></figure></p>
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/dirbuster_results_blog.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/dirbuster_results_blog.png"
                       alt="Resultados de dirbuster."
                 ><figcaption>Resultados de dirbuster.</figcaption></figure></p>
 <p>Bien, podemos ver que en el archivo index.php contiene el script que estará ejecutando el ping por detrás y también vemos una carpeta llamada <strong>my_webblog</strong> que tiene más carpetas y archivos por dentro, vamos a echarle un vistazo.</p>
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/first_view_browser_my_weblog_blog.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/first_view_browser_my_weblog_blog.png"
                       alt="Vistazo de my_weblog."
                 ><figcaption>Vistazo de my_weblog.</figcaption></figure></p>
 <p>Podemos utilizar whatweb para ver que tecnologías contiene.<br><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/whatweb_my_weblog_blog.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/whatweb_my_weblog_blog.png"
                       alt="Tecnologías utilizadas."
                 ><figcaption>Tecnologías utilizadas.</figcaption></figure></p>
 <p>Entre todo esto podemos ver que se aplica un redirect a my_weblog&#x2F; y que en MetaGenerator podemos encontrar algo que nos destaca que es <strong>Nibbleblog</strong>. Si investigamos más vemos que es un gestor de contenido(CMS).</p>
 <p>Si buscamos con searchsloit <code>Nibbleblog</code> nos aparecerán dos opciones.<br><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/searchsploit_nibbleblog_blog.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/searchsploit_nibbleblog_blog.png"
                       alt="Exploits disponibles."
                 ><figcaption>Exploits disponibles.</figcaption></figure></p>
 <p>No tenemos ni idea de la versión, así que vamos a utilizar el último exploit localizado, el de la versión 4.0.3 y que es de metasploit. Vamos a echar un ojo:</p>
@@ -3226,7 +3226,7 @@
 <p>Si nos fijamos en la descripción del exploit podemos ver que dicho exploit nos permite inyectar código php con un usuario autenticado en la versión 4.0.3, pero si todavía no tenemos ningún usuario ni hemos encontrado ningún panel de administración.<br><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/searchsploit_upload_file_exploit_first_part_nibbleblog_blog.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/searchsploit_upload_file_exploit_first_part_nibbleblog_blog.png"
                       alt="Primer vistazo del exploit."
                 ><figcaption>Primer vistazo del exploit.</figcaption></figure></p>
 <p>Bien, pues si bajamos un poco en el exploit tenemos una parte donde se le esta concadenando a la raíz el archivo <strong>admin.php</strong> y si revisamos el fuzz anterior con dirbuster este también encontro dicho archivo.</p>
@@ -3234,7 +3234,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/first_view_nibbleblog_admin_panel_blog.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/first_view_nibbleblog_admin_panel_blog.png"
                       alt="Admin panel del blog."
                 ><figcaption>Admin panel del blog.</figcaption></figure></p>
 <p>No tenemos credenciales, así que podemos probar combinatorias típicas admin:admin, buscar por las credenciales por defecto de este tipo de blog, inyecciones SQL, no SQL…</p>
@@ -3245,7 +3245,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/burpsuite_attempt_nibbleblog_admin_panel_blog.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/burpsuite_attempt_nibbleblog_admin_panel_blog.png"
                       alt="Solicitud y respuesta en Burpsuite."
                 ><figcaption>Solicitud y respuesta en Burpsuite.</figcaption></figure></p>
 <p>Bien, esto también se puede ver en las herramientas del navegador, lo que pasa que se ve con la letra más pequeña y es un poco más difícil de llegar a él.</p>
@@ -3273,21 +3273,21 @@
 <p>Y efectivamente!! podemos ver que ha encontrado que admin:kisses.<br><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/hydra_valid_credentials_nibbleblog_admin_panel_blog.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/hydra_valid_credentials_nibbleblog_admin_panel_blog.png"
                       alt="Credenciales encontradas por hydra."
                 ><figcaption>Credenciales encontradas por hydra.</figcaption></figure></p>
 <p>Vamos a comprobar esto para ver que no sea ningún falso positivo.</p>
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/first_view_inside_nibbleblog_admin_panel_blog.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/first_view_inside_nibbleblog_admin_panel_blog.png"
                       alt="Primer vistazo en la parte de administración del blog."
                 ><figcaption>Primer vistazo en la parte de administración del blog.</figcaption></figure></p>
 <p>Recordamos que vimos que existía un exploit de metasploit sobre file upload en nibbleblog, si abrimos metasploit y lo buscamos.</p>
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/search_metasploit_exploit_nibbleblog_blog.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/search_metasploit_exploit_nibbleblog_blog.png"
                       alt="Buscar por nibbleblog en metasploit."
                 ><figcaption>Buscar por nibbleblog en metasploit.</figcaption></figure></p>
 <p>Hacemos un <code>show options</code> y configuramos las siguientes variables:</p>
@@ -3297,14 +3297,14 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/search_metasploit_exploit_run_failed_nibbleblog_blog.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/search_metasploit_exploit_run_failed_nibbleblog_blog.png"
                       alt="Ejecucción fallida con metasploit."
                 ><figcaption>Ejecucción fallida con metasploit.</figcaption></figure></p>
 <p>Bueno, esto es raro de que pase en la certificación, pero nunca se sabe, si nos descargarmos el exploit y lo inspeccionamos más a fondo vemos al final </p>
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/inspection_exploit_nibbleblog_blog.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/inspection_exploit_nibbleblog_blog.png"
                       alt="Inspeccionando el exploit más a fondo."
                 ><figcaption>Inspeccionando el exploit más a fondo.</figcaption></figure></p>
 <p>Vemos que para payload_url se concadena diferentes variables y strings y podemos ver que utiliza un plugin llamado my_image y le sube un archivo llamado <strong>image.php</strong>.</p>
@@ -3317,21 +3317,21 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/show_failed_php_pentest_monkey_nibbleblog_blog.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/show_failed_php_pentest_monkey_nibbleblog_blog.png"
                       alt="Archivo image.php."
                 ><figcaption>Archivo image.php.</figcaption></figure></p>
 <p>Recordar que esto no suele ser común en la eJPTv2, pero si es más común para la eJPTv2.</p>
 <p>La idea es ahora ponernos por escucha con netcat y obtener la shell.<br><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/obtained_reverse_shell_nibbleblog_blog.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/obtained_reverse_shell_nibbleblog_blog.png"
                       alt="Obteniendo la reverse shell."
                 ><figcaption>Obteniendo la reverse shell.</figcaption></figure></p>
 <p>Estamos en una máquina Linux entonces podemos hacer <code>ip a</code> si fuera en Windows recordar que podemos ver la tabla arp con <code>arp -a</code>.</p>
 <p>Podemos ver que tenemos otra interfaz, enp0s8, entonces puede ser que desde aquí encontremos otra máquina y podamos pivotar…<br><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/ip_a_output_inside_blog.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/ip_a_output_inside_blog.png"
                       alt="Resultado del comando ip a."
                 ><figcaption>Resultado del comando ip a.</figcaption></figure></p>
 <p>Pero primero, vamos a finalizar la escalada de privilegios.</p>
@@ -3343,14 +3343,14 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/sudo_l_blog.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/sudo_l_blog.png"
                       alt="Resultados de sudo -l."
                 ><figcaption>Resultados de sudo -l.</figcaption></figure></p>
 <p>¿Cómo podemos escalar privilegios con esto?<br>Pues nos podemos ir a <a class="link"   href="https://gtfobins.github.io/" >gtfobins<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> y buscar por git. Una vez encontrado en el apartado de “Functions” vamos a indicar que tenemos permisos “sudo” sobre dicho binario.</p>
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/git_abuse_gtfobins_blog.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/git_abuse_gtfobins_blog.png"
                       alt="Formas de abusar de git para que nos de una shell con dicho usuario."
                 ><figcaption>Formas de abusar de git para que nos de una shell con dicho usuario.</figcaption></figure></p>
 <p>En este caso vamos a utilizar la segunda porque es más “curiosa” a la vista, pero podéis probar sin problema con el resto.</p>
@@ -3364,7 +3364,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/bin_bash_in_help_git_blog.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/bin_bash_in_help_git_blog.png"
                       alt="Salimos del manual con una bash."
                 ><figcaption>Salimos del manual con una bash.</figcaption></figure></p>
 <p>Una vez fuera veremos que estamos como el usuario <strong>admin</strong>, si hicieramos un exit volveríamos al manual anterior.</p>
@@ -3382,7 +3382,7 @@
 <p>Y una vez dentro vemos que estamos como el usuario root, por defecto nos deja en una <code>sh</code>, para cambiarnos a una bash solo tendremos que ejecutar el comando: <code>/bin/bash -i</code>.<br><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/change_to_bash_mcedit_blog.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/change_to_bash_mcedit_blog.png"
                       alt="Cambiando a una bash."
                 ><figcaption>Cambiando a una bash.</figcaption></figure></p>
 <h1 id="Pivoting-hacia-Blog"><a href="#Pivoting-hacia-Blog" class="headerlink" title="Pivoting hacía Blog"></a>Pivoting hacía Blog</h1><p>No hace falta tener máximos privilegios, con tener una sesión de meterpreter es suficiente.</p>
@@ -3399,7 +3399,7 @@
 <p>En este caso se encuentran dos equipos, 192.168.100.8 que somos nosotros(máquina Blog) y la IP 192.168.100.9.<br><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/ping_sweep_results_blog.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/ping_sweep_results_blog.png"
                       alt="Resultados del ping sweep."
                 ><figcaption>Resultados del ping sweep.</figcaption></figure></p>
 <p>Si en nuestro máquina Kali abrimos otra ventana con metasploit podemos utilizar &#x2F;multi&#x2F;handler para recibir una conexión normal y después “upgradearla” a una sesión meterpreter para poder hacer el pivoting.</p>
@@ -3413,14 +3413,14 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/shell_to_meterpreter_root_blog.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/shell_to_meterpreter_root_blog.png"
                       alt="Actualizamos la shell a meterpreter."
                 ><figcaption>Actualizamos la shell a meterpreter.</figcaption></figure></p>
 <p>Desde metasploit también podemos realizar un ping sweep, tcp scan, ack, syn, xmas, udp…</p>
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/ping_sweep_from_metasploit_blog.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/ping_sweep_from_metasploit_blog.png"
                       alt="Ping sweep desde metasploit."
                 ><figcaption>Ping sweep desde metasploit.</figcaption></figure></p>
 <p>Para meternos en la sesión de meterpreter podemos utilizar el comando <code>sessions -i 2</code>.</p>
@@ -3433,7 +3433,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/add_route_manual_metasploit_blog.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/add_route_manual_metasploit_blog.png"
                       alt="Añadimos la ruta de forma manual."
                 ><figcaption>Añadimos la ruta de forma manual.</figcaption></figure></p>
 <p>Esto permite que desde <strong>dentro de metasploit</strong> podramos ver dicha red, en cambio, si ejecutamos alguna herramienta desde fuera no funcionará.</p>
@@ -3447,7 +3447,7 @@
 <p>Si borramos la ruta y probamos a usar dicho módulo vemos que solo nos pide como obligatorio indicar la sesión, ¿porque?. Porque va a detectar los segmentos de red a los que tiene acceso y los va añadir automáticamente a nuestra tabla.</p>
 <div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">set SESSION 2</span><br></pre></td></tr></table></figure></div>
 
-<p><figure class="image-caption"><img src="/2025/03/25/lab-ejptv2-xerosec/using_multi_manage_autoroute_metasploit_blog.png" alt="Usando post/multi/manage/autoroute."><figcaption>Usando post/multi/manage/autoroute.</figcaption></figure></p>
+<p><figure class="image-caption"><img src="/ctf/labs/lab-ejptv2-xerosec/using_multi_manage_autoroute_metasploit_blog.png" alt="Usando post/multi/manage/autoroute."><figcaption>Usando post/multi/manage/autoroute.</figcaption></figure></p>
 <p>Podemos intentar hacer utilizar nmap dentro de metasploit hacía dicha IP. Si utilizamos el parámetro -sn para detectar host veremos que sale que esta vivo, pero si pones cualquier otra IP también te pone que esta vivo, así que vemos que no nos podemos fiar porque da muchos falsos positivos. Si intentarás escanear puertos tampoco os reportará nada.</p>
 <p>Así que vamos a utilizar un scanner tcp propio de nmap(mencionado anteriormente).</p>
 <div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">use auxiliary/scanner/portscan/tcp</span><br><span class="line">set RHOSTS 192.168.100.9</span><br></pre></td></tr></table></figure></div>
@@ -3455,7 +3455,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/portscan_metasploit_gift.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/portscan_metasploit_gift.png"
                       alt="Escaneo TCP usando metasploit."
                 ><figcaption>Escaneo TCP usando metasploit.</figcaption></figure></p>
 <h1 id="🎯-Gift"><a href="#🎯-Gift" class="headerlink" title="🎯 Gift"></a>🎯 Gift</h1><p>Nos metemos a la sesión de meterpreter, en este caso hemos visto que tenemos el servicio web y ssh abiertos, pero no podemos acceder a él, para esto vamos a realizar port forwarding que consiste en redirigir nuestro tráfico en la máquina kali a la máquina víctima y el puerto indicado, en este caso el 80.</p>
@@ -3468,14 +3468,14 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/portfwd_meterpreter_add_metasploit_gift.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/portfwd_meterpreter_add_metasploit_gift.png"
                       alt="Redirecciones de puertos."
                 ><figcaption>Redirecciones de puertos.</figcaption></figure></p>
 <p>Si ahora abrimos el navegador y intentamos acceder a dicha web por el puerto 127.0.0.1:8080</p>
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/first_view_web_gift.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/first_view_web_gift.png"
                       alt="Primer vistazo a la página web."
                 ><figcaption>Primer vistazo a la página web.</figcaption></figure></p>
 <p>Si inspeccionamos el código fuente vemos un comentario que pone “Trust me”.</p>
@@ -3488,14 +3488,14 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/ssh_brute_force_metasploit_gift.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/ssh_brute_force_metasploit_gift.png"
                       alt="Resultado de fuerza bruta con metasploit en el protocolo ssh."
                 ><figcaption>Resultado de fuerza bruta con metasploit en el protocolo ssh.</figcaption></figure></p>
 <p>En caso de querer utilizar hydra habría que realizar un port forwarding de dicho puerto para traernósolo(Xerosec dijo que lo probo, pero le daba fallo en esta máquina.)</p>
 <p>Podemos ver que también nos ha abierto una sesión:<br><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/executing_commands_in_new_sessions_metasploit_gift.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/executing_commands_in_new_sessions_metasploit_gift.png"
                       alt="Ejecutando comandos en la nueva sesión creada por metasploit."
                 ><figcaption>Ejecutando comandos en la nueva sesión creada por metasploit.</figcaption></figure></p>
 <p>Por último vamos a realizar un port forwarding del puerto ssh a nuestro puerto ssh para intentar conectarnos con dichas credenciales.</p>
@@ -3508,7 +3508,7 @@
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/2025/03/25/lab-ejptv2-xerosec/portfwd_ssh_in_kali_gift.png"
+                     data-src="/ctf/labs/lab-ejptv2-xerosec/portfwd_ssh_in_kali_gift.png"
                       alt="Uso de ssh en nuestro equipo kali para acceder al puerto 22 de la máquina Gift."
                 ><figcaption>Uso de ssh en nuestro equipo kali para acceder al puerto 22 de la máquina Gift.</figcaption></figure></p>
 <h1 id="Enlaces-de-interes"><a href="#Enlaces-de-interes" class="headerlink" title="Enlaces de interés"></a>Enlaces de interés</h1><ul>
