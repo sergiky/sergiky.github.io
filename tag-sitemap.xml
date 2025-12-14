@@ -17,7 +17,21 @@
     </url>
 
     <url>
+        <loc>https://sergiky.github.io/tags/eCPTXv2/</loc>
+        <lastmod>2025-12-14T16:36:49.497Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>https://sergiky.github.io/tags/OSCP/</loc>
+        <lastmod>2025-12-14T16:36:49.497Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://sergiky.github.io/tags/eCPPTv2/</loc>
         <lastmod>2025-12-14T16:36:49.497Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
@@ -45,6 +59,13 @@
     </url>
 
     <url>
+        <loc>https://sergiky.github.io/tags/linux/</loc>
+        <lastmod>2025-12-14T16:36:49.497Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>https://sergiky.github.io/tags/high/</loc>
         <lastmod>2025-12-14T16:36:49.497Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -53,27 +74,6 @@
 
     <url>
         <loc>https://sergiky.github.io/tags/htb/</loc>
-        <lastmod>2025-12-14T16:36:49.497Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://sergiky.github.io/tags/eCPTXv2/</loc>
-        <lastmod>2025-12-14T16:36:49.497Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://sergiky.github.io/tags/eCPPTv2/</loc>
-        <lastmod>2025-12-14T16:36:49.497Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://sergiky.github.io/tags/linux/</loc>
         <lastmod>2025-12-14T16:36:49.497Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
