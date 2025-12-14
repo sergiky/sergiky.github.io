@@ -1,0 +1,4 @@
+User-Agents: *
+Allow: /
+
+sitemap: https://sergiky.github.io/sitemap.xml

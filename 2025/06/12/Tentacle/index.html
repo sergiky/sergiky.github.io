@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="utf-8">
+	<meta name="robots" content="all">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="keywords" content="Hexo Theme Redefine">
     
@@ -893,7 +894,7 @@
                      data-src="/2025/06/12/Tentacle/original_script_exploit_root_user.png"
                       alt="El usuario que se indica para enviar el correo es root."
                 ><figcaption>El usuario que se indica para enviar el correo es root.</figcaption></figure></p>
-<p>Recordemos que al principio, al visualizar la página del primer squid proxy, nos daba un usuario, el usuario “<a class="link"   href="mailto:&#106;&#46;&#110;&#x61;&#x6b;&#x61;&#x7a;&#x61;&#x77;&#97;&#x40;&#114;&#101;&#97;&#x6c;&#x63;&#x6f;&#114;&#x70;&#x2e;&#104;&#116;&#x62;" >&#106;&#46;&#110;&#x61;&#x6b;&#x61;&#x7a;&#x61;&#x77;&#97;&#x40;&#114;&#101;&#97;&#x6c;&#x63;&#x6f;&#114;&#x70;&#x2e;&#104;&#116;&#x62;<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>“.</p>
+<p>Recordemos que al principio, al visualizar la página del primer squid proxy, nos daba un usuario, el usuario “<a class="link"   href="mailto:&#x6a;&#46;&#x6e;&#x61;&#107;&#x61;&#x7a;&#x61;&#119;&#97;&#x40;&#x72;&#101;&#x61;&#x6c;&#99;&#x6f;&#114;&#x70;&#x2e;&#104;&#116;&#98;" >&#x6a;&#46;&#x6e;&#x61;&#107;&#x61;&#x7a;&#x61;&#119;&#97;&#x40;&#x72;&#101;&#x61;&#x6c;&#99;&#x6f;&#114;&#x70;&#x2e;&#104;&#116;&#98;<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>“.</p>
 <h3 id="Kerbrute-para-validar-usuarios"><a href="#Kerbrute-para-validar-usuarios" class="headerlink" title="Kerbrute para validar usuarios"></a>Kerbrute para validar usuarios</h3><p>Podemos chekear si el usuario existe gracias al servicio kerberos corriendo en la primera máquina, para ello utilizaremos la herramienta kerbrute:</p>
 <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kerbrute userenum --domain realcorp.htb --dc 10.10.10.224 ../data/users.txt</span><br></pre></td></tr></table></figure></div>
 
