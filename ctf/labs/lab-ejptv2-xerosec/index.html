@@ -150,8 +150,8 @@
 <meta property="article:tag" content="easy">
 <meta property="article:tag" content="windows">
 <meta property="article:tag" content="eJPT">
-<meta property="article:tag" content="vulnhub">
 <meta property="article:tag" content="linux">
+<meta property="article:tag" content="vulnhub">
 <meta property="article:tag" content="pivoting">
 <meta property="article:tag" content="movimiento-lateral">
 <meta property="article:tag" content="id-rsa-cracking">
@@ -596,11 +596,11 @@
                     </li>
                 
                     <li>
-                        | <a href="/tags/vulnhub/">vulnhub</a>&nbsp;
+                        | <a href="/tags/linux/">linux</a>&nbsp;
                     </li>
                 
                     <li>
-                        | <a href="/tags/linux/">linux</a>&nbsp;
+                        | <a href="/tags/vulnhub/">vulnhub</a>&nbsp;
                     </li>
                 
                     <li>
@@ -710,20 +710,20 @@
 
 
 		<div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
-			<p>Bueno bueno bueeeeeenoooo, bienvenidos a todos, hoy vamos a crear y resolver el laboratorio creado por <strong><a class="link"   target="_blank" rel="noopener" href="https://www.youtube.com/@xerosec" >XeroSec<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></strong> en el que pone en práctica diferentes técnicas y herramientas recomendadas para la certificación eJPTv2, al lío.</p>
+			<p>Bueno bueno bueeeeeenoooo, bienvenidos a todos, hoy vamos a crear y resolver el laboratorio creado por <strong><a class="link"   target="_blank" rel="noopener external nofollow noreferrer" href="https://www.youtube.com/@xerosec" >XeroSec<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></strong> en el que pone en práctica diferentes técnicas y herramientas recomendadas para la certificación eJPTv2, al lío.</p>
 <h1 id="Creacion-del-laboratorio"><a href="#Creacion-del-laboratorio" class="headerlink" title="Creación del laboratorio"></a>Creación del laboratorio</h1><h2 id="Recursos-necesarios"><a href="#Recursos-necesarios" class="headerlink" title="Recursos necesarios"></a>Recursos necesarios</h2><p>Bien os dejo por aquí las máquinas que vamos a utilizar para nuestro laboratorio en <strong>VirtualBox</strong>:</p>
 <ul>
-<li><p><strong><a class="link"   target="_blank" rel="noopener" href="https://www.vulnhub.com/entry/symfonos-1,322/" >Symfonos I<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></strong>. Si habéis mirado un poco mi super página increible de la muerte podréis observar que ya utilizamos esta máquina previamente <a href="https://sergiky.github.io/2024/12/04/Symfonos%201%20y%202/">Symfonos 1 y 2</a>, pero en esta ocasión vamos a enfocarlo de otra manera en lugar de seguir el procedimiento de explotación con el que fue ideado(cómo lo realizamos en el artículo mencionado).</p>
+<li><p><strong><a class="link"   target="_blank" rel="noopener external nofollow noreferrer" href="https://www.vulnhub.com/entry/symfonos-1,322/" >Symfonos I<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></strong>. Si habéis mirado un poco mi super página increible de la muerte podréis observar que ya utilizamos esta máquina previamente <a href="https://sergiky.github.io/2024/12/04/Symfonos%201%20y%202/">Symfonos 1 y 2</a>, pero en esta ocasión vamos a enfocarlo de otra manera en lugar de seguir el procedimiento de explotación con el que fue ideado(cómo lo realizamos en el artículo mencionado).</p>
 </li>
-<li><p><strong><a class="link"   target="_blank" rel="noopener" href="https://hackmyvm.eu/machines/machine.php?vm=Doc" >Doc<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></strong>. Máquina Linux de la plataforma <a class="link"   target="_blank" rel="noopener" href="https://hackmyvm.eu/" >hackmyvm<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>. En esta plataforma se necesita iniciar sesión.</p>
+<li><p><strong><a class="link"   target="_blank" rel="noopener external nofollow noreferrer" href="https://hackmyvm.eu/machines/machine.php?vm=Doc" >Doc<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></strong>. Máquina Linux de la plataforma <a class="link"   target="_blank" rel="noopener external nofollow noreferrer" href="https://hackmyvm.eu/" >hackmyvm<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>. En esta plataforma se necesita iniciar sesión.</p>
 </li>
-<li><p><strong><a class="link"   target="_blank" rel="noopener" href="https://vulnyx.com/#experience" >Experience<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></strong>: Máquina Windows de la plataforma <a class="link"   target="_blank" rel="noopener" href="https://vulnyx.com/" >Vulnyx<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<li><p><strong><a class="link"   target="_blank" rel="noopener external nofollow noreferrer" href="https://vulnyx.com/#experience" >Experience<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></strong>: Máquina Windows de la plataforma <a class="link"   target="_blank" rel="noopener external nofollow noreferrer" href="https://vulnyx.com/" >Vulnyx<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
 </li>
-<li><p><strong><a class="link"   target="_blank" rel="noopener" href="https://hackmyvm.eu/machines/?v=simple" >Simple<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></strong>. Máquina Windows de la plataforma <a class="link"   target="_blank" rel="noopener" href="https://hackmyvm.eu/" >hackmyvm<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>.</p>
+<li><p><strong><a class="link"   target="_blank" rel="noopener external nofollow noreferrer" href="https://hackmyvm.eu/machines/?v=simple" >Simple<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></strong>. Máquina Windows de la plataforma <a class="link"   target="_blank" rel="noopener external nofollow noreferrer" href="https://hackmyvm.eu/" >hackmyvm<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>.</p>
 </li>
-<li><p><strong><a class="link"   target="_blank" rel="noopener" href="https://vulnyx.com/#blog" >Blog<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></strong>: Máquina Linux de <a class="link"   target="_blank" rel="noopener" href="https://vulnyx.com/" >Vulnyx<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> </p>
+<li><p><strong><a class="link"   target="_blank" rel="noopener external nofollow noreferrer" href="https://vulnyx.com/#blog" >Blog<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></strong>: Máquina Linux de <a class="link"   target="_blank" rel="noopener external nofollow noreferrer" href="https://vulnyx.com/" >Vulnyx<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> </p>
 </li>
-<li><p><strong><a class="link"   target="_blank" rel="noopener" href="https://hackmyvm.eu/machines/?v=gift" >Gift<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></strong>: Máquina Linux de <a class="link"   target="_blank" rel="noopener" href="https://hackmyvm.eu/" >hackmyvm<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>.</p>
+<li><p><strong><a class="link"   target="_blank" rel="noopener external nofollow noreferrer" href="https://hackmyvm.eu/machines/?v=gift" >Gift<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></strong>: Máquina Linux de <a class="link"   target="_blank" rel="noopener external nofollow noreferrer" href="https://hackmyvm.eu/" >hackmyvm<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>.</p>
 </li>
 <li><p><strong>Kali Linux</strong>. No menos importante. En el examen del ejptv2 nos darán una máquina kali a través de Guacamole(por navegador web) <strong>sin acceso a internet</strong> esto significa que tenemos que utilizar las herramientas preinstaladas del sistema o las que nos dejan preparadas.</p>
 </li>
@@ -950,7 +950,7 @@
 <li><strong>-t</strong>: Por defecto se añade una “slash” al final y en ocasiones para descubrir directorios puede venir bien(otras no), pero para descubir archivos por ejemplo no.</li>
 </ul>
 <p>Si utilizamos dirb <strong>NO RECOMIENDO DICCIONARIOS GRANDES</strong> como “directory-list-2.3-medium.txt” o parecidos, recomiendo los que estan en el directorio &#x2F;usr&#x2F;share&#x2F;owrdlists&#x2F;dirb&#x2F; ya que esta herramienta de consola tarda mucho en cargar el diccionario, pero si esperas a que cargue funciona correctamente. Utilizarlo con ‘-w’ para cuando salte un warning poder seguir y que no os pare el programa.</p>
-<p>Ayuda de la documentación de <a class="link"   target="_blank" rel="noopener" href="https://www.hackingarticles.in/comprehensive-guide-on-dirb-tool/" >hackingarticles.in<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<p>Ayuda de la documentación de <a class="link"   target="_blank" rel="noopener external nofollow noreferrer" href="https://www.hackingarticles.in/comprehensive-guide-on-dirb-tool/" >hackingarticles.in<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
 <p>Podéis utilizar dirbuster que es mediante interfaz gráfica, no tarda en cargar los diccionarios:</p>
 <p><figure class="image-caption"><img  
                      lazyload
@@ -971,7 +971,7 @@
                       alt="Recursos compartidos."
                 ><figcaption>Recursos compartidos.</figcaption></figure></p>
 <p>Pero la desventaja de smbclient es que no nos muestra los <strong>permisos de los recursos compartidos</strong>. No sabemos a primera vista a que recurso tenemos acceso mediante esta null session, tendríamos que ir probando uno a uno.</p>
-<p>Para ello podemos utilizar el comando <strong>smbmap</strong>. Al utilizarlo me ponía que estableciendo una conexión con el host, pero no la terminaba de establecer y lo cerraba. Para ello he realizado un git clone del repositorio de <a class="link"   target="_blank" rel="noopener" href="https://github.com/ShawnDEvans/smbmap" >smbmap<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> y he utilizado la herramienta en lugar de la que venía por defecto en Kali Linux y si funciona. Esto no se podría realizar en el examen porque no tendríamos conexión a internet, pero así veis como funciona:</p>
+<p>Para ello podemos utilizar el comando <strong>smbmap</strong>. Al utilizarlo me ponía que estableciendo una conexión con el host, pero no la terminaba de establecer y lo cerraba. Para ello he realizado un git clone del repositorio de <a class="link"   target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/ShawnDEvans/smbmap" >smbmap<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> y he utilizado la herramienta en lugar de la que venía por defecto en Kali Linux y si funciona. Esto no se podría realizar en el examen porque no tendríamos conexión a internet, pero así veis como funciona:</p>
 <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">smbmap -H 10.0.2.6</span><br></pre></td></tr></table></figure></div>
 
 <p><figure class="image-caption"><img  
@@ -1089,7 +1089,7 @@
                       alt="Usuario admin."
                 ><figcaption>Usuario admin.</figcaption></figure></p>
 <p>Podemos ver que el mensaje nos dice que la contraseña para dicho usuario es inválida, en cambio, si os inventáis un usuario veréis que el mensaje cambia(Dice usuario inválido).</p>
-<h4 id="Uso-de-WPScan"><a href="#Uso-de-WPScan" class="headerlink" title="Uso de WPScan"></a>Uso de WPScan</h4><p>En este caso al ser un wordpress vamos a utilizar la herramienta WPScan, si fuera un Joomla tendríamos que utilizar <a class="link"   target="_blank" rel="noopener" href="https://github.com/OWASP/joomscan" >joomscan<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> y si fuera un Droopal pues <a class="link"   target="_blank" rel="noopener" href="https://github.com/SamJoan/droopescan" >droopescan<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>. En caso de no estar estas herramientas utilizar las disponibles en el laboratorio que sigan el mismo propósito.</p>
+<h4 id="Uso-de-WPScan"><a href="#Uso-de-WPScan" class="headerlink" title="Uso de WPScan"></a>Uso de WPScan</h4><p>En este caso al ser un wordpress vamos a utilizar la herramienta WPScan, si fuera un Joomla tendríamos que utilizar <a class="link"   target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/OWASP/joomscan" >joomscan<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> y si fuera un Droopal pues <a class="link"   target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/SamJoan/droopescan" >droopescan<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>. En caso de no estar estas herramientas utilizar las disponibles en el laboratorio que sigan el mismo propósito.</p>
 <p>WPScan puedes añadirle una clave API para que te descubra vulnerabilidades aunque no sería neceseario en un principio para el examen ni este laboratorio.<br>Para hacer un escaneo vamos a utilizar el siguiente comando:</p>
 <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wpscan -U admin -P /usr/share/wordlists/rockyou.txt --url http://symfonos.local/h3l105/</span><br></pre></td></tr></table></figure></div>
 
@@ -1104,7 +1104,7 @@
                      data-src="/ctf/labs/lab-ejptv2-xerosec/wordpress_wpscan_plugins_symfonos.png"
                       alt="Plugins del wordpress detectados con WPScan."
                 ><figcaption>Plugins del wordpress detectados con WPScan.</figcaption></figure></p>
-<h2 id="Explotacion"><a href="#Explotacion" class="headerlink" title="Explotación"></a>Explotación</h2><p>Como no hemos introducido la API key no nos muestra si existen vulnerabilidades, entonces, vamos a utilizar <strong>searchsploit</strong> para buscar vulnerabilidades correspondientes a las versiones de dichos plugins. Dicha herramienta utiliza una base de datos creada a partir de la información existente en <a class="link"   target="_blank" rel="noopener" href="https://www.exploit-db.com/" >exploit-db<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>.</p>
+<h2 id="Explotacion"><a href="#Explotacion" class="headerlink" title="Explotación"></a>Explotación</h2><p>Como no hemos introducido la API key no nos muestra si existen vulnerabilidades, entonces, vamos a utilizar <strong>searchsploit</strong> para buscar vulnerabilidades correspondientes a las versiones de dichos plugins. Dicha herramienta utiliza una base de datos creada a partir de la información existente en <a class="link"   target="_blank" rel="noopener external nofollow noreferrer" href="https://www.exploit-db.com/" >exploit-db<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>.</p>
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
@@ -1340,7 +1340,7 @@
 <p>Normalemente SQLmap es más útil cuando queremos extraer información de una base de datos de una forma automatizada y sencilla.</p>
 <h3 id="File-Upload"><a href="#File-Upload" class="headerlink" title="File Upload"></a>File Upload</h3><p>Bueno si continuamos y nos metemos dentro, vemos abajo a la derecha lo que parece ser un posible CMS y su versión, pues podríamos buscar el cms y la versión en searchsploit o en internet para ver si tiene algún exploit o vulnerabilidad conocida.</p>
 <p>Pero en este caso después de buscar en el CMS vemos en el perfil del usuario (My account) que tenemos un campo para subir un avatar(una imagen). Si le damos click derecho a la imagen del avatar y abrimos la ruta podremos ver donde se guardan los archivos, en este caso en <code>http://doc.hmv/uploads/1624240500_avatar.png</code>.</p>
-<p>A partir de aquí podemos probar muchas cosas, pero llendo un poco al grano, vamos a subir una reverse shell en php en lugar de una imagen. Podemos utilizar la reverse shell de pentestet monkey en la web <a class="link"   target="_blank" rel="noopener" href="https://www.revshells.com/" >revshells<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<p>A partir de aquí podemos probar muchas cosas, pero llendo un poco al grano, vamos a subir una reverse shell en php en lugar de una imagen. Podemos utilizar la reverse shell de pentestet monkey en la web <a class="link"   target="_blank" rel="noopener external nofollow noreferrer" href="https://www.revshells.com/" >revshells<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
 <p>Para la configuración vamos a indicar la IP de nuestra máquina atacante y el puerto por donde nos queremos poner a a la escucha, como veis ya nos esta indicando que necesitaremos privilegios de root para ponernos a la escucha(lo indica a la derecha en la parte de Listener)</p>
 <p><figure class="image-caption"><img  
                      lazyload
@@ -1646,7 +1646,7 @@
 <p>Genial! Vemos que podemos subir archivos.</p>
 <h2 id="Explotacion-3"><a href="#Explotacion-3" class="headerlink" title="Explotación"></a>Explotación</h2><p>La idea ahora es subir un archivo .php para poder obtener una shell en el equipo, el problema que esto es un sistema linux y nosotros estamos en un servidor IIS en Windows como vimos anteriormente. En los servidores IIS de Windows, lo equivalente a los archivos .php son los archivos <strong>.asp</strong> y <strong>.aspx</strong>. Estos están <strong>configurados por defecto</strong>.</p>
 <p>Así que con msfvenom nos vamos a crear un archivo .aspx y de ser interpretado por el servidor nos va a dar una reverse shell.</p>
-<p>Para crear el binario nos podemos dirigir a la página <a class="link"   target="_blank" rel="noopener" href="https://www.revshells.com/" >revshells<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> que también nos da todos los parámetros de msfvenom para crear los archivos correspondientes.</p>
+<p>Para crear el binario nos podemos dirigir a la página <a class="link"   target="_blank" rel="noopener external nofollow noreferrer" href="https://www.revshells.com/" >revshells<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> que también nos da todos los parámetros de msfvenom para crear los archivos correspondientes.</p>
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
@@ -1909,7 +1909,7 @@
                      data-src="/ctf/labs/lab-ejptv2-xerosec/sudo_l_blog.png"
                       alt="Resultados de sudo -l."
                 ><figcaption>Resultados de sudo -l.</figcaption></figure></p>
-<p>¿Cómo podemos escalar privilegios con esto?<br>Pues nos podemos ir a <a class="link"   target="_blank" rel="noopener" href="https://gtfobins.github.io/" >gtfobins<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> y buscar por git. Una vez encontrado en el apartado de “Functions” vamos a indicar que tenemos permisos “sudo” sobre dicho binario.</p>
+<p>¿Cómo podemos escalar privilegios con esto?<br>Pues nos podemos ir a <a class="link"   target="_blank" rel="noopener external nofollow noreferrer" href="https://gtfobins.github.io/" >gtfobins<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> y buscar por git. Una vez encontrado en el apartado de “Functions” vamos a indicar que tenemos permisos “sudo” sobre dicho binario.</p>
 <p><figure class="image-caption"><img  
                      lazyload
                      src="/images/loading.svg"
@@ -1952,7 +1952,7 @@
 <p>Tenemos el comando <code>ss -natup</code> con el que podemos ver si hay algún servicio, puerto que este conectado con alguna posible máquina que vayamos a comprometer(así nos podríamos ahorrar el escaneo). En este caso no aparece ninguna.</p>
 <p>Podemos buscar equipos de múltiples formas, una es haciendo un ping_sweep que ocnsiste en hacer un ping a todos los dispositivos de la nueva red.</p>
 <p>En caso de que fuera una máquina Windows medianamente actualizada, si el firewall está por defecto no permite las conexiones ICMP y este no aparecía como conectado, pero recordar que se pueden hacer otros escaneos.</p>
-<p>Si buscamos ping sweep one liner en google podemos encontrar la web <a class="link"   target="_blank" rel="noopener" href="https://www.rubyguides.com/2012/02/cli-ninja-ping-sweep/" >rubyguides<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> que nos dice como hacer un ping sweep tanto en un equipo Linux como en uno Windows.</p>
+<p>Si buscamos ping sweep one liner en google podemos encontrar la web <a class="link"   target="_blank" rel="noopener external nofollow noreferrer" href="https://www.rubyguides.com/2012/02/cli-ninja-ping-sweep/" >rubyguides<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> que nos dice como hacer un ping sweep tanto en un equipo Linux como en uno Windows.</p>
 <p>Tenemos que adaptarlo poniendo nuestra dirección IP.<br>En Linux:</p>
 <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> &#123;1..254&#125; ;<span class="keyword">do</span> (ping -c 1 192.168.100.<span class="variable">$i</span> | grep <span class="string">&quot;bytes from&quot;</span> &amp;) ;<span class="keyword">done</span></span><br></pre></td></tr></table></figure></div>
 
@@ -2075,7 +2075,7 @@
                       alt="Uso de ssh en nuestro equipo kali para acceder al puerto 22 de la máquina Gift."
                 ><figcaption>Uso de ssh en nuestro equipo kali para acceder al puerto 22 de la máquina Gift.</figcaption></figure></p>
 <h1 id="Enlaces-de-interes"><a href="#Enlaces-de-interes" class="headerlink" title="Enlaces de interés"></a>Enlaces de interés</h1><ul>
-<li>Laboratorio de xerosec: <a class="link"   target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=v20IsEd5nUU" >https://www.youtube.com/watch?v=v20IsEd5nUU<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></li>
+<li>Laboratorio de xerosec: <a class="link"   target="_blank" rel="noopener external nofollow noreferrer" href="https://www.youtube.com/watch?v=v20IsEd5nUU" >https://www.youtube.com/watch?v=v20IsEd5nUU<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></li>
 </ul>
 
 		</div>
@@ -2102,11 +2102,11 @@
 			</li>
 			
 			<li class="tag-item mx-0.5">
-				<a href="/tags/vulnhub/">#vulnhub</a>&nbsp;
+				<a href="/tags/linux/">#linux</a>&nbsp;
 			</li>
 			
 			<li class="tag-item mx-0.5">
-				<a href="/tags/linux/">#linux</a>&nbsp;
+				<a href="/tags/vulnhub/">#vulnhub</a>&nbsp;
 			</li>
 			
 			<li class="tag-item mx-0.5">
@@ -2267,8 +2267,8 @@
         </div>
         
         <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
-            <span class="lg:block text-sm">DESARROLLADO POR <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
-            <span class="text-sm lg:block">TEMA&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.8.5</a></span>
+            <span class="lg:block text-sm">DESARROLLADO POR <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io" rel="external nofollow noreferrer">Hexo</a></span>
+            <span class="text-sm lg:block">TEMA&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine" rel="external nofollow noreferrer">Redefine v2.8.5</a></span>
         </div>
         
         

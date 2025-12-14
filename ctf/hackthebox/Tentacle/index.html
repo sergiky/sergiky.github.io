@@ -144,18 +144,18 @@
 <meta property="og:locale" content="es_ES">
 <meta property="og:image" content="https://sergiky.github.io/images/sergiky.webp">
 <meta property="article:published_time" content="2025-06-11T22:00:00.000Z">
-<meta property="article:modified_time" content="2025-12-14T14:37:08.244Z">
+<meta property="article:modified_time" content="2025-12-14T16:36:49.497Z">
 <meta property="article:author" content="Sergio Guijarro">
 <meta property="article:tag" content="ctf">
-<meta property="article:tag" content="linux">
-<meta property="article:tag" content="eCPPTv2">
-<meta property="article:tag" content="eCPTXv2">
 <meta property="article:tag" content="htb">
 <meta property="article:tag" content="high">
+<meta property="article:tag" content="linux">
 <meta property="article:tag" content="dns_enumeration">
 <meta property="article:tag" content="squid_proxy">
 <meta property="article:tag" content="kerberos">
+<meta property="article:tag" content="eCPPTv2">
 <meta property="article:tag" content="OSCP">
+<meta property="article:tag" content="eCPTXv2">
 <meta property="article:tag" content="dnsenum">
 <meta property="article:tag" content="kerbrute">
 <meta name="twitter:card" content="summary">
@@ -525,8 +525,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2025-12-14 15:37:08</span>
-            <span class="mobile">2025-12-14 15:37:08</span>
+            <span class="desktop">2025-12-14 17:36:49</span>
+            <span class="mobile">2025-12-14 17:36:49</span>
             <span class="hover-info">Actualizado</span>
         </span>
     
@@ -568,23 +568,15 @@
                     </li>
                 
                     <li>
-                        | <a href="/tags/linux/">linux</a>&nbsp;
-                    </li>
-                
-                    <li>
-                        | <a href="/tags/eCPPTv2/">eCPPTv2</a>&nbsp;
-                    </li>
-                
-                    <li>
-                        | <a href="/tags/eCPTXv2/">eCPTXv2</a>&nbsp;
-                    </li>
-                
-                    <li>
                         | <a href="/tags/htb/">htb</a>&nbsp;
                     </li>
                 
                     <li>
                         | <a href="/tags/high/">high</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/linux/">linux</a>&nbsp;
                     </li>
                 
                     <li>
@@ -600,7 +592,15 @@
                     </li>
                 
                     <li>
+                        | <a href="/tags/eCPPTv2/">eCPPTv2</a>&nbsp;
+                    </li>
+                
+                    <li>
                         | <a href="/tags/OSCP/">OSCP</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/eCPTXv2/">eCPTXv2</a>&nbsp;
                     </li>
                 
                     <li>
@@ -642,9 +642,9 @@
                      lazyload
                      src="/images/loading.svg"
                      data-src="/ctf/hackthebox/Tentacle/ping_main_ip.png"
-                      alt="Comprobando si el equipo esta activo."
+                      alt="Comprobando si el equipo esta activo." title="ping"
                 ><figcaption>Comprobando si el equipo esta activo.</figcaption></figure></p>
-<p>Recordar que si el TTL no se ha modificado cada sistema operativo tiene uno diferente, ya solo con un simple ping tenemos un indicio de que esta máquina es Linux. Más cerca de 64 Linux, cerca de 128 Windows, más información en <a class="link"   target="_blank" rel="noopener" href="https://subinsb.com/default-device-ttl-values/" >subinsb.com<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>.</p>
+<p>Recordar que si el TTL no se ha modificado cada sistema operativo tiene uno diferente, ya solo con un simple ping tenemos un indicio de que esta máquina es Linux. Más cerca de 64 Linux, cerca de 128 Windows, más información en <a class="link"   target="_blank" rel="noopener external nofollow noreferrer" href="https://subinsb.com/default-device-ttl-values/" >subinsb.com<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>.</p>
 <p>Procedemos con el típico escaneo de nmap de ‘to’ la vida.</p>
 <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> nmap -p- --open -sS --min-rate 4500 -vvv -n -Pn 10.10.10.224 -oG allPorts</span><br></pre></td></tr></table></figure></div>
 
@@ -841,7 +841,7 @@
 <p>Si lo haces al nombre del dominio sale un 403 Forbidden:</p>
 <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proxychains -q curl http://wpad.realcorp.htb</span><br></pre></td></tr></table></figure></div>
 
-<p>Con la IP aparece una página por defecto de red hat y nginx, en cambio con el dominio vemos que se esta realiando virtual hosting y obtenemos un 403 forbidden, si investigamos más sobre lo que es wpad y acabamos en la página de <a class="link"   target="_blank" rel="noopener" href="https://hacktricks.boitatech.com.br/pentesting/pentesting-network/spoofing-llmnr-nbt-ns-mdns-dns-and-wpad-and-relay-attacks" >hacktricks.boitatech.com.br<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> podemos ver que los clientes para que carguen la configuación automáticamente del proxy acceden por defecto a &#x2F;wpad.dat, así que vamos a probar a hacer un curl de esta ruta.</p>
+<p>Con la IP aparece una página por defecto de red hat y nginx, en cambio con el dominio vemos que se esta realiando virtual hosting y obtenemos un 403 forbidden, si investigamos más sobre lo que es wpad y acabamos en la página de <a class="link"   target="_blank" rel="noopener external nofollow noreferrer" href="https://hacktricks.boitatech.com.br/pentesting/pentesting-network/spoofing-llmnr-nbt-ns-mdns-dns-and-wpad-and-relay-attacks" >hacktricks.boitatech.com.br<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> podemos ver que los clientes para que carguen la configuación automáticamente del proxy acceden por defecto a &#x2F;wpad.dat, así que vamos a probar a hacer un curl de esta ruta.</p>
 <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proxychains -q curl -s http://wpad.realcorp.htb/wpad.dat | bat -l js</span><br></pre></td></tr></table></figure></div>
 
 <p><figure class="image-caption"><img  
@@ -908,7 +908,7 @@
                      data-src="/ctf/hackthebox/Tentacle/original_script_exploit_root_user.png"
                       alt="El usuario que se indica para enviar el correo es root."
                 ><figcaption>El usuario que se indica para enviar el correo es root.</figcaption></figure></p>
-<p>Recordemos que al principio, al visualizar la página del primer squid proxy, nos daba un usuario, el usuario “<a class="link"   href="mailto:&#106;&#46;&#x6e;&#x61;&#107;&#97;&#122;&#97;&#119;&#97;&#64;&#x72;&#101;&#97;&#x6c;&#x63;&#x6f;&#x72;&#112;&#46;&#x68;&#116;&#x62;" >&#106;&#46;&#x6e;&#x61;&#107;&#97;&#122;&#97;&#119;&#97;&#64;&#x72;&#101;&#97;&#x6c;&#x63;&#x6f;&#x72;&#112;&#46;&#x68;&#116;&#x62;<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>“.</p>
+<p>Recordemos que al principio, al visualizar la página del primer squid proxy, nos daba un usuario, el usuario “<a class="link"   href="mailto:&#106;&#x2e;&#x6e;&#x61;&#x6b;&#97;&#x7a;&#x61;&#x77;&#97;&#64;&#x72;&#x65;&#x61;&#x6c;&#99;&#x6f;&#114;&#112;&#46;&#104;&#x74;&#98;" rel="external nofollow noreferrer" >&#106;&#x2e;&#x6e;&#x61;&#x6b;&#97;&#x7a;&#x61;&#x77;&#97;&#64;&#x72;&#x65;&#x61;&#x6c;&#99;&#x6f;&#114;&#112;&#46;&#104;&#x74;&#98;<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>“.</p>
 <h3 id="Kerbrute-para-validar-usuarios"><a href="#Kerbrute-para-validar-usuarios" class="headerlink" title="Kerbrute para validar usuarios"></a>Kerbrute para validar usuarios</h3><p>Podemos chekear si el usuario existe gracias al servicio kerberos corriendo en la primera máquina, para ello utilizaremos la herramienta kerbrute:</p>
 <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kerbrute userenum --domain realcorp.htb --dc 10.10.10.224 ../data/users.txt</span><br></pre></td></tr></table></figure></div>
 
@@ -974,7 +974,7 @@
                      src="/images/loading.svg"
                      data-src="/ctf/hackthebox/Tentacle/ssh_with_nakazawa_error_type.png"
                       alt="Error de ssh al gastar los tres intentos."
-                ><figcaption>Error de ssh al gastar los tres intentos.</figcaption></figure><br>Vemos algo raro, algo fuera de lo común, gssapi-keyex… ¿que es esto?. Vamos a buscarlo en internet. En esta entrada de <a class="link"   target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Generic_Security_Services_Application_Programming_Interface" >wikipedia<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> podemos ver que este mecanismo se utiliza con Kerberos.</p>
+                ><figcaption>Error de ssh al gastar los tres intentos.</figcaption></figure><br>Vemos algo raro, algo fuera de lo común, gssapi-keyex… ¿que es esto?. Vamos a buscarlo en internet. En esta entrada de <a class="link"   target="_blank" rel="noopener external nofollow noreferrer" href="https://en.wikipedia.org/wiki/Generic_Security_Services_Application_Programming_Interface" >wikipedia<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> podemos ver que este mecanismo se utiliza con Kerberos.</p>
 <p>Para utilizar ssh con kerberos como cliente debemos realizar los siguientes pasos:</p>
 <ol>
 <li><p>Checkear si tenemos instalado el paquete <strong>krb5</strong>.</p>
@@ -1076,7 +1076,7 @@
                      data-src="/ctf/hackthebox/Tentacle/ksu_with_root_obtaining_flag.png"
                       alt="Utilizando ksu para entrar como root y mostrar la flag."
                 ><figcaption>Utilizando ksu para entrar como root y mostrar la flag.</figcaption></figure></p>
-<h1 id="Fuentes"><a href="#Fuentes" class="headerlink" title="Fuentes"></a>Fuentes</h1><p>Basado en el write-up de <a class="link"   target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=hFIWuWVIDek&t=3300s" >s4vitar<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<h1 id="Fuentes"><a href="#Fuentes" class="headerlink" title="Fuentes"></a>Fuentes</h1><p>Basado en el write-up de <a class="link"   target="_blank" rel="noopener external nofollow noreferrer" href="https://www.youtube.com/watch?v=hFIWuWVIDek&t=3300s" >s4vitar<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
 
 		</div>
 
@@ -1090,23 +1090,15 @@
 			</li>
 			
 			<li class="tag-item mx-0.5">
-				<a href="/tags/linux/">#linux</a>&nbsp;
-			</li>
-			
-			<li class="tag-item mx-0.5">
-				<a href="/tags/eCPPTv2/">#eCPPTv2</a>&nbsp;
-			</li>
-			
-			<li class="tag-item mx-0.5">
-				<a href="/tags/eCPTXv2/">#eCPTXv2</a>&nbsp;
-			</li>
-			
-			<li class="tag-item mx-0.5">
 				<a href="/tags/htb/">#htb</a>&nbsp;
 			</li>
 			
 			<li class="tag-item mx-0.5">
 				<a href="/tags/high/">#high</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/linux/">#linux</a>&nbsp;
 			</li>
 			
 			<li class="tag-item mx-0.5">
@@ -1122,7 +1114,15 @@
 			</li>
 			
 			<li class="tag-item mx-0.5">
+				<a href="/tags/eCPPTv2/">#eCPPTv2</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
 				<a href="/tags/OSCP/">#OSCP</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/eCPTXv2/">#eCPTXv2</a>&nbsp;
 			</li>
 			
 			<li class="tag-item mx-0.5">
@@ -1203,8 +1203,8 @@
         </div>
         
         <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
-            <span class="lg:block text-sm">DESARROLLADO POR <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
-            <span class="text-sm lg:block">TEMA&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.8.5</a></span>
+            <span class="lg:block text-sm">DESARROLLADO POR <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io" rel="external nofollow noreferrer">Hexo</a></span>
+            <span class="text-sm lg:block">TEMA&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine" rel="external nofollow noreferrer">Redefine v2.8.5</a></span>
         </div>
         
         

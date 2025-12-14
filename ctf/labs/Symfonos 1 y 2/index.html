@@ -148,12 +148,12 @@
 <meta property="article:author" content="Sergio Guijarro">
 <meta property="article:tag" content="ctf">
 <meta property="article:tag" content="eJPT">
-<meta property="article:tag" content="vulnhub">
-<meta property="article:tag" content="medium">
 <meta property="article:tag" content="linux">
-<meta property="article:tag" content="pivoting">
 <meta property="article:tag" content="eCPPTv2">
 <meta property="article:tag" content="eCPTXv2">
+<meta property="article:tag" content="vulnhub">
+<meta property="article:tag" content="pivoting">
+<meta property="article:tag" content="medium">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://sergiky.github.io/images/sergiky.webp">
     
@@ -568,19 +568,7 @@
                     </li>
                 
                     <li>
-                        | <a href="/tags/vulnhub/">vulnhub</a>&nbsp;
-                    </li>
-                
-                    <li>
-                        | <a href="/tags/medium/">medium</a>&nbsp;
-                    </li>
-                
-                    <li>
                         | <a href="/tags/linux/">linux</a>&nbsp;
-                    </li>
-                
-                    <li>
-                        | <a href="/tags/pivoting/">pivoting</a>&nbsp;
                     </li>
                 
                     <li>
@@ -589,6 +577,18 @@
                 
                     <li>
                         | <a href="/tags/eCPTXv2/">eCPTXv2</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/vulnhub/">vulnhub</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/pivoting/">pivoting</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/medium/">medium</a>&nbsp;
                     </li>
                 
             </ul>
@@ -641,7 +641,7 @@
                       class="" title="Uso de ping para comprobar si tenemos comunicación con la víctima"
                 >
 
-<p>En la imagen se puede apreciar que el <strong>ttl&#x3D;64</strong>, si miramos está <a class="link"   target="_blank" rel="noopener" href="https://subinsb.com/default-device-ttl-values/" >página<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> podemos ver que cada sistemas operativo tiene un tiempo de respueta <strong>por defecto</strong>, esto no significa que haya podido ser modificado. </p>
+<p>En la imagen se puede apreciar que el <strong>ttl&#x3D;64</strong>, si miramos está <a class="link"   target="_blank" rel="noopener external nofollow noreferrer" href="https://subinsb.com/default-device-ttl-values/" >página<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> podemos ver que cada sistemas operativo tiene un tiempo de respueta <strong>por defecto</strong>, esto no significa que haya podido ser modificado. </p>
 <h2 id="Escaneo-de-puertos"><a href="#Escaneo-de-puertos" class="headerlink" title="Escaneo de puertos"></a>Escaneo de puertos</h2><p>Disponemos de veintemil herramientas de escaneo de puertos, aquí solo voy a realizar la enumeración de forma activa</p>
 <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> nmap -p- --open -sS --min-rate=4500 -vvv -n -Pn 192.168.1.178 -oG ToLosPuertos</span><br></pre></td></tr></table></figure></div>
 
@@ -663,7 +663,7 @@
 <li><p><strong>-oG</strong> -&gt; Exportamos la información obtenida en un archivo con formato grepeable(que a continuación veréis porque).</p>
 </li>
 </ul>
-<p>Dispones de otras alternativas como <a class="link"   target="_blank" rel="noopener" href="https://github.com/projectdiscovery/naabu" >naabu<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> de projectdiscovery que también es muy potente.</p>
+<p>Dispones de otras alternativas como <a class="link"   target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/projectdiscovery/naabu" >naabu<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> de projectdiscovery que también es muy potente.</p>
 <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">naabu -Pn -host 192.168.1.178</span><br></pre></td></tr></table></figure></div>
 
 <p>Vamos a utilizar extractPorts, otra función definida en la zshrc robada a s4vitar para mostrar los puertos encontrados y copiarlos a la clipboard(recuerdo que estoy utilizando Arch Linux con Hyprland por eso utilizo wl-copy, si utilizas kali linux&#x2F;parrot deberías cambiarlo a xclip -sel clipboard)</p>
@@ -704,7 +704,7 @@
                       class="" title="Uso de la herramienta whatweb"
                 >
 
-<h2 id="Primera-exploracion-desde-el-navegador"><a href="#Primera-exploracion-desde-el-navegador" class="headerlink" title="Primera exploración desde el navegador"></a>Primera exploración desde el navegador</h2><p>Abrimos el navegador y vemos las tecnologías utilizadas con Wappalizer, podemos ver que la versión de apache no es la última(está es la 2.4.62) y podemos buscar diferentes cve en <a class="link"   target="_blank" rel="noopener" href="https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=apache+2.4.25" >cve mitre<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>. Podemos apreciar diferentes vulnerabilidades aunque no nos servirían para la explotación de la máquina, además, los tiros no van por aquí.</p>
+<h2 id="Primera-exploracion-desde-el-navegador"><a href="#Primera-exploracion-desde-el-navegador" class="headerlink" title="Primera exploración desde el navegador"></a>Primera exploración desde el navegador</h2><p>Abrimos el navegador y vemos las tecnologías utilizadas con Wappalizer, podemos ver que la versión de apache no es la última(está es la 2.4.62) y podemos buscar diferentes cve en <a class="link"   target="_blank" rel="noopener external nofollow noreferrer" href="https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=apache+2.4.25" >cve mitre<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>. Podemos apreciar diferentes vulnerabilidades aunque no nos servirían para la explotación de la máquina, además, los tiros no van por aquí.</p>
 <p>Revisamos el código fuente de la página(ctrl + u), vacío, no voy a poner ni una captura.</p>
 <p>La consola y sus diferentes herramientas, tampoco vemos nada por ningún sitio.</p>
 <h2 id="Listar-recursos-compartidos-de-Samba"><a href="#Listar-recursos-compartidos-de-Samba" class="headerlink" title="Listar recursos compartidos de Samba"></a>Listar recursos compartidos de Samba</h2><p>Si vemos el archivo del escaneo de puertos anterior, podemos ver el puerto 139 y el 445 incluso que la autenticación esta activada, pero no se pide.</p>
@@ -1074,7 +1074,7 @@
 </ul>
 <p>El programa puede tardar un rato en ejecutarse, si no os funciona ctrl+c podéis utilizar ctrl+z y en caso de no ver el cursor poner tput cnorm como en el script.</p>
 <h2 id="Tunel-proxy-con-Chisel"><a href="#Tunel-proxy-con-Chisel" class="headerlink" title="Túnel proxy con Chisel."></a>Túnel proxy con Chisel.</h2><p>Vamos a montarnos un túnel con Chisel para poder tener accesible los puertos de la máquina víctima.</p>
-<p>El primer paso es descargarnos <a class="link"   target="_blank" rel="noopener" href="https://github.com/jpillora/chisel" >Chisel<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>, recomiendo ir a las releases y descargar la última versión disponible, si utilizas arch puedes instalarlo mediante AUR(chisel-jpillora) o añadiendo los repositorios de black arch y descargarlo con pacman.</p>
+<p>El primer paso es descargarnos <a class="link"   target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jpillora/chisel" >Chisel<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>, recomiendo ir a las releases y descargar la última versión disponible, si utilizas arch puedes instalarlo mediante AUR(chisel-jpillora) o añadiendo los repositorios de black arch y descargarlo con pacman.</p>
 <p>En caso de descargar la última release desde github o al hacer la copia de &#x2F;usr&#x2F;bin&#x2F;chisel, si quieres reducir el peso del ejecutable ya que está en go, puedes utilizar los siguientes comandos:</p>
 <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Para ver el peso del archivo</span></span><br><span class="line"><span class="built_in">du</span> -hc chisel</span><br><span class="line"></span><br><span class="line"><span class="comment"># Para disminuir el peso(Así tardará menos en subirse a la máquina víctima)</span></span><br><span class="line">upx chisel</span><br></pre></td></tr></table></figure></div>
 
@@ -1492,7 +1492,7 @@
                       class="" title="Permite ejecutar el comando mysql como root."
                 >
 
-<p>Si buscamos en <a class="link"   target="_blank" rel="noopener" href="https://gtfobins.github.io/" >gtfobins<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> por mysql podemos ver que puede usar sudo para escalar privilegios, si pinchamos en él, nos sale lo siguiente:</p>
+<p>Si buscamos en <a class="link"   target="_blank" rel="noopener external nofollow noreferrer" href="https://gtfobins.github.io/" >gtfobins<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> por mysql podemos ver que puede usar sudo para escalar privilegios, si pinchamos en él, nos sale lo siguiente:</p>
 <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> mysql -e <span class="string">&#x27;\! /bin/sh&#x27;</span></span><br></pre></td></tr></table></figure></div>
 
 <img  
@@ -1503,7 +1503,7 @@
                 >
 
 <h1 id="Referencias"><a href="#Referencias" class="headerlink" title="Referencias"></a>Referencias</h1><ul>
-<li><a class="link"   target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=L1jSoCcvRY4&t=6529s" >Pivoting desde cero #1 | S4vitar<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></li>
+<li><a class="link"   target="_blank" rel="noopener external nofollow noreferrer" href="https://www.youtube.com/watch?v=L1jSoCcvRY4&t=6529s" >Pivoting desde cero #1 | S4vitar<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></li>
 </ul>
 
 		</div>
@@ -1522,19 +1522,7 @@
 			</li>
 			
 			<li class="tag-item mx-0.5">
-				<a href="/tags/vulnhub/">#vulnhub</a>&nbsp;
-			</li>
-			
-			<li class="tag-item mx-0.5">
-				<a href="/tags/medium/">#medium</a>&nbsp;
-			</li>
-			
-			<li class="tag-item mx-0.5">
 				<a href="/tags/linux/">#linux</a>&nbsp;
-			</li>
-			
-			<li class="tag-item mx-0.5">
-				<a href="/tags/pivoting/">#pivoting</a>&nbsp;
 			</li>
 			
 			<li class="tag-item mx-0.5">
@@ -1543,6 +1531,18 @@
 			
 			<li class="tag-item mx-0.5">
 				<a href="/tags/eCPTXv2/">#eCPTXv2</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/vulnhub/">#vulnhub</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/pivoting/">#pivoting</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/medium/">#medium</a>&nbsp;
 			</li>
 			
 		</ul>
@@ -1603,8 +1603,8 @@
         </div>
         
         <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
-            <span class="lg:block text-sm">DESARROLLADO POR <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
-            <span class="text-sm lg:block">TEMA&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.8.5</a></span>
+            <span class="lg:block text-sm">DESARROLLADO POR <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io" rel="external nofollow noreferrer">Hexo</a></span>
+            <span class="text-sm lg:block">TEMA&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine" rel="external nofollow noreferrer">Redefine v2.8.5</a></span>
         </div>
         
         

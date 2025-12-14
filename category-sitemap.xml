@@ -9,15 +9,22 @@
 
 
     <url>
-        <loc>https://sergiky.github.io/categories/ctf/tryhackme/</loc>
-        <lastmod>2025-12-14T16:15:01.774Z</lastmod>
+        <loc>https://sergiky.github.io/categories/ctf/hackthebox/</loc>
+        <lastmod>2025-12-14T16:36:49.497Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>https://sergiky.github.io/categories/ctf/</loc>
-        <lastmod>2025-12-14T16:15:01.774Z</lastmod>
+        <lastmod>2025-12-14T16:36:49.497Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://sergiky.github.io/categories/ctf/tryhackme/</loc>
+        <lastmod>2025-12-14T16:31:39.967Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -39,13 +46,6 @@
     <url>
         <loc>https://sergiky.github.io/categories/ctf/portswigger/</loc>
         <lastmod>2025-12-14T14:49:54.055Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://sergiky.github.io/categories/ctf/hackthebox/</loc>
-        <lastmod>2025-12-14T14:37:08.244Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
