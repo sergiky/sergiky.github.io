@@ -3,6 +3,139 @@
 
 
     <url>
+        <loc>https://sergiky.github.io/tags/persistence-with-WMI-Events/</loc>
+        <lastmod>2025-12-14T16:15:01.774Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://sergiky.github.io/tags/persistence-with-gflags/</loc>
+        <lastmod>2025-12-14T16:15:01.774Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://sergiky.github.io/tags/persistence-with-debugging/</loc>
+        <lastmod>2025-12-14T16:15:01.774Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://sergiky.github.io/tags/windows-persistence/</loc>
+        <lastmod>2025-12-14T16:15:01.774Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://sergiky.github.io/tags/enable-RDP-with-netexec/</loc>
+        <lastmod>2025-12-14T16:15:01.774Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://sergiky.github.io/tags/Ebowla/</loc>
+        <lastmod>2025-12-14T16:15:01.774Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://sergiky.github.io/tags/Windows-Defender-Evasion/</loc>
+        <lastmod>2025-12-14T16:15:01.774Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://sergiky.github.io/tags/mimikatz/</loc>
+        <lastmod>2025-12-14T16:15:01.774Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://sergiky.github.io/tags/AutoBlue/</loc>
+        <lastmod>2025-12-14T16:15:01.774Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://sergiky.github.io/tags/triple-z-script/</loc>
+        <lastmod>2025-12-14T16:15:01.774Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://sergiky.github.io/tags/manual-exploitation/</loc>
+        <lastmod>2025-12-14T16:15:01.774Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://sergiky.github.io/tags/metasploit/</loc>
+        <lastmod>2025-12-14T16:15:01.774Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://sergiky.github.io/tags/eJPT/</loc>
+        <lastmod>2025-12-14T16:15:01.774Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://sergiky.github.io/tags/ms17-010/</loc>
+        <lastmod>2025-12-14T16:15:01.774Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://sergiky.github.io/tags/eternalblue/</loc>
+        <lastmod>2025-12-14T16:15:01.774Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://sergiky.github.io/tags/windows/</loc>
+        <lastmod>2025-12-14T16:15:01.774Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://sergiky.github.io/tags/easy/</loc>
+        <lastmod>2025-12-14T16:15:01.774Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://sergiky.github.io/tags/tryhackme/</loc>
+        <lastmod>2025-12-14T16:15:01.774Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://sergiky.github.io/tags/ctf/</loc>
+        <lastmod>2025-12-14T16:15:01.774Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>https://sergiky.github.io/tags/ssh2john/</loc>
         <lastmod>2025-12-14T16:06:40.700Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -166,139 +299,6 @@
     <url>
         <loc>https://sergiky.github.io/tags/vulnhub/</loc>
         <lastmod>2025-12-14T16:06:40.700Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://sergiky.github.io/tags/eJPT/</loc>
-        <lastmod>2025-12-14T16:06:40.700Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://sergiky.github.io/tags/windows/</loc>
-        <lastmod>2025-12-14T16:06:40.700Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://sergiky.github.io/tags/easy/</loc>
-        <lastmod>2025-12-14T16:06:40.700Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://sergiky.github.io/tags/ctf/</loc>
-        <lastmod>2025-12-14T16:06:40.700Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://sergiky.github.io/tags/persistence-with-WMI-Events/</loc>
-        <lastmod>2025-12-14T16:05:55.980Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://sergiky.github.io/tags/persistence-with-gflags/</loc>
-        <lastmod>2025-12-14T16:05:55.980Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://sergiky.github.io/tags/persistence-with-debugging/</loc>
-        <lastmod>2025-12-14T16:05:55.980Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://sergiky.github.io/tags/windows-persistence/</loc>
-        <lastmod>2025-12-14T16:05:55.980Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://sergiky.github.io/tags/enable-RDP-with-netexec/</loc>
-        <lastmod>2025-12-14T16:05:55.980Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://sergiky.github.io/tags/Ebowla/</loc>
-        <lastmod>2025-12-14T16:05:55.980Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://sergiky.github.io/tags/Windows-Defender-Evasion/</loc>
-        <lastmod>2025-12-14T16:05:55.980Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://sergiky.github.io/tags/mimikatz/</loc>
-        <lastmod>2025-12-14T16:05:55.980Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://sergiky.github.io/tags/AutoBlue/</loc>
-        <lastmod>2025-12-14T16:05:55.980Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://sergiky.github.io/tags/triple-z-script/</loc>
-        <lastmod>2025-12-14T16:05:55.980Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://sergiky.github.io/tags/manual-exploitation/</loc>
-        <lastmod>2025-12-14T16:05:55.980Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://sergiky.github.io/tags/metasploit/</loc>
-        <lastmod>2025-12-14T16:05:55.980Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://sergiky.github.io/tags/ms17-010/</loc>
-        <lastmod>2025-12-14T16:05:55.980Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://sergiky.github.io/tags/eternalblue/</loc>
-        <lastmod>2025-12-14T16:05:55.980Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://sergiky.github.io/tags/tryhackme/</loc>
-        <lastmod>2025-12-14T16:05:55.980Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
