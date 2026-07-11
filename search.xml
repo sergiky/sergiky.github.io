@@ -37,49 +37,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Mi primer bounty</title>
-    <url>/bug-bounty/Mi-primer-bounty/</url>
-    <content><![CDATA[<p>Este es un post especial. No todos los días recibes tu primera recompensa en un programa de Bug Bounty.</p>
-<h1 id="Introduccion"><a href="#Introduccion" class="headerlink" title="Introducción"></a>Introducción</h1><p>En el siguiente artículo voy a hablar y contar mi experiencia sobre como descubrí mi primer bounty y de que trataba.</p>
-<p>En mi caso, no suelo realizar reconocimiento al principio al menos que se cumplan uno de los siguientes factores:</p>
-<ul>
-<li>Programa demasiado “difícil”.</li>
-<li>Cuando no encuentro nada.</li>
-</ul>
-<p>Si, así es, cada uno tiene su propia metodología y su forma de trabajar, la mía es ir al programa, clicar en enlace de la página principal y empezar a buscar.</p>
-<h1 id="Que-fallo-fue-y-como-lo-encontre"><a href="#Que-fallo-fue-y-como-lo-encontre" class="headerlink" title="Que fallo fue y como lo encontré"></a>Que fallo fue y como lo encontré</h1><p>El fallo fue un open redirect. Hace no mucho hackerone dejo de aceptar estas vulnerabilidades, pero el programa junto al que estaba trabajando si las aceptaba.</p>
-<p>Este fallo tenía el siguiente aspecto:</p>
-<blockquote>
-<p><a class="link"   href="https://maindomain.com/offlinepage/d#newUrl=/" >https://maindomain.com/offlinepage/d#newUrl=/<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>&lt;maindomain.com&gt;</p>
-</blockquote>
-<p>Yo al principio intenté cambiar el valor de newUrl, pero no vi nada nuevo.<br>Entonces pasé y seguí investigando la aplicación web, entonces decidí darle a la flecha de atrás del navegador, volví a mirar la página, pasé el ratón por encima de un botón y boom, veia que ese botón que redirijia a <em><a class="link"   href="https://maindomain.com/reflected_value" >https://maindomain.com/reflected_value<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></em>.</p>
-<p>Claro y yo pense formas para escaparme de ahí y poder redirigir a otro dominio y lo primero que probe fue utilizar “&#x2F;&#x2F;evil.com”, enter, irme para delante con la flecha y luego para atrás otra vez y ver que efectivamente redirigía fuera del dominio principal.</p>
-<p>Una vez comprobado, empece a estudiar el funcionamiento del componente.</p>
-<ul>
-<li>En lugar de utilizar las flechas podías simplemente recargar.</li>
-<li>Probe para un SSRF, pero era client-side.</li>
-<li>Probe a escalar a un XSS con <code>javascript:alert(0)</code> y algunas otras formas para evadir las diferentes medidas de seguridad de la página.</li>
-</ul>
-<p>Pero nada, no encontré ninguna forma de escalarlo. Por lo cuál, decidí reportarlo y esperar mientras aunque de vez en cuando seguía buscando alguna forma de aumentar el impacto.</p>
-<h1 id="Gestion-de-las-emociones-y-proceso-del-reporte"><a href="#Gestion-de-las-emociones-y-proceso-del-reporte" class="headerlink" title="Gestión de las emociones y proceso del reporte"></a>Gestión de las emociones y proceso del reporte</h1><p>Parece un poco subrealista tener emociones por este simple fallo, pero después de tanto tiempo preparándome, buscando, aprendiendo, fallando… Antes de este existieron 7 reportes inválidos que no me aceptaron y claro que fue frustante, pero no me rendí.</p>
-<p>Respecto al reporte me gustaría recalcar la gran cantidad de tiempo que tardarón en realizar todo el proceso y un malentendido que hubo.</p>
-<p>Una vez llego el reporte a la mano de la empresa (que fue rápido), me bajaron la severidad a 0, claro, yo no entendía nada, porque si me lo habían pasado porque me habían bajado la severidad. A las dos semanas de ver el reporte en la zona de “Open” decidí enviar un mensaje pidiendo que lo cerrarán, al siguiente día me respondieron de que mi reporte tenía valor y que aceptaban los open redirect, entonces no había necesidad de cerrarlos y me volvieron a subir la severidad, un poco menos de lo que reporte, pero ahí estaba.</p>
-<h1 id="Intento-de-Web-Cache-Poisoning"><a href="#Intento-de-Web-Cache-Poisoning" class="headerlink" title="Intento de Web Cache Poisoning"></a>Intento de Web Cache Poisoning</h1><p>Al pasar un mes yo seguía aprendiendo sobre vulnerabilidades web y estaba con una que me parece super interesante, Web Cache Poisoning. Estaba siguiendo el topic the PortSwigger, realizando los laboratorios, me veía algún research de James Kettle sobre esta vulnerabilidad y cogía nota de todo. Y pensé, porque no intento mezclar el fallo mencionado(que aún no habían solucionado) con este nuevo.</p>
-<p>Así fue, empecé a mirar y no encontraba nada y peor, parecía que no estaba entiendo nada, como si mi tiempo no hubiera servidor para nada.</p>
-<p>Así que decidí dejarlo y seguir realizando los laboratorios mejorando así mi conocimiento sobre esta vulnerabilidad y entendiéndola mucho mejor. Entonces, terminé un laboratorio y ya estaba quemado y decidí darle otro intento al mezclar estos fallos. Seguía sin encontrar nada, pero lo entendía todo mucho mejor, sabía donde buscar, sabía como funcionaba todo. Ahí fue cuando descubrí que la página dónde estaba el open redirect era vulnerable a web cache poisoning gracias a que probe a realizar lo mismo visto en el último laboratorio que había realizado. Y efectivamente amigos, descubrí un web cache poisoning que era capaz de envenenar la caché y que todos los usuarios que entrarán a <a class="link"   href="https://maindomain.com/offlinepage/" >https://maindomain.com/offlinepage/<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> se redirigierán a -&gt; <a class="link"   href="https://maindomain.com/offlinepage/d#newUrl=/" >https://maindomain.com/offlinepage/d#newUrl=/<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>&lt;maindomain.com&gt;. Claro, esto con el correspondiente buster para evitar una posible catástrofe.</p>
-<p>El gran problema de aquí es que justo el día anterior habían solucionado el fallo del open redirect. Con tan mala suerte de reportar este web cache poisoning y que ya fuera tarde para ser aceptado.</p>
-<p>Las políticas del programa tampoco aceptaban DoS con Web Cache Poisoning entonces no hubo nada que hacer.</p>
-<h1 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusión"></a>Conclusión</h1><p>Detrás de este bounty tan insignificante hay mucho sacrificio, esfuerzo y dedicación, entre semana estudio y los findes de semana en lugar de salir y disfrutar me quedaba probando mis habilidades y mejorándolas haciendo bug bounty.<br>Exactamente 5 meses en la academia de PortSwigger para recibir mi primer bounty.Por último, me gustaría dar mi punto de visto sobre los VDP, el esfuerzo de una persona tiene que ser recompensado no con una simple carta de agradecimiento.</p>
-]]></content>
-      <categories>
-        <category>bug-bounty</category>
-      </categories>
-      <tags>
-        <tag>bug-bounty</tag>
-        <tag>open-redirect</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Blue | WriteUp</title>
     <url>/ctf/tryhackme/Blue/</url>
     <content><![CDATA[<h1 id="Introduccion"><a href="#Introduccion" class="headerlink" title="Introducción"></a>Introducción</h1><p>Bienvenidos a este humilde WriteUp sobre esta sencillita máquina Windows que nos será de utilidad para repasar conceptos básicos y la explotación de diferentes formas sobre la vulnerabilidad <strong>MS17-010</strong> o mayormente conocida como <strong>EternalBlue</strong>. Para que un sea un simple Write-up más hacer dos tipos de explotaciones, una automática con metasploit y otra manual, aunque para la manual tengo que recalcar que la máquina de tryhackme no está preparada para esto y en ciertas ocasiones tendremos problemas, en cambio, existe la misma máquina sin estos problemas en la plataforma hack the box(se necesita subscripción). También comentaros que veréis diferentes ips de “víctima” porque no lo he podido hacer todo de golpe o he tenido que reiniciar la máquina.</p>
@@ -758,6 +715,49 @@
         <tag>persistence with debugging</tag>
         <tag>persistence with gflags</tag>
         <tag>persistence with WMI Events</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Mi primer bounty</title>
+    <url>/bug-bounty/Mi-primer-bounty/</url>
+    <content><![CDATA[<p>Este es un post especial. No todos los días recibes tu primera recompensa en un programa de Bug Bounty.</p>
+<h1 id="Introduccion"><a href="#Introduccion" class="headerlink" title="Introducción"></a>Introducción</h1><p>En el siguiente artículo voy a hablar y contar mi experiencia sobre como descubrí mi primer bounty y de que trataba.</p>
+<p>En mi caso, no suelo realizar reconocimiento al principio al menos que se cumplan uno de los siguientes factores:</p>
+<ul>
+<li>Programa demasiado “difícil”.</li>
+<li>Cuando no encuentro nada.</li>
+</ul>
+<p>Si, así es, cada uno tiene su propia metodología y su forma de trabajar, la mía es ir al programa, clicar en enlace de la página principal y empezar a buscar.</p>
+<h1 id="Que-fallo-fue-y-como-lo-encontre"><a href="#Que-fallo-fue-y-como-lo-encontre" class="headerlink" title="Que fallo fue y como lo encontré"></a>Que fallo fue y como lo encontré</h1><p>El fallo fue un open redirect. Hace no mucho hackerone dejo de aceptar estas vulnerabilidades, pero el programa junto al que estaba trabajando si las aceptaba.</p>
+<p>Este fallo tenía el siguiente aspecto:</p>
+<blockquote>
+<p><a class="link"   href="https://maindomain.com/offlinepage/d#newUrl=/" >https://maindomain.com/offlinepage/d#newUrl=/<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>&lt;maindomain.com&gt;</p>
+</blockquote>
+<p>Yo al principio intenté cambiar el valor de newUrl, pero no vi nada nuevo.<br>Entonces pasé y seguí investigando la aplicación web, entonces decidí darle a la flecha de atrás del navegador, volví a mirar la página, pasé el ratón por encima de un botón y boom, veia que ese botón que redirijia a <em><a class="link"   href="https://maindomain.com/reflected_value" >https://maindomain.com/reflected_value<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></em>.</p>
+<p>Claro y yo pense formas para escaparme de ahí y poder redirigir a otro dominio y lo primero que probe fue utilizar “&#x2F;&#x2F;evil.com”, enter, irme para delante con la flecha y luego para atrás otra vez y ver que efectivamente redirigía fuera del dominio principal.</p>
+<p>Una vez comprobado, empece a estudiar el funcionamiento del componente.</p>
+<ul>
+<li>En lugar de utilizar las flechas podías simplemente recargar.</li>
+<li>Probe para un SSRF, pero era client-side.</li>
+<li>Probe a escalar a un XSS con <code>javascript:alert(0)</code> y algunas otras formas para evadir las diferentes medidas de seguridad de la página.</li>
+</ul>
+<p>Pero nada, no encontré ninguna forma de escalarlo. Por lo cuál, decidí reportarlo y esperar mientras aunque de vez en cuando seguía buscando alguna forma de aumentar el impacto.</p>
+<h1 id="Gestion-de-las-emociones-y-proceso-del-reporte"><a href="#Gestion-de-las-emociones-y-proceso-del-reporte" class="headerlink" title="Gestión de las emociones y proceso del reporte"></a>Gestión de las emociones y proceso del reporte</h1><p>Parece un poco subrealista tener emociones por este simple fallo, pero después de tanto tiempo preparándome, buscando, aprendiendo, fallando… Antes de este existieron 7 reportes inválidos que no me aceptaron y claro que fue frustante, pero no me rendí.</p>
+<p>Respecto al reporte me gustaría recalcar la gran cantidad de tiempo que tardarón en realizar todo el proceso y un malentendido que hubo.</p>
+<p>Una vez llego el reporte a la mano de la empresa (que fue rápido), me bajaron la severidad a 0, claro, yo no entendía nada, porque si me lo habían pasado porque me habían bajado la severidad. A las dos semanas de ver el reporte en la zona de “Open” decidí enviar un mensaje pidiendo que lo cerrarán, al siguiente día me respondieron de que mi reporte tenía valor y que aceptaban los open redirect, entonces no había necesidad de cerrarlos y me volvieron a subir la severidad, un poco menos de lo que reporte, pero ahí estaba.</p>
+<h1 id="Intento-de-Web-Cache-Poisoning"><a href="#Intento-de-Web-Cache-Poisoning" class="headerlink" title="Intento de Web Cache Poisoning"></a>Intento de Web Cache Poisoning</h1><p>Al pasar un mes yo seguía aprendiendo sobre vulnerabilidades web y estaba con una que me parece super interesante, Web Cache Poisoning. Estaba siguiendo el topic the PortSwigger, realizando los laboratorios, me veía algún research de James Kettle sobre esta vulnerabilidad y cogía nota de todo. Y pensé, porque no intento mezclar el fallo mencionado(que aún no habían solucionado) con este nuevo.</p>
+<p>Así fue, empecé a mirar y no encontraba nada y peor, parecía que no estaba entiendo nada, como si mi tiempo no hubiera servidor para nada.</p>
+<p>Así que decidí dejarlo y seguir realizando los laboratorios mejorando así mi conocimiento sobre esta vulnerabilidad y entendiéndola mucho mejor. Entonces, terminé un laboratorio y ya estaba quemado y decidí darle otro intento al mezclar estos fallos. Seguía sin encontrar nada, pero lo entendía todo mucho mejor, sabía donde buscar, sabía como funcionaba todo. Ahí fue cuando descubrí que la página dónde estaba el open redirect era vulnerable a web cache poisoning gracias a que probe a realizar lo mismo visto en el último laboratorio que había realizado. Y efectivamente amigos, descubrí un web cache poisoning que era capaz de envenenar la caché y que todos los usuarios que entrarán a <a class="link"   href="https://maindomain.com/offlinepage/" >https://maindomain.com/offlinepage/<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> se redirigierán a -&gt; <a class="link"   href="https://maindomain.com/offlinepage/d#newUrl=/" >https://maindomain.com/offlinepage/d#newUrl=/<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>&lt;maindomain.com&gt;. Claro, esto con el correspondiente buster para evitar una posible catástrofe.</p>
+<p>El gran problema de aquí es que justo el día anterior habían solucionado el fallo del open redirect. Con tan mala suerte de reportar este web cache poisoning y que ya fuera tarde para ser aceptado.</p>
+<p>Las políticas del programa tampoco aceptaban DoS con Web Cache Poisoning entonces no hubo nada que hacer.</p>
+<h1 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusión"></a>Conclusión</h1><p>Detrás de este bounty tan insignificante hay mucho sacrificio, esfuerzo y dedicación, entre semana estudio y los findes de semana en lugar de salir y disfrutar me quedaba probando mis habilidades y mejorándolas haciendo bug bounty.<br>Exactamente 5 meses en la academia de PortSwigger para recibir mi primer bounty.Por último, me gustaría dar mi punto de visto sobre los VDP, el esfuerzo de una persona tiene que ser recompensado no con una simple carta de agradecimiento.</p>
+]]></content>
+      <categories>
+        <category>bug-bounty</category>
+      </categories>
+      <tags>
+        <tag>bug-bounty</tag>
+        <tag>open-redirect</tag>
       </tags>
   </entry>
   <entry>
@@ -1955,7 +1955,7 @@
                      data-src="/ctf/hackthebox/Tentacle/original_script_exploit_root_user.png"
                       alt="El usuario que se indica para enviar el correo es root."
                 ><figcaption>El usuario que se indica para enviar el correo es root.</figcaption></figure></p>
-<p>Recordemos que al principio, al visualizar la página del primer squid proxy, nos daba un usuario, el usuario “<a class="link"   href="mailto:&#106;&#x2e;&#x6e;&#x61;&#x6b;&#97;&#122;&#x61;&#119;&#97;&#x40;&#x72;&#x65;&#97;&#108;&#99;&#111;&#114;&#x70;&#46;&#x68;&#116;&#x62;" >&#106;&#x2e;&#x6e;&#x61;&#x6b;&#97;&#122;&#x61;&#119;&#97;&#x40;&#x72;&#x65;&#97;&#108;&#99;&#111;&#114;&#x70;&#46;&#x68;&#116;&#x62;<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>“.</p>
+<p>Recordemos que al principio, al visualizar la página del primer squid proxy, nos daba un usuario, el usuario “<a class="link"   href="mailto:&#x6a;&#46;&#x6e;&#97;&#107;&#x61;&#x7a;&#97;&#x77;&#97;&#64;&#x72;&#101;&#97;&#108;&#99;&#111;&#x72;&#x70;&#x2e;&#x68;&#116;&#98;" >&#x6a;&#46;&#x6e;&#97;&#107;&#x61;&#x7a;&#97;&#x77;&#97;&#64;&#x72;&#101;&#97;&#108;&#99;&#111;&#x72;&#x70;&#x2e;&#x68;&#116;&#98;<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>“.</p>
 <h3 id="Kerbrute-para-validar-usuarios"><a href="#Kerbrute-para-validar-usuarios" class="headerlink" title="Kerbrute para validar usuarios"></a>Kerbrute para validar usuarios</h3><p>Podemos chekear si el usuario existe gracias al servicio kerberos corriendo en la primera máquina, para ello utilizaremos la herramienta kerbrute:</p>
 <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">kerbrute userenum --domain realcorp.htb --dc 10.10.10.224 ../data/users.txt</span><br></pre></td></tr></table></figure></div>
 
