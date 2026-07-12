@@ -254,7 +254,7 @@ p { font-size: 14px; color: var(--text-muted); line-height: 1.5; margin-bottom: 
 .text-side p { overflow-wrap: break-word; } 
 .text-side p {
     display: -webkit-box;
-    -webkit-line-clamp: 3;      /* máximo 3 líneas, el resto se corta con … */
+    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }

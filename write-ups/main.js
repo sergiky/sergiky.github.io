@@ -6,7 +6,6 @@ const DIFF = {
 };
 const COLORS = ["pink", "blue", "yellow", "green"];
 
-// escapa el texto: aunque el contenido es tuyo, evita romper el HTML y cierra la puerta a XSS
 function esc(s) {
     return String(s ?? "").replace(/[&<>"']/g, c =>
         ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -47,11 +46,9 @@ function cardHTML(m, i) {
   </article>`;
 }
 
-// 1) pinta las tarjetas desde los datos (MACHINES vive en data.js)
 const list = typeof MACHINES !== "undefined" ? MACHINES : [];
 document.getElementById("grid").innerHTML = list.map(cardHTML).join("");
 
-// 2) engancha el buscador sobre las tarjetas ya generadas
 const input = document.getElementById("search");
 const cards = document.querySelectorAll(".card");
 input.closest("form").addEventListener("submit", e => e.preventDefault());
