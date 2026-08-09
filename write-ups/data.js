@@ -7,7 +7,7 @@ const MACHINES = [
         tags: ["IDOR", "pcap", "FTP", "Password reuse", "Capabilities"],
         difficulty: "Easy",              // Easy | Medium | Hard | Insane
         date: "01 August 2026",
-        youtube: "https://www.youtube.com/watch?v=XXXXXXXX"
+        youtube: "https://www.youtube.com/watch?v=DGHEjzmdEgw"
         // color: "pink"  <- opcional, si no lo pones, va rotando solo
     }
 ];
