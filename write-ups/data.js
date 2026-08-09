@@ -9,5 +9,16 @@ const MACHINES = [
         date: "01 August 2026",
         youtube: "https://www.youtube.com/watch?v=DGHEjzmdEgw"
         // color: "pink"  <- opcional, si no lo pones, va rotando solo
+    },
+	{
+        title: "Support",
+        badge: "OSCP",
+        platform: "htb",
+        description: "Anonymous SMB leak LDAP binary with valid credentials, connect with evil-winrm and privilage escalation abusing Resource-Based Constrained Delegation (RBCD)",
+        tags: ["dig", "zone transfer", "kerbrute", "naming context", "smb", "smbclient", "smbmap", "netexec", "file", "wireshark", "ldap", "strings", "ltrace", "strace", "objdump", "gdb", "ghidra", "dnspy", "reverse engineeing", "python", "C#", "ldapsearch", "ldapdomaindump", "kerberoasting", "AS-REP Roasting", "Apache Directory Studio", "Password Spraying", "winrm", "evil-winrm", "bloodhound", "bloodhound.py", "rbcd abuse", "powermard", "powerview", "ps-exec", "TGT"],
+        difficulty: "Easy",              // Easy | Medium | Hard | Insane
+        date: "",
+        youtube: ""
+        // color: "pink"  <- opcional, si no lo pones, va rotando solo
     }
 ];
