@@ -6,7 +6,7 @@ const MACHINES = [
         description: "IDOR leak a .pcap file, credentials filtered, password reuse, privilege escalation with capabilities in Python",
         tags: ["IDOR", "pcap", "FTP", "Password reuse", "Capabilities"],
         difficulty: "Easy",              // Easy | Medium | Hard | Insane
-        date: "01 August 2026",
+        date: "01/08/2026",
         youtube: "https://www.youtube.com/watch?v=DGHEjzmdEgw"
         // color: "pink"  <- opcional, si no lo pones, va rotando solo
     },
@@ -28,8 +28,8 @@ const MACHINES = [
 		description: "James SMTP vulnerabilty allow to read email of users leaking ssh password. Then, privilege escalation abusing cron tab",
 		tags: ["ssh user enum", "James SMTP", "searchsploit", "telnet", "smtp", "pop3", "ssh", "rbash", "abuse cron tab", "proc-scan", "bash scripting"],
 		difficulty: "Medium",              // Easy | Medium | Hard | Insane
-		date: "",
-		youtube: ""
+		date: "22/08/2026",
+		youtube: "https://youtu.be/qurbBFEioMQ"
 		// color: "pink"  <- opcional, si no lo pones, va rotando solo
 	},
 ];
