@@ -39,7 +39,7 @@ const MACHINES = [
 		description: "Default credentials tomcat manager, RCE with WAR deployment landing with NT Authority System",
 		tags: ["ffuf", "tomcat", "default credentials", "manager", "WAR RCE"],
 		difficulty: "Easy",              // Easy | Medium | Hard | Insane
-		date: "22/08/2026",
+		date: "26/08/2026",
 		youtube: "https://youtu.be/svh09XpCHRM"
 		// color: "pink"  <- opcional, si no lo pones, va rotando solo
 	}
