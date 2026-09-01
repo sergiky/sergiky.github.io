@@ -42,5 +42,16 @@ const MACHINES = [
 		date: "26/08/2026",
 		youtube: "https://youtu.be/svh09XpCHRM"
 		// color: "pink"  <- opcional, si no lo pones, va rotando solo
-	}
+	},
+	{
+        title: "Forest",
+        badge: "OSCP",
+        platform: "htb",
+        description: "AS-REP Roasting credentials and Account Operation group + WriteDACL permission allow to abuse to do DCSync",
+        tags: ["dig", "zone transfer", "kerbrute", "rpc", "rpcclient", "rpc user description enumeration", "AS-REP", "smb", "smbclient", "smbmap", "netexec", "GPP abuse", "ldap", "ldapsearch", "ldapdomaindump", "winrm", "evil-winrm", "password spraying", "bloodhound", "bloodhound-python", "SharpHound", "Account Operator abuse", "WriteDACL abuse", "DCSync", "ps-exec", "PTH"],
+        difficulty: "Easy",              // Easy | Medium | Hard | Insane
+        date: "01/09/2026",
+        youtube: "https://youtu.be/JrzVUy-4nMs"
+        // color: "pink"  <- opcional, si no lo pones, va rotando solo
+    },
 ];
