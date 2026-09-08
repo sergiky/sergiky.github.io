@@ -54,4 +54,15 @@ const MACHINES = [
         youtube: "https://youtu.be/JrzVUy-4nMs"
         // color: "pink"  <- opcional, si no lo pones, va rotando solo
     },
+	{
+        title: "Nibbles",
+        badge: "OSCP",
+        platform: "htb",
+        description: "Nibbles default credentials, abuse of my_image plugin with a file upload vulnerability. Privilege escalation with sudo no password permission about a custom script.",
+        tags: ["nibbles", "default credentials", "file upload", "my_image plugin", "web shell", "reverse shell", "sudo -l abuse"],
+        difficulty: "Easy",              // Easy | Medium | Hard | Insane
+        date: "08/09/2026",
+        youtube: "https://youtu.be/rXpUN-XGJ7M"
+        // color: "pink"  <- opcional, si no lo pones, va rotando solo
+    },
 ];
