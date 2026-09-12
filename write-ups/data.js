@@ -65,4 +65,15 @@ const MACHINES = [
         youtube: "https://youtu.be/rXpUN-XGJ7M"
         // color: "pink"  <- opcional, si no lo pones, va rotando solo
     },
+	{
+        title: "Netmon",
+        badge: "OSCP",
+        platform: "htb",
+        description: "Information leaked via FTP and Command Injection via Notification CVE-2018-9276, PRTG Network Monitor (NETMON)",
+        tags: ["PRTG Network Monitor", "ftp", "anonymous ftp", "Information Leaked", "CVE-2018-9276", "evil-winrm"],
+        difficulty: "Easy",              // Easy | Medium | Hard | Insane
+        date: "12/09/2026",
+        youtube: "https://youtu.be/ebw4QNH8FNg"
+        // color: "pink"  <- opcional, si no lo pones, va rotando solo
+    },
 ];
