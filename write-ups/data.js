@@ -76,4 +76,15 @@ const MACHINES = [
         youtube: "https://youtu.be/ebw4QNH8FNg"
         // color: "pink"  <- opcional, si no lo pones, va rotando solo
     },
+	{
+        title: "Flight",
+        badge: "OSCP",
+        platform: "htb",
+        description: "Discovering a hidden subdomain with a File Disclosure vulnerability. Then, combining with the abuse of UNC path and responder obtain a hash NTLM, read SMB files and do a Password Spraying to obtain access to another account. Therefore, upload desktop.ini (SFC, SMB Hash Capture) to a shared resource and obtain the hash of another user. From this user we are able to upload a web shell to a shared resource where the source code of the page was located and obtain a session. Inside the machine we use RunasCs to obtain a powershell with more permission. To conclude, we find an internal service running on an internal port where we can upload a web shell and obtain apppool virtual user access. With the user mentioned, 'SeImpersonatePrivilege' was enable by default and we are able to upload and execute Rubeus, obtain a TGT ticket, transform to a ccache file with kirbi2ccache and do a DCSync thanks that DC system account by default have the permission to do that, in this case with impacket-secretsdump.",
+        tags: ["nmap", "dig", "kerbrute", "ffuf", "fuzzing subdomains", "rpcclient", "smbclient", "smbmap", "ldapdomaindump", "AS-REP Roat", "UDP scan", "enum4linux", "Abuse UNC Windows", "Responder", "php.ini", "File disclousure", "hashcat", "netexec", "impacket-lookupsid", "impacket-GetADUsers", "password spraying", "Capture hashes NTLM via SFC/LNK files", "ntlm theft", "web shell", "reverse shell", "RunasCs", "impacket-smbclient", "non-exposed port", "chisel", "proxychains", "aspx", "virtual account", "system account", "Rubeus", "TGT", "tgtdeleg", "SeImpersonatePrivilege", "DCSync", "kirbi2ccache", ".kirbi", ".ccache", "impacket-secretsdump", "impacket-psexec", "IIS", "xamp"],
+        difficulty: "Hard",              // Easy | Medium | Hard | Insane
+        date: "01/10/2026",
+        youtube: "https://youtu.be/PgcItGQyEQA"
+        // color: "pink"  <- opcional, si no lo pones, va rotando solo
+    },
 ];
