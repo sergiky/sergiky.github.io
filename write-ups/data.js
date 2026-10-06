@@ -1,5 +1,16 @@
 const MACHINES = [
 	{
+        title: "Silentium",
+        badge: "OSCP",
+        platform: "htb",
+        description: "Discover a hidden subdomain 'staging' with a Flowise instance running. Leaked reset password token in response, RCE abusing CustomMCP module and improper control of code generation CVE-2025-59528. Docker with leaked password in environment variables. Local port forwarding for GOGS service and abuse CVE-2025-8110 with symbolic links",
+        tags: ["nmap", "ffuf", "fuzzing subdomains", "Flowise", "CVE-2025-59528", "SSH local port forwarding", "GOGS", "CVE-2025-8110"],
+        difficulty: "Easy",              // Easy | Medium | Hard | Insane
+        date: "06/10/2026",
+        youtube: "https://youtu.be/l1WgDk594FU"
+        // color: "pink"  <- opcional, si no lo pones, va rotando solo
+    },
+	{
         title: "Flight",
         badge: "OSCP",
         platform: "htb",
